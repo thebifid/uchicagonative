@@ -9,15 +9,15 @@
 import Cartography
 import UIKit
 
-let playButton = UIButton(titleColor: .green, title: "Play Again!")
-let editProfileButton = UIButton(titleColor: .black, title: "Edit Profile")
-let termsOfServiceButton = UIButton(titleColor: .black, title: "Terms Of Service")
-let getHelpButton = UIButton(titleColor: .black, title: "Get Help")
-let sendFeedbackButton = UIButton(titleColor: .black, title: "Send Feedback")
-let aboutUsButton = UIButton(titleColor: .black, title: "About Us")
-let logoutButton = UIButton(titleColor: .red, title: "Logout")
-
 class MenuScreenViewController: UIViewController {
+    let playButton = UIButton(titleColor: .green, title: "Play Again!")
+    let editProfileButton = UIButton(titleColor: .black, title: "Edit Profile")
+    let termsOfServiceButton = UIButton(titleColor: .black, title: "Terms Of Service")
+    let getHelpButton = UIButton(titleColor: .black, title: "Get Help")
+    let sendFeedbackButton = UIButton(titleColor: .black, title: "Send Feedback")
+    let aboutUsButton = UIButton(titleColor: .black, title: "About Us")
+    let logoutButton = UIButton(titleColor: .red, title: "Logout")
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -29,11 +29,11 @@ class MenuScreenViewController: UIViewController {
         // setting button actions
         playButton.addTarget(self, action: #selector(handlePlay), for: .touchUpInside)
         editProfileButton.addTarget(self, action: #selector(handleEditProfile), for: .touchUpInside)
-        aboutUsButton.addTarget(self, action: #selector(handleAboutUs), for: .touchUpInside)
+        termsOfServiceButton.addTarget(self, action: #selector(handleTermsOfService), for: .touchUpInside)
         getHelpButton.addTarget(self, action: #selector(handleGetHelp), for: .touchUpInside)
+        aboutUsButton.addTarget(self, action: #selector(handleAboutUs), for: .touchUpInside)
         sendFeedbackButton.addTarget(self, action: #selector(handleSendFeedback), for: .touchUpInside)
-
-        logoutButton.addTarget(self, action: #selector(handleLogout), for: .touchUpInside) // last
+        logoutButton.addTarget(self, action: #selector(handleLogout), for: .touchUpInside)
     }
 
     // MARK: - Play action
@@ -60,11 +60,23 @@ class MenuScreenViewController: UIViewController {
         navigationController?.pushViewController(dvc, animated: true)
     }
 
+    // MARK: - Get help action
+
     @objc private func handleGetHelp() {
         let dvc = GetHelpViewController()
         dvc.navigationItem.title = "Get Help"
         navigationController?.pushViewController(dvc, animated: true)
     }
+
+    // MARK: - Term of Service action
+
+    @objc private func handleTermsOfService() {
+        let dvc = TermsOfServiceViewController()
+        dvc.navigationItem.title = "Terms Of Service"
+        navigationController?.pushViewController(dvc, animated: true)
+    }
+
+    // MARK: - Send Feedback action
 
     @objc private func handleSendFeedback() {
         let dvc = SendFeedbackViewController()
@@ -80,13 +92,15 @@ class MenuScreenViewController: UIViewController {
 
     private func setupUI() {
         let stackView = VerticalStackVIew(arrangedSubviews:
-            [playButton,
-             editProfileButton,
-             termsOfServiceButton,
-             getHelpButton,
-             sendFeedbackButton,
-             aboutUsButton,
-             logoutButton], spacing: 12)
+            [
+                playButton,
+                editProfileButton,
+                termsOfServiceButton,
+                getHelpButton,
+                sendFeedbackButton,
+                aboutUsButton,
+                logoutButton
+            ], spacing: 12)
 
         view.addSubview(stackView)
 

@@ -12,9 +12,7 @@ import UIKit
 class SendFeedbackViewController: UIViewController {
     let scrollView = UIScrollView()
 
-    let feedbackLabel = UILabel(
-        title: "Please send us feedback about your Mobile Memory App experience", numberOfLines: 0
-    )
+    let feedbackLabel = UILabel(title: "Please send us feedback about your Mobile Memory App experience", numberOfLines: 0)
 
     let feedbackTextField: UITextField = {
         let tf = UITextField()
@@ -31,7 +29,9 @@ class SendFeedbackViewController: UIViewController {
     }
 
     private func setupUI() {
-        let statusBarHeight = (navigationController?.navigationBar.frame.size.height ?? 0.0) + (navigationController?.navigationBar.frame.origin.y ?? 0.0)
+        let navBarHeight = navigationController?.navigationBar.frame.size.height ?? 0
+        let navBarFrameY = navigationController?.navigationBar.frame.origin.y ?? 0
+        let statusBarHeight = navBarHeight + navBarFrameY
 
         // ScrollView
         scrollView.backgroundColor = Constants.appBackgroundColor
@@ -44,9 +44,11 @@ class SendFeedbackViewController: UIViewController {
         // StackView
 
         let stackView = VerticalStackVIew(arrangedSubviews:
-            [feedbackLabel,
-             feedbackTextField,
-             submitButton], spacing: 12)
+            [
+                feedbackLabel,
+                feedbackTextField,
+                submitButton
+            ], spacing: 12)
 
         scrollView.addSubview(stackView)
 

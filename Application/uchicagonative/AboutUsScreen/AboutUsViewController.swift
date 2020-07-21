@@ -16,7 +16,8 @@ class AboutUsViewController: UIViewController {
         "This app was developed as part of a research project led by Ed Awh and Ed Vogel at University of Chicago", numberOfLines: 0)
 
     let secondLabel = UILabel(title:
-        "Our goal is to better understand the limits of attention and working memory. Thank you for helping us comlete our research", numberOfLines: 0)
+        "Our goal is to better understand the limits of attention and working memory. Thank you for helping us comlete our research",
+                              numberOfLines: 0)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +27,9 @@ class AboutUsViewController: UIViewController {
     }
 
     private func setupUI() {
-        let statusBarHeight = (navigationController?.navigationBar.frame.size.height ?? 0.0) + (navigationController?.navigationBar.frame.origin.y ?? 0.0)
+        let navBarHeight = navigationController?.navigationBar.frame.size.height ?? 0
+        let navBarFrameY = navigationController?.navigationBar.frame.origin.y ?? 0
+        let statusBarHeight = navBarHeight + navBarFrameY
 
         // ScrollView
         scrollView.backgroundColor = Constants.appBackgroundColor
@@ -38,8 +41,10 @@ class AboutUsViewController: UIViewController {
 
         // stackView
         let stackView = VerticalStackVIew(arrangedSubviews:
-            [firstLabel,
-             secondLabel], spacing: 12)
+            [
+                firstLabel,
+                secondLabel
+            ], spacing: 12)
 
         scrollView.addSubview(stackView)
 

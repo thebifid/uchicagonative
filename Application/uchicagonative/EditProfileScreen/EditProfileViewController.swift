@@ -44,7 +44,9 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate {
 
     private func setupUI() {
         scrollView.delegate = self
-        let statusBarHeight = (navigationController?.navigationBar.frame.size.height ?? 0.0) + (navigationController?.navigationBar.frame.origin.y ?? 0.0)
+        let navBarHeight = navigationController?.navigationBar.frame.size.height ?? 0
+        let navBarFrameY = navigationController?.navigationBar.frame.origin.y ?? 0
+        let statusBarHeight = navBarHeight + navBarFrameY
 
         // ScrollView
         scrollView.backgroundColor = Constants.appBackgroundColor
@@ -57,15 +59,17 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate {
         // StackView
 
         let stackView = VerticalStackVIew(arrangedSubviews:
-            [emailLabel,
-             firstNameLabel,
-             secondNameLabel,
-             birhdayYearLabel,
-             numberLabel,
-             selectGenderLabel,
-             pickGenderButton,
-             selectProjectLabel,
-             pickProjectButton], spacing: 12)
+            [
+                emailLabel,
+                firstNameLabel,
+                secondNameLabel,
+                birhdayYearLabel,
+                numberLabel,
+                selectGenderLabel,
+                pickGenderButton,
+                selectProjectLabel,
+                pickProjectButton
+            ], spacing: 12)
 
         scrollView.addSubview(stackView)
 

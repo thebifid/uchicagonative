@@ -17,13 +17,14 @@
 		C19693D024C6C61A0054296F /* VerticalStackVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693CF24C6C61A0054296F /* VerticalStackVIew.swift */; };
 		C19693D324C6CE0E0054296F /* MenuScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693D224C6CE0E0054296F /* MenuScreenViewController.swift */; };
 		C19693D524C6CEF40054296F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693D424C6CEF40054296F /* Constants.swift */; };
-		C19693D724C6D6090054296F /* UIButton + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693D624C6D6090054296F /* UIButton + Extension.swift */; };
+		C19693D724C6D6090054296F /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693D624C6D6090054296F /* UIButton+Extension.swift */; };
 		C19693DC24C6D93F0054296F /* EmptyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693DB24C6D93F0054296F /* EmptyViewController.swift */; };
 		C19693DF24C6DA6E0054296F /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693DE24C6DA6E0054296F /* EditProfileViewController.swift */; };
-		C19693E224C6FA820054296F /* UILabel + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693E124C6FA820054296F /* UILabel + Extension.swift */; };
+		C19693E224C6FA820054296F /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693E124C6FA820054296F /* UILabel+Extension.swift */; };
 		C19693E424C6FC370054296F /* AboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693E324C6FC370054296F /* AboutUsViewController.swift */; };
 		C19693E724C70B270054296F /* GetHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693E624C70B270054296F /* GetHelpViewController.swift */; };
 		C19693EA24C710AF0054296F /* SendFeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693E924C710AF0054296F /* SendFeedbackViewController.swift */; };
+		C19693ED24C71C250054296F /* TermsOfServiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693EC24C71C250054296F /* TermsOfServiceViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,13 +42,14 @@
 		C19693CF24C6C61A0054296F /* VerticalStackVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalStackVIew.swift; sourceTree = "<group>"; };
 		C19693D224C6CE0E0054296F /* MenuScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScreenViewController.swift; sourceTree = "<group>"; };
 		C19693D424C6CEF40054296F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		C19693D624C6D6090054296F /* UIButton + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton + Extension.swift"; sourceTree = "<group>"; };
+		C19693D624C6D6090054296F /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		C19693DB24C6D93F0054296F /* EmptyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyViewController.swift; sourceTree = "<group>"; };
 		C19693DE24C6DA6E0054296F /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
-		C19693E124C6FA820054296F /* UILabel + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel + Extension.swift"; sourceTree = "<group>"; };
+		C19693E124C6FA820054296F /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		C19693E324C6FC370054296F /* AboutUsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUsViewController.swift; sourceTree = "<group>"; };
 		C19693E624C70B270054296F /* GetHelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetHelpViewController.swift; sourceTree = "<group>"; };
 		C19693E924C710AF0054296F /* SendFeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFeedbackViewController.swift; sourceTree = "<group>"; };
+		C19693EC24C71C250054296F /* TermsOfServiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfServiceViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,13 +85,14 @@
 		C116347B24C6B3CF00B6C394 /* uchicagonative */ = {
 			isa = PBXGroup;
 			children = (
-				C19693E824C710940054296F /* Send Feedback Screen */,
-				C19693E524C70B150054296F /* Get Help Screen */,
-				C19693E024C6E6D70054296F /* About Us Screen */,
+				C19693EB24C71C140054296F /* TermsOfServiceScreen */,
 				C19693D924C6D7140054296F /* Helpers */,
-				C19693DD24C6DA5D0054296F /* Edit Profile Screen */,
-				C19693D124C6CDF40054296F /* Menu Screen */,
-				C116349024C6B3DA00B6C394 /* Login Screen */,
+				C19693E824C710940054296F /* SendFeedbackScreen */,
+				C19693E524C70B150054296F /* GetHelpScreen */,
+				C19693E024C6E6D70054296F /* AboutUsScreen */,
+				C19693DD24C6DA5D0054296F /* EditProfileScreen */,
+				C19693D124C6CDF40054296F /* MenuScreen */,
+				C116349024C6B3DA00B6C394 /* LoginScreen */,
 				C19693D824C6D70C0054296F /* Extensions */,
 				C116349124C6B3E200B6C394 /* Commons */,
 				C116349224C6B3EA00B6C394 /* Resources */,
@@ -97,12 +100,12 @@
 			path = uchicagonative;
 			sourceTree = "<group>";
 		};
-		C116349024C6B3DA00B6C394 /* Login Screen */ = {
+		C116349024C6B3DA00B6C394 /* LoginScreen */ = {
 			isa = PBXGroup;
 			children = (
 				C116348024C6B3CF00B6C394 /* LoginViewController.swift */,
 			);
-			path = "Login Screen";
+			path = LoginScreen;
 			sourceTree = "<group>";
 		};
 		C116349124C6B3E200B6C394 /* Commons */ = {
@@ -126,19 +129,19 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		C19693D124C6CDF40054296F /* Menu Screen */ = {
+		C19693D124C6CDF40054296F /* MenuScreen */ = {
 			isa = PBXGroup;
 			children = (
 				C19693D224C6CE0E0054296F /* MenuScreenViewController.swift */,
 			);
-			path = "Menu Screen";
+			path = MenuScreen;
 			sourceTree = "<group>";
 		};
 		C19693D824C6D70C0054296F /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				C19693D624C6D6090054296F /* UIButton + Extension.swift */,
-				C19693E124C6FA820054296F /* UILabel + Extension.swift */,
+				C19693D624C6D6090054296F /* UIButton+Extension.swift */,
+				C19693E124C6FA820054296F /* UILabel+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -152,36 +155,44 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		C19693DD24C6DA5D0054296F /* Edit Profile Screen */ = {
+		C19693DD24C6DA5D0054296F /* EditProfileScreen */ = {
 			isa = PBXGroup;
 			children = (
 				C19693DE24C6DA6E0054296F /* EditProfileViewController.swift */,
 			);
-			path = "Edit Profile Screen";
+			path = EditProfileScreen;
 			sourceTree = "<group>";
 		};
-		C19693E024C6E6D70054296F /* About Us Screen */ = {
+		C19693E024C6E6D70054296F /* AboutUsScreen */ = {
 			isa = PBXGroup;
 			children = (
 				C19693E324C6FC370054296F /* AboutUsViewController.swift */,
 			);
-			path = "About Us Screen";
+			path = AboutUsScreen;
 			sourceTree = "<group>";
 		};
-		C19693E524C70B150054296F /* Get Help Screen */ = {
+		C19693E524C70B150054296F /* GetHelpScreen */ = {
 			isa = PBXGroup;
 			children = (
 				C19693E624C70B270054296F /* GetHelpViewController.swift */,
 			);
-			path = "Get Help Screen";
+			path = GetHelpScreen;
 			sourceTree = "<group>";
 		};
-		C19693E824C710940054296F /* Send Feedback Screen */ = {
+		C19693E824C710940054296F /* SendFeedbackScreen */ = {
 			isa = PBXGroup;
 			children = (
 				C19693E924C710AF0054296F /* SendFeedbackViewController.swift */,
 			);
-			path = "Send Feedback Screen";
+			path = SendFeedbackScreen;
+			sourceTree = "<group>";
+		};
+		C19693EB24C71C140054296F /* TermsOfServiceScreen */ = {
+			isa = PBXGroup;
+			children = (
+				C19693EC24C71C250054296F /* TermsOfServiceViewController.swift */,
+			);
+			path = TermsOfServiceScreen;
 			sourceTree = "<group>";
 		};
 		E11E9708F4C4490F52D0621F /* Frameworks */ = {
@@ -378,16 +389,17 @@
 				C116348124C6B3CF00B6C394 /* LoginViewController.swift in Sources */,
 				C116347D24C6B3CF00B6C394 /* AppDelegate.swift in Sources */,
 				C116347F24C6B3CF00B6C394 /* SceneDelegate.swift in Sources */,
+				C19693ED24C71C250054296F /* TermsOfServiceViewController.swift in Sources */,
 				C19693EA24C710AF0054296F /* SendFeedbackViewController.swift in Sources */,
 				C19693E424C6FC370054296F /* AboutUsViewController.swift in Sources */,
 				C19693D524C6CEF40054296F /* Constants.swift in Sources */,
 				C19693E724C70B270054296F /* GetHelpViewController.swift in Sources */,
 				C116349524C6B6E100B6C394 /* R.generated.swift in Sources */,
-				C19693E224C6FA820054296F /* UILabel + Extension.swift in Sources */,
+				C19693E224C6FA820054296F /* UILabel+Extension.swift in Sources */,
 				C19693DC24C6D93F0054296F /* EmptyViewController.swift in Sources */,
 				C19693D324C6CE0E0054296F /* MenuScreenViewController.swift in Sources */,
 				C19693DF24C6DA6E0054296F /* EditProfileViewController.swift in Sources */,
-				C19693D724C6D6090054296F /* UIButton + Extension.swift in Sources */,
+				C19693D724C6D6090054296F /* UIButton+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

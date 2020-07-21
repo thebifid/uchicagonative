@@ -9,21 +9,16 @@
 import Cartography
 import UIKit
 
-let firstBlockLabel = UILabel(
-    title: "Thank you for using our app. If you have an issue to report, please contact us via email", numberOfLines: 0
-)
-
-let sendEmailButton = UIButton(titleColor: .black, title: "Send Email")
-
-let secondBlcokLabel = UILabel(
-    title: "Read more about our research on our website at AwhVogelLab.com", numberOfLines: 0
-)
-
-let visitWebsiteButton = UIButton(titleColor: .black, title: "Visit Website")
-
-let scrollView = UIScrollView()
-
 class GetHelpViewController: UIViewController {
+    let firstBlockLabel = UILabel(title: "Thank you for using our app. If you have an issue to report, please contact us via email",
+                                  numberOfLines: 0)
+
+    let sendEmailButton = UIButton(titleColor: .black, title: "Send Email")
+    let secondBlcokLabel = UILabel(title: "Read more about our research on our website at AwhVogelLab.com", numberOfLines: 0)
+
+    let visitWebsiteButton = UIButton(titleColor: .black, title: "Visit Website")
+    let scrollView = UIScrollView()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -31,7 +26,9 @@ class GetHelpViewController: UIViewController {
     }
 
     private func setupUI() {
-        let statusBarHeight = (navigationController?.navigationBar.frame.size.height ?? 0.0) + (navigationController?.navigationBar.frame.origin.y ?? 0.0)
+        let navBarHeight = navigationController?.navigationBar.frame.size.height ?? 0
+        let navBarFrameY = navigationController?.navigationBar.frame.origin.y ?? 0
+        let statusBarHeight = navBarHeight + navBarFrameY
 
         // ScrollView
         scrollView.backgroundColor = Constants.appBackgroundColor
@@ -44,10 +41,12 @@ class GetHelpViewController: UIViewController {
         // StackView
 
         let stackView = VerticalStackVIew(arrangedSubviews:
-            [firstBlockLabel,
-             sendEmailButton,
-             secondBlcokLabel,
-             visitWebsiteButton], spacing: 12)
+            [
+                firstBlockLabel,
+                sendEmailButton,
+                secondBlcokLabel,
+                visitWebsiteButton
+            ], spacing: 12)
 
         scrollView.addSubview(stackView)
 
