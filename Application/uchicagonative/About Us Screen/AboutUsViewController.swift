@@ -47,8 +47,8 @@ class AboutUsViewController: UIViewController {
             scrollView.bottom == scrollView.superview!.bottom
 
             stackView.width == scrollView.superview!.width - Constants.defaultInsets
-            stackView.top == stackView.superview!.top + Constants.defaultInsets
-            stackView.left == stackView.superview!.left + Constants.defaultInsets
+            stackView.centerY == stackView.superview!.centerY
+            stackView.centerX == stackView.superview!.centerX
         }
     }
 }

@@ -22,6 +22,7 @@
 		C19693DF24C6DA6E0054296F /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693DE24C6DA6E0054296F /* EditProfileViewController.swift */; };
 		C19693E224C6FA820054296F /* UILabel + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693E124C6FA820054296F /* UILabel + Extension.swift */; };
 		C19693E424C6FC370054296F /* AboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693E324C6FC370054296F /* AboutUsViewController.swift */; };
+		C19693E724C70B270054296F /* GetHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693E624C70B270054296F /* GetHelpViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		C19693DE24C6DA6E0054296F /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		C19693E124C6FA820054296F /* UILabel + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel + Extension.swift"; sourceTree = "<group>"; };
 		C19693E324C6FC370054296F /* AboutUsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUsViewController.swift; sourceTree = "<group>"; };
+		C19693E624C70B270054296F /* GetHelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetHelpViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 		C116347B24C6B3CF00B6C394 /* uchicagonative */ = {
 			isa = PBXGroup;
 			children = (
+				C19693E524C70B150054296F /* Get Help Screen */,
 				C19693E024C6E6D70054296F /* About Us Screen */,
 				C19693D924C6D7140054296F /* Helpers */,
 				C19693DD24C6DA5D0054296F /* Edit Profile Screen */,
@@ -160,6 +163,14 @@
 				C19693E324C6FC370054296F /* AboutUsViewController.swift */,
 			);
 			path = "About Us Screen";
+			sourceTree = "<group>";
+		};
+		C19693E524C70B150054296F /* Get Help Screen */ = {
+			isa = PBXGroup;
+			children = (
+				C19693E624C70B270054296F /* GetHelpViewController.swift */,
+			);
+			path = "Get Help Screen";
 			sourceTree = "<group>";
 		};
 		E11E9708F4C4490F52D0621F /* Frameworks */ = {
@@ -358,6 +369,7 @@
 				C116347F24C6B3CF00B6C394 /* SceneDelegate.swift in Sources */,
 				C19693E424C6FC370054296F /* AboutUsViewController.swift in Sources */,
 				C19693D524C6CEF40054296F /* Constants.swift in Sources */,
+				C19693E724C70B270054296F /* GetHelpViewController.swift in Sources */,
 				C116349524C6B6E100B6C394 /* R.generated.swift in Sources */,
 				C19693E224C6FA820054296F /* UILabel + Extension.swift in Sources */,
 				C19693DC24C6D93F0054296F /* EmptyViewController.swift in Sources */,
