@@ -22,6 +22,10 @@ class AboutUsViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .green
 
+        setupUI()
+    }
+
+    private func setupUI() {
         let statusBarHeight = (navigationController?.navigationBar.frame.size.height ?? 0.0) + (navigationController?.navigationBar.frame.origin.y ?? 0.0)
 
         // ScrollView

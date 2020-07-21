@@ -1,5 +1,5 @@
 //
-//  GetHelpViewController.swift
+//  SendFeedbackViewController.swift
 //  uchicagonative
 //
 //  Created by Vasiliy Matveev on 21.07.2020.
@@ -9,21 +9,21 @@
 import Cartography
 import UIKit
 
-let firstBlockLabel = UILabel(
-    title: "Thank you for using our app. If you have an issue to report, please contact us via email", numberOfLines: 0
-)
+class SendFeedbackViewController: UIViewController {
+    let scrollView = UIScrollView()
 
-let sendEmailButton = UIButton(titleColor: .black, title: "Send Email")
+    let feedbackLabel = UILabel(
+        title: "Please send us feedback about your Mobile Memory App experience", numberOfLines: 0
+    )
 
-let secondBlcokLabel = UILabel(
-    title: "Read more about our research on our website at AwhVogelLab.com", numberOfLines: 0
-)
+    let feedbackTextField: UITextField = {
+        let tf = UITextField()
+        tf.placeholder = "Leave feedback here"
+        return tf
+    }()
 
-let visitWebsiteButton = UIButton(titleColor: .black, title: "Visit Website")
+    let submitButton = UIButton(titleColor: .black, title: "Submit Feedback")
 
-let scrollView = UIScrollView()
-
-class GetHelpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -44,10 +44,9 @@ class GetHelpViewController: UIViewController {
         // StackView
 
         let stackView = VerticalStackVIew(arrangedSubviews:
-            [firstBlockLabel,
-             sendEmailButton,
-             secondBlcokLabel,
-             visitWebsiteButton], spacing: 12)
+            [feedbackLabel,
+             feedbackTextField,
+             submitButton], spacing: 12)
 
         scrollView.addSubview(stackView)
 

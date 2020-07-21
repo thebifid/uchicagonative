@@ -31,6 +31,7 @@ class MenuScreenViewController: UIViewController {
         editProfileButton.addTarget(self, action: #selector(handleEditProfile), for: .touchUpInside)
         aboutUsButton.addTarget(self, action: #selector(handleAboutUs), for: .touchUpInside)
         getHelpButton.addTarget(self, action: #selector(handleGetHelp), for: .touchUpInside)
+        sendFeedbackButton.addTarget(self, action: #selector(handleSendFeedback), for: .touchUpInside)
 
         logoutButton.addTarget(self, action: #selector(handleLogout), for: .touchUpInside) // last
     }
@@ -62,6 +63,12 @@ class MenuScreenViewController: UIViewController {
     @objc private func handleGetHelp() {
         let dvc = GetHelpViewController()
         dvc.navigationItem.title = "Get Help"
+        navigationController?.pushViewController(dvc, animated: true)
+    }
+
+    @objc private func handleSendFeedback() {
+        let dvc = SendFeedbackViewController()
+        dvc.navigationItem.title = "Send Feedback"
         navigationController?.pushViewController(dvc, animated: true)
     }
 
