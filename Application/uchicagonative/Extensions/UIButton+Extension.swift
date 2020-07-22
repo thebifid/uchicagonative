@@ -15,4 +15,11 @@ extension UIButton {
         setTitle(title, for: .normal)
         titleLabel?.font = .boldSystemFont(ofSize: Constants.fontSize)
     }
+
+    convenience init(titleColor color: UIColor, title: String, font: UIFont) {
+        self.init(type: .system)
+        setTitleColor(color, for: .normal)
+        setTitle(title, for: .normal)
+        titleLabel?.font = font
+    }
 }
