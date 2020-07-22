@@ -25,6 +25,12 @@
 		C19693E724C70B270054296F /* GetHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693E624C70B270054296F /* GetHelpViewController.swift */; };
 		C19693EA24C710AF0054296F /* SendFeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693E924C710AF0054296F /* SendFeedbackViewController.swift */; };
 		C19693ED24C71C250054296F /* TermsOfServiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693EC24C71C250054296F /* TermsOfServiceViewController.swift */; };
+		C19693FB24C833C90054296F /* Helvetica-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C19693F924C832F00054296F /* Helvetica-Medium.ttf */; };
+		C19693FC24C833CC0054296F /* Karla-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C19693F624C832EF0054296F /* Karla-Bold.ttf */; };
+		C19693FD24C833CE0054296F /* Karla-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C19693FA24C832F00054296F /* Karla-BoldItalic.ttf */; };
+		C19693FE24C833D10054296F /* Karla-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C19693F724C832EF0054296F /* Karla-Italic.ttf */; };
+		C19693FF24C833D30054296F /* Karla-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C19693F824C832F00054296F /* Karla-Regular.ttf */; };
+		C196940124C839320054296F /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C196940024C839320054296F /* UITextField+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +56,12 @@
 		C19693E624C70B270054296F /* GetHelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetHelpViewController.swift; sourceTree = "<group>"; };
 		C19693E924C710AF0054296F /* SendFeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFeedbackViewController.swift; sourceTree = "<group>"; };
 		C19693EC24C71C250054296F /* TermsOfServiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfServiceViewController.swift; sourceTree = "<group>"; };
+		C19693F624C832EF0054296F /* Karla-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Karla-Bold.ttf"; sourceTree = "<group>"; };
+		C19693F724C832EF0054296F /* Karla-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Karla-Italic.ttf"; sourceTree = "<group>"; };
+		C19693F824C832F00054296F /* Karla-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Karla-Regular.ttf"; sourceTree = "<group>"; };
+		C19693F924C832F00054296F /* Helvetica-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Helvetica-Medium.ttf"; sourceTree = "<group>"; };
+		C19693FA24C832F00054296F /* Karla-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Karla-BoldItalic.ttf"; sourceTree = "<group>"; };
+		C196940024C839320054296F /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +136,7 @@
 		C116349224C6B3EA00B6C394 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C19693F524C832D40054296F /* Fonts */,
 				C116348524C6B3D000B6C394 /* Assets.xcassets */,
 			);
 			path = Resources;
@@ -142,6 +155,7 @@
 			children = (
 				C19693D624C6D6090054296F /* UIButton+Extension.swift */,
 				C19693E124C6FA820054296F /* UILabel+Extension.swift */,
+				C196940024C839320054296F /* UITextField+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -193,6 +207,18 @@
 				C19693EC24C71C250054296F /* TermsOfServiceViewController.swift */,
 			);
 			path = TermsOfServiceScreen;
+			sourceTree = "<group>";
+		};
+		C19693F524C832D40054296F /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				C19693F924C832F00054296F /* Helvetica-Medium.ttf */,
+				C19693F624C832EF0054296F /* Karla-Bold.ttf */,
+				C19693FA24C832F00054296F /* Karla-BoldItalic.ttf */,
+				C19693F724C832EF0054296F /* Karla-Italic.ttf */,
+				C19693F824C832F00054296F /* Karla-Regular.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		E11E9708F4C4490F52D0621F /* Frameworks */ = {
@@ -277,6 +303,11 @@
 			files = (
 				C116348924C6B3D000B6C394 /* LaunchScreen.storyboard in Resources */,
 				C116348624C6B3D000B6C394 /* Assets.xcassets in Resources */,
+				C19693FE24C833D10054296F /* Karla-Italic.ttf in Resources */,
+				C19693FD24C833CE0054296F /* Karla-BoldItalic.ttf in Resources */,
+				C19693FF24C833D30054296F /* Karla-Regular.ttf in Resources */,
+				C19693FB24C833C90054296F /* Helvetica-Medium.ttf in Resources */,
+				C19693FC24C833CC0054296F /* Karla-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,6 +421,7 @@
 				C116347D24C6B3CF00B6C394 /* AppDelegate.swift in Sources */,
 				C116347F24C6B3CF00B6C394 /* SceneDelegate.swift in Sources */,
 				C19693ED24C71C250054296F /* TermsOfServiceViewController.swift in Sources */,
+				C196940124C839320054296F /* UITextField+Extension.swift in Sources */,
 				C19693EA24C710AF0054296F /* SendFeedbackViewController.swift in Sources */,
 				C19693E424C6FC370054296F /* AboutUsViewController.swift in Sources */,
 				C19693D524C6CEF40054296F /* Constants.swift in Sources */,

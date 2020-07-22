@@ -9,7 +9,7 @@
 import UIKit
 
 struct Constants {
-    static let appBackgroundColor = #colorLiteral(red: 0.9866276383, green: 1, blue: 0.7717416286, alpha: 1)
+    static let appBackgroundColor = UIColor.white
     static let fontSize: CGFloat = 24
-    static let defaultInsets: CGFloat = 20
+    static let defaultInsets: CGFloat = 20 // will delete
 }
