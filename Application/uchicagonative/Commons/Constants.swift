@@ -11,5 +11,8 @@ import UIKit
 struct Constants {
     static let appBackgroundColor = UIColor.white
     static let fontSize: CGFloat = 24
-    static let defaultInsets: CGFloat = 20 // will delete
+    static let defaultInsets: CGFloat = 20
+    static var deviseHeight: CGFloat {
+        UIScreen.main.bounds.height
+    }
 }

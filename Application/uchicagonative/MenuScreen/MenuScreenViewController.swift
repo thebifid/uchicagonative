@@ -7,6 +7,7 @@
 //
 
 import Cartography
+import FirebaseAuth
 import UIKit
 
 class MenuScreenViewController: UIViewController {
@@ -87,7 +88,12 @@ class MenuScreenViewController: UIViewController {
     // MARK: - Logout action
 
     @objc private func handleLogout() {
-        dismiss(animated: true, completion: nil)
+        do {
+            try FirebaseAuth.Auth.auth().signOut()
+            dismiss(animated: true, completion: nil)
+        } catch let logOutError {
+            print("error", logOutError.localizedDescription)
+        }
     }
 
     private func setupUI() {
