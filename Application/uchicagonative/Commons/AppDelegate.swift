@@ -33,3 +33,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
 }
+
+extension AppDelegate {
+    static var shared: AppDelegate {
+        return UIApplication.shared.delegate as! AppDelegate
+    }
+
+    var rootViewController: RootViewController {
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        return windowScene!.windows.first!.rootViewController as! RootViewController
+    }
+}

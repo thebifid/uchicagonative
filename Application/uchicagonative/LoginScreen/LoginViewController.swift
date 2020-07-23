@@ -68,13 +68,29 @@ class LoginViewController: UIViewController {
         // signUpButton.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
 
         // scrollView will scrollUp if devices heigh is small like iphone 8 and smaller
-        if Constants.deviseHeight < 700 {
-            NotificationCenter.default.addObserver(self, selector: #selector(LoginViewController.keyboardWillShow),
-                                                   name: UIResponder.keyboardWillShowNotification, object: nil)
-        }
+
+        registerKeyBoardNotifications()
 
         emailTextiField.addTarget(self, action: #selector(isValidEmail), for: .editingChanged)
         passwordTextiField.addTarget(self, action: #selector(isPasswordFieldNotEmpty), for: .editingChanged)
+    }
+
+    private func registerKeyBoardNotifications() {
+        if Constants.deviseHeight < 700 {
+            NotificationCenter.default.addObserver(self, selector: #selector(LoginViewController.keyboardWillShow),
+                                                   name: UIResponder.keyboardWillShowNotification, object: nil)
+
+            NotificationCenter.default.addObserver(self, selector: #selector(LoginViewController.keyboardWillHide),
+                                                   name: UIResponder.keyboardDidHideNotification, object: nil)
+        }
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+
+    @objc func dismissKeyboard() {
+        // Causes the view (or one of its embedded text fields) to resign the first responder status.
+        emailTextiField.resignFirstResponder()
+        passwordTextiField.resignFirstResponder()
     }
 
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -83,7 +99,15 @@ class LoginViewController: UIViewController {
             return
         }
         // move the root view up by the distance of keyboard height
-        view.frame.origin.y = 0 - keyboardSize.height / 3
+        // view.frame.origin.y = 0 - keyboardSize.height / 3
+        scrollView.contentOffset = CGPoint(x: 0, y: keyboardSize.height / 3)
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        // move the root view down
+        UIView.animate(withDuration: 0.2) {
+            self.scrollView.contentOffset = CGPoint.zero
+        }
     }
 
     // check correct email
@@ -130,10 +154,7 @@ class LoginViewController: UIViewController {
 
             } else {
                 // if success - go to mainMenu
-                let msvc = MenuScreenViewController()
-                let navController = UINavigationController(rootViewController: msvc)
-                navController.modalPresentationStyle = .fullScreen
-                self?.present(navController, animated: true, completion: nil)
+                AppDelegate.shared.rootViewController.switchToMainScreen()
             }
         }
     }
