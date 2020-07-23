@@ -14,22 +14,22 @@ class RootViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        addChild(current) // 1
-        current.view.frame = view.bounds // 2
-        view.addSubview(current.view) // 3
-        current.didMove(toParent: self) // 4
+        addChild(current)
+        current.view.frame = view.bounds
+        view.addSubview(current.view)
+        current.didMove(toParent: self)
     }
 
     func showLoginScreen() {
-        let new = UINavigationController(rootViewController: LoginViewController()) // 1
-        addChild(new) // 2
-        new.view.frame = view.bounds // 3
-        view.addSubview(new.view) // 4
-        new.didMove(toParent: self) // 5
-        current.willMove(toParent: nil) // 6
-        current.view.removeFromSuperview() // 7
-        current.removeFromParent() // 8
-        current = new // 9
+        let new = EmptyViewController()
+        addChild(new)
+        new.view.frame = view.bounds
+        view.addSubview(new.view)
+        new.didMove(toParent: self)
+        current.willMove(toParent: nil)
+        current.view.removeFromSuperview()
+        current.removeFromParent()
+        current = new
     }
 
     func switchToMainScreen() {
@@ -39,8 +39,7 @@ class RootViewController: UIViewController {
     }
 
     func switchToLogout() {
-        let loginViewController = LoginViewController()
-        let logoutScreen = UINavigationController(rootViewController: loginViewController)
+        let logoutScreen = LoginViewController()
         animateDismissTransition(to: logoutScreen)
     }
 
