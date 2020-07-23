@@ -11,7 +11,6 @@ import FirebaseAuth
 import UIKit
 
 class LoginViewController: UIViewController {
-    // AppLogo or title for login screen
     let scrollView = UIScrollView()
 
     let loginLabel = UILabel(title: "Log In", numberOfLines: 1, font: R.font.helveticaNeueCyrMedium(size: 28)!,
@@ -40,12 +39,14 @@ class LoginViewController: UIViewController {
     let createAccountButton = UIButton(titleColor: R.color.lightRed()!, title: "Not a Member? Create an Account",
                                        font: R.font.karlaBold(size: 20)!)
 
+    // if email have a valid form
     var isEmailValid: Bool = false {
         didSet {
             activateLoginButton()
         }
     }
 
+    // if password is not empty
     var isPasswordNotEmpty: Bool = false {
         didSet {
             activateLoginButton()
@@ -54,8 +55,8 @@ class LoginViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // view.backgroundColor = Constants.appBackgroundColor
-
+        emailTextiField.delegate = self
+        passwordTextiField.delegate = self
         setupUI()
         // setting button actions
         // Login Action
@@ -93,6 +94,7 @@ class LoginViewController: UIViewController {
         isEmailValid = emailPred.evaluate(with: emailTextiField.text) ? true : false
     }
 
+    // check if password is not empty
     @objc private func isPasswordFieldNotEmpty() {
         guard let text = passwordTextiField.text else { return }
         isPasswordNotEmpty = !text.isEmpty ? true : false
@@ -104,6 +106,7 @@ class LoginViewController: UIViewController {
             loginButton.isEnabled = true
             loginButton.backgroundColor = .green
         } else {
+            // disable button if email incorrect or password is empty
             loginButton.isEnabled = false
             loginButton.backgroundColor = R.color.lightGrayCustom()!
         }
@@ -111,23 +114,22 @@ class LoginViewController: UIViewController {
 
     // handle login action
     @objc private func handleLogin() {
-        print("Login button pressed...")
-
-        // trimingcharters / whitespaces and new lines
+        // get text data from emailTF and passwordTF and clearing from any spaces or new lines
         guard let email = emailTextiField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
             let password = passwordTextiField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
-        print("email = \(email) password = \(password)")
 
+        // LogIn FireBase
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] _, error in
 
-            if error != nil {
-                let alertController = UIAlertController(title: "Error", message: "Incorrect Login Or Password", preferredStyle: .alert)
+            // if error - show alert with description
+            if let error = error {
+                let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
                 let alertOkAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
                 alertController.addAction(alertOkAction)
                 self?.present(alertController, animated: true)
 
             } else {
-                print("Success")
+                // if success - go to mainMenu
                 let msvc = MenuScreenViewController()
                 let navController = UINavigationController(rootViewController: msvc)
                 navController.modalPresentationStyle = .fullScreen
@@ -149,6 +151,7 @@ class LoginViewController: UIViewController {
     }
 
     private func setupUI() {
+        // adding components on screen
         view.addSubview(scrollView)
         scrollView.backgroundColor = Constants.appBackgroundColor
 
