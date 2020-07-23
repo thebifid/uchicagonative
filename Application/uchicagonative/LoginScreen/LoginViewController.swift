@@ -173,74 +173,116 @@ class LoginViewController: UIViewController {
 
     private func setupUI() {
         // adding components on screen
+        createAccountButton.titleLabel?.lineBreakMode = .byWordWrapping
         view.addSubview(scrollView)
-        scrollView.backgroundColor = Constants.appBackgroundColor
+        scrollView.backgroundColor = .white
 
-        scrollView.addSubview(loginLabel)
-
-        scrollView.addSubview(emailTextiField)
-        let separatorViewEmail = getSeparator()
-        emailTextiField.addSubview(separatorViewEmail)
-
-        scrollView.addSubview(passwordTextiField)
-        let separatorViewPassword = getSeparator()
-        passwordTextiField.addSubview(separatorViewPassword)
-
-        scrollView.addSubview(loginButton)
-        scrollView.addSubview(forgotPasswordButton)
-
-        scrollView.addSubview(createAccountButton)
-
-        constrain(scrollView, loginLabel, emailTextiField, separatorViewEmail,
-                  passwordTextiField, separatorViewPassword,
-                  loginButton, forgotPasswordButton,
-                  createAccountButton) { scrollView, loginLabel, emailTextiField, separatorViewEmail,
-            passwordTextiField, separatorViewPassword, loginButton, forgotPasswordButton, createAccountButton in
-
-            // scrollView
+        // ScrollView
+        constrain(scrollView) { scrollView in
             scrollView.top == scrollView.superview!.top
-            scrollView.left == scrollView.superview!.left
             scrollView.right == scrollView.superview!.right
+            scrollView.left == scrollView.superview!.left
             scrollView.bottom == scrollView.superview!.bottom
+        }
 
-            // Login Label
+        // Login label constraints
+        scrollView.addSubview(loginLabel)
+        constrain(loginLabel) { loginLabel in
             loginLabel.centerX == loginLabel.superview!.centerX
-            loginLabel.top == loginLabel.superview!.top + 100
+            loginLabel.top == loginLabel.superview!.top + 65
+        }
 
-            // emailTextField with separator
-            emailTextiField.top == loginLabel.bottom + 70
-            emailTextiField.left == emailTextiField.superview!.left + Constants.defaultInsets
-            emailTextiField.right == emailTextiField.superview!.superview!.right - Constants.defaultInsets
-            emailTextiField.height == 30
-            separatorViewEmail.top == emailTextiField.bottom
-            separatorViewEmail.left == emailTextiField.left
-            separatorViewEmail.right == emailTextiField.right
-            separatorViewEmail.height == 2
+        // emailTextFieldView block
+        let emailTextFieldView = getView()
+        scrollView.addSubview(emailTextFieldView)
+        emailTextFieldView.addSubview(emailTextiField)
+        let separatorEmailView = getSeparator()
+        emailTextFieldView.addSubview(separatorEmailView)
 
-            // passwordTextField with separator
-            passwordTextiField.top == emailTextiField.bottom + 50
-            passwordTextiField.left == passwordTextiField.superview!.left + Constants.defaultInsets
-            passwordTextiField.right == passwordTextiField.superview!.superview!.right - Constants.defaultInsets
-            passwordTextiField.height == 30
-            separatorViewPassword.top == passwordTextiField.bottom
-            separatorViewPassword.left == passwordTextiField.left
-            separatorViewPassword.right == passwordTextiField.right
-            separatorViewPassword.height == 2
+        // emailTextFieldView constraints
+        constrain(loginLabel, emailTextFieldView) { loginLabel, emailTextFieldView in
+            emailTextFieldView.height == 30
+            emailTextFieldView.centerX == emailTextFieldView.superview!.centerX
+            emailTextFieldView.width == emailTextFieldView.superview!.width - 2 * Constants.defaultInsets
+            emailTextFieldView.top == loginLabel.bottom + 80
+        }
 
-            // login button
-            loginButton.top == passwordTextiField.bottom + 50
-            loginButton.centerX == loginButton.superview!.centerX
-            loginButton.width == loginButton.superview!.width - 6 * Constants.defaultInsets
+        // email field with separator constraints
+        constrain(emailTextFieldView, emailTextiField, separatorEmailView) { emailTextFieldView, emailTextiField, separatorEmailView in
+            emailTextiField.left == emailTextFieldView.left
+            emailTextiField.right == emailTextFieldView.right
+            separatorEmailView.top == emailTextFieldView.bottom
+            separatorEmailView.left == emailTextFieldView.left
+            separatorEmailView.right == emailTextFieldView.right
+            separatorEmailView.height == 1
+        }
+
+        // passwordTextField block
+        let passwordTextFieldView = getView()
+        scrollView.addSubview(passwordTextFieldView)
+        passwordTextFieldView.addSubview(passwordTextiField)
+        let separatorPasswordView = getSeparator()
+        emailTextFieldView.addSubview(separatorPasswordView)
+
+        // emailTextField view and passwordTextFieldView constraints
+        constrain(emailTextFieldView, passwordTextFieldView) { emailTextFieldView, passwordTextFieldView in
+
+            passwordTextFieldView.height == 30
+            passwordTextFieldView.centerX == passwordTextFieldView.superview!.centerX
+            passwordTextFieldView.width == emailTextFieldView.superview!.width - 2 * Constants.defaultInsets
+            passwordTextFieldView.top == emailTextFieldView.bottom + 40
+        }
+
+        // passwrod field with separator constraints
+        constrain(passwordTextFieldView, passwordTextiField,
+                  separatorPasswordView) { passwordTextFieldView, passwordTextiField, separatorPasswordView in
+
+            passwordTextiField.left == passwordTextFieldView.left
+            passwordTextFieldView.right == passwordTextFieldView.right
+            separatorPasswordView.top == passwordTextiField.bottom
+            separatorPasswordView.left == passwordTextFieldView.left
+            separatorPasswordView.right == passwordTextFieldView.right
+            separatorPasswordView.height == 1
+        }
+
+        // buttonsView block
+        let buttonsView = getView()
+        scrollView.addSubview(buttonsView)
+        buttonsView.addSubview(loginButton)
+        buttonsView.addSubview(forgotPasswordButton)
+        buttonsView.addSubview(createAccountButton)
+
+        // passwordTextField and buttonsView constraints
+        constrain(passwordTextFieldView, buttonsView) { passwordTextFieldView, buttonsView in
+
+            buttonsView.width == buttonsView.superview!.width - 4 * Constants.defaultInsets
+            buttonsView.center == buttonsView.superview!.center
+            buttonsView.top == passwordTextFieldView.bottom + 50
+        }
+
+        // constraints in buttonsView ( loginButton, frogotPasswordButton and createAccountButton )
+        constrain(buttonsView, loginButton,
+                  forgotPasswordButton, createAccountButton) { buttonsView, loginButton, forgotPasswordButton, createAccountButton in
+
+            // login button constraints
+            loginButton.top == buttonsView.top
+            loginButton.width == loginButton.superview!.width
             loginButton.height == 50
 
-            // forgotPasswordButton
-            forgotPasswordButton.top == loginButton.bottom
+            // forgotButton constraints
+            forgotPasswordButton.top == loginButton.bottom + 3
             forgotPasswordButton.centerX == forgotPasswordButton.superview!.centerX
 
-            // createAccountLabel
-            createAccountButton.top == forgotPasswordButton.bottom + 20
+            // createAccountButton constraints
+            createAccountButton.top == forgotPasswordButton.bottom + 10
             createAccountButton.centerX == createAccountButton.superview!.centerX
+            createAccountButton.width == loginButton.width
         }
+    }
+
+    private func getView() -> UIView {
+        let view = UIView()
+        return view
     }
 
     // generate separatorView
