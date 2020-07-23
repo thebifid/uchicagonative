@@ -22,16 +22,7 @@ class LoginViewController: UIViewController {
     let passwordTextiField = UITextField(placeholder: "password",
                                          borderStyle: .none, font: R.font.karlaRegular(size: 22)!, isSecureTextEntry: true)
 
-    let loginButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Log In", for: .normal)
-        button.titleLabel?.font = R.font.karlaBold(size: 18)
-        button.setTitleColor(.white, for: .normal)
-        button.layer.cornerRadius = 24
-        button.backgroundColor = R.color.lightGrayCustom()!
-        button.isEnabled = false
-        return button
-    }()
+    var loginButton: UIButton!
 
     let forgotPasswordButton = UIButton(titleColor: R.color.lightRed()!, title: "Forgot Password?", font: R.font.karlaBold(size: 20)!)
 
@@ -171,6 +162,13 @@ class LoginViewController: UIViewController {
     }
 
     private func setupUI() {
+        // MARK: - Login Button
+
+        // uielements Helper
+        let uiHelper: UIElements = UIElements()
+
+        loginButton = uiHelper.getRoundedButton(withTitle: "Log In", fontSize: 18)
+
         // adding components on screen
         view.addSubview(scrollView)
         scrollView.backgroundColor = .white
@@ -190,74 +188,25 @@ class LoginViewController: UIViewController {
             loginLabel.top == loginLabel.superview!.top + 100
         }
 
-        // emailTextFieldView block
-        let emailTextFieldView = getView()
-        scrollView.addSubview(emailTextFieldView)
-        emailTextFieldView.addSubview(emailTextiField)
-        let separatorEmailView = getSeparator()
-        emailTextFieldView.addSubview(separatorEmailView)
-
-        // emailTextFieldView constraints
-        constrain(loginLabel, emailTextFieldView) { loginLabel, emailTextFieldView in
-            emailTextFieldView.height == 30
-            emailTextFieldView.centerX == emailTextFieldView.superview!.centerX
-            emailTextFieldView.width == emailTextFieldView.superview!.width - 2 * Constants.defaultInsets
-            emailTextFieldView.top == loginLabel.bottom + 80
-        }
-
-        // email field with separator constraints
-        constrain(emailTextFieldView, emailTextiField, separatorEmailView) { emailTextFieldView, emailTextiField, separatorEmailView in
-            emailTextiField.left == emailTextFieldView.left
-            emailTextiField.right == emailTextFieldView.right
-            emailTextiField.height == 30
-            separatorEmailView.top == emailTextFieldView.bottom
-            separatorEmailView.left == emailTextFieldView.left
-            separatorEmailView.right == emailTextFieldView.right
-            separatorEmailView.height == 1
-        }
-
-        // passwordTextField block
-        let passwordTextFieldView = getView()
-        scrollView.addSubview(passwordTextFieldView)
-        passwordTextFieldView.addSubview(passwordTextiField)
-        let separatorPasswordView = getSeparator()
-        emailTextFieldView.addSubview(separatorPasswordView)
-
-        // emailTextField view and passwordTextFieldView constraints
-        constrain(emailTextFieldView, passwordTextFieldView) { emailTextFieldView, passwordTextFieldView in
-
-            passwordTextFieldView.height == 30
-            passwordTextFieldView.centerX == passwordTextFieldView.superview!.centerX
-            passwordTextFieldView.width == emailTextFieldView.superview!.width - 2 * Constants.defaultInsets
-            passwordTextFieldView.top == emailTextFieldView.bottom + 40
-        }
-
-        // passwrod field with separator constraints
-        constrain(passwordTextFieldView, passwordTextiField,
-                  separatorPasswordView) { passwordTextFieldView, passwordTextiField, separatorPasswordView in
-
-            passwordTextiField.left == passwordTextFieldView.left
-            passwordTextiField.right == passwordTextFieldView.right
-            passwordTextiField.height == 30
-            separatorPasswordView.top == passwordTextiField.bottom
-            separatorPasswordView.left == passwordTextFieldView.left
-            separatorPasswordView.right == passwordTextFieldView.right
-            separatorPasswordView.height == 1
-        }
+        // emailTextField
+        uiHelper.getTFBlock(addTo: scrollView, textField: emailTextiField, topView: loginLabel, yOffset: 80)
+        // passwordTextField
+        uiHelper.getTFBlock(addTo: scrollView, textField: passwordTextiField, topView: emailTextiField, yOffset: 30)
 
         // buttonsView block
-        let buttonsView = getView()
+        let buttonsView = uiHelper.getView()
         scrollView.addSubview(buttonsView)
+
         buttonsView.addSubview(loginButton)
         buttonsView.addSubview(forgotPasswordButton)
         buttonsView.addSubview(createAccountButton)
 
         // passwordTextField and buttonsView constraints
-        constrain(passwordTextFieldView, buttonsView) { passwordTextFieldView, buttonsView in
+        constrain(passwordTextiField, buttonsView) { passwordTextiField, buttonsView in
 
             buttonsView.width == buttonsView.superview!.width - 4 * Constants.defaultInsets
             buttonsView.centerX == buttonsView.superview!.centerX
-            buttonsView.top == passwordTextFieldView.bottom + 50
+            buttonsView.top == passwordTextiField.bottom + 50
         }
 
         // constraints in buttonsView ( loginButton, frogotPasswordButton and createAccountButton )
@@ -280,17 +229,5 @@ class LoginViewController: UIViewController {
 
             buttonsView.bottom == createAccountButton.bottom
         }
-    }
-
-    private func getView() -> UIView {
-        let view = UIView()
-        return view
-    }
-
-    // generate separatorView
-    private func getSeparator() -> UIView {
-        let view = UIView()
-        view.backgroundColor = UIColor(white: 0.3, alpha: 0.3)
-        return view
     }
 }
