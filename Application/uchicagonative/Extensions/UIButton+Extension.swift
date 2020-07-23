@@ -16,10 +16,11 @@ extension UIButton {
         titleLabel?.font = .boldSystemFont(ofSize: Constants.fontSize)
     }
 
-    convenience init(titleColor color: UIColor, title: String, font: UIFont) {
+    convenience init(titleColor color: UIColor, title: String, font: UIFont, breakMode: NSLineBreakMode = .byTruncatingTail) {
         self.init(type: .system)
         setTitleColor(color, for: .normal)
         setTitle(title, for: .normal)
         titleLabel?.font = font
+        titleLabel?.lineBreakMode = breakMode
     }
 }

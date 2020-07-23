@@ -24,7 +24,6 @@ class LoginViewController: UIViewController {
 
     let loginButton: UIButton = {
         let button = UIButton(type: .system)
-        button.backgroundColor = .blue
         button.setTitle("Log In", for: .normal)
         button.titleLabel?.font = R.font.karlaBold(size: 18)
         button.setTitleColor(.white, for: .normal)
@@ -37,7 +36,7 @@ class LoginViewController: UIViewController {
     let forgotPasswordButton = UIButton(titleColor: R.color.lightRed()!, title: "Forgot Password?", font: R.font.karlaBold(size: 20)!)
 
     let createAccountButton = UIButton(titleColor: R.color.lightRed()!, title: "Not a Member? Create an Account",
-                                       font: R.font.karlaBold(size: 20)!)
+                                       font: R.font.karlaBold(size: 20)!, breakMode: .byWordWrapping)
 
     // if email have a valid form
     var isEmailValid: Bool = false {
@@ -173,7 +172,6 @@ class LoginViewController: UIViewController {
 
     private func setupUI() {
         // adding components on screen
-        createAccountButton.titleLabel?.lineBreakMode = .byWordWrapping
         view.addSubview(scrollView)
         scrollView.backgroundColor = .white
 
@@ -189,7 +187,7 @@ class LoginViewController: UIViewController {
         scrollView.addSubview(loginLabel)
         constrain(loginLabel) { loginLabel in
             loginLabel.centerX == loginLabel.superview!.centerX
-            loginLabel.top == loginLabel.superview!.top + 65
+            loginLabel.top == loginLabel.superview!.top + 100
         }
 
         // emailTextFieldView block
@@ -211,6 +209,7 @@ class LoginViewController: UIViewController {
         constrain(emailTextFieldView, emailTextiField, separatorEmailView) { emailTextFieldView, emailTextiField, separatorEmailView in
             emailTextiField.left == emailTextFieldView.left
             emailTextiField.right == emailTextFieldView.right
+            emailTextiField.height == 30
             separatorEmailView.top == emailTextFieldView.bottom
             separatorEmailView.left == emailTextFieldView.left
             separatorEmailView.right == emailTextFieldView.right
@@ -238,7 +237,8 @@ class LoginViewController: UIViewController {
                   separatorPasswordView) { passwordTextFieldView, passwordTextiField, separatorPasswordView in
 
             passwordTextiField.left == passwordTextFieldView.left
-            passwordTextFieldView.right == passwordTextFieldView.right
+            passwordTextiField.right == passwordTextFieldView.right
+            passwordTextiField.height == 30
             separatorPasswordView.top == passwordTextiField.bottom
             separatorPasswordView.left == passwordTextFieldView.left
             separatorPasswordView.right == passwordTextFieldView.right
@@ -256,7 +256,7 @@ class LoginViewController: UIViewController {
         constrain(passwordTextFieldView, buttonsView) { passwordTextFieldView, buttonsView in
 
             buttonsView.width == buttonsView.superview!.width - 4 * Constants.defaultInsets
-            buttonsView.center == buttonsView.superview!.center
+            buttonsView.centerX == buttonsView.superview!.centerX
             buttonsView.top == passwordTextFieldView.bottom + 50
         }
 
@@ -277,6 +277,8 @@ class LoginViewController: UIViewController {
             createAccountButton.top == forgotPasswordButton.bottom + 10
             createAccountButton.centerX == createAccountButton.superview!.centerX
             createAccountButton.width == loginButton.width
+
+            buttonsView.bottom == createAccountButton.bottom
         }
     }
 
