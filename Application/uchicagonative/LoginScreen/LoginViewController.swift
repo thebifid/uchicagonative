@@ -65,6 +65,7 @@ class LoginViewController: UIViewController {
         passwordTextiField.addTarget(self, action: #selector(isPasswordFieldNotEmpty), for: .editingChanged)
     }
 
+    // observers for show and hide keyboard
     private func registerKeyBoardNotifications() {
         if Constants.deviseHeight < 700 {
             NotificationCenter.default.addObserver(self, selector: #selector(LoginViewController.keyboardWillShow),
@@ -89,7 +90,6 @@ class LoginViewController: UIViewController {
             return
         }
         // move the root view up by the distance of keyboard height
-        // view.frame.origin.y = 0 - keyboardSize.height / 3
         scrollView.contentOffset = CGPoint(x: 0, y: keyboardSize.height / 3)
     }
 
@@ -167,19 +167,14 @@ class LoginViewController: UIViewController {
         // uielements Helper
         let uiHelper: UIElements = UIElements()
 
-        loginButton = uiHelper.getRoundedButton(withTitle: "Log In", fontSize: 18)
+        loginButton = uiHelper.getRoundedButton(withTitle: "Log In", fontSize: 18, isEnabled: false)
 
         // adding components on screen
         view.addSubview(scrollView)
         scrollView.backgroundColor = .white
 
         // ScrollView
-        constrain(scrollView) { scrollView in
-            scrollView.top == scrollView.superview!.top
-            scrollView.right == scrollView.superview!.right
-            scrollView.left == scrollView.superview!.left
-            scrollView.bottom == scrollView.superview!.bottom
-        }
+        scrollView.fillsuperView(view: scrollView)
 
         // Login label constraints
         scrollView.addSubview(loginLabel)

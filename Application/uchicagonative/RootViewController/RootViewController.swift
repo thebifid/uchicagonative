@@ -69,7 +69,7 @@ class RootViewController: UIViewController {
             self.current.removeFromParent()
             new.didMove(toParent: self)
             self.current = new
-            completion?() // 1
+            completion?()
         }
     }
 
