@@ -21,6 +21,7 @@
 		C1713C9124C999D1002D0E04 /* UIElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713C9024C999D1002D0E04 /* UIElements.swift */; };
 		C1713C9324C99D3D002D0E04 /* UIView+ExtensionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713C9224C99D3D002D0E04 /* UIView+ExtensionLayout.swift */; };
 		C1713C9524CA88C4002D0E04 /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713C9424CA88C4002D0E04 /* PrimaryButton.swift */; };
+		C1713C9724CA8F10002D0E04 /* CustomTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713C9624CA8F10002D0E04 /* CustomTextFieldView.swift */; };
 		C19693D024C6C61A0054296F /* VerticalStackVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693CF24C6C61A0054296F /* VerticalStackVIew.swift */; };
 		C19693D324C6CE0E0054296F /* MenuScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693D224C6CE0E0054296F /* MenuScreenViewController.swift */; };
 		C19693D524C6CEF40054296F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693D424C6CEF40054296F /* Constants.swift */; };
@@ -59,6 +60,7 @@
 		C1713C9024C999D1002D0E04 /* UIElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIElements.swift; sourceTree = "<group>"; };
 		C1713C9224C99D3D002D0E04 /* UIView+ExtensionLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ExtensionLayout.swift"; sourceTree = "<group>"; };
 		C1713C9424CA88C4002D0E04 /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
+		C1713C9624CA8F10002D0E04 /* CustomTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFieldView.swift; sourceTree = "<group>"; };
 		C19693CF24C6C61A0054296F /* VerticalStackVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalStackVIew.swift; sourceTree = "<group>"; };
 		C19693D224C6CE0E0054296F /* MenuScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScreenViewController.swift; sourceTree = "<group>"; };
 		C19693D424C6CEF40054296F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 				C19693DB24C6D93F0054296F /* EmptyViewController.swift */,
 				C1713C9024C999D1002D0E04 /* UIElements.swift */,
 				C1713C9424CA88C4002D0E04 /* PrimaryButton.swift */,
+				C1713C9624CA8F10002D0E04 /* CustomTextFieldView.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -458,6 +461,7 @@
 				C116348124C6B3CF00B6C394 /* LoginViewController.swift in Sources */,
 				C1713C8B24C94B23002D0E04 /* RootViewController.swift in Sources */,
 				C116347D24C6B3CF00B6C394 /* AppDelegate.swift in Sources */,
+				C1713C9724CA8F10002D0E04 /* CustomTextFieldView.swift in Sources */,
 				C1713C8824C9473E002D0E04 /* LoginViewController+UITextFieldDelegate.swift in Sources */,
 				C116347F24C6B3CF00B6C394 /* SceneDelegate.swift in Sources */,
 				C19693ED24C71C250054296F /* TermsOfServiceViewController.swift in Sources */,

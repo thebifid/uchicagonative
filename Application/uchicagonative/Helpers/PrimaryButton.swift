@@ -28,20 +28,3 @@ class PrimaryButton: UIButton {
         self.isEnabled = isEnabled
     }
 }
-
-// width
-// buttonsView.superview!.width - 4 * Constants.defaultInsets
-
-// func getRoundedButton(withTitle title: String,
-//                      fontSize: CGFloat,
-//                      backGroundColor color: UIColor = R.color.lightGrayCustom()!,
-//                      isEnabled: Bool = true) -> UIButton {
-//    let button = UIButton(type: .system)
-//    button.setTitle(title, for: .normal)
-//    button.titleLabel?.font = R.font.karlaBold(size: fontSize)
-//    button.setTitleColor(.white, for: .normal)
-//    button.layer.cornerRadius = 24
-//    button.backgroundColor = color
-//    button.isEnabled = isEnabled
-//    return button
-// }
