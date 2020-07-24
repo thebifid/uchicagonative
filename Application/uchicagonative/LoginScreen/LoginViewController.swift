@@ -43,6 +43,8 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupTextFieldsHandlers()
+
         setupUI()
         // setting button actions
         // Login Action
@@ -51,14 +53,20 @@ class LoginViewController: UIViewController {
         // Forgot password action
         forgotPasswordButton.addTarget(self, action: #selector(handleForgotPassword), for: .touchUpInside)
 
-        // signUpButton.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
-
         // scrollView will scrollUp if devices heigh is small like iphone 8 and smaller
-
         registerKeyBoardNotifications()
+    }
 
-        // emailTextiField.addTarget(self, action: #selector(isValidEmail), for: .editingChanged)
-        // passwordTextiField.addTarget(self, action: #selector(isPasswordFieldNotEmpty), for: .editingChanged)
+    private func setupTextFieldsHandlers() {
+        let didEmailChange: ((String) -> Void) = { [weak self] text in
+            self?.isValidEmailCheck(text: text)
+        }
+        emailTextFieldView.didChangeText = didEmailChange
+
+        let didPasswordChange: ((String) -> Void) = { [weak self] text in
+            self?.isPasswordFieldNotEmptyCheck(text: text)
+        }
+        passwordTextFieldView.didChangeText = didPasswordChange
     }
 
     // observers for show and hide keyboard
@@ -76,6 +84,7 @@ class LoginViewController: UIViewController {
 
     @objc func dismissKeyboard() {
         // Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
     }
 
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -94,8 +103,8 @@ class LoginViewController: UIViewController {
         }
     }
 
-    // check correct email
-    private func isValidEmail(text: String) {
+    // check if email correct
+    private func isValidEmailCheck(text: String) {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
 
         let emailPred = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
@@ -103,7 +112,7 @@ class LoginViewController: UIViewController {
     }
 
     // check if password is not empty
-    private func isPasswordFieldNotEmpty(text: String) {
+    private func isPasswordFieldNotEmptyCheck(text: String) {
         isPasswordNotEmpty = !text.isEmpty ? true : false
     }
 
@@ -165,7 +174,7 @@ class LoginViewController: UIViewController {
         scrollView.backgroundColor = .white
 
         // ScrollView
-        scrollView.fillsuperView(view: scrollView)
+        scrollView.fillsuperView()
 
         // Login label constraints
         scrollView.addSubview(loginLabel)
@@ -174,36 +183,25 @@ class LoginViewController: UIViewController {
             loginLabel.top == loginLabel.superview!.top + 100
         }
 
-        // emailTextField
-
-        let didEmailChange: ((String) -> Void) = { [weak self] text in
-            self?.isValidEmail(text: text)
-        }
-        emailTextFieldView.didChangeText = didEmailChange
-
+        // emailTextFieldView
         emailTextFieldView.configure(placeholder: "email",
                                      spellCheck: .no)
-        view.addSubview(emailTextFieldView)
+        scrollView.addSubview(emailTextFieldView)
         constrain(loginLabel, emailTextFieldView) { loginLabel, emailTextFieldView in
             emailTextFieldView.top == loginLabel.bottom + 30
-            emailTextFieldView.left == emailTextFieldView.superview!.left + Constants.defaultInsets
-            emailTextFieldView.right == emailTextFieldView.superview!.right - Constants.defaultInsets
+            emailTextFieldView.left == emailTextFieldView.superview!.superview!.left + Constants.defaultInsets
+            emailTextFieldView.right == emailTextFieldView.superview!.superview!.right - Constants.defaultInsets
             emailTextFieldView.height == 30
         }
 
-        // passwordTextField
-
-        let didPasswordChange: ((String) -> Void) = { [weak self] text in
-            self?.isPasswordFieldNotEmpty(text: text)
-        }
-        passwordTextFieldView.didChangeText = didPasswordChange
+        // passwordTextFieldView
         passwordTextFieldView.configure(placeholder: "password",
                                         isSecureTextEntry: true)
-        view.addSubview(passwordTextFieldView)
+        scrollView.addSubview(passwordTextFieldView)
         constrain(emailTextFieldView, passwordTextFieldView) { emailTextFieldView, passwordTextFieldView in
             passwordTextFieldView.top == emailTextFieldView.bottom + 30
-            passwordTextFieldView.left == passwordTextFieldView.superview!.left + Constants.defaultInsets
-            passwordTextFieldView.right == passwordTextFieldView.superview!.right - Constants.defaultInsets
+            passwordTextFieldView.left == passwordTextFieldView.superview!.superview!.left + Constants.defaultInsets
+            passwordTextFieldView.right == passwordTextFieldView.superview!.superview!.right - Constants.defaultInsets
             passwordTextFieldView.height == 30
         }
 
