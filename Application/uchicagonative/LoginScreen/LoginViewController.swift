@@ -11,6 +11,7 @@ import FirebaseAuth
 import UIKit
 
 class LoginViewController: UIViewController {
+    var viewModel: LoginViewModel?
     private let scrollView = UIScrollView()
 
     private let loginLabel = UILabel(title: "Log In", numberOfLines: 1, font: R.font.helveticaNeueCyrMedium(size: 28)!,

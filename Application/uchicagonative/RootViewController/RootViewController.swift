@@ -40,6 +40,7 @@ class RootViewController: UIViewController {
 
     func switchToLogout() {
         let logoutScreen = LoginViewController()
+        logoutScreen.viewModel = LoginViewModel()
         animateDismissTransition(to: logoutScreen)
     }
 
