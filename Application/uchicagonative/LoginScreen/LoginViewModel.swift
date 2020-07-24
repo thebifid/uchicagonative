@@ -13,6 +13,7 @@ class LoginViewModel {
     private var email: String?
     private var password: String?
     var didUpdateState: (() -> Void)?
+    var isLoggingState: (() -> Void)?
 
     func setEmail(_ email: String) {
         self.email = email
@@ -32,7 +33,7 @@ class LoginViewModel {
         // get text data from emailTF and passwordTF and clearing from any spaces or new lines
         guard let email = email?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
         guard let password = password?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
-
+        isLoggingState?()
         // LogIn FireBase
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] _, error in
             if error == nil {
@@ -42,6 +43,7 @@ class LoginViewModel {
                 self?.didUpdateState?()
                 completion(.failure(error!))
             }
+            self?.isLoggingState?()
         }
     }
 

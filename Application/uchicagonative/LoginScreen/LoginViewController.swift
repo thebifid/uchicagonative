@@ -31,6 +31,13 @@ class LoginViewController: UIViewController {
 
     private let keyboardObserver = KeyboardNotificationsObserver()
 
+    private let activityIndicator: UIActivityIndicatorView = {
+        let ai = UIActivityIndicatorView()
+        ai.hidesWhenStopped = true
+        ai.color = .black
+        return ai
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -40,6 +47,20 @@ class LoginViewController: UIViewController {
             self.loginButton.backgroundColor = isEnabled ? .green : R.color.lightGrayCustom()
         }
         viewModel.didUpdateState = didUpdateHandler
+
+        // state of button when logging
+        let isLoggingHandler = {
+            if self.activityIndicator.isAnimating {
+                self.loginButton.isEnabled = true
+                self.loginButton.backgroundColor = .green
+                self.activityIndicator.stopAnimating()
+            } else {
+                self.loginButton.isEnabled = false
+                self.loginButton.backgroundColor = R.color.lightGrayCustom()
+                self.activityIndicator.startAnimating()
+            }
+        }
+        viewModel.isLoggingState = isLoggingHandler
 
         setupTextFieldsHandlers()
 
@@ -88,14 +109,12 @@ class LoginViewController: UIViewController {
 
     // handle login action
     @objc private func handleLogin() {
-        loginButton.isEnabled = false
         viewModel.login { [weak self] result in
             switch result {
             case .success:
                 AppDelegate.shared.rootViewController.switchToMainScreen()
             case let .failure(error):
                 self?.showAlert(withError: error)
-                self?.loginButton.isEnabled = true
             }
         }
     }
@@ -129,8 +148,6 @@ class LoginViewController: UIViewController {
         // adding components on screen
         view.addSubview(scrollView)
         scrollView.backgroundColor = .white
-
-        // ScrollView
         scrollView.fillsuperView()
 
         // Login label constraints
@@ -197,6 +214,11 @@ class LoginViewController: UIViewController {
             createAccountButton.width == loginButton.width
 
             buttonsView.bottom == createAccountButton.bottom
+        }
+
+        loginButton.addSubview(activityIndicator)
+        constrain(loginButton, activityIndicator) { loginButton, activityIndicator in
+            activityIndicator.center == loginButton.center
         }
     }
 }

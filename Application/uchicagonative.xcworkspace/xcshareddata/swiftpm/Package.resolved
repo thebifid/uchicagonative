@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "KeyboardNotificationsObserver",
+        "repositoryURL": "https://github.com/zummenix/KeyboardNotificationsObserver.git",
+        "state": {
+          "branch": null,
+          "revision": "d825a8394bfdd31d337da4c4b328e96a01603b2c",
+          "version": "1.0.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
