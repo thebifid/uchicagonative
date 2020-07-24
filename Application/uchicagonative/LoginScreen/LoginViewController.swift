@@ -11,7 +11,7 @@ import FirebaseAuth
 import UIKit
 
 class LoginViewController: UIViewController {
-    var viewModel: LoginViewModel?
+    var viewModel: LoginViewModel!
     private let scrollView = UIScrollView()
 
     private let loginLabel = UILabel(title: "Log In", numberOfLines: 1, font: R.font.helveticaNeueCyrMedium(size: 28)!,
@@ -28,22 +28,15 @@ class LoginViewController: UIViewController {
     private let createAccountButton = UIButton(titleColor: R.color.lightRed()!, title: "Not a Member? Create an Account",
                                                font: R.font.karlaBold(size: 20)!, breakMode: .byWordWrapping)
 
-    // if email have a valid form
-    private var isEmailValid: Bool = false {
-        didSet {
-            activateLoginButton()
-        }
-    }
-
-    // if password is not empty
-    private var isPasswordNotEmpty: Bool = false {
-        didSet {
-            activateLoginButton()
-        }
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        let didUpdateHandler = {
+            let isEnabled = self.viewModel.isLoginButtonEnabled()
+            self.loginButton.isEnabled = isEnabled
+            self.loginButton.backgroundColor = isEnabled ? .green : R.color.lightGrayCustom()
+        }
+        viewModel.didUpdateState = didUpdateHandler
 
         setupTextFieldsHandlers()
 
@@ -60,13 +53,13 @@ class LoginViewController: UIViewController {
     }
 
     private func setupTextFieldsHandlers() {
-        let didEmailChange: ((String) -> Void) = { [weak self] text in
-            self?.isValidEmailCheck(text: text)
+        let didEmailChange: ((String) -> Void) = { [weak self] email in
+            self?.viewModel?.setEmail(email)
         }
         emailTextFieldView.didChangeText = didEmailChange
 
-        let didPasswordChange: ((String) -> Void) = { [weak self] text in
-            self?.isPasswordFieldNotEmptyCheck(text: text)
+        let didPasswordChange: ((String) -> Void) = { [weak self] password in
+            self?.viewModel?.setPassword(password)
         }
         passwordTextFieldView.didChangeText = didPasswordChange
     }
@@ -105,49 +98,16 @@ class LoginViewController: UIViewController {
         }
     }
 
-    // check if email correct
-    private func isValidEmailCheck(text: String) {
-        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-
-        let emailPred = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
-        isEmailValid = emailPred.evaluate(with: text) ? true : false
-    }
-
-    // check if password is not empty
-    private func isPasswordFieldNotEmptyCheck(text: String) {
-        isPasswordNotEmpty = !text.isEmpty ? true : false
-    }
-
-    // activate button if email and password are correct
-    private func activateLoginButton() {
-        if isEmailValid, isPasswordNotEmpty {
-            loginButton.isEnabled = true
-            loginButton.backgroundColor = .green
-        } else {
-            // disable button if email incorrect or password is empty
-            loginButton.isEnabled = false
-            loginButton.backgroundColor = R.color.lightGrayCustom()!
-        }
-    }
-
     // handle login action
     @objc private func handleLogin() {
-        // get text data from emailTF and passwordTF and clearing from any spaces or new lines
-        let email = emailTextFieldView.text.trimmingCharacters(in: .whitespacesAndNewlines)
-        let password = passwordTextFieldView.text.trimmingCharacters(in: .whitespacesAndNewlines)
-
-        // LogIn FireBase
-        Auth.auth().signIn(withEmail: email, password: password) { [weak self] _, error in
-
-            if let error = error {
-                let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-                let alertOkAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                alertController.addAction(alertOkAction)
-                self?.present(alertController, animated: true)
-
-            } else {
-                // if success - go to mainMenu
+        loginButton.isEnabled = false
+        viewModel.login { [weak self] result in
+            switch result {
+            case .success:
                 AppDelegate.shared.rootViewController.switchToMainScreen()
+            case let .failure(error):
+                print(error.localizedDescription)
+                self?.loginButton.isEnabled = true
             }
         }
     }
