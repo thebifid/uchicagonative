@@ -11,30 +11,31 @@ import FirebaseAuth
 import UIKit
 
 class LoginViewController: UIViewController {
-    let scrollView = UIScrollView()
+    private let scrollView = UIScrollView()
 
-    let loginLabel = UILabel(title: "Log In", numberOfLines: 1, font: R.font.helveticaNeueCyrMedium(size: 28)!,
-                             color: R.color.lightBlack()!)
+    private let loginLabel = UILabel(title: "Log In", numberOfLines: 1, font: R.font.helveticaNeueCyrMedium(size: 28)!,
+                                     color: R.color.lightBlack()!)
 
-    let emailTextFieldView = CustomTextFieldView()
-    let passwordTextFieldView = CustomTextFieldView()
+    private let emailTextFieldView = CustomTextFieldView()
+    private let passwordTextFieldView = CustomTextFieldView()
 
-    var loginButton = PrimaryButton()
+    private var loginButton = PrimaryButton()
 
-    let forgotPasswordButton = UIButton(titleColor: R.color.lightRed()!, title: "Forgot Password?", font: R.font.karlaBold(size: 20)!)
+    private let forgotPasswordButton = UIButton(titleColor: R.color.lightRed()!,
+                                                title: "Forgot Password?", font: R.font.karlaBold(size: 20)!)
 
-    let createAccountButton = UIButton(titleColor: R.color.lightRed()!, title: "Not a Member? Create an Account",
-                                       font: R.font.karlaBold(size: 20)!, breakMode: .byWordWrapping)
+    private let createAccountButton = UIButton(titleColor: R.color.lightRed()!, title: "Not a Member? Create an Account",
+                                               font: R.font.karlaBold(size: 20)!, breakMode: .byWordWrapping)
 
     // if email have a valid form
-    var isEmailValid: Bool = false {
+    private var isEmailValid: Bool = false {
         didSet {
             activateLoginButton()
         }
     }
 
     // if password is not empty
-    var isPasswordNotEmpty: Bool = false {
+    private var isPasswordNotEmpty: Bool = false {
         didSet {
             activateLoginButton()
         }
@@ -82,12 +83,12 @@ class LoginViewController: UIViewController {
         view.addGestureRecognizer(tap)
     }
 
-    @objc func dismissKeyboard() {
+    @objc private func dismissKeyboard() {
         // Causes the view (or one of its embedded text fields) to resign the first responder status.
         view.endEditing(true)
     }
 
-    @objc func keyboardWillShow(notification: NSNotification) {
+    @objc private func keyboardWillShow(notification: NSNotification) {
         guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
             // if keyboard size is not available for some reason, dont do anything
             return
@@ -96,7 +97,7 @@ class LoginViewController: UIViewController {
         scrollView.contentOffset = CGPoint(x: 0, y: keyboardSize.height / 3)
     }
 
-    @objc func keyboardWillHide(notification: NSNotification) {
+    @objc private func keyboardWillHide(notification: NSNotification) {
         // move the root view down
         UIView.animate(withDuration: 0.2) {
             self.scrollView.contentOffset = CGPoint.zero
