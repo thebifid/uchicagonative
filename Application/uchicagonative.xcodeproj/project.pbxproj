@@ -20,6 +20,7 @@
 		C1713C8F24C9529E002D0E04 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713C8E24C9529E002D0E04 /* SplashViewController.swift */; };
 		C1713C9124C999D1002D0E04 /* UIElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713C9024C999D1002D0E04 /* UIElements.swift */; };
 		C1713C9324C99D3D002D0E04 /* UIView+ExtensionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713C9224C99D3D002D0E04 /* UIView+ExtensionLayout.swift */; };
+		C1713C9524CA88C4002D0E04 /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713C9424CA88C4002D0E04 /* PrimaryButton.swift */; };
 		C19693D024C6C61A0054296F /* VerticalStackVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693CF24C6C61A0054296F /* VerticalStackVIew.swift */; };
 		C19693D324C6CE0E0054296F /* MenuScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693D224C6CE0E0054296F /* MenuScreenViewController.swift */; };
 		C19693D524C6CEF40054296F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693D424C6CEF40054296F /* Constants.swift */; };
@@ -57,6 +58,7 @@
 		C1713C8E24C9529E002D0E04 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		C1713C9024C999D1002D0E04 /* UIElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIElements.swift; sourceTree = "<group>"; };
 		C1713C9224C99D3D002D0E04 /* UIView+ExtensionLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ExtensionLayout.swift"; sourceTree = "<group>"; };
+		C1713C9424CA88C4002D0E04 /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
 		C19693CF24C6C61A0054296F /* VerticalStackVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalStackVIew.swift; sourceTree = "<group>"; };
 		C19693D224C6CE0E0054296F /* MenuScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScreenViewController.swift; sourceTree = "<group>"; };
 		C19693D424C6CEF40054296F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 				C19693CF24C6C61A0054296F /* VerticalStackVIew.swift */,
 				C19693DB24C6D93F0054296F /* EmptyViewController.swift */,
 				C1713C9024C999D1002D0E04 /* UIElements.swift */,
+				C1713C9424CA88C4002D0E04 /* PrimaryButton.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -463,6 +466,7 @@
 				C1713C9324C99D3D002D0E04 /* UIView+ExtensionLayout.swift in Sources */,
 				C19693E424C6FC370054296F /* AboutUsViewController.swift in Sources */,
 				C19693D524C6CEF40054296F /* Constants.swift in Sources */,
+				C1713C9524CA88C4002D0E04 /* PrimaryButton.swift in Sources */,
 				C19693E724C70B270054296F /* GetHelpViewController.swift in Sources */,
 				C116349524C6B6E100B6C394 /* R.generated.swift in Sources */,
 				C19693E224C6FA820054296F /* UILabel+Extension.swift in Sources */,

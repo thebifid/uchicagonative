@@ -22,7 +22,7 @@ class LoginViewController: UIViewController {
     let passwordTextiField = UITextField(placeholder: "password",
                                          borderStyle: .none, font: R.font.karlaRegular(size: 22)!, isSecureTextEntry: true)
 
-    var loginButton: UIButton!
+    var loginButton = PrimaryButton()
 
     let forgotPasswordButton = UIButton(titleColor: R.color.lightRed()!, title: "Forgot Password?", font: R.font.karlaBold(size: 20)!)
 
@@ -167,7 +167,11 @@ class LoginViewController: UIViewController {
         // uielements Helper
         let uiHelper: UIElements = UIElements()
 
-        loginButton = uiHelper.getRoundedButton(withTitle: "Log In", fontSize: 18, isEnabled: false)
+        // configure Log In button
+        loginButton.configure(title: "Log In",
+                              font: R.font.karlaBold(size: 18)!,
+                              backgroundColor: R.color.lightGrayCustom()!,
+                              isEnabled: false)
 
         // adding components on screen
         view.addSubview(scrollView)
