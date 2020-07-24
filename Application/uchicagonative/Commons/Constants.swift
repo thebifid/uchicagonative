@@ -9,7 +9,6 @@
 import UIKit
 
 struct Constants {
-    static let appBackgroundColor = UIColor.white
     static let fontSize: CGFloat = 24
     static let defaultInsets: CGFloat = 20
     static let textFieldFontSize: CGFloat = 22

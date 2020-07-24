@@ -13,7 +13,7 @@ class TermsOfServiceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = Constants.appBackgroundColor
+        view.backgroundColor = R.color.appBackgroundColor()!
 
         // WebView on this screen
 

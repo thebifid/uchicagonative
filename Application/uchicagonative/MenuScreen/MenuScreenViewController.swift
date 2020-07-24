@@ -23,7 +23,7 @@ class MenuScreenViewController: UIViewController {
         super.viewDidLoad()
 
         navigationController?.navigationBar.barTintColor = .white
-        view.backgroundColor = Constants.appBackgroundColor
+        view.backgroundColor = R.color.appBackgroundColor()!
 
         setupUI()
 

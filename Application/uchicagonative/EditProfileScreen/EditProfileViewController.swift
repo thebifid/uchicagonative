@@ -49,7 +49,7 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate {
         let statusBarHeight = navBarHeight + navBarFrameY
 
         // ScrollView
-        scrollView.backgroundColor = Constants.appBackgroundColor
+        scrollView.backgroundColor = R.color.appBackgroundColor()!
         scrollView.isScrollEnabled = true
         scrollView.showsVerticalScrollIndicator = false
         scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height - statusBarHeight)
