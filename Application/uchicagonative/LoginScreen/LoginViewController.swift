@@ -8,6 +8,7 @@
 
 import Cartography
 import FirebaseAuth
+import KeyboardNotificationsObserver
 import UIKit
 
 class LoginViewController: UIViewController {
@@ -27,6 +28,8 @@ class LoginViewController: UIViewController {
 
     private let createAccountButton = UIButton(titleColor: R.color.lightRed()!, title: "Not a Member? Create an Account",
                                                font: R.font.karlaBold(size: 20)!, breakMode: .byWordWrapping)
+
+    private let keyboardObserver = KeyboardNotificationsObserver()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,35 +70,20 @@ class LoginViewController: UIViewController {
     // observers for show and hide keyboard
     private func registerKeyBoardNotifications() {
         if Constants.deviseHeight < 700 {
-            NotificationCenter.default.addObserver(self, selector: #selector(LoginViewController.keyboardWillShow),
-                                                   name: UIResponder.keyboardWillShowNotification, object: nil)
+            keyboardObserver.onWillShow = { [weak self] info in
+                self?.scrollView.contentOffset = CGPoint(x: 0, y: info.endFrame.height / 3)
+            }
 
-            NotificationCenter.default.addObserver(self, selector: #selector(LoginViewController.keyboardWillHide),
-                                                   name: UIResponder.keyboardDidHideNotification, object: nil)
+            keyboardObserver.onWillHide = { [weak self] _ in
+                self?.scrollView.contentOffset = .zero
+            }
         }
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
     }
 
     @objc private func dismissKeyboard() {
-        // Causes the view (or one of its embedded text fields) to resign the first responder status.
         view.endEditing(true)
-    }
-
-    @objc private func keyboardWillShow(notification: NSNotification) {
-        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
-            // if keyboard size is not available for some reason, dont do anything
-            return
-        }
-        // move the root view up by the distance of keyboard height
-        scrollView.contentOffset = CGPoint(x: 0, y: keyboardSize.height / 3)
-    }
-
-    @objc private func keyboardWillHide(notification: NSNotification) {
-        // move the root view down
-        UIView.animate(withDuration: 0.2) {
-            self.scrollView.contentOffset = CGPoint.zero
-        }
     }
 
     // handle login action
@@ -106,10 +94,17 @@ class LoginViewController: UIViewController {
             case .success:
                 AppDelegate.shared.rootViewController.switchToMainScreen()
             case let .failure(error):
-                print(error.localizedDescription)
+                self?.showAlert(withError: error)
                 self?.loginButton.isEnabled = true
             }
         }
+    }
+
+    private func showAlert(withError error: Error) {
+        let ac = UIAlertController(title: "Error!", message: error.localizedDescription, preferredStyle: .alert)
+        let alertOkAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        ac.addAction(alertOkAction)
+        present(ac, animated: true)
     }
 
     // handle forget password action
