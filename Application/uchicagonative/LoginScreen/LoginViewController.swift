@@ -86,6 +86,9 @@ class LoginViewController: UIViewController {
         // Forgot password action
         forgotPasswordButton.addTarget(self, action: #selector(handleForgotPassword), for: .touchUpInside)
 
+        // Creaate account action
+        createAccountButton.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
+
         // scrollView will scrollUp if devices heigh is small like iphone 8 and smaller
         registerKeyBoardNotifications()
     }
@@ -163,7 +166,9 @@ class LoginViewController: UIViewController {
 
     // handle sign up action
     @objc private func handleSignUp() {
-        print("SignUp button pressed...")
+        let createAccountController = CreateAccountViewController(viewModel: CreateAccountViewModel())
+        createAccountController.navigationItem.title = "Create Account"
+        navigationController?.pushViewController(createAccountController, animated: true)
     }
 
     // MARK: - UI Actions

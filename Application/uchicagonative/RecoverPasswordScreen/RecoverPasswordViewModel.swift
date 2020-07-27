@@ -27,7 +27,7 @@ class RecoverPasswordViewModel {
 
     // MARK: - Public Properties
 
-    /// disabled request password button if email is not valid. Enabled button if email is valid.
+    /// Disabled request password button if email is not valid. Enabled button if email is valid.
     /// Starts animating if button is valid and pressed.
     var requestNewPasswordButtonState: RequestNewPasswordButtonState {
         if isRequesting {
@@ -39,7 +39,7 @@ class RecoverPasswordViewModel {
 
     // MARK: - Public Methods
 
-    /// set self email
+    /// Set self email
     func setEmail(_ email: String) {
         self.email = email
         didUpdateState?()
@@ -70,7 +70,7 @@ class RecoverPasswordViewModel {
 
     // MARK: - Private Methods
 
-    /// check if email correct
+    /// Check if email correct
     private func isValidEmailCheck() -> Bool {
         guard let email = email else { return false }
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"

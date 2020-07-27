@@ -50,6 +50,7 @@ class RecoverPasswordViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        /// This is a handler for change 'Request New Password' button state and start/stop activity indicator
         let didUpdateHandler = {
             let buttonState = self.viewModel.requestNewPasswordButtonState
             switch buttonState {
@@ -57,6 +58,7 @@ class RecoverPasswordViewController: UIViewController {
                 self.requestNewPasswordButton.isEnabled = false
                 self.requestNewPasswordButton.backgroundColor = R.color.lightGrayCustom()
                 self.activityIndicator.startAnimating()
+
             case let .enabled(state):
                 self.activityIndicator.stopAnimating()
                 self.requestNewPasswordButton.isEnabled = state
@@ -87,6 +89,7 @@ class RecoverPasswordViewController: UIViewController {
         emailTextField.didChangeText = didEmailChange
     }
 
+    /// This method try to reset FireBase users's password and shows success or error alert to user
     @objc private func handleResetPassword() {
         viewModel.resetPassword { [weak self] result in
             switch result {
@@ -94,11 +97,11 @@ class RecoverPasswordViewController: UIViewController {
                 let handler: ((UIAlertAction) -> Void) = { [weak self] _ in
                     self?.navigationController?.popViewController(animated: true)
                 }
-                let ac = AlertAssist.sharedInstance.showErrorAlert(type:
-                    .success("Instructions for password recovery have been sent to your email address.", handler))
+                let ac = AlertAssist.showSuccessAlert(withMessage:
+                    "Instructions for password recovery have been sent to your email address.", handler: handler)
                 self?.present(ac, animated: true)
             case let .failure(error):
-                let ac = AlertAssist.sharedInstance.showErrorAlert(type: .failure(error))
+                let ac = AlertAssist.showErrorAlert(error)
                 self?.present(ac, animated: true)
             }
         }
