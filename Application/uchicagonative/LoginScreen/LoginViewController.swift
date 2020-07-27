@@ -12,7 +12,12 @@ import KeyboardNotificationsObserver
 import UIKit
 
 class LoginViewController: UIViewController {
+    // MARK: - Public Properties
+
     var viewModel: LoginViewModel!
+
+    // MARK: - UI Controls
+
     private let scrollView = UIScrollView()
 
     private let loginLabel = UILabel(title: "Log In", numberOfLines: 1, font: R.font.helveticaNeueCyrMedium(size: 28)!,
@@ -38,29 +43,25 @@ class LoginViewController: UIViewController {
         return ai
     }()
 
+    // MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         let didUpdateHandler = {
-            let isEnabled = self.viewModel.isLoginButtonEnabled()
-            self.loginButton.isEnabled = isEnabled
-            self.loginButton.backgroundColor = isEnabled ? .green : R.color.lightGrayCustom()
-        }
-        viewModel.didUpdateState = didUpdateHandler
-
-        // state of button when logging
-        let isLoggingHandler = {
-            if self.activityIndicator.isAnimating {
-                self.loginButton.isEnabled = true
-                self.loginButton.backgroundColor = .green
-                self.activityIndicator.stopAnimating()
-            } else {
+            let buttonState = self.viewModel.loginButtonState
+            switch buttonState {
+            case .animating:
                 self.loginButton.isEnabled = false
                 self.loginButton.backgroundColor = R.color.lightGrayCustom()
                 self.activityIndicator.startAnimating()
+            case let .enabled(state):
+                self.loginButton.isEnabled = state
+                self.loginButton.backgroundColor = state ? .green : R.color.lightGrayCustom()
+                self.activityIndicator.stopAnimating()
             }
         }
-        viewModel.isLoggingState = isLoggingHandler
+        viewModel.didUpdateState = didUpdateHandler
 
         setupTextFieldsHandlers()
 
@@ -75,6 +76,8 @@ class LoginViewController: UIViewController {
         // scrollView will scrollUp if devices heigh is small like iphone 8 and smaller
         registerKeyBoardNotifications()
     }
+
+    // MARK: - Private Methods
 
     private func setupTextFieldsHandlers() {
         let didEmailChange: ((String) -> Void) = { [weak self] email in
@@ -138,6 +141,8 @@ class LoginViewController: UIViewController {
         print("SignUp button pressed...")
     }
 
+    // MARK: - UI Actions
+
     private func setupUI() {
         // configure Log In button
         loginButton.configure(title: "Log In",
@@ -148,7 +153,7 @@ class LoginViewController: UIViewController {
         // adding components on screen
         view.addSubview(scrollView)
         scrollView.backgroundColor = .white
-        scrollView.fillsuperView()
+        scrollView.fillSuperView()
 
         // Login label constraints
         scrollView.addSubview(loginLabel)

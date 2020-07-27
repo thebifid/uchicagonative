@@ -10,7 +10,7 @@ import Cartography
 import UIKit
 
 extension UIView {
-    func fillsuperView() {
+    func fillSuperView() {
         constrain(self) { view in
             view.edges == view.superview!.edges
         }

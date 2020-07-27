@@ -10,10 +10,38 @@ import FirebaseAuth
 import UIKit
 
 class LoginViewModel {
+    // MARK: - Private Properties
+
     private var email: String?
     private var password: String?
+
+    private var isLoggingIn: Bool = false {
+        didSet {
+            didUpdateState?()
+        }
+    }
+
+    // MARK: - Public Properties
+
+    var loginButtonState: LoginButtonState {
+        if isLoggingIn {
+            return .animating
+        } else {
+            return .enabled(isPasswordNotEmptyCheck() && isValidEmailCheck())
+        }
+    }
+
+    // MARK: - Handlers
+
     var didUpdateState: (() -> Void)?
-    var isLoggingState: (() -> Void)?
+
+    // MARK: - Enums
+
+    enum LoginButtonState {
+        case enabled(Bool), animating
+    }
+
+    // MARK: - Public Methods
 
     func setEmail(_ email: String) {
         self.email = email
@@ -33,7 +61,7 @@ class LoginViewModel {
         // get text data from emailTF and passwordTF and clearing from any spaces or new lines
         guard let email = email?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
         guard let password = password?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
-        isLoggingState?()
+        isLoggingIn = true
         // LogIn FireBase
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] _, error in
             if error == nil {
@@ -43,9 +71,11 @@ class LoginViewModel {
                 self?.didUpdateState?()
                 completion(.failure(error!))
             }
-            self?.isLoggingState?()
+            self?.isLoggingIn = false
         }
     }
+
+    // MARK: - Private Methods
 
     // check if email correct
     private func isValidEmailCheck() -> Bool {

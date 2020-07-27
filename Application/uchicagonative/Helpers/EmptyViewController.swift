@@ -10,7 +10,7 @@ import Cartography
 import UIKit
 
 class EmptyViewController: UIViewController {
-    let dismissButton = UIButton(titleColor: .green, title: "Dismiss", font: .boldSystemFont(ofSize: 35))
+    private let dismissButton = UIButton(titleColor: .green, title: "Dismiss", font: .boldSystemFont(ofSize: 35))
 
     override func viewDidLoad() {
         super.viewDidLoad()
