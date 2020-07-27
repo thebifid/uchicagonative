@@ -25,7 +25,7 @@ class LoginViewController: UIViewController {
 
     // MARK: - Private Properties
 
-    private let viewModel: LoginViewModel!
+    private let viewModel: LoginViewModel
 
     // MARK: - UI Controls
 
