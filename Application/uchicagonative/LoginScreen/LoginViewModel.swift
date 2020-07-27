@@ -33,6 +33,7 @@ class LoginViewModel {
 
     // MARK: - Handlers
 
+    /// Handler for update login state 
     var didUpdateState: (() -> Void)?
 
     // MARK: - Enums
@@ -43,20 +44,24 @@ class LoginViewModel {
 
     // MARK: - Public Methods
 
+    /// Set User email for login
     func setEmail(_ email: String) {
         self.email = email
         didUpdateState?()
     }
 
+    /// Set User password for login
     func setPassword(_ password: String) {
         self.password = password
         didUpdateState?()
     }
 
+    /// Return true if user password and email are correct form
     func isLoginButtonEnabled() -> Bool {
         return isPasswordNotEmptyCheck() && isValidEmailCheck()
     }
 
+    /// FireBase authorization
     func login(completion: @escaping (Result<Void, Error>) -> Void) {
         // get text data from emailTF and passwordTF and clearing from any spaces or new lines
         guard let email = email?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
