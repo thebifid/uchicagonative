@@ -22,10 +22,13 @@ class RecoverPasswordViewModel {
 
     // MARK: - Handlers
 
+    /// Handler for update request password button state
     var didUpdateState: (() -> Void)?
 
     // MARK: - Public Properties
 
+    /// disabled request password button if email is not valid. Enabled button if email is valid.
+    /// Starts animating if button is valid and pressed.
     var requestNewPasswordButtonState: RequestNewPasswordButtonState {
         if isRequesting {
             return .animating
@@ -36,11 +39,13 @@ class RecoverPasswordViewModel {
 
     // MARK: - Public Methods
 
+    /// set self email
     func setEmail(_ email: String) {
         self.email = email
         didUpdateState?()
     }
 
+    /// Send reset password request to FireBase
     func resetPassword(completion: @escaping (Result<Void, Error>) -> Void) {
         isRequesting = true
         guard let email = email?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }

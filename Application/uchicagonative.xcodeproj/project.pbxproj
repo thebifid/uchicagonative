@@ -25,6 +25,7 @@
 		C1713C9F24CAED4D002D0E04 /* KeyboardNotificationsObserver in Frameworks */ = {isa = PBXBuildFile; productRef = C1713C9E24CAED4D002D0E04 /* KeyboardNotificationsObserver */; };
 		C1713CE824CEA4D8002D0E04 /* RecoverPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713CE724CEA4D8002D0E04 /* RecoverPasswordViewController.swift */; };
 		C1713CEA24CEAC50002D0E04 /* RecoverPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713CE924CEAC50002D0E04 /* RecoverPasswordViewModel.swift */; };
+		C1713CEC24CEC7B3002D0E04 /* AlertAssist.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713CEB24CEC7B3002D0E04 /* AlertAssist.swift */; };
 		C19693D024C6C61A0054296F /* VerticalStackVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693CF24C6C61A0054296F /* VerticalStackVIew.swift */; };
 		C19693D324C6CE0E0054296F /* MenuScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693D224C6CE0E0054296F /* MenuScreenViewController.swift */; };
 		C19693D524C6CEF40054296F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693D424C6CEF40054296F /* Constants.swift */; };
@@ -66,6 +67,7 @@
 		C1713C9B24CAC27E002D0E04 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		C1713CE724CEA4D8002D0E04 /* RecoverPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoverPasswordViewController.swift; sourceTree = "<group>"; };
 		C1713CE924CEAC50002D0E04 /* RecoverPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoverPasswordViewModel.swift; sourceTree = "<group>"; };
+		C1713CEB24CEC7B3002D0E04 /* AlertAssist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertAssist.swift; sourceTree = "<group>"; };
 		C19693CF24C6C61A0054296F /* VerticalStackVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalStackVIew.swift; sourceTree = "<group>"; };
 		C19693D224C6CE0E0054296F /* MenuScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScreenViewController.swift; sourceTree = "<group>"; };
 		C19693D424C6CEF40054296F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 				C19693DB24C6D93F0054296F /* EmptyViewController.swift */,
 				C1713C9424CA88C4002D0E04 /* PrimaryButton.swift */,
 				C1713C9624CA8F10002D0E04 /* CustomTextFieldView.swift */,
+				C1713CEB24CEC7B3002D0E04 /* AlertAssist.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -480,6 +483,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1713CEC24CEC7B3002D0E04 /* AlertAssist.swift in Sources */,
 				C19693D024C6C61A0054296F /* VerticalStackVIew.swift in Sources */,
 				C116348124C6B3CF00B6C394 /* LoginViewController.swift in Sources */,
 				C1713C8B24C94B23002D0E04 /* RootViewController.swift in Sources */,

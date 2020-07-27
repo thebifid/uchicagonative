@@ -54,7 +54,6 @@ class RecoverPasswordViewController: UIViewController {
             let buttonState = self.viewModel.requestNewPasswordButtonState
             switch buttonState {
             case .animating:
-                print("Here")
                 self.requestNewPasswordButton.isEnabled = false
                 self.requestNewPasswordButton.backgroundColor = R.color.lightGrayCustom()
                 self.activityIndicator.startAnimating()
@@ -91,19 +90,18 @@ class RecoverPasswordViewController: UIViewController {
     @objc private func handleResetPassword() {
         viewModel.resetPassword { [weak self] result in
             switch result {
-            case .success():
-                print("success")
-            case .failure(let error):
-                self?.showAlert(withError: error)
+            case .success:
+                let handler: ((UIAlertAction) -> Void) = { [weak self] _ in
+                    self?.navigationController?.popViewController(animated: true)
+                }
+                let ac = AlertAssist.sharedInstance.showErrorAlert(type:
+                    .success("Instructions for password recovery have been sent to your email address.", handler))
+                self?.present(ac, animated: true)
+            case let .failure(error):
+                let ac = AlertAssist.sharedInstance.showErrorAlert(type: .failure(error))
+                self?.present(ac, animated: true)
             }
         }
-    }
-    
-    private func showAlert(withError error: Error) {
-        let ac = UIAlertController(title: "Error!", message: error.localizedDescription, preferredStyle: .alert)
-        let alertOkAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-        ac.addAction(alertOkAction)
-        present(ac, animated: true)
     }
 
     // MARK: - UI Actions
@@ -136,7 +134,6 @@ class RecoverPasswordViewController: UIViewController {
         requestNewPasswordButton.addSubview(activityIndicator)
 
         constrain(activityIndicator) { activityIndicator in
-
             activityIndicator.center == activityIndicator.superview!.center
         }
     }
