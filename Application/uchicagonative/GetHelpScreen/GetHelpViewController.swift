@@ -9,6 +9,7 @@
 import Cartography
 import UIKit
 
+/// This View Controller shows 'Get Help' info
 class GetHelpViewController: UIViewController {
     let firstBlockLabel = UILabel(title: "Thank you for using our app. If you have an issue to report, please contact us via email",
                                   numberOfLines: 0)

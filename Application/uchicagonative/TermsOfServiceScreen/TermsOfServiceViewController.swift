@@ -8,7 +8,7 @@
 
 import Cartography
 import UIKit
-
+/// This View Controller shows 'Terms Of Service' info
 class TermsOfServiceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()

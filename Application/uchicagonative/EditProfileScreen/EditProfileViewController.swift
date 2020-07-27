@@ -8,7 +8,7 @@
 
 import Cartography
 import UIKit
-
+/// This View Controller shows editing user's profile
 class EditProfileViewController: UIViewController, UIScrollViewDelegate {
     let scrollView = UIScrollView()
 

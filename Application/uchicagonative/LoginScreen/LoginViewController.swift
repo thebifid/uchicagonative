@@ -11,6 +11,7 @@ import FirebaseAuth
 import KeyboardNotificationsObserver
 import UIKit
 
+/// This is a View Controller shows login screen
 class LoginViewController: UIViewController {
     // MARK: - Init
 
@@ -59,6 +60,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        /// This is a handler for change 'Log In' button state and start/stop activity indicator
         let didUpdateHandler = {
             let buttonState = self.viewModel.loginButtonState
             switch buttonState {
@@ -102,7 +104,7 @@ class LoginViewController: UIViewController {
         passwordTextFieldView.didChangeText = didPasswordChange
     }
 
-    // observers for show and hide keyboard
+    // setting up observers for show and hide keyboard
     private func registerKeyBoardNotifications() {
         if Constants.deviseHeight < 700 {
             keyboardObserver.onWillShow = { [weak self] info in

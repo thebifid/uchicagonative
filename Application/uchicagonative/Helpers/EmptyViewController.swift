@@ -8,7 +8,7 @@
 
 import Cartography
 import UIKit
-
+/// This View Controller is a placeHolder for unrealized yet pages
 class EmptyViewController: UIViewController {
     private let dismissButton = UIButton(titleColor: .green, title: "Dismiss", font: .boldSystemFont(ofSize: 35))
 
