@@ -1,0 +1,143 @@
+//
+//  RecoverPasswordViewController.swift
+//  uchicagonative
+//
+//  Created by Vasiliy Matveev on 27.07.2020.
+//  Copyright © 2020 Vasiliy Matveev. All rights reserved.
+//
+
+import Cartography
+import UIKit
+
+class RecoverPasswordViewController: UIViewController {
+    // MARK: - Init
+
+    init(viewModel model: RecoverPasswordViewModel) {
+        viewModel = model
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Private Properties
+
+    private let viewModel: RecoverPasswordViewModel
+
+    // MARK: - UI Controls
+
+    private let scrollView: UIScrollView = {
+        let sv = UIScrollView()
+        sv.backgroundColor = .white
+        sv.alwaysBounceVertical = true
+        return sv
+    }()
+
+    private let activityIndicator: UIActivityIndicatorView = {
+        let ai = UIActivityIndicatorView()
+        ai.hidesWhenStopped = true
+        ai.color = .black
+        return ai
+    }()
+
+    private let emailTextField = CustomTextFieldView()
+
+    private let requestNewPasswordButton = PrimaryButton()
+
+    // MARK: - Lifecycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        let didUpdateHandler = {
+            let buttonState = self.viewModel.requestNewPasswordButtonState
+            switch buttonState {
+            case .animating:
+                print("Here")
+                self.requestNewPasswordButton.isEnabled = false
+                self.requestNewPasswordButton.backgroundColor = R.color.lightGrayCustom()
+                self.activityIndicator.startAnimating()
+            case let .enabled(state):
+                self.activityIndicator.stopAnimating()
+                self.requestNewPasswordButton.isEnabled = state
+                self.requestNewPasswordButton.backgroundColor = state ? .green : R.color.lightGrayCustom()
+            }
+        }
+        viewModel.didUpdateState = didUpdateHandler
+
+        setupUI()
+        setupTextFieldHandler()
+
+        requestNewPasswordButton.addTarget(self, action: #selector(handleResetPassword), for: .touchUpInside)
+
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+
+    // MARK: - Private Methods
+
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+    }
+
+    private func setupTextFieldHandler() {
+        let didEmailChange: ((String) -> Void) = { [weak self] email in
+            self?.viewModel.setEmail(email)
+        }
+        emailTextField.didChangeText = didEmailChange
+    }
+
+    @objc private func handleResetPassword() {
+        viewModel.resetPassword { [weak self] result in
+            switch result {
+            case .success():
+                print("success")
+            case .failure(let error):
+                self?.showAlert(withError: error)
+            }
+        }
+    }
+    
+    private func showAlert(withError error: Error) {
+        let ac = UIAlertController(title: "Error!", message: error.localizedDescription, preferredStyle: .alert)
+        let alertOkAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        ac.addAction(alertOkAction)
+        present(ac, animated: true)
+    }
+
+    // MARK: - UI Actions
+
+    private func setupUI() {
+        view.addSubview(scrollView)
+
+        scrollView.addSubview(emailTextField)
+        emailTextField.configure(placeholder: "name@email.com", spellCheck: .no)
+
+        scrollView.addSubview(requestNewPasswordButton)
+        requestNewPasswordButton.configure(title: "Request New Password",
+                                           font: R.font.karlaBold(size: 18)!, backgroundColor: R.color.lightGrayCustom()!, isEnabled: false)
+
+        constrain(scrollView, emailTextField, requestNewPasswordButton) { scrollView, emailTextField, requestNewPasswordButton in
+
+            scrollView.edges == scrollView.superview!.edges
+
+            emailTextField.height == 30
+            emailTextField.width == emailTextField.superview!.width - 4 * Constants.defaultInsets
+            emailTextField.centerX == emailTextField.superview!.centerX
+            emailTextField.top == emailTextField.superview!.top + 100
+
+            requestNewPasswordButton.top == emailTextField.bottom + 40
+            requestNewPasswordButton.width == emailTextField.width
+            requestNewPasswordButton.centerX == emailTextField.centerX
+            requestNewPasswordButton.height == 50
+        }
+
+        requestNewPasswordButton.addSubview(activityIndicator)
+
+        constrain(activityIndicator) { activityIndicator in
+
+            activityIndicator.center == activityIndicator.superview!.center
+        }
+    }
+}

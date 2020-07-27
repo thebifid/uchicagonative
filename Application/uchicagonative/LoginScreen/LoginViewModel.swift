@@ -33,7 +33,7 @@ class LoginViewModel {
 
     // MARK: - Handlers
 
-    /// Handler for update login state 
+    /// Handler for update login state
     var didUpdateState: (() -> Void)?
 
     // MARK: - Enums

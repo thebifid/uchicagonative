@@ -90,6 +90,18 @@ class LoginViewController: UIViewController {
         registerKeyBoardNotifications()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+
     // MARK: - Private Methods
 
     private func setupTextFieldsHandlers() {
@@ -144,9 +156,9 @@ class LoginViewController: UIViewController {
 
     // handle forget password action
     @objc private func handleForgotPassword() {
-        let emptyViewController = EmptyViewController()
-        emptyViewController.modalPresentationStyle = .fullScreen
-        present(emptyViewController, animated: true)
+        let recoverPasswordViewController = RecoverPasswordViewController(viewModel: RecoverPasswordViewModel())
+        recoverPasswordViewController.navigationItem.title = "Recover Password"
+        navigationController?.pushViewController(recoverPasswordViewController, animated: true)
     }
 
     // handle sign up action
@@ -165,6 +177,7 @@ class LoginViewController: UIViewController {
 
         // adding components on screen
         view.addSubview(scrollView)
+        scrollView.alwaysBounceVertical = true
         scrollView.backgroundColor = .white
         scrollView.fillSuperView()
 

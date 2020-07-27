@@ -23,6 +23,8 @@
 		C1713C9A24CABBA2002D0E04 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1713C9924CABBA2002D0E04 /* Colors.xcassets */; };
 		C1713C9C24CAC27E002D0E04 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713C9B24CAC27E002D0E04 /* LoginViewModel.swift */; };
 		C1713C9F24CAED4D002D0E04 /* KeyboardNotificationsObserver in Frameworks */ = {isa = PBXBuildFile; productRef = C1713C9E24CAED4D002D0E04 /* KeyboardNotificationsObserver */; };
+		C1713CE824CEA4D8002D0E04 /* RecoverPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713CE724CEA4D8002D0E04 /* RecoverPasswordViewController.swift */; };
+		C1713CEA24CEAC50002D0E04 /* RecoverPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713CE924CEAC50002D0E04 /* RecoverPasswordViewModel.swift */; };
 		C19693D024C6C61A0054296F /* VerticalStackVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693CF24C6C61A0054296F /* VerticalStackVIew.swift */; };
 		C19693D324C6CE0E0054296F /* MenuScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693D224C6CE0E0054296F /* MenuScreenViewController.swift */; };
 		C19693D524C6CEF40054296F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693D424C6CEF40054296F /* Constants.swift */; };
@@ -62,6 +64,8 @@
 		C1713C9624CA8F10002D0E04 /* CustomTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFieldView.swift; sourceTree = "<group>"; };
 		C1713C9924CABBA2002D0E04 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		C1713C9B24CAC27E002D0E04 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		C1713CE724CEA4D8002D0E04 /* RecoverPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoverPasswordViewController.swift; sourceTree = "<group>"; };
+		C1713CE924CEAC50002D0E04 /* RecoverPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoverPasswordViewModel.swift; sourceTree = "<group>"; };
 		C19693CF24C6C61A0054296F /* VerticalStackVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalStackVIew.swift; sourceTree = "<group>"; };
 		C19693D224C6CE0E0054296F /* MenuScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScreenViewController.swift; sourceTree = "<group>"; };
 		C19693D424C6CEF40054296F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -125,6 +129,7 @@
 				C19693DD24C6DA5D0054296F /* EditProfileScreen */,
 				C19693D124C6CDF40054296F /* MenuScreen */,
 				C116349024C6B3DA00B6C394 /* LoginScreen */,
+				C1713CE624CEA4AD002D0E04 /* RecoverPasswordScreen */,
 				C19693D824C6D70C0054296F /* Extensions */,
 				C116349124C6B3E200B6C394 /* Commons */,
 				C116349224C6B3EA00B6C394 /* Resources */,
@@ -179,6 +184,15 @@
 				C1713C8E24C9529E002D0E04 /* SplashViewController.swift */,
 			);
 			path = SplashViewController;
+			sourceTree = "<group>";
+		};
+		C1713CE624CEA4AD002D0E04 /* RecoverPasswordScreen */ = {
+			isa = PBXGroup;
+			children = (
+				C1713CE724CEA4D8002D0E04 /* RecoverPasswordViewController.swift */,
+				C1713CE924CEAC50002D0E04 /* RecoverPasswordViewModel.swift */,
+			);
+			path = RecoverPasswordScreen;
 			sourceTree = "<group>";
 		};
 		C19693D124C6CDF40054296F /* MenuScreen */ = {
@@ -472,6 +486,7 @@
 				C116347D24C6B3CF00B6C394 /* AppDelegate.swift in Sources */,
 				C1713C9724CA8F10002D0E04 /* CustomTextFieldView.swift in Sources */,
 				C116347F24C6B3CF00B6C394 /* SceneDelegate.swift in Sources */,
+				C1713CEA24CEAC50002D0E04 /* RecoverPasswordViewModel.swift in Sources */,
 				C19693ED24C71C250054296F /* TermsOfServiceViewController.swift in Sources */,
 				C196940124C839320054296F /* UITextField+Extension.swift in Sources */,
 				C19693EA24C710AF0054296F /* SendFeedbackViewController.swift in Sources */,
@@ -487,6 +502,7 @@
 				C1713C9C24CAC27E002D0E04 /* LoginViewModel.swift in Sources */,
 				C19693D324C6CE0E0054296F /* MenuScreenViewController.swift in Sources */,
 				C19693DF24C6DA6E0054296F /* EditProfileViewController.swift in Sources */,
+				C1713CE824CEA4D8002D0E04 /* RecoverPasswordViewController.swift in Sources */,
 				C19693D724C6D6090054296F /* UIButton+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

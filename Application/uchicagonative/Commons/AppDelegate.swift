@@ -6,13 +6,17 @@
 //  Copyright © 2020 Vasiliy Matveev. All rights reserved.
 //
 
-import Firebase
+import FirebaseCore
 import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
+
+        let attributes = [NSAttributedString.Key.font: R.font.karlaRegular(size: 26)!]
+        UINavigationBar.appearance().titleTextAttributes = attributes
+
         return true
     }
 
