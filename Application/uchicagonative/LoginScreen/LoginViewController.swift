@@ -12,9 +12,20 @@ import KeyboardNotificationsObserver
 import UIKit
 
 class LoginViewController: UIViewController {
-    // MARK: - Public Properties
+    // MARK: - Init
 
-    var viewModel: LoginViewModel!
+    init(viewModel model: LoginViewModel) {
+        viewModel = model
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Private Properties
+
+    private let viewModel: LoginViewModel!
 
     // MARK: - UI Controls
 
@@ -81,12 +92,12 @@ class LoginViewController: UIViewController {
 
     private func setupTextFieldsHandlers() {
         let didEmailChange: ((String) -> Void) = { [weak self] email in
-            self?.viewModel?.setEmail(email)
+            self?.viewModel.setEmail(email)
         }
         emailTextFieldView.didChangeText = didEmailChange
 
         let didPasswordChange: ((String) -> Void) = { [weak self] password in
-            self?.viewModel?.setPassword(password)
+            self?.viewModel.setPassword(password)
         }
         passwordTextFieldView.didChangeText = didPasswordChange
     }
