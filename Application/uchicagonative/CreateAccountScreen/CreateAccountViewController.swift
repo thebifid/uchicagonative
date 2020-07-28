@@ -40,8 +40,19 @@ class CreateAccountViewController: UIViewController {
 
     private let dropDownButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .blue
+        button.backgroundColor = .orange
+        button.setTitle("Select an item", for: .normal)
         return button
+    }()
+
+    private let popupMenu = PopupMenu()
+
+    private let activityIndicator: UIActivityIndicatorView = {
+        let ai = UIActivityIndicatorView()
+        ai.hidesWhenStopped = true
+        ai.startAnimating()
+        ai.color = .black
+        return ai
     }()
 
     // MARK: - Lifecycle
@@ -71,7 +82,7 @@ class CreateAccountViewController: UIViewController {
 
         scrollView.addSubview(dropDownButton)
 
-        constrain(scrollView, emailTextField, passwordTextField, dropDownButton) { scrollView, emailTextField, passwordTextField, dropDownButton in
+        constrain(scrollView, emailTextField, passwordTextField) { scrollView, emailTextField, passwordTextField in
 
             scrollView.edges == scrollView.superview!.edges
 
@@ -84,11 +95,31 @@ class CreateAccountViewController: UIViewController {
             passwordTextField.width == emailTextField.width
             passwordTextField.centerX == emailTextField.centerX
             passwordTextField.top == emailTextField.bottom + 30
+        }
+
+        dropDownButton.addSubview(activityIndicator)
+        constrain(dropDownButton, activityIndicator) { dropDownButton, activityIndicator in
+            activityIndicator.center == dropDownButton.center
+        }
+
+        scrollView.addSubview(popupMenu)
+        constrain(passwordTextField, dropDownButton, popupMenu) { passwordTextField, dropDownButton, popupMenu in
 
             dropDownButton.height == 30
             dropDownButton.width == passwordTextField.width
             dropDownButton.top == passwordTextField.bottom + 30
             dropDownButton.centerX == passwordTextField.centerX
+
+            popupMenu.top == dropDownButton.bottom + 20
+            popupMenu.height == 100
+            popupMenu.width == dropDownButton.width
+            popupMenu.centerX == dropDownButton.centerX
         }
+
+        let didFetchedGroupsHandler = {
+            self.popupMenu.configure(items: self.viewModel.availableGroups!)
+            self.activityIndicator.stopAnimating()
+        }
+        viewModel.didFetchedGroups = didFetchedGroupsHandler
     }
 }

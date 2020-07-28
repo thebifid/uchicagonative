@@ -28,6 +28,8 @@
 		C1713CEC24CEC7B3002D0E04 /* AlertAssist.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713CEB24CEC7B3002D0E04 /* AlertAssist.swift */; };
 		C1713CEF24CED257002D0E04 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713CEE24CED257002D0E04 /* CreateAccountViewController.swift */; };
 		C1713CF124CED5D1002D0E04 /* CreateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713CF024CED5D1002D0E04 /* CreateAccountViewModel.swift */; };
+		C1713CF424CFCCC4002D0E04 /* PopupMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713CF324CFCCC4002D0E04 /* PopupMenu.swift */; };
+		C1713CF724CFD7AB002D0E04 /* FireBaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713CF624CFD7AB002D0E04 /* FireBaseManager.swift */; };
 		C19693D024C6C61A0054296F /* VerticalStackVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693CF24C6C61A0054296F /* VerticalStackVIew.swift */; };
 		C19693D324C6CE0E0054296F /* MenuScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693D224C6CE0E0054296F /* MenuScreenViewController.swift */; };
 		C19693D524C6CEF40054296F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693D424C6CEF40054296F /* Constants.swift */; };
@@ -72,6 +74,8 @@
 		C1713CEB24CEC7B3002D0E04 /* AlertAssist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertAssist.swift; sourceTree = "<group>"; };
 		C1713CEE24CED257002D0E04 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 		C1713CF024CED5D1002D0E04 /* CreateAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewModel.swift; sourceTree = "<group>"; };
+		C1713CF324CFCCC4002D0E04 /* PopupMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupMenu.swift; sourceTree = "<group>"; };
+		C1713CF624CFD7AB002D0E04 /* FireBaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseManager.swift; sourceTree = "<group>"; };
 		C19693CF24C6C61A0054296F /* VerticalStackVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalStackVIew.swift; sourceTree = "<group>"; };
 		C19693D224C6CE0E0054296F /* MenuScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScreenViewController.swift; sourceTree = "<group>"; };
 		C19693D424C6CEF40054296F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -125,6 +129,8 @@
 		C116347B24C6B3CF00B6C394 /* uchicagonative */ = {
 			isa = PBXGroup;
 			children = (
+				C1713CF524CFD79C002D0E04 /* FireBaseManager */,
+				C1713CF224CFCC93002D0E04 /* PopupMenu */,
 				C1713C8C24C95284002D0E04 /* SplashViewController */,
 				C1713C8924C94B11002D0E04 /* RootViewController */,
 				C19693EB24C71C140054296F /* TermsOfServiceScreen */,
@@ -209,6 +215,22 @@
 				C1713CF024CED5D1002D0E04 /* CreateAccountViewModel.swift */,
 			);
 			path = CreateAccountScreen;
+			sourceTree = "<group>";
+		};
+		C1713CF224CFCC93002D0E04 /* PopupMenu */ = {
+			isa = PBXGroup;
+			children = (
+				C1713CF324CFCCC4002D0E04 /* PopupMenu.swift */,
+			);
+			path = PopupMenu;
+			sourceTree = "<group>";
+		};
+		C1713CF524CFD79C002D0E04 /* FireBaseManager */ = {
+			isa = PBXGroup;
+			children = (
+				C1713CF624CFD7AB002D0E04 /* FireBaseManager.swift */,
+			);
+			path = FireBaseManager;
 			sourceTree = "<group>";
 		};
 		C19693D124C6CDF40054296F /* MenuScreen */ = {
@@ -504,6 +526,7 @@
 				C116347D24C6B3CF00B6C394 /* AppDelegate.swift in Sources */,
 				C1713C9724CA8F10002D0E04 /* CustomTextFieldView.swift in Sources */,
 				C116347F24C6B3CF00B6C394 /* SceneDelegate.swift in Sources */,
+				C1713CF424CFCCC4002D0E04 /* PopupMenu.swift in Sources */,
 				C1713CF124CED5D1002D0E04 /* CreateAccountViewModel.swift in Sources */,
 				C1713CEA24CEAC50002D0E04 /* RecoverPasswordViewModel.swift in Sources */,
 				C19693ED24C71C250054296F /* TermsOfServiceViewController.swift in Sources */,
@@ -520,6 +543,7 @@
 				C1713C8F24C9529E002D0E04 /* SplashViewController.swift in Sources */,
 				C19693DC24C6D93F0054296F /* EmptyViewController.swift in Sources */,
 				C1713C9C24CAC27E002D0E04 /* LoginViewModel.swift in Sources */,
+				C1713CF724CFD7AB002D0E04 /* FireBaseManager.swift in Sources */,
 				C19693D324C6CE0E0054296F /* MenuScreenViewController.swift in Sources */,
 				C19693DF24C6DA6E0054296F /* EditProfileViewController.swift in Sources */,
 				C1713CE824CEA4D8002D0E04 /* RecoverPasswordViewController.swift in Sources */,
