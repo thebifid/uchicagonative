@@ -11,11 +11,17 @@ import UIKit
 class CreateAccountViewModel {
     var email: String?
     var password: String?
-
     var selectedGroup: String?
+
     var availableGroups: [String]?
 
     var didFetchedGroups: (() -> Void)?
+
+    var didUpdateState: (() -> Void)?
+
+    var signUpButtonState: Bool {
+        return isPasswordNotEmptyCheck() && isValidEmailCheck() && isSelectedGroupNotNil()
+    }
 
     init() {
         FireBaseManager.sharedInstance.fetchAvailableGroups { [weak self] result in
@@ -33,14 +39,19 @@ class CreateAccountViewModel {
 
     func setEmail(_ email: String) {
         self.email = email
+        print("email")
+        didUpdateState?()
     }
 
     func setPassword(_ password: String) {
+        print("password")
         self.password = password
+        didUpdateState?()
     }
 
     func didChangeGroup(group: String) {
         selectedGroup = group
+        didUpdateState?()
     }
 
     /// Return true if user password and email are correct form
@@ -61,5 +72,13 @@ class CreateAccountViewModel {
     private func isPasswordNotEmptyCheck() -> Bool {
         guard let password = password else { return false }
         return !password.isEmpty ? true : false
+    }
+
+    private func isSelectedGroupNotNil() -> Bool {
+        guard let selectedGroup = selectedGroup else { return false }
+        if selectedGroup != "Select an item..." {
+            return true
+        }
+        return false
     }
 }

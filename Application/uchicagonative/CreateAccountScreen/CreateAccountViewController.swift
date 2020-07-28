@@ -34,9 +34,9 @@ class CreateAccountViewController: UIViewController {
         return sv
     }()
 
-    private let emailTextField = CustomTextFieldView()
+    private let emailTextFieldView = CustomTextFieldView()
 
-    private let passwordTextField = CustomTextFieldView()
+    private let passwordTextFieldView = CustomTextFieldView()
 
     private let dropDownButton: UIButton = {
         let button = UIButton()
@@ -49,6 +49,23 @@ class CreateAccountViewController: UIViewController {
 
     private let popupMenu = PopupMenu()
 
+    private let signUpButton = PrimaryButton()
+
+    private let termText = "By signing up, you agree to our Terms of Service and Privacy Policy"
+    private let term = "Terms of Service"
+    private let termLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.isUserInteractionEnabled = true
+        label.textAlignment = .center
+        return label
+    }()
+
+    private var formattedText: NSAttributedString?
+
+    private let alreadyMemberButton = UIButton(titleColor: R.color.lightRed()!, title: "Already a member? Log In!",
+                                               font: R.font.karlaBold(size: 20)!, breakMode: .byWordWrapping)
+
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
@@ -57,6 +74,39 @@ class CreateAccountViewController: UIViewController {
         setupUI()
 
         setupHandlers()
+        setupTextFieldsHandlers()
+
+        let termTap = UITapGestureRecognizer(target: self, action: #selector(handleTermTapped))
+        termLabel.addGestureRecognizer(termTap)
+
+        viewModel.didUpdateState = {
+            let status = self.viewModel.signUpButtonState
+
+            if status == true {
+                self.signUpButton.backgroundColor = .green
+            } else {
+                self.signUpButton.backgroundColor = R.color.lightGrayCustom()
+            }
+        }
+
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+    }
+
+    private func setupTextFieldsHandlers() {
+        let didEmailChange: ((String) -> Void) = { [weak self] email in
+            self?.viewModel.setEmail(email)
+        }
+        emailTextFieldView.didChangeText = didEmailChange
+
+        let didPasswordChange: ((String) -> Void) = { [weak self] password in
+            self?.viewModel.setPassword(password)
+        }
+        passwordTextFieldView.didChangeText = didPasswordChange
     }
 
     // MARK: - UI Actions
@@ -64,15 +114,15 @@ class CreateAccountViewController: UIViewController {
     private func setupUI() {
         view.addSubview(scrollView)
 
-        scrollView.addSubview(emailTextField)
-        emailTextField.configure(placeholder: "name@email.com", spellCheck: .no)
+        scrollView.addSubview(emailTextFieldView)
+        emailTextFieldView.configure(placeholder: "name@email.com", spellCheck: .no)
 
-        scrollView.addSubview(passwordTextField)
-        passwordTextField.configure(placeholder: "password", isSecureTextEntry: true)
+        scrollView.addSubview(passwordTextFieldView)
+        passwordTextFieldView.configure(placeholder: "password", isSecureTextEntry: true)
 
         scrollView.addSubview(dropDownButton)
 
-        constrain(scrollView, emailTextField, passwordTextField) { scrollView, emailTextField, passwordTextField in
+        constrain(scrollView, emailTextFieldView, passwordTextFieldView) { scrollView, emailTextField, passwordTextField in
 
             scrollView.edges == scrollView.superview!.edges
 
@@ -90,7 +140,7 @@ class CreateAccountViewController: UIViewController {
         scrollView.addSubview(dropDownSelectView)
         dropDownSelectView.configure(labelTitle: "Select Project:", buttonTitle: "Select an item...")
 
-        constrain(passwordTextField, dropDownSelectView) { passwordTextField, dropDownSelectView in
+        constrain(passwordTextFieldView, dropDownSelectView) { passwordTextField, dropDownSelectView in
 
             dropDownSelectView.top == passwordTextField.bottom + 20
             dropDownSelectView.width == passwordTextField.width
@@ -101,16 +151,64 @@ class CreateAccountViewController: UIViewController {
 
         scrollView.addSubview(popupMenu)
         popupMenu.transform = .init(scaleX: 1, y: 0)
+
+        signUpButton.configure(title: "Sign Up with Email",
+                               font: R.font.karlaBold(size: 18)!, backgroundColor: R.color.lightGrayCustom()!, isEnabled: false)
+
+        scrollView.addSubview(signUpButton)
+
+        constrain(dropDownSelectView, signUpButton) { dropDownSelectView, signUpButton in
+
+            signUpButton.top == dropDownSelectView.bottom + 20
+            signUpButton.centerX == signUpButton.superview!.centerX
+            signUpButton.height == 50
+            signUpButton.width == dropDownSelectView.width
+        }
+
+        formattedText = String.format(strings: [term],
+                                      boldFont: UIFont.boldSystemFont(ofSize: 15),
+                                      boldColor: R.color.lightRed()!,
+                                      inString: termText,
+                                      font: UIFont.systemFont(ofSize: 15),
+                                      color: .gray)
+
+        termLabel.attributedText = formattedText
+
+        scrollView.addSubview(termLabel)
+
+        constrain(signUpButton, termLabel) { signUpButton, termLabel in
+
+            termLabel.top == signUpButton.bottom + 20
+            termLabel.centerX == termLabel.superview!.centerX
+            termLabel.width == signUpButton.width
+            termLabel.height == 50
+        }
+
+        scrollView.addSubview(alreadyMemberButton)
+
+        constrain(termLabel, alreadyMemberButton) { termLabel, alreadyMemberButton in
+
+            alreadyMemberButton.top == termLabel.bottom + 70
+            alreadyMemberButton.centerX == alreadyMemberButton.superview!.centerX
+        }
+    }
+
+    @objc func handleTermTapped(gesture: UITapGestureRecognizer) {
+        print("hello")
     }
 
     // MARK: - Private Methods
 
     private func setupHandlers() {
         dropDownSelectView.didTapButton = {
+            self.view.endEditing(true)
             UIView.animate(withDuration: 0.2) {
                 self.scrollView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
                 self.popupMenu.alpha = 1
                 self.popupMenu.transform = .identity
+                self.signUpButton.isHidden = true
+                self.termLabel.isHidden = true
+                self.alreadyMemberButton.isHidden = true
             }
         }
 
@@ -127,11 +225,18 @@ class CreateAccountViewController: UIViewController {
             self?.dropDownSelectView.setTitle(title: group)
 
             UIView.animate(withDuration: 0.4, animations: {
-                self?.scrollView.backgroundColor = .white
-                self?.popupMenu.alpha = 0
-                self?.popupMenu.transform = .init(scaleX: 1, y: 0)
+                self?.hidePopUpWindow()
             })
         }
+    }
+
+    @objc private func hidePopUpWindow() {
+        scrollView.backgroundColor = .white
+        popupMenu.alpha = 0
+        popupMenu.transform = .init(scaleX: 1, y: 0)
+        signUpButton.isHidden = false
+        termLabel.isHidden = false
+        alreadyMemberButton.isHidden = false
     }
 
     private func setupPopUpMenu(withHeight height: CGFloat) {

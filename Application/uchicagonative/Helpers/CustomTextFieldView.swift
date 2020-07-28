@@ -13,6 +13,9 @@ class CustomTextFieldView: UIView {
     private let textField: UITextField = {
         let tf = UITextField()
         tf.borderStyle = .none
+        tf.spellCheckingType = .no
+        tf.autocorrectionType = .no
+        tf.autocapitalizationType = .none
         tf.font = R.font.karlaRegular(size: Constants.textFieldFontSize)!
         return tf
     }()
