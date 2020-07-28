@@ -46,7 +46,7 @@ class CustomTextFieldView: UIView {
             separatorView.top == textField.bottom
             separatorView.left == textField.left
             separatorView.right == textField.right
-            separatorView.height == 1
+            separatorView.height == 2
         }
     }
 

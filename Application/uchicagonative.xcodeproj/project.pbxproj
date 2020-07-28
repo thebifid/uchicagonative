@@ -30,6 +30,7 @@
 		C1713CF124CED5D1002D0E04 /* CreateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713CF024CED5D1002D0E04 /* CreateAccountViewModel.swift */; };
 		C1713CF424CFCCC4002D0E04 /* PopupMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713CF324CFCCC4002D0E04 /* PopupMenu.swift */; };
 		C1713CF724CFD7AB002D0E04 /* FireBaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713CF624CFD7AB002D0E04 /* FireBaseManager.swift */; };
+		C1713CF924CFE9E6002D0E04 /* CustomSelectButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713CF824CFE9E6002D0E04 /* CustomSelectButtonView.swift */; };
 		C19693D024C6C61A0054296F /* VerticalStackVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693CF24C6C61A0054296F /* VerticalStackVIew.swift */; };
 		C19693D324C6CE0E0054296F /* MenuScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693D224C6CE0E0054296F /* MenuScreenViewController.swift */; };
 		C19693D524C6CEF40054296F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693D424C6CEF40054296F /* Constants.swift */; };
@@ -76,6 +77,7 @@
 		C1713CF024CED5D1002D0E04 /* CreateAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewModel.swift; sourceTree = "<group>"; };
 		C1713CF324CFCCC4002D0E04 /* PopupMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupMenu.swift; sourceTree = "<group>"; };
 		C1713CF624CFD7AB002D0E04 /* FireBaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseManager.swift; sourceTree = "<group>"; };
+		C1713CF824CFE9E6002D0E04 /* CustomSelectButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSelectButtonView.swift; sourceTree = "<group>"; };
 		C19693CF24C6C61A0054296F /* VerticalStackVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalStackVIew.swift; sourceTree = "<group>"; };
 		C19693D224C6CE0E0054296F /* MenuScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScreenViewController.swift; sourceTree = "<group>"; };
 		C19693D424C6CEF40054296F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -258,6 +260,7 @@
 				C19693CF24C6C61A0054296F /* VerticalStackVIew.swift */,
 				C19693DB24C6D93F0054296F /* EmptyViewController.swift */,
 				C1713C9424CA88C4002D0E04 /* PrimaryButton.swift */,
+				C1713CF824CFE9E6002D0E04 /* CustomSelectButtonView.swift */,
 				C1713C9624CA8F10002D0E04 /* CustomTextFieldView.swift */,
 				C1713CEB24CEC7B3002D0E04 /* AlertAssist.swift */,
 			);
@@ -529,6 +532,7 @@
 				C1713CF424CFCCC4002D0E04 /* PopupMenu.swift in Sources */,
 				C1713CF124CED5D1002D0E04 /* CreateAccountViewModel.swift in Sources */,
 				C1713CEA24CEAC50002D0E04 /* RecoverPasswordViewModel.swift in Sources */,
+				C1713CF924CFE9E6002D0E04 /* CustomSelectButtonView.swift in Sources */,
 				C19693ED24C71C250054296F /* TermsOfServiceViewController.swift in Sources */,
 				C196940124C839320054296F /* UITextField+Extension.swift in Sources */,
 				C19693EA24C710AF0054296F /* SendFeedbackViewController.swift in Sources */,

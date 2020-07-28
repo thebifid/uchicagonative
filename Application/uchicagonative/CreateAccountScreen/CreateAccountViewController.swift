@@ -45,15 +45,9 @@ class CreateAccountViewController: UIViewController {
         return button
     }()
 
-    private let popupMenu = PopupMenu()
+    private let dropDownSelectView = CustomSelectButtonView()
 
-    private let activityIndicator: UIActivityIndicatorView = {
-        let ai = UIActivityIndicatorView()
-        ai.hidesWhenStopped = true
-        ai.startAnimating()
-        ai.color = .black
-        return ai
-    }()
+    private let popupMenu = PopupMenu()
 
     // MARK: - Lifecycle
 
@@ -62,11 +56,7 @@ class CreateAccountViewController: UIViewController {
 
         setupUI()
 
-        dropDownButton.addTarget(self, action: #selector(handleDD), for: .touchUpInside)
-    }
-
-    @objc private func handleDD() {
-        print("DD")
+        setupHandlers()
     }
 
     // MARK: - UI Actions
@@ -97,29 +87,59 @@ class CreateAccountViewController: UIViewController {
             passwordTextField.top == emailTextField.bottom + 30
         }
 
-        dropDownButton.addSubview(activityIndicator)
-        constrain(dropDownButton, activityIndicator) { dropDownButton, activityIndicator in
-            activityIndicator.center == dropDownButton.center
+        scrollView.addSubview(dropDownSelectView)
+        dropDownSelectView.configure(labelTitle: "Select Project:", buttonTitle: "Select an item...")
+
+        constrain(passwordTextField, dropDownSelectView) { passwordTextField, dropDownSelectView in
+
+            dropDownSelectView.top == passwordTextField.bottom + 20
+            dropDownSelectView.width == passwordTextField.width
+            dropDownSelectView.centerX == passwordTextField.centerX
+
+            dropDownSelectView.height == 100
         }
 
         scrollView.addSubview(popupMenu)
-        constrain(passwordTextField, dropDownButton, popupMenu) { passwordTextField, dropDownButton, popupMenu in
+        popupMenu.transform = .init(scaleX: 1, y: 0)
+    }
 
-            dropDownButton.height == 30
-            dropDownButton.width == passwordTextField.width
-            dropDownButton.top == passwordTextField.bottom + 30
-            dropDownButton.centerX == passwordTextField.centerX
+    // MARK: - Private Methods
 
-            popupMenu.top == dropDownButton.bottom + 20
-            popupMenu.height == 100
-            popupMenu.width == dropDownButton.width
-            popupMenu.centerX == dropDownButton.centerX
+    private func setupHandlers() {
+        dropDownSelectView.didTapButton = {
+            UIView.animate(withDuration: 0.2) {
+                self.scrollView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
+                self.popupMenu.alpha = 1
+                self.popupMenu.transform = .identity
+            }
         }
 
-        let didFetchedGroupsHandler = {
+        viewModel.didFetchedGroups = {
+            let heihght: CGFloat = CGFloat(self.viewModel.availableGroups!.count * 30) + 35
+            self.setupPopUpMenu(withHeight: heihght)
+            self.popupMenu.layoutIfNeeded()
             self.popupMenu.configure(items: self.viewModel.availableGroups!)
-            self.activityIndicator.stopAnimating()
         }
-        viewModel.didFetchedGroups = didFetchedGroupsHandler
+
+        popupMenu.didSelectItem = { [weak self] group in
+            self?.viewModel.didChangeGroup(group: group)
+            print("group set \(group)")
+            self?.dropDownSelectView.setTitle(title: group)
+
+            UIView.animate(withDuration: 0.4, animations: {
+                self?.scrollView.backgroundColor = .white
+                self?.popupMenu.alpha = 0
+                self?.popupMenu.transform = .init(scaleX: 1, y: 0)
+            })
+        }
+    }
+
+    private func setupPopUpMenu(withHeight height: CGFloat) {
+        constrain(dropDownSelectView, popupMenu) { dropDownSelectView, popupMenu in
+            popupMenu.top == dropDownSelectView.top
+            popupMenu.width == dropDownSelectView.width
+            popupMenu.centerX == dropDownSelectView.centerX
+            popupMenu.height == height
+        }
     }
 }
