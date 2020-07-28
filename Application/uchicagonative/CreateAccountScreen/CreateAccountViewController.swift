@@ -66,6 +66,13 @@ class CreateAccountViewController: UIViewController {
     private let alreadyMemberButton = UIButton(titleColor: R.color.lightRed()!, title: "Already a member? Log In!",
                                                font: R.font.karlaBold(size: 20)!, breakMode: .byWordWrapping)
 
+    private let activityIndicator: UIActivityIndicatorView = {
+        let ai = UIActivityIndicatorView()
+        ai.hidesWhenStopped = true
+        ai.color = .black
+        return ai
+    }()
+
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
@@ -82,31 +89,31 @@ class CreateAccountViewController: UIViewController {
         viewModel.didUpdateState = {
             let status = self.viewModel.signUpButtonState
 
-            if status == true {
-                self.signUpButton.backgroundColor = .green
-            } else {
+            switch status {
+            case .animating:
+                print("this state")
+                self.signUpButton.isEnabled = false
+                self.activityIndicator.startAnimating()
                 self.signUpButton.backgroundColor = R.color.lightGrayCustom()
+            case let .enabled(state):
+                if state {
+                    self.signUpButton.isEnabled = true
+                    self.activityIndicator.stopAnimating()
+                    self.signUpButton.backgroundColor = .green
+                } else {
+                    self.signUpButton.isEnabled = true
+                    self.signUpButton.backgroundColor = R.color.lightGrayCustom()
+                    self.activityIndicator.stopAnimating()
+                }
+
+                print("state is", state)
             }
         }
 
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
-    }
 
-    @objc private func dismissKeyboard() {
-        view.endEditing(true)
-    }
-
-    private func setupTextFieldsHandlers() {
-        let didEmailChange: ((String) -> Void) = { [weak self] email in
-            self?.viewModel.setEmail(email)
-        }
-        emailTextFieldView.didChangeText = didEmailChange
-
-        let didPasswordChange: ((String) -> Void) = { [weak self] password in
-            self?.viewModel.setPassword(password)
-        }
-        passwordTextFieldView.didChangeText = didPasswordChange
+        signUpButton.addTarget(self, action: #selector(HandleSignIn), for: .touchUpInside)
     }
 
     // MARK: - UI Actions
@@ -191,42 +198,12 @@ class CreateAccountViewController: UIViewController {
             alreadyMemberButton.top == termLabel.bottom + 70
             alreadyMemberButton.centerX == alreadyMemberButton.superview!.centerX
         }
-    }
 
-    @objc func handleTermTapped(gesture: UITapGestureRecognizer) {
-        print("hello")
-    }
+        signUpButton.addSubview(activityIndicator)
 
-    // MARK: - Private Methods
+        constrain(activityIndicator) { activityIndicator in
 
-    private func setupHandlers() {
-        dropDownSelectView.didTapButton = {
-            self.view.endEditing(true)
-            UIView.animate(withDuration: 0.2) {
-                self.scrollView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
-                self.popupMenu.alpha = 1
-                self.popupMenu.transform = .identity
-                self.signUpButton.isHidden = true
-                self.termLabel.isHidden = true
-                self.alreadyMemberButton.isHidden = true
-            }
-        }
-
-        viewModel.didFetchedGroups = {
-            let heihght: CGFloat = CGFloat(self.viewModel.availableGroups!.count * 30) + 35
-            self.setupPopUpMenu(withHeight: heihght)
-            self.popupMenu.layoutIfNeeded()
-            self.popupMenu.configure(items: self.viewModel.availableGroups!)
-        }
-
-        popupMenu.didSelectItem = { [weak self] group in
-            self?.viewModel.didChangeGroup(group: group)
-            print("group set \(group)")
-            self?.dropDownSelectView.setTitle(title: group)
-
-            UIView.animate(withDuration: 0.4, animations: {
-                self?.hidePopUpWindow()
-            })
+            activityIndicator.center == activityIndicator.superview!.center
         }
     }
 
@@ -245,6 +222,78 @@ class CreateAccountViewController: UIViewController {
             popupMenu.width == dropDownSelectView.width
             popupMenu.centerX == dropDownSelectView.centerX
             popupMenu.height == height
+        }
+    }
+
+    // MARK: - Private Methods
+
+    @objc private func handleTermTapped(gesture: UITapGestureRecognizer) {
+        print("hello")
+    }
+
+    @objc private func HandleSignIn() {
+        viewModel.createNewUser { result in
+
+            switch result {
+            case .success:
+                print("success")
+            case let .failure(error):
+                let alertController = AlertAssist.showErrorAlert(error)
+                self.present(alertController, animated: true)
+            }
+        }
+    }
+
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+    }
+
+    private func setupTextFieldsHandlers() {
+        let didEmailChange: ((String) -> Void) = { [weak self] email in
+            self?.viewModel.setEmail(email)
+        }
+        emailTextFieldView.didChangeText = didEmailChange
+
+        let didPasswordChange: ((String) -> Void) = { [weak self] password in
+            self?.viewModel.setPassword(password)
+        }
+        passwordTextFieldView.didChangeText = didPasswordChange
+    }
+
+    private func setupHandlers() {
+        dropDownSelectView.didTapButton = { [weak self] in
+            self?.view.endEditing(true)
+            UIView.animate(withDuration: 0.2) {
+                self?.scrollView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
+                self?.navigationController?.navigationBar.alpha = 0.5
+                self?.emailTextFieldView.isUserInteractionEnabled = false
+                self?.passwordTextFieldView.isUserInteractionEnabled = false
+                self?.popupMenu.alpha = 1
+                self?.popupMenu.transform = .identity
+                self?.signUpButton.isHidden = true
+                self?.termLabel.isHidden = true
+                self?.alreadyMemberButton.isHidden = true
+            }
+        }
+
+        viewModel.didFetchedGroups = {
+            let heihght: CGFloat = CGFloat(self.viewModel.availableGroups!.count * 30) + 35
+            self.setupPopUpMenu(withHeight: heihght)
+            self.popupMenu.layoutIfNeeded()
+            self.popupMenu.configure(items: self.viewModel.availableGroups!)
+        }
+
+        popupMenu.didSelectItem = { [weak self] group in
+            self?.viewModel.didChangeGroup(group: group)
+            print("group set \(group)")
+            self?.dropDownSelectView.setTitle(title: group)
+
+            UIView.animate(withDuration: 0.4, animations: {
+                self?.hidePopUpWindow()
+                self?.navigationController?.navigationBar.alpha = 1
+                self?.emailTextFieldView.isUserInteractionEnabled = true
+                self?.passwordTextFieldView.isUserInteractionEnabled = true
+            })
         }
     }
 }

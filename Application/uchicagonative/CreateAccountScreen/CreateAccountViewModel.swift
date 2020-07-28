@@ -6,26 +6,14 @@
 //  Copyright © 2020 Vasiliy Matveev. All rights reserved.
 //
 
+import FirebaseAuth
 import UIKit
 
 class CreateAccountViewModel {
-    var email: String?
-    var password: String?
-    var selectedGroup: String?
-
-    var availableGroups: [String]?
-
-    var didFetchedGroups: (() -> Void)?
-
-    var didUpdateState: (() -> Void)?
-
-    var signUpButtonState: Bool {
-        return isPasswordNotEmptyCheck() && isValidEmailCheck() && isSelectedGroupNotNil()
-    }
+    // MARK: - Init
 
     init() {
         FireBaseManager.sharedInstance.fetchAvailableGroups { [weak self] result in
-
             switch result {
             case let .failure(error):
                 print(error)
@@ -37,27 +25,89 @@ class CreateAccountViewModel {
         }
     }
 
+    // MARK: - Private Properties
+
+    private var email: String?
+    private var password: String?
+    private var selectedGroup: String?
+
+    // MARK: - Public Properties
+
+    var availableGroups: [String]?
+
+    var isRequesting: Bool = false {
+        didSet {
+            didUpdateState?()
+        }
+    }
+
+    var signUpButtonState: SignUpButtonState {
+        if isRequesting {
+            return .animating
+        } else {
+            return .enabled(isPasswordNotEmptyCheck() && isValidEmailCheck() && isSelectedGroupNotNil())
+        }
+    }
+
+    // MARK: - Handlers
+
+    var didFetchedGroups: (() -> Void)?
+
+    var didUpdateState: (() -> Void)?
+
+    // MARK: - Enums
+
+    enum SignUpButtonState {
+        case enabled(Bool), animating
+    }
+
+    // MARK: - Public Methods
+
+    /// Set model email
     func setEmail(_ email: String) {
         self.email = email
         print("email")
         didUpdateState?()
     }
 
+    /// Set model password
     func setPassword(_ password: String) {
         print("password")
         self.password = password
         didUpdateState?()
     }
 
+    /// Set self selected group from dporDown menu and update state
     func didChangeGroup(group: String) {
         selectedGroup = group
         didUpdateState?()
+    }
+
+    /// Create new user in FireBase
+    func createNewUser(completion: @escaping (Result<Void, Error>) -> Void) {
+        // get text data from emailTF and passwordTF and clearing from any spaces or new lines
+        guard let email = email?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
+        guard let password = password?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
+        isRequesting = true
+        // LogIn FireBase
+        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { [weak self] _, error in
+            if error == nil {
+                self?.didUpdateState?()
+                completion(.success(()))
+            } else {
+                self?.didUpdateState?()
+                completion(.failure(error!))
+            }
+            self?.isRequesting = false
+        }
     }
 
     /// Return true if user password and email are correct form
     func isLoginButtonEnabled() -> Bool {
         return isPasswordNotEmptyCheck() && isValidEmailCheck()
     }
+
+    // MARK: - Private Methods
 
     /// check if email correct
     private func isValidEmailCheck() -> Bool {
