@@ -18,9 +18,10 @@ class CreateAccountViewModel {
             case let .failure(error):
                 print(error)
             case let .success(groups):
-                self?.availableGroups = groups
-                self?.didFetchedGroups?()
+                self?.availableGroups = Array(groups.keys)
+                self?.groupNameIdDictionary = groups
                 print("groups fetched")
+                self?.didFetchedGroups?()
             }
         }
     }
@@ -30,10 +31,11 @@ class CreateAccountViewModel {
     private var email: String?
     private var password: String?
     private var selectedGroup: String?
+    private var groupNameIdDictionary = [String: String]()
 
     // MARK: - Public Properties
 
-    var availableGroups: [String]?
+    var availableGroups = [String]()
 
     var isRequesting: Bool = false {
         didSet {
@@ -90,8 +92,21 @@ class CreateAccountViewModel {
         guard let password = password?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
         isRequesting = true
         // LogIn FireBase
-        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { [weak self] _, error in
+        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { [weak self] result, error in
             if error == nil {
+                guard let selectedGroup = self?.selectedGroup else { return }
+
+                let userInfo: [String: Any] = [
+                    "email": email,
+                    "projectId": self?.groupNameIdDictionary[selectedGroup] ?? "",
+                    "role": "subject"
+                    // "createdAt": ServerValue.timestamp()
+                ]
+
+                FireBaseManager.sharedInstance.addDocumentToUserProfiles(documentName: (result?.user.uid)!, attributes: userInfo) { _ in
+                    print("123")
+                }
+
                 self?.didUpdateState?()
                 completion(.success(()))
             } else {

@@ -277,10 +277,10 @@ class CreateAccountViewController: UIViewController {
         }
 
         viewModel.didFetchedGroups = {
-            let heihght: CGFloat = CGFloat(self.viewModel.availableGroups!.count * 30) + 35
+            let heihght: CGFloat = CGFloat(self.viewModel.availableGroups.count * 30) + 35
             self.setupPopUpMenu(withHeight: heihght)
             self.popupMenu.layoutIfNeeded()
-            self.popupMenu.configure(items: self.viewModel.availableGroups!)
+            self.popupMenu.configure(items: self.viewModel.availableGroups)
         }
 
         popupMenu.didSelectItem = { [weak self] group in

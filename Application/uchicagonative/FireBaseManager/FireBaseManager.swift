@@ -15,7 +15,7 @@ class FireBaseManager {
 
     static let sharedInstance = FireBaseManager()
 
-    func fetchAvailableGroups(completion: @escaping (Result<[String], Error>) -> Void) {
+    func fetchAvailableGroups(completion: @escaping (Result<[String: String], Error>) -> Void) {
         db.collection("sessionConfigurations").getDocuments { snapshot, error in
 
             if error != nil {
@@ -23,14 +23,29 @@ class FireBaseManager {
                 return
             }
 
-            var groups = [String]()
+            var groups = [String: String]()
             snapshot?.documents.forEach { document in
                 let data = document.data()
                 let group = data["name"] as? String ?? ""
-                groups.append(group)
+                groups[group] = document.documentID
             }
 
             completion(.success(groups))
+        }
+    }
+
+    func addDocumentToUserProfiles(documentName: String, attributes: [String: String],
+                                   completion: @escaping (Result<Void, Error>) -> Void) {
+        db.collection("userProfiles").document(documentName).setData(attributes) { error in
+
+            if let error = error {
+                completion(.failure(error))
+                print("error")
+                return
+            } else {
+                completion(.success(()))
+                print("added")
+            }
         }
     }
 }
