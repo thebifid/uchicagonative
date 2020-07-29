@@ -10,8 +10,7 @@ import Cartography
 import UIKit
 
 class PopupMenu: UIView {
-    var items: [String] = ["Select an item..."]
-    var didSelectItem: ((String) -> Void)?
+    // MARK: - Init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -19,6 +18,21 @@ class PopupMenu: UIView {
         backgroundColor = .white
     }
 
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Private Properties
+
+    private var items: [String] = ["Select an item..."]
+
+    // MARK: - Handlers
+
+    var didSelectItem: ((String) -> Void)?
+
+    // MARK: - Public Methods
+
+    /// set seilf items
     func configure(items: [String]) {
         self.items += items
         backgroundColor = .white
@@ -36,9 +50,7 @@ class PopupMenu: UIView {
         }
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    // MARK: - Private Methods
 
     @objc private func handleButtonPressed(sender: UIButton) {
         guard let item = sender.titleLabel?.text else { return }

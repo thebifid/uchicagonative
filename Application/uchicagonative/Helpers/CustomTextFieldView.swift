@@ -10,6 +10,8 @@ import Cartography
 import UIKit
 
 class CustomTextFieldView: UIView {
+    // MARK: - UI Controls
+
     private let textField: UITextField = {
         let tf = UITextField()
         tf.borderStyle = .none
@@ -22,7 +24,11 @@ class CustomTextFieldView: UIView {
 
     private let separatorView = UIView()
 
+    // MARK: - Handlers
+
     var didChangeText: ((String) -> Void)?
+
+    // MARK: - Public Properties
 
     var text: String {
         set {
@@ -32,6 +38,8 @@ class CustomTextFieldView: UIView {
             return textField.text ?? ""
         }
     }
+
+    // MARK: - Init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -53,17 +61,21 @@ class CustomTextFieldView: UIView {
         }
     }
 
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Public Methods
+
     func configure(placeholder: String, isSecureTextEntry: Bool = false, spellCheck: UITextSpellCheckingType = .default) {
         textField.placeholder = placeholder
         textField.isSecureTextEntry = isSecureTextEntry
         textField.spellCheckingType = spellCheck
     }
 
+    // MARK: - Private Methods
+
     @objc private func editingChanged(_ sender: UITextField) {
         didChangeText?(text)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }

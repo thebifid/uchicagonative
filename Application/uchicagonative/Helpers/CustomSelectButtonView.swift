@@ -10,6 +10,8 @@ import Cartography
 import UIKit
 
 class CustomSelectButtonView: UIView {
+    // MARK: - UI Controls
+
     private let label: UILabel = {
         let label = UILabel()
         label.font = R.font.karlaRegular(size: Constants.textFieldFontSize)!
@@ -29,10 +31,15 @@ class CustomSelectButtonView: UIView {
         imageView.alpha = 0.5
         return imageView
     }()
+    
 
     private let separatorView = UIView()
 
+    // MARK: - Hanldeers
+
     var didTapButton: (() -> Void)?
+
+    // MARK: - Init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -74,6 +81,12 @@ class CustomSelectButtonView: UIView {
         }
     }
 
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Public Methods
+
     func configure(labelTitle: String, buttonTitle: String) {
         label.text = labelTitle
         button.setTitle(buttonTitle, for: .normal)
@@ -86,9 +99,5 @@ class CustomSelectButtonView: UIView {
 
     @objc private func handleButtonPressed() {
         didTapButton?()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
