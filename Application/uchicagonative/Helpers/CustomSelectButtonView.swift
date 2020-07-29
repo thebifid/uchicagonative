@@ -31,7 +31,13 @@ class CustomSelectButtonView: UIView {
         imageView.alpha = 0.5
         return imageView
     }()
-    
+
+    private let activityIndicator: UIActivityIndicatorView = {
+        let ai = UIActivityIndicatorView()
+        ai.hidesWhenStopped = true
+        ai.color = .black
+        return ai
+    }()
 
     private let separatorView = UIView()
 
@@ -43,13 +49,14 @@ class CustomSelectButtonView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
+        activityIndicator.startAnimating()
         separatorView.backgroundColor = UIColor(white: 0.3, alpha: 0.3)
 
         addSubview(label)
         addSubview(button)
 
         button.addTarget(self, action: #selector(handleButtonPressed), for: .touchUpInside)
+        button.isEnabled = false
 
         addSubview(separatorView)
 
@@ -79,6 +86,13 @@ class CustomSelectButtonView: UIView {
             arrowDown.centerY == arrowDown.superview!.centerY
             arrowDown.right == arrowDown.superview!.right - 10
         }
+
+        button.addSubview(activityIndicator)
+
+        constrain(activityIndicator) { activityIndicator in
+
+            activityIndicator.center == activityIndicator.superview!.center
+        }
     }
 
     required init?(coder: NSCoder) {
@@ -95,6 +109,11 @@ class CustomSelectButtonView: UIView {
     func setTitle(title: String) {
         button.setTitle(title, for: .normal)
         button.setTitleColor(.black, for: .normal)
+    }
+
+    func activateButton() {
+        activityIndicator.stopAnimating()
+        button.isEnabled = true
     }
 
     @objc private func handleButtonPressed() {
