@@ -82,13 +82,14 @@ class CreateAccountViewController: UIViewController {
 
         setupHandlers()
         setupTextFieldsHandlers()
+        setupGestures()
 
+        // This handler for update state of signUp button and start/stop animating
         viewModel.didUpdateState = {
             let status = self.viewModel.signUpButtonState
 
             switch status {
             case .animating:
-                print("this state")
                 self.signUpButton.isEnabled = false
                 self.activityIndicator.startAnimating()
                 self.signUpButton.backgroundColor = R.color.lightGrayCustom()
@@ -102,19 +103,11 @@ class CreateAccountViewController: UIViewController {
                     self.signUpButton.backgroundColor = R.color.lightGrayCustom()
                     self.activityIndicator.stopAnimating()
                 }
-
-                print("state is", state)
             }
         }
 
-        let termTap = UITapGestureRecognizer(target: self, action: #selector(handleTermTapped))
-        termLabel.addGestureRecognizer(termTap)
-
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        view.addGestureRecognizer(tap)
-
-        signUpButton.addTarget(self, action: #selector(HandleSignIn), for: .touchUpInside)
-        alreadyMemberButton.addTarget(self, action: #selector(HandleAlreadyMember), for: .touchUpInside)
+        signUpButton.addTarget(self, action: #selector(handleSignIn), for: .touchUpInside)
+        alreadyMemberButton.addTarget(self, action: #selector(handleAlreadyMember), for: .touchUpInside)
     }
 
     // MARK: - UI Actions
@@ -228,7 +221,15 @@ class CreateAccountViewController: UIViewController {
 
     // MARK: - Private Methods
 
-    @objc private func HandleAlreadyMember() {
+    private func setupGestures() {
+        let termTap = UITapGestureRecognizer(target: self, action: #selector(handleTermTapped))
+        termLabel.addGestureRecognizer(termTap)
+
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboardAndPopUp))
+        view.addGestureRecognizer(tap)
+    }
+
+    @objc private func handleAlreadyMember() {
         navigationController?.popToRootViewController(animated: true)
     }
 
@@ -238,7 +239,7 @@ class CreateAccountViewController: UIViewController {
         navigationController?.pushViewController(termOfServiceController, animated: true)
     }
 
-    @objc private func HandleSignIn() {
+    @objc private func handleSignIn() {
         viewModel.createNewUser { result in
 
             switch result {
@@ -251,8 +252,16 @@ class CreateAccountViewController: UIViewController {
         }
     }
 
-    @objc private func dismissKeyboard() {
+    @objc private func dismissKeyboardAndPopUp() {
         view.endEditing(true)
+
+        if popupMenu.alpha != 0 {
+            hidePopUpWindow()
+
+            navigationController?.navigationBar.alpha = 1
+            emailTextFieldView.isUserInteractionEnabled = true
+            passwordTextFieldView.isUserInteractionEnabled = true
+        }
     }
 
     private func setupTextFieldsHandlers() {
@@ -268,21 +277,23 @@ class CreateAccountViewController: UIViewController {
     }
 
     private func setupHandlers() {
-        dropDownSelectView.didTapButton = { [weak self] in
-            self?.view.endEditing(true)
+        // when user press button to show popUpMenu
+        dropDownSelectView.didTapButton = {
+            self.view.endEditing(true)
             UIView.animate(withDuration: 0.2) {
-                self?.scrollView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
-                self?.navigationController?.navigationBar.alpha = 0.5
-                self?.emailTextFieldView.isUserInteractionEnabled = false
-                self?.passwordTextFieldView.isUserInteractionEnabled = false
-                self?.popupMenu.alpha = 1
-                self?.popupMenu.transform = .identity
-                self?.signUpButton.isHidden = true
-                self?.termLabel.isHidden = true
-                self?.alreadyMemberButton.isHidden = true
+                self.scrollView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
+                self.navigationController?.navigationBar.alpha = 0.5
+                self.emailTextFieldView.isUserInteractionEnabled = false
+                self.passwordTextFieldView.isUserInteractionEnabled = false
+                self.popupMenu.alpha = 1
+                self.popupMenu.transform = .identity
+                self.signUpButton.isHidden = true
+                self.termLabel.isHidden = true
+                self.alreadyMemberButton.isHidden = true
             }
         }
 
+        // when groups fetched from FireBase
         viewModel.didFetchedGroups = {
             let height: CGFloat = CGFloat(self.viewModel.availableGroups.count * 30) + 35
             self.setupPopUpMenu(withHeight: height)
@@ -291,16 +302,15 @@ class CreateAccountViewController: UIViewController {
             self.dropDownSelectView.activateButton()
         }
 
-        popupMenu.didSelectItem = { [weak self] group in
-            self?.viewModel.didChangeGroup(group: group)
-            print("group set \(group)")
-            self?.dropDownSelectView.setTitle(title: group)
+        popupMenu.didSelectItem = { group in
+            self.viewModel.didChangeGroup(group: group)
+            self.dropDownSelectView.setTitle(title: group)
 
             UIView.animate(withDuration: 0.4, animations: {
-                self?.hidePopUpWindow()
-                self?.navigationController?.navigationBar.alpha = 1
-                self?.emailTextFieldView.isUserInteractionEnabled = true
-                self?.passwordTextFieldView.isUserInteractionEnabled = true
+                self.hidePopUpWindow()
+                self.navigationController?.navigationBar.alpha = 1
+                self.emailTextFieldView.isUserInteractionEnabled = true
+                self.passwordTextFieldView.isUserInteractionEnabled = true
             })
         }
     }

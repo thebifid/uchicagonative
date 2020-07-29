@@ -8,6 +8,8 @@
 
 import UIKit
 
+/// This extension make  hightlighted text in string
+
 extension String {
     static func format(strings: [String],
                        boldFont: UIFont = UIFont.boldSystemFont(ofSize: 14),

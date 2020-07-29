@@ -7,6 +7,7 @@
 //
 
 import FirebaseAuth
+import FirebaseFirestore
 import UIKit
 
 class CreateAccountViewModel {
@@ -20,7 +21,6 @@ class CreateAccountViewModel {
             case let .success(groups):
                 self?.availableGroups = Array(groups.keys)
                 self?.groupNameIdDictionary = groups
-                print("groups fetched")
                 self?.didFetchedGroups?()
             }
         }
@@ -35,14 +35,10 @@ class CreateAccountViewModel {
 
     // MARK: - Public Properties
 
+    /// Available groups for popUpMenu
     var availableGroups = [String]()
 
-    var isRequesting: Bool = false {
-        didSet {
-            didUpdateState?()
-        }
-    }
-
+    /// This Property for signUp button (if requesting = animate), disabled / enabled if fields are filled
     var signUpButtonState: SignUpButtonState {
         if isRequesting {
             return .animating
@@ -53,8 +49,10 @@ class CreateAccountViewModel {
 
     // MARK: - Handlers
 
+    /// Works when fetch group request is completed
     var didFetchedGroups: (() -> Void)?
 
+    /// Hanlder for update button state (SignUp button)
     var didUpdateState: (() -> Void)?
 
     // MARK: - Enums
@@ -68,13 +66,11 @@ class CreateAccountViewModel {
     /// Set model email
     func setEmail(_ email: String) {
         self.email = email
-        print("email")
         didUpdateState?()
     }
 
     /// Set model password
     func setPassword(_ password: String) {
-        print("password")
         self.password = password
         didUpdateState?()
     }
@@ -100,8 +96,8 @@ class CreateAccountViewModel {
                     "email": email,
                     "projectId": self?.groupNameIdDictionary[selectedGroup] ?? "",
                     "role": "subject",
-                    "createdAt": Int(Date().timeIntervalSince1970),
-                    "updatedAt": Int(Date().timeIntervalSince1970)
+                    "createdAt": FieldValue.serverTimestamp(),
+                    "updatedAt": FieldValue.serverTimestamp()
                 ]
 
                 FireBaseManager.sharedInstance.addDocumentToUserProfiles(documentName: (result?.user.uid)!,
@@ -131,19 +127,22 @@ class CreateAccountViewModel {
 
     // MARK: - Private Methods
 
+    private var isRequesting: Bool = false {
+        didSet {
+            didUpdateState?()
+        }
+    }
+
     /// check if email correct
     private func isValidEmailCheck() -> Bool {
         guard let email = email else { return false }
-        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-
-        let emailPred = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
-        return emailPred.evaluate(with: email) ? true : false
+        return CheckFields.isValidEmailCheck(email)
     }
 
     /// check if password is not empty
     private func isPasswordNotEmptyCheck() -> Bool {
         guard let password = password else { return false }
-        return !password.isEmpty ? true : false
+        return CheckFields.isPasswordNotEmptyCheck(password)
     }
 
     private func isSelectedGroupNotNil() -> Bool {

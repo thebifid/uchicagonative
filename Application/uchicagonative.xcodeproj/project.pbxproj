@@ -50,6 +50,7 @@
 		C19693FE24C833D10054296F /* Karla-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C19693F724C832EF0054296F /* Karla-Italic.ttf */; };
 		C19693FF24C833D30054296F /* Karla-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C19693F824C832F00054296F /* Karla-Regular.ttf */; };
 		C196940124C839320054296F /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C196940024C839320054296F /* UITextField+Extension.swift */; };
+		C1FD150324D152F700188BE0 /* CheckFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1FD150224D152F700188BE0 /* CheckFields.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,6 +100,7 @@
 		C19693F924C832F00054296F /* Helvetica-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Helvetica-Medium.ttf"; sourceTree = "<group>"; };
 		C19693FA24C832F00054296F /* Karla-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Karla-BoldItalic.ttf"; sourceTree = "<group>"; };
 		C196940024C839320054296F /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
+		C1FD150224D152F700188BE0 /* CheckFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckFields.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -277,6 +279,7 @@
 				C1713CF824CFE9E6002D0E04 /* CustomSelectButtonView.swift */,
 				C1713C9624CA8F10002D0E04 /* CustomTextFieldView.swift */,
 				C1713CEB24CEC7B3002D0E04 /* AlertAssist.swift */,
+				C1FD150224D152F700188BE0 /* CheckFields.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -538,6 +541,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C1713CEC24CEC7B3002D0E04 /* AlertAssist.swift in Sources */,
+				C1FD150324D152F700188BE0 /* CheckFields.swift in Sources */,
 				C19693D024C6C61A0054296F /* VerticalStackVIew.swift in Sources */,
 				C116348124C6B3CF00B6C394 /* LoginViewController.swift in Sources */,
 				C1713C8B24C94B23002D0E04 /* RootViewController.swift in Sources */,
