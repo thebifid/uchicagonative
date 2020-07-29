@@ -12,22 +12,23 @@ import WebKit
 
 /// This View Controller shows 'Terms Of Service' info
 class TermsOfServiceViewController: UIViewController {
+    // MARK: - Private Properties
+
     private let webView = WKWebView()
 
-    let url = Bundle.main.url(forResource: "HTML", withExtension: "html", subdirectory: "Resources/HTML")!
+    // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        webView.loadFileURL(url, allowingReadAccessTo: url)
-        let request = URLRequest(url: url)
-        webView.load(request)
+        webView.isOpaque = false
+        webView.backgroundColor = R.color.lightGrayCustom()
 
-//            webView.loadFileURL(url, allowingReadAccessTo: url)
-//            let request = URLRequest(url: url)
-//            webView.load(request)
-
-        //   webView.loadHTMLString(HTML, baseURL: nil)
+        if let indexURL = Bundle.main.url(forResource: "HTML",
+                                          withExtension: "html") {
+            webView.loadFileURL(indexURL,
+                                allowingReadAccessTo: indexURL)
+        }
 
         view.addSubview(webView)
 

@@ -234,6 +234,7 @@ class CreateAccountViewController: UIViewController {
 
     @objc private func handleTermTapped(gesture: UITapGestureRecognizer) {
         let termOfServiceController = TermsOfServiceViewController()
+        termOfServiceController.navigationItem.title = "Term of Service"
         navigationController?.pushViewController(termOfServiceController, animated: true)
     }
 
