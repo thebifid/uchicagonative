@@ -233,7 +233,8 @@ class CreateAccountViewController: UIViewController {
     }
 
     @objc private func handleTermTapped(gesture: UITapGestureRecognizer) {
-        print("hello")
+        let termOfServiceController = TermsOfServiceViewController()
+        navigationController?.pushViewController(termOfServiceController, animated: true)
     }
 
     @objc private func HandleSignIn() {

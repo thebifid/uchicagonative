@@ -8,21 +8,31 @@
 
 import Cartography
 import UIKit
+import WebKit
+
 /// This View Controller shows 'Terms Of Service' info
 class TermsOfServiceViewController: UIViewController {
+    private let webView = WKWebView()
+
+    let url = Bundle.main.url(forResource: "HTML", withExtension: "html", subdirectory: "Resources/HTML")!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = R.color.appBackgroundColor()!
+        webView.loadFileURL(url, allowingReadAccessTo: url)
+        let request = URLRequest(url: url)
+        webView.load(request)
 
-        // WebView on this screen
+//            webView.loadFileURL(url, allowingReadAccessTo: url)
+//            let request = URLRequest(url: url)
+//            webView.load(request)
 
-        let webViewLabel = UILabel(title: "WebView")
-        view.addSubview(webViewLabel)
+        //   webView.loadHTMLString(HTML, baseURL: nil)
 
-        constrain(webViewLabel) { wv in
-            wv.centerX == wv.superview!.centerX
-            wv.centerY == wv.superview!.centerY
+        view.addSubview(webView)
+
+        constrain(webView) { webView in
+            webView.edges == webView.superview!.edges
         }
     }
 }

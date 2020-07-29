@@ -7,7 +7,6 @@
 //
 
 import FirebaseAuth
-import FirebaseFirestore
 import UIKit
 
 class CreateAccountViewModel {
@@ -101,7 +100,8 @@ class CreateAccountViewModel {
                     "email": email,
                     "projectId": self?.groupNameIdDictionary[selectedGroup] ?? "",
                     "role": "subject",
-                    "createdAt": FieldValue.serverTimestamp()
+                    "createdAt": Int(Date().timeIntervalSince1970),
+                    "updatedAt": Int(Date().timeIntervalSince1970)
                 ]
 
                 FireBaseManager.sharedInstance.addDocumentToUserProfiles(documentName: (result?.user.uid)!,
