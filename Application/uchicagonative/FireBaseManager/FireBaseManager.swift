@@ -34,7 +34,7 @@ class FireBaseManager {
         }
     }
 
-    func addDocumentToUserProfiles(documentName: String, attributes: [String: String],
+    func addDocumentToUserProfiles(documentName: String, attributes: [String: Any],
                                    completion: @escaping (Result<Void, Error>) -> Void) {
         db.collection("userProfiles").document(documentName).setData(attributes) { error in
 

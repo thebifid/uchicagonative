@@ -7,6 +7,7 @@
 //
 
 import FirebaseAuth
+import FirebaseFirestore
 import UIKit
 
 class CreateAccountViewModel {
@@ -99,12 +100,18 @@ class CreateAccountViewModel {
                 let userInfo: [String: Any] = [
                     "email": email,
                     "projectId": self?.groupNameIdDictionary[selectedGroup] ?? "",
-                    "role": "subject"
-                    // "createdAt": ServerValue.timestamp()
+                    "role": "subject",
+                    "createdAt": FieldValue.serverTimestamp()
                 ]
 
-                FireBaseManager.sharedInstance.addDocumentToUserProfiles(documentName: (result?.user.uid)!, attributes: userInfo) { _ in
-                    print("123")
+                FireBaseManager.sharedInstance.addDocumentToUserProfiles(documentName: (result?.user.uid)!,
+                                                                         attributes: userInfo) { result in
+                    switch result {
+                    case let .failure(error):
+                        print(error.localizedDescription)
+                    case .success:
+                        break
+                    }
                 }
 
                 self?.didUpdateState?()

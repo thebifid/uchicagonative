@@ -83,9 +83,6 @@ class CreateAccountViewController: UIViewController {
         setupHandlers()
         setupTextFieldsHandlers()
 
-        let termTap = UITapGestureRecognizer(target: self, action: #selector(handleTermTapped))
-        termLabel.addGestureRecognizer(termTap)
-
         viewModel.didUpdateState = {
             let status = self.viewModel.signUpButtonState
 
@@ -110,10 +107,14 @@ class CreateAccountViewController: UIViewController {
             }
         }
 
+        let termTap = UITapGestureRecognizer(target: self, action: #selector(handleTermTapped))
+        termLabel.addGestureRecognizer(termTap)
+
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
 
         signUpButton.addTarget(self, action: #selector(HandleSignIn), for: .touchUpInside)
+        alreadyMemberButton.addTarget(self, action: #selector(HandleAlreadyMember), for: .touchUpInside)
     }
 
     // MARK: - UI Actions
@@ -227,6 +228,10 @@ class CreateAccountViewController: UIViewController {
 
     // MARK: - Private Methods
 
+    @objc private func HandleAlreadyMember() {
+        navigationController?.popToRootViewController(animated: true)
+    }
+
     @objc private func handleTermTapped(gesture: UITapGestureRecognizer) {
         print("hello")
     }
@@ -236,7 +241,7 @@ class CreateAccountViewController: UIViewController {
 
             switch result {
             case .success:
-                print("success")
+                AppDelegate.shared.rootViewController.switchToMainScreen()
             case let .failure(error):
                 let alertController = AlertAssist.showErrorAlert(error)
                 self.present(alertController, animated: true)
