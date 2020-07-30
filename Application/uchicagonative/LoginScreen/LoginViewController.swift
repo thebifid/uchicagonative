@@ -146,7 +146,7 @@ class LoginViewController: UIViewController {
                 if state {
                     AppDelegate.shared.rootViewController.switchToMainScreen()
                 } else {
-                    let message = "Your account data is not set. Please, try registering again with same password or reset it"
+                    let message = "Your account data is not set. Please, try registering again with same password or reset it."
                     let alert = AlertAssist.showCustomAlert("Error!",
                                                             message: message,
                                                             optionHadler: nil)

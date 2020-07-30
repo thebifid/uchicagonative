@@ -257,74 +257,17 @@ class CreateAccountViewController: UIViewController {
     }
 
     @objc private func handleSignIn() {
-        // try login
-        viewModel.login { [weak self] result in
-
-            // Account isn't exist -> create new user
+        viewModel.createNewAccount { [weak self] result in
             switch result {
-            case .failure:
-                self?.viewModel.createNewUser(completion: { [weak self] result in
-                    // user created
-                    switch result {
-                    case .success:
-                        // add user data
-                        self?.viewModel.addUserData(completion: { [weak self] result in
-                            switch result {
-                            case .success:
-                                AppDelegate.shared.rootViewController.switchToMainScreen()
-                            case let .failure(error):
-                                let alert = AlertAssist.showErrorAlert(error)
-                                self?.present(alert, animated: true)
-                            }
-                        })
-                    // user is not created
-                    case let .failure(error):
-                        let alert = AlertAssist.showErrorAlert(error)
-                        self?.present(alert, animated: true)
-                    }
-                })
-
-            // Account is exitst
-            case .success:
-                FirebaseManager.sharedInstance.isUserDataExitsts { [weak self] resultCheck in
-                    switch resultCheck {
-                    case let .success(status):
-                        // document isn't exist
-                        if !status {
-                            self?.viewModel.addUserData { [weak self] result in
-                                switch result {
-                                case .success:
-                                    let alert = AlertAssist.showSuccessAlert(withMessage: "Data successfully added") { _ in
-                                        AppDelegate.shared.rootViewController.switchToMainScreen()
-                                    }
-                                    self?.present(alert, animated: true)
-
-                                case let .failure(error):
-                                    let alert = AlertAssist.showErrorAlert(error)
-                                    do {
-                                        try FirebaseAuth.Auth.auth().signOut()
-                                    } catch let logOutError {
-                                        let alert = AlertAssist.showErrorAlert(logOutError)
-                                        self?.present(alert, animated: true)
-                                    }
-                                    self?.present(alert, animated: true)
-                                }
-                            }
-                        }
-                        // document exists
-                        else {
-                            let alert = AlertAssist.showCustomAlert("Failed!", message:
-                                "Accoun's Already exist. You will be redirected to the main menu") { _ in
-                                AppDelegate.shared.rootViewController.switchToMainScreen()
-                            }
-                            self?.present(alert, animated: true)
-                        }
-
-                    case let .failure(error):
-                        let alert = AlertAssist.showErrorAlert(error)
-                        self?.present(alert, animated: true)
-                    }
+            case let .success(message):
+                let alert = AlertAssist.showSuccessAlert(withMessage: message) { _ in
+                    AppDelegate.shared.rootViewController.switchToMainScreen()
                 }
+                self?.present(alert, animated: true)
+
+            case let .failure(error):
+                let alert = AlertAssist.showErrorAlert(error)
+                self?.present(alert, animated: true)
             }
         }
     }

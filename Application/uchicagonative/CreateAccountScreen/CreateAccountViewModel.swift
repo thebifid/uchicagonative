@@ -120,17 +120,65 @@ class CreateAccountViewModel {
     }
 
     /// FireBase authorization
-    func login(completion: @escaping (Result<Void, Error>) -> Void) {
+    func createNewAccount(completion: @escaping (Result<String, Error>) -> Void) {
         // get text data from emailTF and passwordTF and clearing from any spaces or new lines
         guard let email = email?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
         guard let password = password?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
         // LogIn FireBase
         isRequesting = true
-        Auth.auth().signIn(withEmail: email, password: password) { _, error in
+        Auth.auth().signIn(withEmail: email, password: password) { result, error in
+
             if error == nil {
-                completion(.success(()))
+                // Logged
+                FirebaseManager.sharedInstance.isUserDataExitsts { [weak self] resultCheck in
+                    switch resultCheck {
+                    case let .success(status):
+                        // document isn't exist
+                        if !status {
+                            self?.addUserData { result in
+                                switch result {
+                                case .success:
+                                    completion(.success("Data successfully added."))
+
+                                case let .failure(error):
+                                    do {
+                                        try FirebaseAuth.Auth.auth().signOut()
+                                    } catch let logOutError {
+                                        completion(.failure(logOutError))
+                                    }
+                                    completion(.failure(error))
+                                }
+                            }
+                        }
+                        // document exists
+                        else {
+                            completion(.success("Accoun's Already exist. You will be redirected to the main menu."))
+                        }
+
+                    case let .failure(error):
+                        completion(.failure(error))
+                    }
+                }
+
             } else {
-                completion(.failure(error!))
+                self.createNewUser(completion: { result in
+                    // user created
+                    switch result {
+                    case .success:
+                        // add user data
+                        self.addUserData(completion: { result in
+                            switch result {
+                            case .success:
+                                AppDelegate.shared.rootViewController.switchToMainScreen()
+                            case let .failure(error):
+                                completion(.failure(error))
+                            }
+                        })
+                    // user is not created
+                    case let .failure(error):
+                        completion(.failure(error))
+                    }
+                })
             }
         }
     }

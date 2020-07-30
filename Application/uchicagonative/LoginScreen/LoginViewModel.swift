@@ -72,7 +72,7 @@ class LoginViewModel {
 
             // Logged
             if error == nil {
-                FirebaseManager.sharedInstance.isUserDataExitsts { result in
+                FirebaseManager.sharedInstance.isUserDataExitsts { [weak self] result in
                     switch result {
                     case let .success(state):
                         // userData is not exists
@@ -81,7 +81,6 @@ class LoginViewModel {
                         } else {
                             // userData exists
                             if error == nil {
-                                self?.didUpdateState?()
                                 completion(.success(true))
                             } else {
                                 self?.didUpdateState?()
@@ -91,6 +90,7 @@ class LoginViewModel {
                     case let .failure(error):
                         completion(.failure(error))
                     }
+                    self?.isLoggingIn = false
                 }
             }
 
@@ -98,8 +98,6 @@ class LoginViewModel {
             else {
                 completion(.failure(error!))
             }
-
-            self?.isLoggingIn = false
         }
     }
 
