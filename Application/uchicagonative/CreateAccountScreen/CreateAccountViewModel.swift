@@ -72,24 +72,6 @@ class CreateAccountViewModel {
 
     var userInfo = [String: Any]()
 
-    /// Create new user in FireBase
-    func createNewUser(completion: @escaping (Result<Void, Error>) -> Void) {
-        // get text data from emailTF and passwordTF and clearing from any spaces or new lines
-        guard let email = email?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
-        guard let password = password?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
-        isRequesting = true
-
-        // LogIn FireBase
-        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { [weak self] _, error in
-            if error == nil {
-                completion(.success(()))
-            } else {
-                completion(.failure(error!))
-            }
-            self?.isRequesting = false
-        }
-    }
-
     func addUserData(completion: @escaping ((Result<Void, Error>) -> Void)) {
         setUserInfo()
         FirebaseManager.sharedInstance.addDocumentToUserProfiles(documentName: FirebaseAuth.Auth.auth().currentUser!.uid,
@@ -119,7 +101,7 @@ class CreateAccountViewModel {
         }
     }
 
-    /// FireBase authorization
+    /// Create new account is Firebase
     func createNewAccount(completion: @escaping (Result<String, Error>) -> Void) {
         // get text data from emailTF and passwordTF and clearing from any spaces or new lines
         guard let email = email?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
@@ -130,12 +112,12 @@ class CreateAccountViewModel {
 
             if error == nil {
                 // Logged
-                FirebaseManager.sharedInstance.isUserDataExitsts { [weak self] resultCheck in
+                FirebaseManager.sharedInstance.isUserDataExitsts { resultCheck in
                     switch resultCheck {
                     case let .success(status):
                         // document isn't exist
                         if !status {
-                            self?.addUserData { result in
+                            self.addUserData { result in
                                 switch result {
                                 case .success:
                                     completion(.success("Data successfully added."))
@@ -189,6 +171,23 @@ class CreateAccountViewModel {
     }
 
     // MARK: - Private Methods
+
+    private func createNewUser(completion: @escaping (Result<Void, Error>) -> Void) {
+        // get text data from emailTF and passwordTF and clearing from any spaces or new lines
+        guard let email = email?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
+        guard let password = password?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
+        isRequesting = true
+
+        // LogIn FireBase
+        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { [weak self] _, error in
+            if error == nil {
+                completion(.success(()))
+            } else {
+                completion(.failure(error!))
+                self?.isRequesting = false
+            }
+        }
+    }
 
     private func setUserInfo() {
         guard let selectedGroup = self.selectedGroup else { return }
