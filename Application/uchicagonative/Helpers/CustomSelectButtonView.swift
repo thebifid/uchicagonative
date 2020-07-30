@@ -49,7 +49,7 @@ class CustomSelectButtonView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        activityIndicator.startAnimating()
+
         separatorView.backgroundColor = UIColor(white: 0.3, alpha: 0.3)
 
         addSubview(label)
@@ -111,9 +111,14 @@ class CustomSelectButtonView: UIView {
         button.setTitleColor(.black, for: .normal)
     }
 
-    func activateButton() {
-        activityIndicator.stopAnimating()
-        button.isEnabled = true
+    /// Enables/disables activity indicator animation.
+    func setAnimation(enabled: Bool) {
+        button.isEnabled = !enabled
+        if enabled {
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.stopAnimating()
+        }
     }
 
     @objc private func handleButtonPressed() {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-/// This extension make  hightlighted text in string
+/// Make  hightlighted text in string
 
 extension String {
     static func format(strings: [String],

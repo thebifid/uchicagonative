@@ -8,7 +8,7 @@
 
 import Cartography
 import UIKit
-/// This View Controller shows send user's Feedback screen
+/// Shows send user's Feedback screen
 class SendFeedbackViewController: UIViewController {
     let scrollView = UIScrollView()
 

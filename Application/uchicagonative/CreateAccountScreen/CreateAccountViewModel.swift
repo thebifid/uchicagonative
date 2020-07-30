@@ -14,12 +14,11 @@ class CreateAccountViewModel {
     // MARK: - Init
 
     init() {
-        FireBaseManager.sharedInstance.fetchAvailableGroups { [weak self] result in
+        FirebaseManager.sharedInstance.fetchAvailableGroups { [weak self] result in
             switch result {
             case let .failure(error):
                 print(error)
             case let .success(groups):
-                self?.availableGroups = Array(groups.keys)
                 self?.groupNameIdDictionary = groups
                 self?.didFetchedGroups?()
             }
@@ -36,9 +35,11 @@ class CreateAccountViewModel {
     // MARK: - Public Properties
 
     /// Available groups for popUpMenu
-    var availableGroups = [String]()
+    var availableGroups: [String] {
+        return Array(groupNameIdDictionary.keys)
+    }
 
-    /// This Property for signUp button (if requesting = animate), disabled / enabled if fields are filled
+    /// SignUp button state
     var signUpButtonState: SignUpButtonState {
         if isRequesting {
             return .animating
@@ -87,11 +88,10 @@ class CreateAccountViewModel {
         guard let email = email?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
         guard let password = password?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
         isRequesting = true
+        guard let selectedGroup = self.selectedGroup else { return }
         // LogIn FireBase
         FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { [weak self] result, error in
             if error == nil {
-                guard let selectedGroup = self?.selectedGroup else { return }
-
                 let userInfo: [String: Any] = [
                     "email": email,
                     "projectId": self?.groupNameIdDictionary[selectedGroup] ?? "",
@@ -100,7 +100,7 @@ class CreateAccountViewModel {
                     "updatedAt": FieldValue.serverTimestamp()
                 ]
 
-                FireBaseManager.sharedInstance.addDocumentToUserProfiles(documentName: (result?.user.uid)!,
+                FirebaseManager.sharedInstance.addDocumentToUserProfiles(documentName: (result?.user.uid)!,
                                                                          attributes: userInfo) { result in
                     switch result {
                     case let .failure(error):
@@ -136,13 +136,13 @@ class CreateAccountViewModel {
     /// check if email correct
     private func isValidEmailCheck() -> Bool {
         guard let email = email else { return false }
-        return CheckFields.isValidEmailCheck(email)
+        return CheckFields.isValidEmail(email)
     }
 
     /// check if password is not empty
     private func isPasswordNotEmptyCheck() -> Bool {
         guard let password = password else { return false }
-        return CheckFields.isPasswordNotEmptyCheck(password)
+        return CheckFields.isValidPassword(password)
     }
 
     private func isSelectedGroupNotNil() -> Bool {

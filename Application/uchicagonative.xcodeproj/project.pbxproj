@@ -14,7 +14,7 @@
 		C116348624C6B3D000B6C394 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C116348524C6B3D000B6C394 /* Assets.xcassets */; };
 		C116348924C6B3D000B6C394 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C116348724C6B3D000B6C394 /* LaunchScreen.storyboard */; };
 		C116349524C6B6E100B6C394 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C116349424C6B6E100B6C394 /* R.generated.swift */; };
-		C13F115024D14CAD001676C2 /* HTML.html in Resources */ = {isa = PBXBuildFile; fileRef = C13F114F24D14CAD001676C2 /* HTML.html */; };
+		C13F115024D14CAD001676C2 /* tos.html in Resources */ = {isa = PBXBuildFile; fileRef = C13F114F24D14CAD001676C2 /* tos.html */; };
 		C1713C8624C937F9002D0E04 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C1713C8524C937F9002D0E04 /* GoogleService-Info.plist */; };
 		C1713C8B24C94B23002D0E04 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713C8A24C94B23002D0E04 /* RootViewController.swift */; };
 		C1713C8F24C9529E002D0E04 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713C8E24C9529E002D0E04 /* SplashViewController.swift */; };
@@ -30,7 +30,7 @@
 		C1713CEF24CED257002D0E04 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713CEE24CED257002D0E04 /* CreateAccountViewController.swift */; };
 		C1713CF124CED5D1002D0E04 /* CreateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713CF024CED5D1002D0E04 /* CreateAccountViewModel.swift */; };
 		C1713CF424CFCCC4002D0E04 /* PopupMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713CF324CFCCC4002D0E04 /* PopupMenu.swift */; };
-		C1713CF724CFD7AB002D0E04 /* FireBaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713CF624CFD7AB002D0E04 /* FireBaseManager.swift */; };
+		C1713CF724CFD7AB002D0E04 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713CF624CFD7AB002D0E04 /* FirebaseManager.swift */; };
 		C1713CF924CFE9E6002D0E04 /* CustomSelectButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713CF824CFE9E6002D0E04 /* CustomSelectButtonView.swift */; };
 		C1713CFB24D024B5002D0E04 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713CFA24D024B5002D0E04 /* String+Extension.swift */; };
 		C19693D024C6C61A0054296F /* VerticalStackVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693CF24C6C61A0054296F /* VerticalStackVIew.swift */; };
@@ -65,7 +65,7 @@
 		C116348824C6B3D000B6C394 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C116348A24C6B3D000B6C394 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C116349424C6B6E100B6C394 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
-		C13F114F24D14CAD001676C2 /* HTML.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = HTML.html; sourceTree = "<group>"; };
+		C13F114F24D14CAD001676C2 /* tos.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = tos.html; sourceTree = "<group>"; };
 		C1713C8524C937F9002D0E04 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C1713C8A24C94B23002D0E04 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		C1713C8E24C9529E002D0E04 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -80,7 +80,7 @@
 		C1713CEE24CED257002D0E04 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 		C1713CF024CED5D1002D0E04 /* CreateAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewModel.swift; sourceTree = "<group>"; };
 		C1713CF324CFCCC4002D0E04 /* PopupMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupMenu.swift; sourceTree = "<group>"; };
-		C1713CF624CFD7AB002D0E04 /* FireBaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseManager.swift; sourceTree = "<group>"; };
+		C1713CF624CFD7AB002D0E04 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		C1713CF824CFE9E6002D0E04 /* CustomSelectButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSelectButtonView.swift; sourceTree = "<group>"; };
 		C1713CFA24D024B5002D0E04 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		C19693CF24C6C61A0054296F /* VerticalStackVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalStackVIew.swift; sourceTree = "<group>"; };
@@ -195,7 +195,7 @@
 		C13F115124D14E5B001676C2 /* HTML */ = {
 			isa = PBXGroup;
 			children = (
-				C13F114F24D14CAD001676C2 /* HTML.html */,
+				C13F114F24D14CAD001676C2 /* tos.html */,
 			);
 			path = HTML;
 			sourceTree = "<group>";
@@ -245,7 +245,7 @@
 		C1713CF524CFD79C002D0E04 /* FireBaseManager */ = {
 			isa = PBXGroup;
 			children = (
-				C1713CF624CFD7AB002D0E04 /* FireBaseManager.swift */,
+				C1713CF624CFD7AB002D0E04 /* FirebaseManager.swift */,
 			);
 			path = FireBaseManager;
 			sourceTree = "<group>";
@@ -431,7 +431,7 @@
 				C19693FF24C833D30054296F /* Karla-Regular.ttf in Resources */,
 				C19693FB24C833C90054296F /* Helvetica-Medium.ttf in Resources */,
 				C19693FC24C833CC0054296F /* Karla-Bold.ttf in Resources */,
-				C13F115024D14CAD001676C2 /* HTML.html in Resources */,
+				C13F115024D14CAD001676C2 /* tos.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -567,7 +567,7 @@
 				C1713C8F24C9529E002D0E04 /* SplashViewController.swift in Sources */,
 				C19693DC24C6D93F0054296F /* EmptyViewController.swift in Sources */,
 				C1713C9C24CAC27E002D0E04 /* LoginViewModel.swift in Sources */,
-				C1713CF724CFD7AB002D0E04 /* FireBaseManager.swift in Sources */,
+				C1713CF724CFD7AB002D0E04 /* FirebaseManager.swift in Sources */,
 				C19693D324C6CE0E0054296F /* MenuScreenViewController.swift in Sources */,
 				C19693DF24C6DA6E0054296F /* EditProfileViewController.swift in Sources */,
 				C1713CE824CEA4D8002D0E04 /* RecoverPasswordViewController.swift in Sources */,

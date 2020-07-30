@@ -10,7 +10,7 @@ import Cartography
 import UIKit
 import WebKit
 
-/// This View Controller shows 'Terms Of Service' info
+/// Shows 'Terms Of Service' info
 class TermsOfServiceViewController: UIViewController {
     // MARK: - Private Properties
 
@@ -24,7 +24,7 @@ class TermsOfServiceViewController: UIViewController {
         webView.isOpaque = false
         webView.backgroundColor = R.color.lightGrayCustom()
 
-        if let indexURL = Bundle.main.url(forResource: "HTML",
+        if let indexURL = Bundle.main.url(forResource: "tos",
                                           withExtension: "html") {
             webView.loadFileURL(indexURL,
                                 allowingReadAccessTo: indexURL)

@@ -84,25 +84,27 @@ class CreateAccountViewController: UIViewController {
         setupTextFieldsHandlers()
         setupGestures()
 
-        // This handler for update state of signUp button and start/stop animating
-        viewModel.didUpdateState = {
-            let status = self.viewModel.signUpButtonState
+        // Handler for update state of signUp button and start/stop animating
+        viewModel.didUpdateState = { [weak self] in
+            let status = self?.viewModel.signUpButtonState
 
             switch status {
             case .animating:
-                self.signUpButton.isEnabled = false
-                self.activityIndicator.startAnimating()
-                self.signUpButton.backgroundColor = R.color.lightGrayCustom()
+                self?.signUpButton.isEnabled = false
+                self?.activityIndicator.startAnimating()
+                self?.signUpButton.backgroundColor = R.color.lightGrayCustom()
             case let .enabled(state):
                 if state {
-                    self.signUpButton.isEnabled = true
-                    self.activityIndicator.stopAnimating()
-                    self.signUpButton.backgroundColor = .green
+                    self?.signUpButton.isEnabled = true
+                    self?.activityIndicator.stopAnimating()
+                    self?.signUpButton.backgroundColor = .green
                 } else {
-                    self.signUpButton.isEnabled = true
-                    self.signUpButton.backgroundColor = R.color.lightGrayCustom()
-                    self.activityIndicator.stopAnimating()
+                    self?.signUpButton.isEnabled = true
+                    self?.signUpButton.backgroundColor = R.color.lightGrayCustom()
+                    self?.activityIndicator.stopAnimating()
                 }
+            case .none:
+                break
             }
         }
 
@@ -139,6 +141,7 @@ class CreateAccountViewController: UIViewController {
         }
 
         scrollView.addSubview(dropDownSelectView)
+        dropDownSelectView.setAnimation(enabled: true)
         dropDownSelectView.configure(labelTitle: "Select Project:", buttonTitle: "Select an item...")
 
         constrain(passwordTextFieldView, dropDownSelectView) { passwordTextField, dropDownSelectView in
@@ -240,14 +243,14 @@ class CreateAccountViewController: UIViewController {
     }
 
     @objc private func handleSignIn() {
-        viewModel.createNewUser { result in
+        viewModel.createNewUser { [weak self] result in
 
             switch result {
             case .success:
                 AppDelegate.shared.rootViewController.switchToMainScreen()
             case let .failure(error):
                 let alertController = AlertAssist.showErrorAlert(error)
-                self.present(alertController, animated: true)
+                self?.present(alertController, animated: true)
             }
         }
     }
@@ -278,39 +281,42 @@ class CreateAccountViewController: UIViewController {
 
     private func setupHandlers() {
         // when user press button to show popUpMenu
-        dropDownSelectView.didTapButton = {
-            self.view.endEditing(true)
+        dropDownSelectView.didTapButton = { [weak self] in
+            self?.view.endEditing(true)
             UIView.animate(withDuration: 0.2) {
-                self.scrollView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
-                self.navigationController?.navigationBar.alpha = 0.5
-                self.emailTextFieldView.isUserInteractionEnabled = false
-                self.passwordTextFieldView.isUserInteractionEnabled = false
-                self.popupMenu.alpha = 1
-                self.popupMenu.transform = .identity
-                self.signUpButton.isHidden = true
-                self.termLabel.isHidden = true
-                self.alreadyMemberButton.isHidden = true
+                self?.scrollView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
+                self?.navigationController?.navigationBar.alpha = 0.5
+                self?.emailTextFieldView.isUserInteractionEnabled = false
+                self?.passwordTextFieldView.isUserInteractionEnabled = false
+                self?.popupMenu.alpha = 1
+                self?.popupMenu.transform = .identity
+                self?.signUpButton.isHidden = true
+                self?.termLabel.isHidden = true
+                self?.alreadyMemberButton.isHidden = true
             }
         }
 
         // when groups fetched from FireBase
-        viewModel.didFetchedGroups = {
-            let height: CGFloat = CGFloat(self.viewModel.availableGroups.count * 30) + 35
-            self.setupPopUpMenu(withHeight: height)
-            self.popupMenu.layoutIfNeeded()
-            self.popupMenu.configure(items: self.viewModel.availableGroups)
-            self.dropDownSelectView.activateButton()
+        viewModel.didFetchedGroups = { [weak self] in
+            if let strongSelf = self {
+                let height: CGFloat = CGFloat(strongSelf.viewModel.availableGroups.count * 30) + 35
+                self?.setupPopUpMenu(withHeight: height)
+            }
+            self?.popupMenu.layoutIfNeeded()
+            self?.popupMenu.configure(items: self?.viewModel.availableGroups ?? [])
+            self?.dropDownSelectView.setAnimation(enabled: false)
         }
 
-        popupMenu.didSelectItem = { group in
-            self.viewModel.didChangeGroup(group: group)
-            self.dropDownSelectView.setTitle(title: group)
+        popupMenu.didSelectItem = { [weak self] group in
+            print(group)
+            self?.viewModel.didChangeGroup(group: group)
+            self?.dropDownSelectView.setTitle(title: group)
 
             UIView.animate(withDuration: 0.4, animations: {
-                self.hidePopUpWindow()
-                self.navigationController?.navigationBar.alpha = 1
-                self.emailTextFieldView.isUserInteractionEnabled = true
-                self.passwordTextFieldView.isUserInteractionEnabled = true
+                self?.hidePopUpWindow()
+                self?.navigationController?.navigationBar.alpha = 1
+                self?.emailTextFieldView.isUserInteractionEnabled = true
+                self?.passwordTextFieldView.isUserInteractionEnabled = true
             })
         }
     }

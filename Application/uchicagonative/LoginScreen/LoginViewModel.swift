@@ -8,7 +8,7 @@
 
 import FirebaseAuth
 import UIKit
-/// This is a View Model for LoginView Controller
+/// View Model for LoginView Controller
 class LoginViewModel {
     // MARK: - Private Properties
 
@@ -85,12 +85,12 @@ class LoginViewModel {
     /// check if email correct
     private func isValidEmailCheck() -> Bool {
         guard let email = email else { return false }
-        return CheckFields.isValidEmailCheck(email)
+        return CheckFields.isValidEmail(email)
     }
 
     /// check if password is not empty
     private func isPasswordNotEmptyCheck() -> Bool {
         guard let password = password else { return false }
-        return CheckFields.isPasswordNotEmptyCheck(password)
+        return CheckFields.isValidPassword(password)
     }
 }

@@ -50,37 +50,33 @@ class RecoverPasswordViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        /// This is a handler for change 'Request New Password' button state and start/stop activity indicator
-        let didUpdateHandler = {
-            let buttonState = self.viewModel.requestNewPasswordButtonState
+        /// Handler for change 'Request New Password' button state and start/stop activity indicator
+        viewModel.didUpdateState = { [weak self] in
+            let buttonState = self?.viewModel.requestNewPasswordButtonState
             switch buttonState {
             case .animating:
-                self.requestNewPasswordButton.isEnabled = false
-                self.requestNewPasswordButton.backgroundColor = R.color.lightGrayCustom()
-                self.activityIndicator.startAnimating()
+                self?.requestNewPasswordButton.isEnabled = false
+                self?.requestNewPasswordButton.backgroundColor = R.color.lightGrayCustom()
+                self?.activityIndicator.startAnimating()
 
             case let .enabled(state):
-                self.activityIndicator.stopAnimating()
-                self.requestNewPasswordButton.isEnabled = state
-                self.requestNewPasswordButton.backgroundColor = state ? .green : R.color.lightGrayCustom()
+                self?.activityIndicator.stopAnimating()
+                self?.requestNewPasswordButton.isEnabled = state
+                self?.requestNewPasswordButton.backgroundColor = state ? .green : R.color.lightGrayCustom()
+            case .none:
+                break
             }
         }
-        viewModel.didUpdateState = didUpdateHandler
 
         setupUI()
         setupTextFieldHandler()
 
         requestNewPasswordButton.addTarget(self, action: #selector(handleResetPassword), for: .touchUpInside)
 
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        view.addGestureRecognizer(tap)
+        scrollView.keyboardDismissMode = .onDrag
     }
 
     // MARK: - Private Methods
-
-    @objc private func dismissKeyboard() {
-        view.endEditing(true)
-    }
 
     private func setupTextFieldHandler() {
         let didEmailChange: ((String) -> Void) = { [weak self] email in
@@ -89,7 +85,7 @@ class RecoverPasswordViewController: UIViewController {
         emailTextField.didChangeText = didEmailChange
     }
 
-    /// This method try to reset FireBase users's password and shows success or error alert to user
+    /// Try to reset FireBase users's password and shows success or error alert to user
     @objc private func handleResetPassword() {
         viewModel.resetPassword { [weak self] result in
             switch result {

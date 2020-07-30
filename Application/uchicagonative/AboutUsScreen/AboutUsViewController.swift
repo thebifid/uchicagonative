@@ -8,7 +8,7 @@
 
 import Cartography
 import UIKit
-/// This View Controller shows 'About Us' info
+/// Shows 'About Us' info
 class AboutUsViewController: UIViewController {
     let scrollView = UIScrollView()
 

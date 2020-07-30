@@ -9,14 +9,14 @@
 import FirebaseFirestore
 import Foundation
 
-/// This class helps to interacte with Firestore
-class FireBaseManager {
+/// Helps to interacte with Firestore
+class FirebaseManager {
     private init() {}
     private let db = Firestore.firestore()
 
-    static let sharedInstance = FireBaseManager()
+    static let sharedInstance = FirebaseManager()
 
-    /// This metod fetch available groups for user
+    /// Fetches available groups for user
     func fetchAvailableGroups(completion: @escaping (Result<[String: String], Error>) -> Void) {
         db.collection("sessionConfigurations").getDocuments { snapshot, error in
 
@@ -36,14 +36,14 @@ class FireBaseManager {
         }
     }
 
-    /// This method add new document (userInfo) to userProfiles collection
+    /// Add new document (userInfo) to userProfiles collection
     func addDocumentToUserProfiles(documentName: String, attributes: [String: Any],
                                    completion: @escaping (Result<Void, Error>) -> Void) {
         let collection = "userProfiles"
         addDocumentToFireBase(collection: collection, documentName: documentName, attributes: attributes, completion: completion)
     }
 
-    /// This method is main for add documents in firestore. Add document to collection from params.
+    /// Main for add documents in firestore. Add document to collection from params.
     func addDocumentToFireBase(collection: String, documentName: String, attributes: [String: Any],
                                completion: @escaping (Result<Void, Error>) -> Void) {
         db.collection(collection).document(documentName).setData(attributes) { error in

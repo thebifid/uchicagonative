@@ -10,7 +10,7 @@ import Foundation
 
 class CheckFields {
     /// check if email correct
-    static func isValidEmailCheck(_ email: String) -> Bool {
+    static func isValidEmail(_ email: String) -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
 
         let emailPred = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
@@ -18,7 +18,7 @@ class CheckFields {
     }
 
     /// check if password is not empty
-    static func isPasswordNotEmptyCheck(_ password: String) -> Bool {
-        return !password.isEmpty ? true : false
+    static func isValidPassword(_ password: String) -> Bool {
+        return !password.isEmpty
     }
 }

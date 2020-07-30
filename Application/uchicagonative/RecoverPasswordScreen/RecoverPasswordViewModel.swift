@@ -12,7 +12,7 @@ import UIKit
 class RecoverPasswordViewModel {
     // MARK: - Private Properties
 
-    private var email: String?
+    private var email: String = ""
 
     private var isRequesting: Bool = false {
         didSet {
@@ -48,17 +48,15 @@ class RecoverPasswordViewModel {
     /// Send reset password request to FireBase
     func resetPassword(completion: @escaping (Result<Void, Error>) -> Void) {
         isRequesting = true
-        guard let email = email?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
+        email = email.trimmingCharacters(in: .whitespacesAndNewlines)
 
         FirebaseAuth.Auth.auth().sendPasswordReset(withEmail: email) { error in
+            self.isRequesting = false
             if error == nil {
-                self.didUpdateState?()
                 completion(.success(()))
             } else {
-                self.didUpdateState?()
                 completion(.failure(error!))
             }
-            self.isRequesting = false
         }
     }
 
@@ -72,7 +70,6 @@ class RecoverPasswordViewModel {
 
     /// Check if email correct
     private func isValidEmailCheck() -> Bool {
-        guard let email = email else { return false }
-        return CheckFields.isValidEmailCheck(email)
+        return CheckFields.isValidEmail(email)
     }
 }

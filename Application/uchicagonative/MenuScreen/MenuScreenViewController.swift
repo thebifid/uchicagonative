@@ -9,7 +9,7 @@
 import Cartography
 import FirebaseAuth
 import UIKit
-/// This is a Main Menu View Controller
+/// Main Menu View Controller
 class MenuScreenViewController: UIViewController {
     let playButton = UIButton(titleColor: .green, title: "Play Again!")
     let editProfileButton = UIButton(titleColor: .black, title: "Edit Profile")

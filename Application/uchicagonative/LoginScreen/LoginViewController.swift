@@ -11,7 +11,7 @@ import FirebaseAuth
 import KeyboardNotificationsObserver
 import UIKit
 
-/// This is a View Controller shows login screen
+/// Shows login screen
 class LoginViewController: UIViewController {
     // MARK: - Init
 
@@ -60,7 +60,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        /// This is a handler for change 'Log In' button state and start/stop activity indicator
+        /// Handler for change 'Log In' button state and start/stop activity indicator
         let didUpdateHandler = {
             let buttonState = self.viewModel.loginButtonState
             switch buttonState {
