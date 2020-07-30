@@ -6,6 +6,7 @@
 //  Copyright © 2020 Vasiliy Matveev. All rights reserved.
 //
 
+import FirebaseAuth
 import FirebaseFirestore
 import Foundation
 
@@ -50,11 +51,28 @@ class FirebaseManager {
 
             if let error = error {
                 completion(.failure(error))
-                print("error")
                 return
             } else {
                 completion(.success(()))
-                print("added")
+            }
+        }
+    }
+
+    /// Check if userData is set 
+    func checkIfCreateAtExist(completion: @escaping ((Result<Bool, Error>) -> Void)) {
+        let document = db.collection("userProfiles").document(FirebaseAuth.Auth.auth().currentUser!.uid)
+        document.getDocument { document, error in
+            
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            guard let document = document else { return }
+            if document.exists {
+                completion(.success((true)))
+            } else {
+                completion(.success(false))
             }
         }
     }

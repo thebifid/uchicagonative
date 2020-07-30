@@ -7,6 +7,7 @@
 //
 
 import Cartography
+import FirebaseAuth
 import UIKit
 
 class CreateAccountViewController: UIViewController {
@@ -77,6 +78,19 @@ class CreateAccountViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // Fetching data for dropDown list
+        viewModel.fetchAvailableGroups { [weak self] result in
+            switch result {
+            case .success:
+                break
+            case let .failure(error):
+                let alert = AlertAssist.showErrorAlertWithCancelAndOption(error, optionName: "Try Again") { _ in
+                    self?.viewDidLoad()
+                }
+                self?.present(alert, animated: true)
+            }
+        }
 
         setupUI()
 
@@ -243,14 +257,74 @@ class CreateAccountViewController: UIViewController {
     }
 
     @objc private func handleSignIn() {
-        viewModel.createNewUser { [weak self] result in
+        // try login
+        viewModel.login { [weak self] result in
 
+            // Account isn't exist -> create new user
             switch result {
+            case .failure:
+                self?.viewModel.createNewUser(completion: { result in
+                    // user created
+                    switch result {
+                    case .success:
+                        // add user data
+                        self?.viewModel.addUserData(completion: { result in
+                            switch result {
+                            case .success:
+                                AppDelegate.shared.rootViewController.switchToMainScreen()
+                            case let .failure(error):
+                                let alert = AlertAssist.showErrorAlert(error)
+                                self?.present(alert, animated: true)
+                            }
+                        })
+                    // user is not created
+                    case let .failure(error):
+                        let alert = AlertAssist.showErrorAlert(error)
+                        self?.present(alert, animated: true)
+                    }
+                })
+
+            // Account is exitst
             case .success:
-                AppDelegate.shared.rootViewController.switchToMainScreen()
-            case let .failure(error):
-                let alertController = AlertAssist.showErrorAlert(error)
-                self?.present(alertController, animated: true)
+                FirebaseManager.sharedInstance.checkIfCreateAtExist { [weak self] resultCheck in
+                    switch resultCheck {
+                    case let .success(status):
+                        // document isn't exist
+                        if !status {
+                            self?.viewModel.addUserData { result in
+                                switch result {
+                                case .success:
+                                    let alert = AlertAssist.showSuccessAlert(withMessage: "Data successfully added") { _ in
+                                        AppDelegate.shared.rootViewController.switchToMainScreen()
+                                    }
+                                    self?.present(alert, animated: true)
+                                case let .failure(error):
+                                    let alert = AlertAssist.showErrorAlert(error)
+
+                                    do {
+                                        try FirebaseAuth.Auth.auth().signOut()
+                                    } catch let logOutError {
+                                        let alert = AlertAssist.showErrorAlert(logOutError)
+                                        self?.present(alert, animated: true)
+                                    }
+                                    self?.present(alert, animated: true)
+                                }
+                            }
+                        }
+                        // document exists
+                        else {
+                            let alert = AlertAssist.showCustomAlert("Failed!", message:
+                                "Accoun's Already exist. You will be redirected to the main menu") { _ in
+                                AppDelegate.shared.rootViewController.switchToMainScreen()
+                            }
+                            self?.present(alert, animated: true)
+                        }
+
+                    case let .failure(error):
+                        let alert = AlertAssist.showErrorAlert(error)
+                        self?.present(alert, animated: true)
+                    }
+                }
             }
         }
     }

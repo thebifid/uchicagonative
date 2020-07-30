@@ -142,8 +142,24 @@ class LoginViewController: UIViewController {
     @objc private func handleLogin() {
         viewModel.login { [weak self] result in
             switch result {
-            case .success:
-                AppDelegate.shared.rootViewController.switchToMainScreen()
+            case let .success(state):
+                if state {
+                    AppDelegate.shared.rootViewController.switchToMainScreen()
+                } else {
+                    let message = "Your account data is not set. Please, try registering again with same password or reset it"
+                    let alert = AlertAssist.showCustomAlert("Error!",
+                                                            message: message,
+                                                            optionHadler: nil)
+                    self?.present(alert, animated: true)
+                    do {
+                        try FirebaseAuth.Auth.auth().signOut()
+                        AppDelegate.shared.rootViewController.switchToLogout()
+                    } catch let logOutError {
+                        let alert = AlertAssist.showErrorAlert(logOutError)
+                        self?.present(alert, animated: true)
+                    }
+                }
+
             case let .failure(error):
                 self?.showAlert(withError: error)
             }

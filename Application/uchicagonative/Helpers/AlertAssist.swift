@@ -22,4 +22,25 @@ class AlertAssist {
         ac.addAction(alertOkAction)
         return ac
     }
+
+    static func showErrorAlertWithCancelAndOption(_ error: Error, optionName: String,
+                                                  optionHadler: @escaping (UIAlertAction) -> Void) -> UIAlertController {
+        let ac = UIAlertController(title: "Error!", message: error.localizedDescription, preferredStyle: .alert)
+        let alertCancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        ac.addAction(alertCancelAction)
+
+        let optionAction = UIAlertAction(title: optionName, style: .default, handler: optionHadler)
+        ac.addAction(optionAction)
+
+        return ac
+    }
+
+    static func showCustomAlert(_ title: String, message: String,
+                                optionHadler: ((UIAlertAction) -> Void)?) -> UIAlertController {
+        let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alertCancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: optionHadler)
+        ac.addAction(alertCancelAction)
+
+        return ac
+    }
 }

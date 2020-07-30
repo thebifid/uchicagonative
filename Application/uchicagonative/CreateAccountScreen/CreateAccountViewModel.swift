@@ -13,18 +13,6 @@ import UIKit
 class CreateAccountViewModel {
     // MARK: - Init
 
-    init() {
-        FirebaseManager.sharedInstance.fetchAvailableGroups { [weak self] result in
-            switch result {
-            case let .failure(error):
-                print(error)
-            case let .success(groups):
-                self?.groupNameIdDictionary = groups
-                self?.didFetchedGroups?()
-            }
-        }
-    }
-
     // MARK: - Private Properties
 
     private var email: String?
@@ -44,7 +32,7 @@ class CreateAccountViewModel {
         if isRequesting {
             return .animating
         } else {
-            return .enabled(isPasswordNotEmptyCheck() && isValidEmailCheck() && isSelectedGroupNotNil())
+            return .enabled(isPasswordNotEmpty() && isValidEmail() && isSelectedGroupNotNil())
         }
     }
 
@@ -82,50 +70,88 @@ class CreateAccountViewModel {
         didUpdateState?()
     }
 
+    var userInfo = [String: Any]()
+
     /// Create new user in FireBase
     func createNewUser(completion: @escaping (Result<Void, Error>) -> Void) {
         // get text data from emailTF and passwordTF and clearing from any spaces or new lines
         guard let email = email?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
         guard let password = password?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
         isRequesting = true
-        guard let selectedGroup = self.selectedGroup else { return }
+
         // LogIn FireBase
-        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { [weak self] result, error in
+        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { _, error in
             if error == nil {
-                let userInfo: [String: Any] = [
-                    "email": email,
-                    "projectId": self?.groupNameIdDictionary[selectedGroup] ?? "",
-                    "role": "subject",
-                    "createdAt": FieldValue.serverTimestamp(),
-                    "updatedAt": FieldValue.serverTimestamp()
-                ]
-
-                FirebaseManager.sharedInstance.addDocumentToUserProfiles(documentName: (result?.user.uid)!,
-                                                                         attributes: userInfo) { result in
-                    switch result {
-                    case let .failure(error):
-                        print(error.localizedDescription)
-                    case .success:
-                        break
-                    }
-                }
-
-                self?.didUpdateState?()
                 completion(.success(()))
             } else {
-                self?.didUpdateState?()
                 completion(.failure(error!))
             }
+        }
+    }
+
+
+    func addUserData(completion: @escaping ((Result<Void, Error>) -> Void)) {
+        setUserInfo()
+        FirebaseManager.sharedInstance.addDocumentToUserProfiles(documentName: FirebaseAuth.Auth.auth().currentUser!.uid,
+                                                                 attributes: userInfo) { [weak self] result in
             self?.isRequesting = false
+            switch result {
+            case let .failure(error):
+                self?.didUpdateState?()
+                completion(.failure(error))
+            case .success:
+                self?.didUpdateState?()
+                completion(.success(()))
+            }
+        }
+    }
+
+    func fetchAvailableGroups(completion: @escaping ((Result<Void, Error>) -> Void)) {
+        FirebaseManager.sharedInstance.fetchAvailableGroups { [weak self] result in
+            switch result {
+            case let .failure(error):
+                completion(.failure(error))
+            case let .success(groups):
+                self?.groupNameIdDictionary = groups
+                self?.didFetchedGroups?()
+                completion(.success(()))
+            }
+        }
+    }
+
+    /// FireBase authorization
+    func login(completion: @escaping (Result<Void, Error>) -> Void) {
+        // get text data from emailTF and passwordTF and clearing from any spaces or new lines
+        guard let email = email?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
+        guard let password = password?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
+        // LogIn FireBase
+        isRequesting = true
+        Auth.auth().signIn(withEmail: email, password: password) { _, error in
+            if error == nil {
+                completion(.success(()))
+            } else {
+                completion(.failure(error!))
+            }
         }
     }
 
     /// Return true if user password and email are correct form
     func isLoginButtonEnabled() -> Bool {
-        return isPasswordNotEmptyCheck() && isValidEmailCheck()
+        return isPasswordNotEmpty() && isValidEmail()
     }
 
     // MARK: - Private Methods
+    
+    private func setUserInfo() {
+        guard let selectedGroup = self.selectedGroup else { return }
+        userInfo = [
+            "email": email!,
+            "projectId": groupNameIdDictionary[selectedGroup]!,
+            "role": "subject",
+            "createdAt": FieldValue.serverTimestamp(),
+            "updatedAt": FieldValue.serverTimestamp()
+        ]
+    }
 
     private var isRequesting: Bool = false {
         didSet {
@@ -134,13 +160,13 @@ class CreateAccountViewModel {
     }
 
     /// check if email correct
-    private func isValidEmailCheck() -> Bool {
+    private func isValidEmail() -> Bool {
         guard let email = email else { return false }
         return CheckFields.isValidEmail(email)
     }
 
     /// check if password is not empty
-    private func isPasswordNotEmptyCheck() -> Bool {
+    private func isPasswordNotEmpty() -> Bool {
         guard let password = password else { return false }
         return CheckFields.isValidPassword(password)
     }

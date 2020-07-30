@@ -62,20 +62,33 @@ class LoginViewModel {
     }
 
     /// FireBase authorization
-    func login(completion: @escaping (Result<Void, Error>) -> Void) {
+    func login(completion: @escaping (Result<Bool, Error>) -> Void) {
         // get text data from emailTF and passwordTF and clearing from any spaces or new lines
         guard let email = email?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
         guard let password = password?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
         isLoggingIn = true
         // LogIn FireBase
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] _, error in
-            if error == nil {
-                self?.didUpdateState?()
-                completion(.success(()))
-            } else {
-                self?.didUpdateState?()
-                completion(.failure(error!))
+
+            FirebaseManager.sharedInstance.checkIfCreateAtExist { result in
+                switch result {
+                case let .success(state):
+                    if !state {
+                        completion(.success(false))
+                    } else {
+                        if error == nil {
+                            self?.didUpdateState?()
+                            completion(.success(true))
+                        } else {
+                            self?.didUpdateState?()
+                            completion(.failure(error!))
+                        }
+                    }
+                case let .failure(error):
+                    completion(.failure(error))
+                }
             }
+
             self?.isLoggingIn = false
         }
     }
