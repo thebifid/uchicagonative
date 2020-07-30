@@ -58,19 +58,21 @@ class FirebaseManager {
         }
     }
 
-    /// Check if userData is set 
-    func checkIfCreateAtExist(completion: @escaping ((Result<Bool, Error>) -> Void)) {
+    /// Check if userData is set
+    func isUserDataExitsts(completion: @escaping ((Result<Bool, Error>) -> Void)) {
+        guard FirebaseAuth.Auth.auth().currentUser?.uid != nil else { return }
+
         let document = db.collection("userProfiles").document(FirebaseAuth.Auth.auth().currentUser!.uid)
         document.getDocument { document, error in
-            
+
             if let error = error {
                 completion(.failure(error))
                 return
             }
-            
+
             guard let document = document else { return }
             if document.exists {
-                completion(.success((true)))
+                completion(.success(true))
             } else {
                 completion(.success(false))
             }

@@ -263,12 +263,12 @@ class CreateAccountViewController: UIViewController {
             // Account isn't exist -> create new user
             switch result {
             case .failure:
-                self?.viewModel.createNewUser(completion: { result in
+                self?.viewModel.createNewUser(completion: { [weak self] result in
                     // user created
                     switch result {
                     case .success:
                         // add user data
-                        self?.viewModel.addUserData(completion: { result in
+                        self?.viewModel.addUserData(completion: { [weak self] result in
                             switch result {
                             case .success:
                                 AppDelegate.shared.rootViewController.switchToMainScreen()
@@ -286,21 +286,21 @@ class CreateAccountViewController: UIViewController {
 
             // Account is exitst
             case .success:
-                FirebaseManager.sharedInstance.checkIfCreateAtExist { [weak self] resultCheck in
+                FirebaseManager.sharedInstance.isUserDataExitsts { [weak self] resultCheck in
                     switch resultCheck {
                     case let .success(status):
                         // document isn't exist
                         if !status {
-                            self?.viewModel.addUserData { result in
+                            self?.viewModel.addUserData { [weak self] result in
                                 switch result {
                                 case .success:
                                     let alert = AlertAssist.showSuccessAlert(withMessage: "Data successfully added") { _ in
                                         AppDelegate.shared.rootViewController.switchToMainScreen()
                                     }
                                     self?.present(alert, animated: true)
+
                                 case let .failure(error):
                                     let alert = AlertAssist.showErrorAlert(error)
-
                                     do {
                                         try FirebaseAuth.Auth.auth().signOut()
                                     } catch let logOutError {
@@ -382,7 +382,6 @@ class CreateAccountViewController: UIViewController {
         }
 
         popupMenu.didSelectItem = { [weak self] group in
-            print(group)
             self?.viewModel.didChangeGroup(group: group)
             self?.dropDownSelectView.setTitle(title: group)
 

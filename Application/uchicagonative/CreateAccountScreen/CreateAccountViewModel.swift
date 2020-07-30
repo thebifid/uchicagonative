@@ -80,15 +80,15 @@ class CreateAccountViewModel {
         isRequesting = true
 
         // LogIn FireBase
-        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { _, error in
+        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { [weak self] _, error in
             if error == nil {
                 completion(.success(()))
             } else {
                 completion(.failure(error!))
             }
+            self?.isRequesting = false
         }
     }
-
 
     func addUserData(completion: @escaping ((Result<Void, Error>) -> Void)) {
         setUserInfo()
@@ -141,7 +141,7 @@ class CreateAccountViewModel {
     }
 
     // MARK: - Private Methods
-    
+
     private func setUserInfo() {
         guard let selectedGroup = self.selectedGroup else { return }
         userInfo = [

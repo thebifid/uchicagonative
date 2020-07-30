@@ -92,7 +92,8 @@ class MenuScreenViewController: UIViewController {
             try FirebaseAuth.Auth.auth().signOut()
             AppDelegate.shared.rootViewController.switchToLogout()
         } catch let logOutError {
-            print("error", logOutError.localizedDescription)
+            let alert = AlertAssist.showErrorAlert(logOutError)
+            present(alert, animated: true)
         }
     }
 

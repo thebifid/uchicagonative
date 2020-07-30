@@ -68,25 +68,35 @@ class LoginViewModel {
         guard let password = password?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
         isLoggingIn = true
         // LogIn FireBase
-        Auth.auth().signIn(withEmail: email, password: password) { [weak self] _, error in
+        Auth.auth().signIn(withEmail: email, password: password) { [weak self] result, error in
 
-            FirebaseManager.sharedInstance.checkIfCreateAtExist { result in
-                switch result {
-                case let .success(state):
-                    if !state {
-                        completion(.success(false))
-                    } else {
-                        if error == nil {
-                            self?.didUpdateState?()
-                            completion(.success(true))
+            // Logged
+            if error == nil {
+                FirebaseManager.sharedInstance.isUserDataExitsts { result in
+                    switch result {
+                    case let .success(state):
+                        // userData is not exists
+                        if !state {
+                            completion(.success(false))
                         } else {
-                            self?.didUpdateState?()
-                            completion(.failure(error!))
+                            // userData exists
+                            if error == nil {
+                                self?.didUpdateState?()
+                                completion(.success(true))
+                            } else {
+                                self?.didUpdateState?()
+                                completion(.failure(error!))
+                            }
                         }
+                    case let .failure(error):
+                        completion(.failure(error))
                     }
-                case let .failure(error):
-                    completion(.failure(error))
                 }
+            }
+
+            // Failed to log in
+            else {
+                completion(.failure(error!))
             }
 
             self?.isLoggingIn = false

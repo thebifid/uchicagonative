@@ -161,7 +161,8 @@ class LoginViewController: UIViewController {
                 }
 
             case let .failure(error):
-                self?.showAlert(withError: error)
+                let alert = AlertAssist.showErrorAlert(error)
+                self?.present(alert, animated: true)
             }
         }
     }
