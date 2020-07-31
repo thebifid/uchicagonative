@@ -31,7 +31,7 @@ class EditProfileViewController: UIViewController {
     private let scrollView = UIScrollView()
 
     private let emailLabel: UILabel = {
-        let label = UILabel(title: "Email: xxx@gmail.com", font: R.font.karlaBold(size: Constants.fontSize)!, color: R.color.lightBlack()!)
+        let label = UILabel(title: "Email:", font: R.font.karlaBold(size: Constants.fontSize)!, color: R.color.lightBlack()!)
         return label
     }()
 
@@ -49,12 +49,32 @@ class EditProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        fetchUserData()
         setupHandlers()
         setupUI()
     }
 
     // MARK: - Private Methods
+
+    private func fetchUserData() {
+        viewModel.fetchUserInfo { [weak self] result in
+
+            switch result {
+            case let .failure(error):
+                let alert = AlertAssist.showErrorAlert(error)
+                self?.present(alert, animated: true)
+
+            case let .success(userInfo):
+                self?.emailLabel.text = "Email: \(userInfo["email"] ?? "")"
+                self?.firstNameTextFeildView.text = userInfo["firstName"] as? String ?? ""
+                self?.lastNameTextFieldView.text = userInfo["lastName"] as? String ?? ""
+                self?.birthdayTextFieldView.text = "\(userInfo["birthYear"] ?? "")"
+                self?.zipCodeTextFieldView.text = "\(userInfo["zipCode"] ?? "")"
+                self?.selectGenderSelectView.setTitle(title: userInfo["gender"] as? String ?? "Select an item...")
+                self?.selectProjectSelectView.setTitle(title: userInfo["projectId"] as? String ?? "Select an item...")
+            }
+        }
+    }
 
     private func setupHandlers() {
         selectGenderSelectView.didTapButton = {
@@ -64,6 +84,8 @@ class EditProfileViewController: UIViewController {
         selectProjectSelectView.didTapButton = {
             print("selectProjectSelectView button did tapped")
         }
+
+        viewModel.didFetchedUserInfo = {}
     }
 
     private func makeConstrain(downView: UIView, upperView: UIView, height: CGFloat = 30) {

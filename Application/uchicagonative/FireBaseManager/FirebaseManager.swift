@@ -37,6 +37,30 @@ class FirebaseManager {
         }
     }
 
+    /// Fetches user info
+    func fetchUserInfo(completion: @escaping (Result<[String: Any], Error>) -> Void) {
+        guard let uid = FirebaseAuth.Auth.auth().currentUser?.uid else { return }
+        let document = db.collection("userProfiles").document(uid)
+
+        document.getDocument { document, error in
+            if error != nil {
+                completion(.failure(error!))
+            } else {
+                var userInfo = [String: Any]()
+                guard let data = document?.data() else { return }
+                userInfo["firstName"] = data["firstName"]
+                userInfo["lastName"] = data["lastName"]
+                userInfo["gender"] = data["gender"]
+                userInfo["birthYear"] = data["birthYear"]
+                userInfo["email"] = data["email"]
+                userInfo["zipCode"] = data["zipCode"]
+                userInfo["projectId"] = data["projectId"]
+                userInfo["role"] = data["role"]
+                completion(.success(userInfo))
+            }
+        }
+    }
+
     /// Add new document (userInfo) to userProfiles collection
     func addDocumentToUserProfiles(documentName: String, attributes: [String: Any],
                                    completion: @escaping (Result<Void, Error>) -> Void) {

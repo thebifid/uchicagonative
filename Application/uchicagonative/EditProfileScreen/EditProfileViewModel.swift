@@ -17,12 +17,57 @@ class EditProfileViewModel {
     private var zipCode: Int = 0 // ?
     private var gender: String = ""
     private var project: String = ""
+    private var role: String = ""
+
+    private var availableGroups = [String: String]()
+    private var userInfo = [String: Any]()
 
     // MARK: - Handlers
 
     var didUpdateState: (() -> Void)?
 
+    var didFetchedUserInfo: (() -> Void)?
+
+    // MARK: - Private Methods
+
     // MARK: Public Methods
+
+    func fetchUserInfo(completion: @escaping ((Result<[String: Any], Error>) -> Void)) {
+        fetchAvailableGroups { result in
+
+            switch result {
+            case let .failure(error):
+                completion(.failure(error))
+
+            case .success:
+                FirebaseManager.sharedInstance.fetchUserInfo { result in
+
+                    switch result {
+                    case let .failure(error):
+                        completion(.failure(error))
+
+                    case var .success(userInfo):
+                        userInfo["projectId"] = self.availableGroups[userInfo["projectId"] as? String ?? ""]
+                        self.userInfo = userInfo
+                        completion(.success(self.userInfo))
+                    }
+                }
+            }
+        }
+    }
+
+    func fetchAvailableGroups(completion: @escaping ((Result<[String: String], Error>) -> Void)) {
+        FirebaseManager.sharedInstance.fetchAvailableGroups { result in
+
+            switch result {
+            case let .success(groups):
+                self.availableGroups = groups.swapKeyValues()
+                completion(.success(groups))
+            case let .failure(error):
+                completion(.failure(error))
+            }
+        }
+    }
 
     func setFirstName(_ firstName: String) {
         self.firstName = firstName
