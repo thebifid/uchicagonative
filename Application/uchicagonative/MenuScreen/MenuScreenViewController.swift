@@ -63,7 +63,7 @@ class MenuScreenViewController: UIViewController {
     }
 
     @objc private func handleEditProfile() {
-        let dvc = EditProfileViewController()
+        let dvc = EditProfileViewController(viewModel: EditProfileViewModel())
         dvc.navigationItem.title = "Edit Your Profile"
         navigationController?.pushViewController(dvc, animated: true)
     }

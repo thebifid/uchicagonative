@@ -10,6 +10,20 @@ import Cartography
 import UIKit
 ///  Shows editing user's profile
 class EditProfileViewController: UIViewController {
+    // MARK: - Init
+
+    init(viewModel model: EditProfileViewModel) {
+        viewModel = model
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Private Properties
+
+    private let viewModel: EditProfileViewModel
     private let spacing: CGFloat = 30
 
     // MARK: - UI Controls
