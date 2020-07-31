@@ -111,7 +111,7 @@ class CreateAccountViewController: UIViewController {
                 if state {
                     self?.signUpButton.isEnabled = true
                     self?.activityIndicator.stopAnimating()
-                    self?.signUpButton.backgroundColor = .green
+                    self?.signUpButton.backgroundColor = R.color.mediumAquamarine()!
                 } else {
                     self?.signUpButton.isEnabled = true
                     self?.signUpButton.backgroundColor = R.color.lightGrayCustom()

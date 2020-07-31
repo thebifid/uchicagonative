@@ -9,81 +9,115 @@
 import Cartography
 import UIKit
 ///  Shows editing user's profile
-class EditProfileViewController: UIViewController, UIScrollViewDelegate {
-    let scrollView = UIScrollView()
+class EditProfileViewController: UIViewController {
+    private let spacing: CGFloat = 30
 
-    let emailLabel = UILabel(title: "Email: example@mail.ru")
-    let firstNameLabel = UILabel(title: "Firstname")
-    let secondNameLabel = UILabel(title: "Secondname")
-    let birhdayYearLabel = UILabel(title: "1990")
-    let numberLabel = UILabel(title: "90005")
-    let selectGenderLabel = UILabel(title: "Select Your Gender")
+    // MARK: - UI Controls
 
-    let pickGenderButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Male", for: .normal)
-        button.backgroundColor = .lightGray
-        button.layer.cornerRadius = 4
-        return button
+    private let scrollView = UIScrollView()
+
+    private let emailLabel: UILabel = {
+        let label = UILabel(title: "Email: xxx@gmail.com", font: R.font.karlaBold(size: Constants.fontSize)!, color: R.color.lightBlack()!)
+        return label
     }()
 
-    let selectProjectLabel = UILabel(title: "Select Project")
+    private let firstNameTextFeildView = CustomTextFieldView()
+    private let lastNameTextFieldView = CustomTextFieldView()
+    private let birthdayTextFieldView = CustomTextFieldView()
+    private let zipCodeTextFieldView = CustomTextFieldView()
 
-    let pickProjectButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("uchicago_student_group", for: .normal)
-        button.backgroundColor = .lightGray
-        button.layer.cornerRadius = 4
-        return button
-    }()
+    private let selectGenderSelectView = CustomSelectButtonView()
+    private let selectProjectSelectView = CustomSelectButtonView()
+
+    private let saveButton = PrimaryButton()
+
+    // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        setupHandlers()
         setupUI()
     }
 
+    // MARK: - Private Methods
+
+    private func setupHandlers() {
+        selectGenderSelectView.didTapButton = {
+            print("selectGenderSelectView button did tapped")
+        }
+
+        selectProjectSelectView.didTapButton = {
+            print("selectProjectSelectView button did tapped")
+        }
+    }
+
+    private func makeConstrain(downView: UIView, upperView: UIView, height: CGFloat = 30) {
+        constrain(downView, upperView) { firstView, secondView in
+
+            firstView.top == secondView.bottom + spacing
+            firstView.centerX == firstView.superview!.centerX
+            firstView.width == firstView.superview!.width - 2 * Constants.defaultInsets
+            firstView.height == height
+        }
+    }
+
+    // MARK: - UI Actions
+
     private func setupUI() {
-        scrollView.delegate = self
-        let navBarHeight = navigationController?.navigationBar.frame.size.height ?? 0
-        let navBarFrameY = navigationController?.navigationBar.frame.origin.y ?? 0
-        let statusBarHeight = navBarHeight + navBarFrameY
+        scrollView.alwaysBounceVertical = true
 
         // ScrollView
         scrollView.backgroundColor = R.color.appBackgroundColor()!
         scrollView.isScrollEnabled = true
         scrollView.showsVerticalScrollIndicator = false
-        scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height - statusBarHeight)
 
         view.addSubview(scrollView)
+        scrollView.fillSuperView()
 
-        // StackView
+        scrollView.addSubview(emailLabel)
+        constrain(emailLabel) { emailLabel in
 
-        let stackView = VerticalStackVIew(arrangedSubviews:
-            [
-                emailLabel,
-                firstNameLabel,
-                secondNameLabel,
-                birhdayYearLabel,
-                numberLabel,
-                selectGenderLabel,
-                pickGenderButton,
-                selectProjectLabel,
-                pickProjectButton
-            ], spacing: 12)
+            emailLabel.top == emailLabel.superview!.top + 10
+            emailLabel.centerX == emailLabel.superview!.centerX
+            emailLabel.width == emailLabel.superview!.width - 2 * Constants.defaultInsets
+        }
 
-        scrollView.addSubview(stackView)
+        firstNameTextFeildView.configure(placeholder: "First Name")
+        scrollView.addSubview(firstNameTextFeildView)
+        makeConstrain(downView: firstNameTextFeildView, upperView: emailLabel)
 
-        constrain(scrollView, stackView) { scrollView, stackView in
+        lastNameTextFieldView.configure(placeholder: "Last Name")
+        scrollView.addSubview(lastNameTextFieldView)
+        makeConstrain(downView: lastNameTextFieldView, upperView: firstNameTextFeildView)
 
-            // scrollView
-            scrollView.top == scrollView.superview!.top
-            scrollView.left == scrollView.superview!.left
-            scrollView.right == scrollView.superview!.right
-            scrollView.bottom == scrollView.superview!.bottom
+        birthdayTextFieldView.configure(placeholder: "Year of Birth")
+        scrollView.addSubview(birthdayTextFieldView)
+        makeConstrain(downView: birthdayTextFieldView, upperView: lastNameTextFieldView)
 
-            // stackView
-            stackView.top == stackView.superview!.top + Constants.defaultInsets
-            stackView.left == stackView.superview!.left + Constants.defaultInsets
+        zipCodeTextFieldView.configure(placeholder: "Zip Code")
+        scrollView.addSubview(zipCodeTextFieldView)
+        makeConstrain(downView: zipCodeTextFieldView, upperView: birthdayTextFieldView)
+
+        selectGenderSelectView.setAnimation(enabled: false)
+        selectGenderSelectView.configure(labelTitle: "Select Your Gender", buttonTitle: "Select an item...")
+        scrollView.addSubview(selectGenderSelectView)
+        makeConstrain(downView: selectGenderSelectView, upperView: zipCodeTextFieldView, height: 90)
+
+        selectProjectSelectView.setAnimation(enabled: false)
+        selectProjectSelectView.configure(labelTitle: "Select Project", buttonTitle: "Select an item...")
+        scrollView.addSubview(selectProjectSelectView)
+        makeConstrain(downView: selectProjectSelectView, upperView: selectGenderSelectView, height: 90)
+
+        saveButton.configure(title: "Save Changes", font: R.font.karlaBold(size: 18)!, backgroundColor: R.color.mediumAquamarine()!)
+        scrollView.addSubview(saveButton)
+
+        constrain(saveButton, selectProjectSelectView) { saveButton, selectProjectSelectView in
+
+            saveButton.top == selectProjectSelectView.bottom + spacing
+            saveButton.centerX == saveButton.superview!.centerX
+            saveButton.width == saveButton.superview!.width - 4 * Constants.defaultInsets
+            saveButton.height == 50
         }
     }
 }

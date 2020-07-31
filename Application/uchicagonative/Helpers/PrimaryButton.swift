@@ -12,9 +12,9 @@ import UIKit
 class PrimaryButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setTitleColor(.white, for: .normal)
+        setTitleColor(.black, for: .normal)
         layer.cornerRadius = 24
-        backgroundColor = .green
+        backgroundColor = R.color.mediumAquamarine()!
     }
 
     required init?(coder: NSCoder) {

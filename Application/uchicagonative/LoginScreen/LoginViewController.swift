@@ -70,7 +70,7 @@ class LoginViewController: UIViewController {
                 self.activityIndicator.startAnimating()
             case let .enabled(state):
                 self.loginButton.isEnabled = state
-                self.loginButton.backgroundColor = state ? .green : R.color.lightGrayCustom()
+                self.loginButton.backgroundColor = state ? R.color.mediumAquamarine()! : R.color.lightGrayCustom()
                 self.activityIndicator.stopAnimating()
             }
         }

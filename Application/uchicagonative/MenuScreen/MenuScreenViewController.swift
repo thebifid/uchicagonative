@@ -11,17 +11,24 @@ import FirebaseAuth
 import UIKit
 /// Main Menu View Controller
 class MenuScreenViewController: UIViewController {
-    let playButton = UIButton(titleColor: .green, title: "Play Again!")
-    let editProfileButton = UIButton(titleColor: .black, title: "Edit Profile")
-    let termsOfServiceButton = UIButton(titleColor: .black, title: "Terms Of Service")
-    let getHelpButton = UIButton(titleColor: .black, title: "Get Help")
-    let sendFeedbackButton = UIButton(titleColor: .black, title: "Send Feedback")
-    let aboutUsButton = UIButton(titleColor: .black, title: "About Us")
-    let logoutButton = UIButton(titleColor: .red, title: "Logout")
+    // MARK: - UI Controls
+
+    private let scrollView = UIScrollView()
+
+    private let playButton = UIButton(titleColor: .green, title: "Play Again!")
+    private let editProfileButton = UIButton(titleColor: .black, title: "Edit Profile")
+    private let termsOfServiceButton = UIButton(titleColor: .black, title: "Terms Of Service")
+    private let getHelpButton = UIButton(titleColor: .black, title: "Get Help")
+    private let sendFeedbackButton = UIButton(titleColor: .black, title: "Send Feedback")
+    private let aboutUsButton = UIButton(titleColor: .black, title: "About Us")
+    private let logoutButton = UIButton(titleColor: .red, title: "Logout")
+
+    // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        scrollView.alwaysBounceVertical = true
         navigationController?.navigationBar.barTintColor = .white
         view.backgroundColor = R.color.appBackgroundColor()!
 
@@ -37,7 +44,17 @@ class MenuScreenViewController: UIViewController {
         logoutButton.addTarget(self, action: #selector(handleLogout), for: .touchUpInside)
     }
 
-    // MARK: - Play action
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+
+    // MARK: - Private Methods
 
     @objc private func handlePlay() {
         let dvc = EmptyViewController()
@@ -45,15 +62,11 @@ class MenuScreenViewController: UIViewController {
         navigationController?.pushViewController(dvc, animated: true)
     }
 
-    // MARK: - Edit profile action
-
     @objc private func handleEditProfile() {
         let dvc = EditProfileViewController()
-        dvc.navigationItem.title = "Edit Profile"
+        dvc.navigationItem.title = "Edit Your Profile"
         navigationController?.pushViewController(dvc, animated: true)
     }
-
-    // MARK: - About us action
 
     @objc private func handleAboutUs() {
         let dvc = AboutUsViewController()
@@ -61,15 +74,11 @@ class MenuScreenViewController: UIViewController {
         navigationController?.pushViewController(dvc, animated: true)
     }
 
-    // MARK: - Get help action
-
     @objc private func handleGetHelp() {
         let dvc = GetHelpViewController()
         dvc.navigationItem.title = "Get Help"
         navigationController?.pushViewController(dvc, animated: true)
     }
-
-    // MARK: - Term of Service action
 
     @objc private func handleTermsOfService() {
         let dvc = TermsOfServiceViewController()
@@ -77,15 +86,11 @@ class MenuScreenViewController: UIViewController {
         navigationController?.pushViewController(dvc, animated: true)
     }
 
-    // MARK: - Send Feedback action
-
     @objc private func handleSendFeedback() {
         let dvc = SendFeedbackViewController()
         dvc.navigationItem.title = "Send Feedback"
         navigationController?.pushViewController(dvc, animated: true)
     }
-
-    // MARK: - Logout action
 
     @objc private func handleLogout() {
         do {
@@ -97,7 +102,12 @@ class MenuScreenViewController: UIViewController {
         }
     }
 
+    // MARK: - UI Actions
+
     private func setupUI() {
+        view.addSubview(scrollView)
+        scrollView.fillSuperView()
+
         let stackView = VerticalStackVIew(arrangedSubviews:
             [
                 playButton,
@@ -109,10 +119,10 @@ class MenuScreenViewController: UIViewController {
                 logoutButton
             ], spacing: 12)
 
-        view.addSubview(stackView)
+        scrollView.addSubview(stackView)
 
         constrain(stackView) { stackView in
-            stackView.centerY == stackView.superview!.centerY
+            stackView.centerY == stackView.superview!.centerY - self.topbarHeight
             stackView.centerX == stackView.superview!.centerX
         }
     }

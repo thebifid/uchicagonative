@@ -54,7 +54,6 @@ class CustomSelectButtonView: UIView {
 
         addSubview(label)
         addSubview(button)
-
         button.addTarget(self, action: #selector(handleButtonPressed), for: .touchUpInside)
         button.isEnabled = false
 

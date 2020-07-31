@@ -14,6 +14,7 @@
 		C116348624C6B3D000B6C394 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C116348524C6B3D000B6C394 /* Assets.xcassets */; };
 		C116348924C6B3D000B6C394 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C116348724C6B3D000B6C394 /* LaunchScreen.storyboard */; };
 		C116349524C6B6E100B6C394 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C116349424C6B6E100B6C394 /* R.generated.swift */; };
+		C135296324D3C2F10004D9B8 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C135296224D3C2F10004D9B8 /* UIViewController+Extension.swift */; };
 		C13F115024D14CAD001676C2 /* tos.html in Resources */ = {isa = PBXBuildFile; fileRef = C13F114F24D14CAD001676C2 /* tos.html */; };
 		C1713C8624C937F9002D0E04 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C1713C8524C937F9002D0E04 /* GoogleService-Info.plist */; };
 		C1713C8B24C94B23002D0E04 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713C8A24C94B23002D0E04 /* RootViewController.swift */; };
@@ -65,6 +66,7 @@
 		C116348824C6B3D000B6C394 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C116348A24C6B3D000B6C394 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C116349424C6B6E100B6C394 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
+		C135296224D3C2F10004D9B8 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		C13F114F24D14CAD001676C2 /* tos.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = tos.html; sourceTree = "<group>"; };
 		C1713C8524C937F9002D0E04 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C1713C8A24C94B23002D0E04 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
@@ -266,6 +268,7 @@
 				C196940024C839320054296F /* UITextField+Extension.swift */,
 				C1713C9224C99D3D002D0E04 /* UIView+ExtensionLayout.swift */,
 				C1713CFA24D024B5002D0E04 /* String+Extension.swift */,
+				C135296224D3C2F10004D9B8 /* UIViewController+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -552,6 +555,7 @@
 				C1713CFB24D024B5002D0E04 /* String+Extension.swift in Sources */,
 				C1713CF124CED5D1002D0E04 /* CreateAccountViewModel.swift in Sources */,
 				C1713CEA24CEAC50002D0E04 /* RecoverPasswordViewModel.swift in Sources */,
+				C135296324D3C2F10004D9B8 /* UIViewController+Extension.swift in Sources */,
 				C1713CF924CFE9E6002D0E04 /* CustomSelectButtonView.swift in Sources */,
 				C19693ED24C71C250054296F /* TermsOfServiceViewController.swift in Sources */,
 				C196940124C839320054296F /* UITextField+Extension.swift in Sources */,

@@ -96,6 +96,7 @@ class LoginViewModel {
 
             // Failed to log in
             else {
+                self?.isLoggingIn = false
                 completion(.failure(error!))
             }
         }
