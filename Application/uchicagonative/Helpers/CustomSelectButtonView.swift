@@ -41,6 +41,12 @@ class CustomSelectButtonView: UIView {
 
     private let separatorView = UIView()
 
+    // MARK: - Public Properties
+
+    var text: String {
+        return button.titleLabel?.text ?? ""
+    }
+
     // MARK: - Hanldeers
 
     var didTapButton: (() -> Void)?

@@ -86,7 +86,7 @@ class LoginViewController: UIViewController {
         // Forgot password action
         forgotPasswordButton.addTarget(self, action: #selector(handleForgotPassword), for: .touchUpInside)
 
-        // Creaate account action
+        // Create account action
         createAccountButton.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
 
         // scrollView will scrollUp if devices heigh is small like iphone 8 and smaller

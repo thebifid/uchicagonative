@@ -22,6 +22,16 @@ class EditProfileViewModel {
     private var availableGroups = [String: String]()
     private var userInfo = [String: Any]()
 
+    // MARK: - Public Properties
+
+    var groups: [String] {
+        return Array(availableGroups.values)
+    }
+
+    var genderList: [String] {
+        return ["Select an item...", "Female", "Male", "Non-binary", "TransMale", "TransFemale", "Something Else", "No Answer"]
+    }
+
     // MARK: - Handlers
 
     var didUpdateState: (() -> Void)?

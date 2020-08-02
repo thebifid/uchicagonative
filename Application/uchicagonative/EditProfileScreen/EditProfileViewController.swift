@@ -26,6 +26,13 @@ class EditProfileViewController: UIViewController {
     private let viewModel: EditProfileViewModel
     private let spacing: CGFloat = 30
 
+    private var pickerViewCard: PickerViewController!
+    private var currentPickerView: PickerViewType = .none
+
+    enum PickerViewType {
+        case none, gender, project
+    }
+
     // MARK: - UI Controls
 
     private let scrollView = UIScrollView()
@@ -79,13 +86,68 @@ class EditProfileViewController: UIViewController {
     private func setupHandlers() {
         selectGenderSelectView.didTapButton = {
             print("selectGenderSelectView button did tapped")
+            self.currentPickerView = .gender
+            self.showPickerViewCard(items: self.viewModel.genderList, selectedItem: self.selectGenderSelectView.text)
         }
 
         selectProjectSelectView.didTapButton = {
             print("selectProjectSelectView button did tapped")
+            self.currentPickerView = .project
+            self.showPickerViewCard(items: self.viewModel.groups, selectedItem: self.selectProjectSelectView.text)
         }
 
         viewModel.didFetchedUserInfo = {}
+    }
+
+    private func showPickerViewCard(items: [String], selectedItem: String) {
+        guard pickerViewCard == nil else { return }
+        pickerViewCard = PickerViewController()
+        pickerViewCard.configure(items: items, selectedItem: selectedItem)
+
+        pickerViewCard.view.layer.cornerRadius = 12
+
+        addChild(pickerViewCard)
+        view.addSubview(pickerViewCard.view)
+        pickerViewCard.didMove(toParent: self)
+
+        pickerViewCard.view.frame = .init(x: 0, y: view.frame.height, width: view.frame.width, height: 300)
+
+        UIView.animate(withDuration: 0.4) {
+            self.pickerViewCard.view.frame = .init(x: 0, y: self.view.frame.height - 300, width: self.view.frame.width, height: 300)
+        }
+
+        pickerViewCard.didDoneButtonTapped = { value in
+
+            switch self.currentPickerView {
+            case .none:
+                break
+
+            case .gender:
+                self.viewModel.setGender(value)
+                self.selectGenderSelectView.setTitle(title: value)
+                self.hidePickerViewCard()
+
+            case .project:
+                self.viewModel.setProject(value)
+                self.selectProjectSelectView.setTitle(title: value)
+                self.hidePickerViewCard()
+            }
+        }
+    }
+
+    private func hidePickerViewCard() {
+        let animation = { self.pickerViewCard.view.frame = .init(x: 0,
+                                                                 y: self.view.frame.height,
+                                                                 width: self.view.frame.width,
+                                                                 height: 300) }
+
+        UIView.animate(withDuration: 0.4, animations: animation) { _ in
+
+            self.pickerViewCard.willMove(toParent: nil)
+            self.pickerViewCard.view.removeFromSuperview()
+            self.pickerViewCard.removeFromParent()
+            self.pickerViewCard = nil
+        }
     }
 
     private func makeConstrain(downView: UIView, upperView: UIView, height: CGFloat = 30) {
