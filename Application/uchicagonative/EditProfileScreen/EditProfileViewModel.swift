@@ -63,11 +63,11 @@ class EditProfileViewModel {
 
     /// Fetches availables user groups
     private func fetchAvailableGroups(completion: @escaping ((Result<[String: String], Error>) -> Void)) {
-        FirebaseManager.sharedInstance.fetchAvailableGroups { result in
+        FirebaseManager.sharedInstance.fetchAvailableGroups { [weak self] result in
 
             switch result {
             case let .success(groups):
-                self.availableGroups = groups.swapKeyValues()
+                self?.availableGroups = groups.swapKeyValues()
                 completion(.success(groups))
             case let .failure(error):
                 completion(.failure(error))
@@ -131,7 +131,7 @@ class EditProfileViewModel {
         let groups = availableGroups.swapKeyValues()
         userInfo["projectId"] = groups[project]
 
-        FirebaseManager.sharedInstance.updateUserInfo(attributes: userInfo) { result in
+        FirebaseManager.sharedInstance.updateUserInfo(attributes: userInfo) { [weak self] result in
 
             switch result {
             case let .failure(error):
@@ -140,7 +140,7 @@ class EditProfileViewModel {
             case .success:
                 competion(.success(()))
             }
-            self.isRequesting = false
+            self?.isRequesting = false
         }
     }
 
