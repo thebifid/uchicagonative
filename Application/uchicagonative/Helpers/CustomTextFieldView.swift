@@ -79,12 +79,13 @@ class CustomTextFieldView: UIView {
 
     func configure(placeholder: String, isSecureTextEntry: Bool = false,
                    spellCheck: UITextSpellCheckingType = .default, maxLenght: Int = 0,
-                   textFieldInputType: TextFieldInputType = .any) {
+                   textFieldInputType: TextFieldInputType = .any, autocapitalization: UITextAutocapitalizationType = .none) {
         textField.placeholder = placeholder
         textField.isSecureTextEntry = isSecureTextEntry
         textField.spellCheckingType = spellCheck
         self.maxLenght = maxLenght
         self.textFieldInputType = textFieldInputType
+        textField.autocapitalizationType = autocapitalization
     }
 
     // MARK: - Private Methods

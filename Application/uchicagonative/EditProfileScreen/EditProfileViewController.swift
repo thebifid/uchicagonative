@@ -62,6 +62,13 @@ class EditProfileViewController: UIViewController {
         return ai
     }()
 
+    private let buttonActivityIndicator: UIActivityIndicatorView = {
+        let ai = UIActivityIndicatorView()
+        ai.hidesWhenStopped = true
+        ai.color = .black
+        return ai
+    }()
+
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
@@ -74,51 +81,53 @@ class EditProfileViewController: UIViewController {
         activityIndicator.startAnimating()
         scrollView.backgroundColor = .lightGray
         scrollView.isUserInteractionEnabled = false
+        scrollView.keyboardDismissMode = .onDrag
 
+        saveButton.isEnabled = false
         saveButton.addTarget(self, action: #selector(sendUserInfo), for: .touchUpInside)
 
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyBoard))
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
-    }
-
-    @objc private func dismissKeyBoard() {
-        view.endEditing(true)
     }
 
     // MARK: - Private Methods
 
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+    }
+
     @objc private func sendUserInfo() {
-        viewModel.sendUserInfo { result in
+        viewModel.sendUserInfo { [weak self] result in
 
             switch result {
             case let .failure(error):
                 let alert = AlertAssist.showErrorAlert(error)
-                self.present(alert, animated: true)
+                self?.present(alert, animated: true)
 
             case .success:
                 let alert = AlertAssist.showSuccessAlert(withMessage: "Your profile successfully saved.", handler: nil)
-                self.present(alert, animated: true)
+                self?.present(alert, animated: true)
             }
         }
     }
 
     private func setupTextFieldsHanslers() {
-        firstNameTextFeildView.didChangeText = { firstName in
-            self.viewModel.setFirstName(firstName)
+        firstNameTextFeildView.didChangeText = { [weak self] firstName in
+            self?.viewModel.setFirstName(firstName)
         }
 
-        lastNameTextFieldView.didChangeText = { lastName in
-            self.viewModel.setLastName(lastName)
+        lastNameTextFieldView.didChangeText = { [weak self] lastName in
+            self?.viewModel.setLastName(lastName)
         }
 
-        birthdayTextFieldView.didChangeText = { birthYear in
+        birthdayTextFieldView.didChangeText = { [weak self] birthYear in
             guard let birthYear = Int(birthYear) else { return }
-            self.viewModel.setBirthYear(birthYear)
+            self?.viewModel.setBirthYear(birthYear)
         }
 
-        zipCodeTextFieldView.didChangeText = { zipCode in
+        zipCodeTextFieldView.didChangeText = { [weak self] zipCode in
             guard let zipCode = Int(zipCode) else { return }
-            self.viewModel.setZipCode(zipCode)
+            self?.viewModel.setZipCode(zipCode)
         }
     }
 
@@ -151,27 +160,43 @@ class EditProfileViewController: UIViewController {
     }
 
     private func setupHandlers() {
-        selectGenderSelectView.didTapButton = {
-            print("selectGenderSelectView button did tapped")
-            self.scrollView.isUserInteractionEnabled = false
-            self.dismissKeyBoard()
-            self.currentPickerView = .gender
-            self.showPickerViewCard(items: self.viewModel.genderList, selectedItem: self.selectGenderSelectView.text)
+        viewModel.didUpdateState = { [weak self] in
+            let state = self?.viewModel.saveButtonState
+            switch state {
+            case .animating:
+                self?.buttonActivityIndicator.startAnimating()
+                self?.saveButton.isEnabled = false
+                self?.saveButton.backgroundColor = R.color.lightGrayCustom()
+            case let .enabled(status):
+                self?.buttonActivityIndicator.stopAnimating()
+                self?.saveButton.isEnabled = status ? true : false
+                self?.saveButton.backgroundColor = status ? R.color.mediumAquamarine() : R.color.lightGrayCustom()
+            case .none:
+                break
+            }
         }
 
-        selectProjectSelectView.didTapButton = {
-            print("selectProjectSelectView button did tapped")
-            self.scrollView.isUserInteractionEnabled = false
-            self.dismissKeyBoard()
-            self.currentPickerView = .project
-            self.showPickerViewCard(items: self.viewModel.groups, selectedItem: self.selectProjectSelectView.text)
+        selectGenderSelectView.didTapButton = { [weak self] in
+            self?.scrollView.isUserInteractionEnabled = false
+            self?.dismissKeyboard()
+            self?.currentPickerView = .gender
+            self?.showPickerViewCard(items: self?.viewModel.genderList ?? [],
+                                     selectedItem: self?.selectGenderSelectView.text ?? "", title: "Select Your Gender")
+        }
+
+        selectProjectSelectView.didTapButton = { [weak self] in
+            self?.scrollView.isUserInteractionEnabled = false
+            self?.dismissKeyboard()
+            self?.currentPickerView = .project
+            self?.showPickerViewCard(items: self?.viewModel.groups ?? [],
+                                     selectedItem: self?.selectProjectSelectView.text ?? "", title: "Select Project")
         }
     }
 
-    private func showPickerViewCard(items: [String], selectedItem: String) {
+    private func showPickerViewCard(items: [String], selectedItem: String, title: String = "") {
         guard pickerViewCard == nil else { return }
         pickerViewCard = PickerViewController()
-        pickerViewCard.configure(items: items, selectedItem: selectedItem)
+        pickerViewCard.configure(items: items, selectedItem: selectedItem, labelText: title)
 
         pickerViewCard.view.layer.cornerRadius = 12
 
@@ -185,22 +210,26 @@ class EditProfileViewController: UIViewController {
             self.pickerViewCard.view.frame = .init(x: 0, y: self.view.frame.height - 300, width: self.view.frame.width, height: 300)
         }
 
-        pickerViewCard.didDoneButtonTapped = { value in
-            self.scrollView.isUserInteractionEnabled = true
-            switch self.currentPickerView {
+        pickerViewCard.didDoneButtonTapped = { [weak self] value in
+            self?.scrollView.isUserInteractionEnabled = true
+            switch self?.currentPickerView {
             case .none:
                 break
 
             case .gender:
-                self.viewModel.setGender(value)
-                self.selectGenderSelectView.setTitle(title: value)
-                self.hidePickerViewCard()
+                self?.viewModel.setGender(value)
+                self?.selectGenderSelectView.setTitle(title: value)
+                self?.hidePickerViewCard()
 
             case .project:
-                self.viewModel.setProject(value)
-                self.selectProjectSelectView.setTitle(title: value)
-                self.hidePickerViewCard()
+                self?.viewModel.setProject(value)
+                self?.selectProjectSelectView.setTitle(title: value)
+                self?.hidePickerViewCard()
+
+            case .some(.none):
+                break
             }
+            self?.view.endEditing(true)
         }
     }
 
@@ -250,11 +279,11 @@ class EditProfileViewController: UIViewController {
             emailLabel.width == emailLabel.superview!.width - 2 * Constants.defaultInsets
         }
 
-        firstNameTextFeildView.configure(placeholder: "First Name", textFieldInputType: .latters)
+        firstNameTextFeildView.configure(placeholder: "First Name", textFieldInputType: .latters, autocapitalization: .words)
         scrollView.addSubview(firstNameTextFeildView)
         makeConstrain(downView: firstNameTextFeildView, upperView: emailLabel)
 
-        lastNameTextFieldView.configure(placeholder: "Last Name", textFieldInputType: .latters)
+        lastNameTextFieldView.configure(placeholder: "Last Name", textFieldInputType: .latters, autocapitalization: .words)
         scrollView.addSubview(lastNameTextFieldView)
         makeConstrain(downView: lastNameTextFieldView, upperView: firstNameTextFeildView)
 
@@ -276,7 +305,7 @@ class EditProfileViewController: UIViewController {
         scrollView.addSubview(selectProjectSelectView)
         makeConstrain(downView: selectProjectSelectView, upperView: selectGenderSelectView, height: 90)
 
-        saveButton.configure(title: "Save Changes", font: R.font.karlaBold(size: 18)!, backgroundColor: R.color.mediumAquamarine()!)
+        saveButton.configure(title: "Save Changes", font: R.font.karlaBold(size: 18)!, backgroundColor: R.color.lightGrayCustom()!)
         scrollView.addSubview(saveButton)
 
         constrain(saveButton, selectProjectSelectView) { saveButton, selectProjectSelectView in
@@ -293,6 +322,12 @@ class EditProfileViewController: UIViewController {
 
             activityIndicator.centerX == activityIndicator.superview!.centerX
             activityIndicator.centerY == activityIndicator.superview!.centerY - 3 * topbarHeight
+        }
+
+        saveButton.addSubview(buttonActivityIndicator)
+
+        constrain(buttonActivityIndicator) { buttonActivityIndicator in
+            buttonActivityIndicator.center == buttonActivityIndicator.superview!.center
         }
     }
 }

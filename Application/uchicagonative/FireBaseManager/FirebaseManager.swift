@@ -94,7 +94,9 @@ class FirebaseManager {
 
     private func updateFirebaseDocument(colletction: String, documentName: String, attributes: [String: Any],
                                         completion: @escaping ((Result<Void, Error>) -> Void)) {
-        db.collection(colletction).document(documentName).updateData(attributes) { error in
+        var attributesWithTimestamp = attributes
+        attributesWithTimestamp["updatedAt"] = FieldValue.serverTimestamp()
+        db.collection(colletction).document(documentName).updateData(attributesWithTimestamp) { error in
 
             if let error = error {
                 completion(.failure(error))

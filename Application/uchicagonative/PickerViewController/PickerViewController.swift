@@ -20,12 +20,17 @@ class PickerViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
 
     private let menuView: UIView = {
         let view = UIView()
-        view.backgroundColor = R.color.lightGrayCustom()
+        view.backgroundColor = .white // R.color.lightGrayCustom()
         return view
     }()
 
     lazy var topBorder = makeBorder()
     lazy var bottomBorder = makeBorder()
+
+    private let label: UILabel = {
+        let label = UILabel()
+        return label
+    }()
 
     private let doneButton: UIButton = {
         let button = UIButton(type: .system)
@@ -73,9 +78,10 @@ class PickerViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
     // MARK: - Public Methods
 
     /// Configure pickerView
-    func configure(items: [String], selectedItem item: String = "") {
+    func configure(items: [String], selectedItem item: String = "", labelText text: String = "") {
         self.items = items
         selectedIndex = items.firstIndex(of: item) ?? 0
+        label.text = text
     }
 
     // MARK: - Private Methods
@@ -115,6 +121,13 @@ class PickerViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
 
             doneButton.centerY == doneButton.superview!.centerY
             doneButton.right == doneButton.superview!.right - 20
+        }
+
+        menuView.addSubview(label)
+
+        constrain(label) { label in
+            label.centerY == label.superview!.centerY
+            label.left == label.superview!.left + 20
         }
 
         menuView.addSubview(topBorder)

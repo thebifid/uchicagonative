@@ -24,6 +24,7 @@ class EditProfileViewModel {
 
     // MARK: - Public Properties
 
+    /// Returns names of groups
     var groups: [String] {
         return Array(availableGroups.values)
     }
@@ -32,13 +33,42 @@ class EditProfileViewModel {
         return ["Select an item...", "Female", "Male", "Non-binary", "TransMale", "TransFemale", "Something Else", "No Answer"]
     }
 
+    /// Request status
+    var isRequesting: Bool = false {
+        didSet {
+            didUpdateState?()
+        }
+    }
+
+    var saveButtonState: SaveButtonState {
+        if isRequesting {
+            return .animating
+        } else {
+            return .enabled(isAllFieldsAreFill())
+        }
+    }
+
     // MARK: - Handlers
 
+    /// Calls when get updated
     var didUpdateState: (() -> Void)?
 
-    var didFetchedUserInfo: (() -> Void)?
+    // MARK: - Enums
+
+    enum SaveButtonState {
+        case animating, enabled(Bool)
+    }
 
     // MARK: - Private Methods
+
+    private func isAllFieldsAreFill() -> Bool {
+        let isFilled = !firstName.isEmpty && !lastName.isEmpty && birthYear != 0 &&
+            zipCode != 0 && !gender.isEmpty && gender != genderList[0]
+
+        let isFullyFilled = isFilled && String(birthYear).count == 4 && String(zipCode).count == 5
+
+        return isFullyFilled
+    }
 
     // MARK: Public Methods
 
@@ -51,24 +81,24 @@ class EditProfileViewModel {
                 completion(.failure(error))
 
             case .success:
-                FirebaseManager.sharedInstance.fetchUserInfo { result in
+                FirebaseManager.sharedInstance.fetchUserInfo { [weak self] result in
 
                     switch result {
                     case let .failure(error):
                         completion(.failure(error))
 
                     case var .success(userInfo):
-                        userInfo["projectId"] = self.availableGroups[userInfo["projectId"] as? String ?? ""]
-                        self.userInfo = userInfo
+                        userInfo["projectId"] = self?.availableGroups[userInfo["projectId"] as? String ?? ""]
+                        self?.userInfo = userInfo
 
-                        self.project = userInfo["projectId"] as? String ?? ""
-                        self.firstName = userInfo["firstName"] as? String ?? ""
-                        self.lastName = userInfo["lastName"] as? String ?? ""
-                        self.birthYear = userInfo["birthYear"] as? Int ?? 0
-                        self.zipCode = userInfo["zipCode"] as? Int ?? 0
-                        self.gender = userInfo["gender"] as? String ?? ""
+                        self?.project = userInfo["projectId"] as? String ?? ""
+                        self?.firstName = userInfo["firstName"] as? String ?? ""
+                        self?.lastName = userInfo["lastName"] as? String ?? ""
+                        self?.birthYear = userInfo["birthYear"] as? Int ?? 0
+                        self?.zipCode = userInfo["zipCode"] as? Int ?? 0
+                        self?.gender = userInfo["gender"] as? String ?? ""
 
-                        completion(.success(self.userInfo))
+                        completion(.success(self?.userInfo ?? [:]))
                     }
                 }
             }
@@ -89,7 +119,9 @@ class EditProfileViewModel {
         }
     }
 
+    /// Save User Information in Firebase
     func sendUserInfo(competion: @escaping ((Result<Void, Error>) -> Void)) {
+        isRequesting = true
         userInfo["firstName"] = firstName
         userInfo["lastName"] = lastName
         userInfo["gender"] = gender
@@ -108,9 +140,11 @@ class EditProfileViewModel {
             case .success:
                 competion(.success(()))
             }
+            self.isRequesting = false
         }
     }
 
+    /// Set itself properties
     func setFirstName(_ firstName: String) {
         self.firstName = firstName
         didUpdateState?()
