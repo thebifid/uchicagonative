@@ -61,6 +61,20 @@ class EditProfileViewModel {
 
     // MARK: - Private Methods
 
+    /// Fetches availables user groups
+    private func fetchAvailableGroups(completion: @escaping ((Result<[String: String], Error>) -> Void)) {
+        FirebaseManager.sharedInstance.fetchAvailableGroups { result in
+
+            switch result {
+            case let .success(groups):
+                self.availableGroups = groups.swapKeyValues()
+                completion(.success(groups))
+            case let .failure(error):
+                completion(.failure(error))
+            }
+        }
+    }
+
     private func isAllFieldsAreFill() -> Bool {
         let isFilled = !firstName.isEmpty && !lastName.isEmpty && birthYear != 0 &&
             zipCode != 0 && !gender.isEmpty && gender != genderList[0]
@@ -101,20 +115,6 @@ class EditProfileViewModel {
                         completion(.success(self?.userInfo ?? [:]))
                     }
                 }
-            }
-        }
-    }
-
-    /// Fetches availables user groups
-    func fetchAvailableGroups(completion: @escaping ((Result<[String: String], Error>) -> Void)) {
-        FirebaseManager.sharedInstance.fetchAvailableGroups { result in
-
-            switch result {
-            case let .success(groups):
-                self.availableGroups = groups.swapKeyValues()
-                completion(.success(groups))
-            case let .failure(error):
-                completion(.failure(error))
             }
         }
     }

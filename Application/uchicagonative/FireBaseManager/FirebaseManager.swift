@@ -70,7 +70,7 @@ class FirebaseManager {
                               attributes: attributes, completion: completion)
     }
 
-    /// Main for add documents in firestore. Add document to collection from params.
+    /// Main method for add documents in firestore. Add document to collection from params.
     private func addDocumentToFireBase(collection: String, documentName: String, attributes: [String: Any],
                                        completion: @escaping (Result<Void, Error>) -> Void) {
         db.collection(collection).document(documentName).setData(attributes) { error in
@@ -84,6 +84,7 @@ class FirebaseManager {
         }
     }
 
+    /// Update document (userInfo) in userProfiles collection
     func updateUserInfo(attributes: [String: Any], completion: @escaping (Result<Void, Error>) -> Void) {
         let collection = "userProfiles"
         updateFirebaseDocument(colletction: collection,
@@ -92,6 +93,7 @@ class FirebaseManager {
                                completion: completion)
     }
 
+    /// Main method to update document in collection
     private func updateFirebaseDocument(colletction: String, documentName: String, attributes: [String: Any],
                                         completion: @escaping ((Result<Void, Error>) -> Void)) {
         var attributesWithTimestamp = attributes
