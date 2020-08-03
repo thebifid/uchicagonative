@@ -106,15 +106,12 @@ class CreateAccountViewController: UIViewController {
             case .animating:
                 self?.signUpButton.isEnabled = false
                 self?.activityIndicator.startAnimating()
-                self?.signUpButton.backgroundColor = R.color.lightGrayCustom()
             case let .enabled(state):
                 if state {
                     self?.signUpButton.isEnabled = true
                     self?.activityIndicator.stopAnimating()
-                    self?.signUpButton.backgroundColor = R.color.mediumAquamarine()!
                 } else {
-                    self?.signUpButton.isEnabled = true
-                    self?.signUpButton.backgroundColor = R.color.lightGrayCustom()
+                    self?.signUpButton.isEnabled = false
                     self?.activityIndicator.stopAnimating()
                 }
             case .none:
@@ -171,7 +168,7 @@ class CreateAccountViewController: UIViewController {
         popupMenu.transform = .init(scaleX: 1, y: 0)
 
         signUpButton.configure(title: "Sign Up with Email",
-                               font: R.font.karlaBold(size: 18)!, backgroundColor: R.color.lightGrayCustom()!, isEnabled: false)
+                               font: R.font.karlaBold(size: 18)!, isEnabled: false)
 
         scrollView.addSubview(signUpButton)
 

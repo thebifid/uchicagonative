@@ -66,11 +66,9 @@ class LoginViewController: UIViewController {
             switch buttonState {
             case .animating:
                 self.loginButton.isEnabled = false
-                self.loginButton.backgroundColor = R.color.lightGrayCustom()
                 self.activityIndicator.startAnimating()
             case let .enabled(state):
                 self.loginButton.isEnabled = state
-                self.loginButton.backgroundColor = state ? R.color.mediumAquamarine()! : R.color.lightGrayCustom()
                 self.activityIndicator.stopAnimating()
             }
         }
@@ -194,7 +192,6 @@ class LoginViewController: UIViewController {
         // configure Log In button
         loginButton.configure(title: "Log In",
                               font: R.font.karlaBold(size: 18)!,
-                              backgroundColor: R.color.lightGrayCustom()!,
                               isEnabled: false)
 
         // adding components on screen

@@ -84,6 +84,58 @@ class PickerViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
         label.text = text
     }
 
+    func hidePickerViewCard() {
+        let animation = { self.view.frame = .init(x: 0,
+                                                  y: self.view.frame.height,
+                                                  width: self.view.frame.width,
+                                                  height: 300) }
+
+        UIView.animate(withDuration: 0.4, animations: animation) { _ in
+
+            self.willMove(toParent: nil)
+            self.view.removeFromSuperview()
+            self.removeFromParent()
+        }
+    }
+
+    func showPickerViewCard(items: [String], selectedItem: String, title: String = "", didDoneButtonTapped: (String) -> Void) {
+        let pickerViewCard = self
+        pickerViewCard.configure(items: items, selectedItem: selectedItem, labelText: title)
+
+        pickerViewCard.view.layer.cornerRadius = 12
+
+        view.addSubview(pickerViewCard.view)
+        pickerViewCard.didMove(toParent: self)
+
+        pickerViewCard.view.frame = .init(x: 0, y: view.frame.height, width: view.frame.width, height: 300)
+
+        UIView.animate(withDuration: 0.4) {
+            pickerViewCard.view.frame = .init(x: 0, y: self.view.frame.height - 300, width: self.view.frame.width, height: 300)
+        }
+
+//        pickerViewCard.didDoneButtonTapped = { [weak self] value in
+//            self?.scrollView.isUserInteractionEnabled = true
+//            switch self?.currentPickerView {
+//            case .none:
+//                break
+//
+//            case .gender:
+//                self?.viewModel.setGender(value)
+//                self?.selectGenderSelectView.setTitle(title: value)
+//                self?.pickerViewCard.hidePickerViewCard()
+//
+//            case .project:
+//                self?.viewModel.setProject(value)
+//                self?.selectProjectSelectView.setTitle(title: value)
+//                self?.hidePickerViewCard()
+//
+//            case .some(.none):
+//                break
+//            }
+//            self?.view.endEditing(true)
+//        }
+    }
+
     // MARK: - Private Methods
 
     @objc private func handleDoneButtonTapped() {

@@ -139,20 +139,20 @@ class EditProfileViewController: UIViewController {
                 let alert = AlertAssist.showErrorAlert(error)
                 self?.present(alert, animated: true)
 
-            case let .success(userInfo):
-                self?.emailLabel.text = "Email: \(userInfo["email"] ?? "")"
-                self?.firstNameTextFeildView.text = userInfo["firstName"] as? String ?? ""
-                self?.lastNameTextFieldView.text = userInfo["lastName"] as? String ?? ""
-                self?.birthdayTextFieldView.text = "\(userInfo["birthYear"] ?? "")"
-                self?.zipCodeTextFieldView.text = "\(userInfo["zipCode"] ?? "")"
-                self?.selectGenderSelectView.setTitle(title: userInfo["gender"] as? String ?? "Select an item...")
-                self?.selectProjectSelectView.setTitle(title: userInfo["projectId"] as? String ?? "Select an item...")
+            case .success:
+                self?.emailLabel.text = "Email: \(self?.viewModel.userInfo["email"] ?? "")"
+                self?.firstNameTextFeildView.text = self?.viewModel.userInfo["firstName"] as? String ?? ""
+                self?.lastNameTextFieldView.text = self?.viewModel.userInfo["lastName"] as? String ?? ""
+                self?.birthdayTextFieldView.text = "\(self?.viewModel.userInfo["birthYear"] ?? "")"
+                self?.zipCodeTextFieldView.text = "\(self?.viewModel.userInfo["zipCode"] ?? "")"
+                self?.selectGenderSelectView.setTitle(title: self?.viewModel.userInfo["gender"] as? String ?? "Select an item...")
+                self?.selectProjectSelectView.setTitle(title: self?.viewModel.userInfo["projectId"] as? String ?? "Select an item...")
 
                 self?.activityIndicator.stopAnimating()
                 self?.scrollView.backgroundColor = .white
                 self?.scrollView.isUserInteractionEnabled = true
 
-                if userInfo["role"] as? String != "admin" {
+                if self?.viewModel.userInfo["role"] as? String != "admin" {
                     self?.selectProjectSelectView.disableButton()
                 }
             }
@@ -181,7 +181,7 @@ class EditProfileViewController: UIViewController {
             self?.dismissKeyboard()
             self?.currentPickerView = .gender
             self?.showPickerViewCard(items: self?.viewModel.genderList ?? [],
-                                     selectedItem: self?.selectGenderSelectView.text ?? "", title: "Select Your Gender")
+                                     selectedItem: self?.viewModel.userInfo["gender"] as? String ?? "", title: "Select Your Gender")
         }
 
         selectProjectSelectView.didTapButton = { [weak self] in
@@ -189,7 +189,7 @@ class EditProfileViewController: UIViewController {
             self?.dismissKeyboard()
             self?.currentPickerView = .project
             self?.showPickerViewCard(items: self?.viewModel.groups ?? [],
-                                     selectedItem: self?.selectProjectSelectView.text ?? "", title: "Select Project")
+                                     selectedItem: self?.viewModel.userInfo["projectId"] as? String ?? "", title: "Select Project")
         }
     }
 
@@ -219,7 +219,7 @@ class EditProfileViewController: UIViewController {
             case .gender:
                 self?.viewModel.setGender(value)
                 self?.selectGenderSelectView.setTitle(title: value)
-                self?.hidePickerViewCard()
+                self?.pickerViewCard.hidePickerViewCard()
 
             case .project:
                 self?.viewModel.setProject(value)
@@ -244,7 +244,6 @@ class EditProfileViewController: UIViewController {
             self.pickerViewCard.willMove(toParent: nil)
             self.pickerViewCard.view.removeFromSuperview()
             self.pickerViewCard.removeFromParent()
-            self.pickerViewCard = nil
         }
     }
 
@@ -305,7 +304,7 @@ class EditProfileViewController: UIViewController {
         scrollView.addSubview(selectProjectSelectView)
         makeConstrain(downView: selectProjectSelectView, upperView: selectGenderSelectView, height: 90)
 
-        saveButton.configure(title: "Save Changes", font: R.font.karlaBold(size: 18)!, backgroundColor: R.color.lightGrayCustom()!)
+        saveButton.configure(title: "Save Changes", font: R.font.karlaBold(size: 18)!)
         scrollView.addSubview(saveButton)
 
         constrain(saveButton, selectProjectSelectView) { saveButton, selectProjectSelectView in

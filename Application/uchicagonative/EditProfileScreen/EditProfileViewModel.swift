@@ -13,20 +13,22 @@ class EditProfileViewModel {
 
     private var firstName: String = ""
     private var lastName: String = ""
-    private var birthYear: Int = 0 // ?
-    private var zipCode: Int = 0 // ?
+    private var birthYear: Int = 0
+    private var zipCode: Int = 0
     private var gender: String = ""
     private var project: String = ""
     private var role: String = ""
 
-    private var availableGroups = [String: String]()
-    private var userInfo = [String: Any]()
+    private var availableGroupNameById = [String: String]()
+    private var availableGroupIdByName = [String: String]()
+
+    private(set) var userInfo = [String: Any]()
 
     // MARK: - Public Properties
 
     /// Returns names of groups
     var groups: [String] {
-        return Array(availableGroups.values)
+        return Array(availableGroupNameById.values)
     }
 
     var genderList: [String] {
@@ -67,7 +69,8 @@ class EditProfileViewModel {
 
             switch result {
             case let .success(groups):
-                self?.availableGroups = groups.swapKeyValues()
+                self?.availableGroupIdByName = groups
+                self?.availableGroupNameById = groups.swapKeyValues()
                 completion(.success(groups))
             case let .failure(error):
                 completion(.failure(error))
@@ -87,7 +90,7 @@ class EditProfileViewModel {
     // MARK: Public Methods
 
     /// Fetches user information like firt name, last name and etc
-    func fetchUserInfo(completion: @escaping ((Result<[String: Any], Error>) -> Void)) {
+    func fetchUserInfo(completion: @escaping ((Result<Void, Error>) -> Void)) {
         fetchAvailableGroups { result in
 
             switch result {
@@ -102,7 +105,7 @@ class EditProfileViewModel {
                         completion(.failure(error))
 
                     case var .success(userInfo):
-                        userInfo["projectId"] = self?.availableGroups[userInfo["projectId"] as? String ?? ""]
+                        userInfo["projectId"] = self?.availableGroupNameById[userInfo["projectId"] as? String ?? ""]
                         self?.userInfo = userInfo
 
                         self?.project = userInfo["projectId"] as? String ?? ""
@@ -112,7 +115,7 @@ class EditProfileViewModel {
                         self?.zipCode = userInfo["zipCode"] as? Int ?? 0
                         self?.gender = userInfo["gender"] as? String ?? ""
 
-                        completion(.success(self?.userInfo ?? [:]))
+                        completion(.success(()))
                     }
                 }
             }
@@ -128,8 +131,7 @@ class EditProfileViewModel {
         userInfo["birthYear"] = birthYear
         userInfo["zipCode"] = zipCode
 
-        let groups = availableGroups.swapKeyValues()
-        userInfo["projectId"] = groups[project]
+        userInfo["projectId"] = availableGroupIdByName[project]
 
         FirebaseManager.sharedInstance.updateUserInfo(attributes: userInfo) { [weak self] result in
 

@@ -91,11 +91,16 @@ class CustomTextFieldView: UIView {
     // MARK: - Private Methods
 
     @objc private func editingChanged(_ sender: UITextField) {
-        if maxLenght != 0 {
-            textField.text = String(textField.text!.prefix(maxLenght))
-        }
-
         didChangeText?(text)
+    }
+
+    private func textLimit(existingText: String?,
+                           newText: String,
+                           limit: Int) -> Bool {
+        if maxLenght == 0 { return true }
+        let text = existingText ?? ""
+        let isAtLimit = text.count + newText.count <= limit
+        return isAtLimit
     }
 }
 
@@ -105,19 +110,30 @@ extension CustomTextFieldView: UITextFieldDelegate {
         case .any:
             return true
         case .digits:
+
             if textField == textField {
                 let allowedCharacters = CharacterSet(charactersIn: "0123456789")
                 let characterSet = CharacterSet(charactersIn: string)
-                return allowedCharacters.isSuperset(of: characterSet)
+
+                if allowedCharacters.isSuperset(of: characterSet) {
+                    return textLimit(existingText: textField.text,
+                                     newText: string,
+                                     limit: maxLenght)
+                }
             }
 
         case .latters:
             if textField == textField {
                 let allowedCharacters = CharacterSet.letters
                 let characterSet = CharacterSet(charactersIn: string)
-                return allowedCharacters.isSuperset(of: characterSet)
+
+                if allowedCharacters.isSuperset(of: characterSet) {
+                    return textLimit(existingText: textField.text,
+                                     newText: string,
+                                     limit: maxLenght)
+                }
             }
         }
-        return true
+        return false
     }
 }

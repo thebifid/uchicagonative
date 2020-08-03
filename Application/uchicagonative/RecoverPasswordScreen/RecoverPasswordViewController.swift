@@ -56,13 +56,11 @@ class RecoverPasswordViewController: UIViewController {
             switch buttonState {
             case .animating:
                 self?.requestNewPasswordButton.isEnabled = false
-                self?.requestNewPasswordButton.backgroundColor = R.color.lightGrayCustom()
                 self?.activityIndicator.startAnimating()
 
             case let .enabled(state):
                 self?.activityIndicator.stopAnimating()
                 self?.requestNewPasswordButton.isEnabled = state
-                self?.requestNewPasswordButton.backgroundColor = state ? .green : R.color.lightGrayCustom()
             case .none:
                 break
             }
@@ -113,7 +111,7 @@ class RecoverPasswordViewController: UIViewController {
 
         scrollView.addSubview(requestNewPasswordButton)
         requestNewPasswordButton.configure(title: "Request New Password",
-                                           font: R.font.karlaBold(size: 18)!, backgroundColor: R.color.lightGrayCustom()!, isEnabled: false)
+                                           font: R.font.karlaBold(size: 18)!, isEnabled: false)
 
         constrain(scrollView, emailTextField, requestNewPasswordButton) { scrollView, emailTextField, requestNewPasswordButton in
 
