@@ -74,8 +74,7 @@ class CreateAccountViewModel {
 
     func addUserData(completion: @escaping ((Result<Void, Error>) -> Void)) {
         setUserInfo()
-        FirebaseManager.sharedInstance.addDocumentToUserProfiles(documentName: FirebaseAuth.Auth.auth().currentUser!.uid,
-                                                                 attributes: userInfo) { [weak self] result in
+        FirebaseManager.sharedInstance.addDocumentToUserProfiles(attributes: userInfo) { [weak self] result in
             self?.isRequesting = false
             switch result {
             case let .failure(error):

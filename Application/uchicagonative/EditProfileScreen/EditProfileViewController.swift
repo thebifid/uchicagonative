@@ -75,6 +75,8 @@ class EditProfileViewController: UIViewController {
         scrollView.backgroundColor = .lightGray
         scrollView.isUserInteractionEnabled = false
 
+        saveButton.addTarget(self, action: #selector(sendUserInfo), for: .touchUpInside)
+
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyBoard))
         view.addGestureRecognizer(tap)
     }
@@ -84,6 +86,21 @@ class EditProfileViewController: UIViewController {
     }
 
     // MARK: - Private Methods
+
+    @objc private func sendUserInfo() {
+        viewModel.sendUserInfo { result in
+
+            switch result {
+            case let .failure(error):
+                let alert = AlertAssist.showErrorAlert(error)
+                self.present(alert, animated: true)
+
+            case .success:
+                let alert = AlertAssist.showSuccessAlert(withMessage: "Your profile successfully saved.", handler: nil)
+                self.present(alert, animated: true)
+            }
+        }
+    }
 
     private func setupTextFieldsHanslers() {
         firstNameTextFeildView.didChangeText = { firstName in

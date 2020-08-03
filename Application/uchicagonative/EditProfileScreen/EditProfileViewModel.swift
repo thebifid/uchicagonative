@@ -60,13 +60,20 @@ class EditProfileViewModel {
                     case var .success(userInfo):
                         userInfo["projectId"] = self.availableGroups[userInfo["projectId"] as? String ?? ""]
                         self.userInfo = userInfo
+
+                        self.project = userInfo["projectId"] as? String ?? ""
+                        self.firstName = userInfo["firstName"] as? String ?? ""
+                        self.lastName = userInfo["lastName"] as? String ?? ""
+                        self.birthYear = userInfo["birthYear"] as? Int ?? 0
+                        self.zipCode = userInfo["zipCode"] as? Int ?? 0
+                        self.gender = userInfo["gender"] as? String ?? ""
+
                         completion(.success(self.userInfo))
                     }
                 }
             }
         }
     }
-    
 
     /// Fetches availables user groups
     func fetchAvailableGroups(completion: @escaping ((Result<[String: String], Error>) -> Void)) {
@@ -78,6 +85,28 @@ class EditProfileViewModel {
                 completion(.success(groups))
             case let .failure(error):
                 completion(.failure(error))
+            }
+        }
+    }
+
+    func sendUserInfo(competion: @escaping ((Result<Void, Error>) -> Void)) {
+        userInfo["firstName"] = firstName
+        userInfo["lastName"] = lastName
+        userInfo["gender"] = gender
+        userInfo["birthYear"] = birthYear
+        userInfo["zipCode"] = zipCode
+
+        let groups = availableGroups.swapKeyValues()
+        userInfo["projectId"] = groups[project]
+
+        FirebaseManager.sharedInstance.updateUserInfo(attributes: userInfo) { result in
+
+            switch result {
+            case let .failure(error):
+                competion(.failure(error))
+
+            case .success:
+                competion(.success(()))
             }
         }
     }

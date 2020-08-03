@@ -72,17 +72,14 @@ class PickerViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
 
     // MARK: - Public Methods
 
-    
     /// Configure pickerView
     func configure(items: [String], selectedItem item: String = "") {
         self.items = items
         selectedIndex = items.firstIndex(of: item) ?? 0
     }
 
-
-
     // MARK: - Private Methods
-    
+
     @objc private func handleDoneButtonTapped() {
         didDoneButtonTapped?(items[selectedIndex])
     }

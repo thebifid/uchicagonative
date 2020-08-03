@@ -62,16 +62,39 @@ class FirebaseManager {
     }
 
     /// Add new document (userInfo) to userProfiles collection
-    func addDocumentToUserProfiles(documentName: String, attributes: [String: Any],
+    func addDocumentToUserProfiles(attributes: [String: Any],
                                    completion: @escaping (Result<Void, Error>) -> Void) {
         let collection = "userProfiles"
-        addDocumentToFireBase(collection: collection, documentName: documentName, attributes: attributes, completion: completion)
+        addDocumentToFireBase(collection: collection,
+                              documentName: FirebaseAuth.Auth.auth().currentUser!.uid,
+                              attributes: attributes, completion: completion)
     }
 
     /// Main for add documents in firestore. Add document to collection from params.
-    func addDocumentToFireBase(collection: String, documentName: String, attributes: [String: Any],
-                               completion: @escaping (Result<Void, Error>) -> Void) {
+    private func addDocumentToFireBase(collection: String, documentName: String, attributes: [String: Any],
+                                       completion: @escaping (Result<Void, Error>) -> Void) {
         db.collection(collection).document(documentName).setData(attributes) { error in
+
+            if let error = error {
+                completion(.failure(error))
+                return
+            } else {
+                completion(.success(()))
+            }
+        }
+    }
+
+    func updateUserInfo(attributes: [String: Any], completion: @escaping (Result<Void, Error>) -> Void) {
+        let collection = "userProfiles"
+        updateFirebaseDocument(colletction: collection,
+                               documentName: FirebaseAuth.Auth.auth().currentUser!.uid,
+                               attributes: attributes,
+                               completion: completion)
+    }
+
+    private func updateFirebaseDocument(colletction: String, documentName: String, attributes: [String: Any],
+                                        completion: @escaping ((Result<Void, Error>) -> Void)) {
+        db.collection(colletction).document(documentName).updateData(attributes) { error in
 
             if let error = error {
                 completion(.failure(error))
