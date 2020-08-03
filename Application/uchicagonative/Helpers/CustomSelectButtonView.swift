@@ -116,6 +116,11 @@ class CustomSelectButtonView: UIView {
         button.setTitleColor(.black, for: .normal)
     }
 
+    func disableButton() {
+        button.backgroundColor = R.color.lightGrayCustom()!
+        button.isEnabled = false
+    }
+
     /// Enables/disables activity indicator animation.
     func setAnimation(enabled: Bool) {
         button.isEnabled = !enabled

@@ -42,6 +42,7 @@ class EditProfileViewModel {
 
     // MARK: Public Methods
 
+    /// Fetches user information like firt name, last name and etc
     func fetchUserInfo(completion: @escaping ((Result<[String: Any], Error>) -> Void)) {
         fetchAvailableGroups { result in
 
@@ -65,7 +66,9 @@ class EditProfileViewModel {
             }
         }
     }
+    
 
+    /// Fetches availables user groups
     func fetchAvailableGroups(completion: @escaping ((Result<[String: String], Error>) -> Void)) {
         FirebaseManager.sharedInstance.fetchAvailableGroups { result in
 

@@ -20,9 +20,12 @@ class PickerViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
 
     private let menuView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = R.color.lightGrayCustom()
         return view
     }()
+
+    lazy var topBorder = makeBorder()
+    lazy var bottomBorder = makeBorder()
 
     private let doneButton: UIButton = {
         let button = UIButton(type: .system)
@@ -69,15 +72,25 @@ class PickerViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
 
     // MARK: - Public Methods
 
+    
+    /// Configure pickerView
     func configure(items: [String], selectedItem item: String = "") {
         self.items = items
         selectedIndex = items.firstIndex(of: item) ?? 0
     }
 
-    func selectInitIndex(index: Int) {}
 
+
+    // MARK: - Private Methods
+    
     @objc private func handleDoneButtonTapped() {
         didDoneButtonTapped?(items[selectedIndex])
+    }
+
+    private func makeBorder() -> UIView {
+        let view = UIView()
+        view.backgroundColor = .lightGray
+        return view
     }
 
     // MARK: - UI Actions
@@ -105,6 +118,19 @@ class PickerViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
 
             doneButton.centerY == doneButton.superview!.centerY
             doneButton.right == doneButton.superview!.right - 20
+        }
+
+        menuView.addSubview(topBorder)
+        menuView.addSubview(bottomBorder)
+
+        constrain(topBorder, bottomBorder) { topBorder, bottomBorder in
+            topBorder.width == topBorder.superview!.width
+            topBorder.height == 1
+            topBorder.top == topBorder.superview!.top
+
+            bottomBorder.width == bottomBorder.superview!.width
+            bottomBorder.height == 1
+            bottomBorder.bottom == bottomBorder.superview!.bottom
         }
 
         fullView.addSubview(pickerView)

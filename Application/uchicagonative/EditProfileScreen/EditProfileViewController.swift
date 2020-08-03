@@ -29,6 +29,8 @@ class EditProfileViewController: UIViewController {
     private var pickerViewCard: PickerViewController!
     private var currentPickerView: PickerViewType = .none
 
+    // MARK: - Enums
+
     enum PickerViewType {
         case none, gender, project
     }
@@ -67,6 +69,7 @@ class EditProfileViewController: UIViewController {
         fetchUserData()
         setupHandlers()
         setupUI()
+        setupTextFieldsHanslers()
 
         activityIndicator.startAnimating()
         scrollView.backgroundColor = .lightGray
@@ -81,6 +84,26 @@ class EditProfileViewController: UIViewController {
     }
 
     // MARK: - Private Methods
+
+    private func setupTextFieldsHanslers() {
+        firstNameTextFeildView.didChangeText = { firstName in
+            self.viewModel.setFirstName(firstName)
+        }
+
+        lastNameTextFieldView.didChangeText = { lastName in
+            self.viewModel.setLastName(lastName)
+        }
+
+        birthdayTextFieldView.didChangeText = { birthYear in
+            guard let birthYear = Int(birthYear) else { return }
+            self.viewModel.setBirthYear(birthYear)
+        }
+
+        zipCodeTextFieldView.didChangeText = { zipCode in
+            guard let zipCode = Int(zipCode) else { return }
+            self.viewModel.setZipCode(zipCode)
+        }
+    }
 
     private func fetchUserData() {
         viewModel.fetchUserInfo { [weak self] result in
@@ -102,6 +125,10 @@ class EditProfileViewController: UIViewController {
                 self?.activityIndicator.stopAnimating()
                 self?.scrollView.backgroundColor = .white
                 self?.scrollView.isUserInteractionEnabled = true
+
+                if userInfo["role"] as? String != "admin" {
+                    self?.selectProjectSelectView.disableButton()
+                }
             }
         }
     }
@@ -122,8 +149,6 @@ class EditProfileViewController: UIViewController {
             self.currentPickerView = .project
             self.showPickerViewCard(items: self.viewModel.groups, selectedItem: self.selectProjectSelectView.text)
         }
-
-        viewModel.didFetchedUserInfo = {}
     }
 
     private func showPickerViewCard(items: [String], selectedItem: String) {
