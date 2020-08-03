@@ -28,6 +28,11 @@ class CustomTextFieldView: UIView {
 
     var didChangeText: ((String) -> Void)?
 
+    // MARK: - Private Properties
+
+    private var maxLenght: Int = 0
+    private var textFieldInputType: TextFieldInputType = .any
+
     // MARK: - Public Properties
 
     var text: String {
@@ -39,13 +44,18 @@ class CustomTextFieldView: UIView {
         }
     }
 
+    // MARK: - Enum
+
+    enum TextFieldInputType {
+        case digits, latters, any
+    }
+
     // MARK: - Init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
         separatorView.backgroundColor = UIColor(white: 0.3, alpha: 0.3)
-
+        textField.delegate = self
         addSubview(textField)
         textField.addTarget(self, action: #selector(editingChanged(_:)), for: .editingChanged)
         addSubview(separatorView)
@@ -67,15 +77,46 @@ class CustomTextFieldView: UIView {
 
     // MARK: - Public Methods
 
-    func configure(placeholder: String, isSecureTextEntry: Bool = false, spellCheck: UITextSpellCheckingType = .default) {
+    func configure(placeholder: String, isSecureTextEntry: Bool = false,
+                   spellCheck: UITextSpellCheckingType = .default, maxLenght: Int = 0,
+                   textFieldInputType: TextFieldInputType = .any) {
         textField.placeholder = placeholder
         textField.isSecureTextEntry = isSecureTextEntry
         textField.spellCheckingType = spellCheck
+        self.maxLenght = maxLenght
+        self.textFieldInputType = textFieldInputType
     }
 
     // MARK: - Private Methods
 
     @objc private func editingChanged(_ sender: UITextField) {
+        if maxLenght != 0 {
+            textField.text = String(textField.text!.prefix(maxLenght))
+        }
+
         didChangeText?(text)
+    }
+}
+
+extension CustomTextFieldView: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        switch textFieldInputType {
+        case .any:
+            return true
+        case .digits:
+            if textField == textField {
+                let allowedCharacters = CharacterSet(charactersIn: "0123456789")
+                let characterSet = CharacterSet(charactersIn: string)
+                return allowedCharacters.isSuperset(of: characterSet)
+            }
+
+        case .latters:
+            if textField == textField {
+                let allowedCharacters = CharacterSet.letters
+                let characterSet = CharacterSet(charactersIn: string)
+                return allowedCharacters.isSuperset(of: characterSet)
+            }
+        }
+        return true
     }
 }

@@ -52,6 +52,14 @@ class EditProfileViewController: UIViewController {
 
     private let saveButton = PrimaryButton()
 
+    private let activityIndicator: UIActivityIndicatorView = {
+        let ai = UIActivityIndicatorView()
+        ai.hidesWhenStopped = true
+        ai.style = .large
+        ai.color = .white
+        return ai
+    }()
+
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
@@ -59,6 +67,17 @@ class EditProfileViewController: UIViewController {
         fetchUserData()
         setupHandlers()
         setupUI()
+
+        activityIndicator.startAnimating()
+        scrollView.backgroundColor = .lightGray
+        scrollView.isUserInteractionEnabled = false
+
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyBoard))
+        view.addGestureRecognizer(tap)
+    }
+
+    @objc private func dismissKeyBoard() {
+        view.endEditing(true)
     }
 
     // MARK: - Private Methods
@@ -79,6 +98,10 @@ class EditProfileViewController: UIViewController {
                 self?.zipCodeTextFieldView.text = "\(userInfo["zipCode"] ?? "")"
                 self?.selectGenderSelectView.setTitle(title: userInfo["gender"] as? String ?? "Select an item...")
                 self?.selectProjectSelectView.setTitle(title: userInfo["projectId"] as? String ?? "Select an item...")
+
+                self?.activityIndicator.stopAnimating()
+                self?.scrollView.backgroundColor = .white
+                self?.scrollView.isUserInteractionEnabled = true
             }
         }
     }
@@ -86,12 +109,16 @@ class EditProfileViewController: UIViewController {
     private func setupHandlers() {
         selectGenderSelectView.didTapButton = {
             print("selectGenderSelectView button did tapped")
+            self.scrollView.isUserInteractionEnabled = false
+            self.dismissKeyBoard()
             self.currentPickerView = .gender
             self.showPickerViewCard(items: self.viewModel.genderList, selectedItem: self.selectGenderSelectView.text)
         }
 
         selectProjectSelectView.didTapButton = {
             print("selectProjectSelectView button did tapped")
+            self.scrollView.isUserInteractionEnabled = false
+            self.dismissKeyBoard()
             self.currentPickerView = .project
             self.showPickerViewCard(items: self.viewModel.groups, selectedItem: self.selectProjectSelectView.text)
         }
@@ -117,7 +144,7 @@ class EditProfileViewController: UIViewController {
         }
 
         pickerViewCard.didDoneButtonTapped = { value in
-
+            self.scrollView.isUserInteractionEnabled = true
             switch self.currentPickerView {
             case .none:
                 break
@@ -181,19 +208,19 @@ class EditProfileViewController: UIViewController {
             emailLabel.width == emailLabel.superview!.width - 2 * Constants.defaultInsets
         }
 
-        firstNameTextFeildView.configure(placeholder: "First Name")
+        firstNameTextFeildView.configure(placeholder: "First Name", textFieldInputType: .latters)
         scrollView.addSubview(firstNameTextFeildView)
         makeConstrain(downView: firstNameTextFeildView, upperView: emailLabel)
 
-        lastNameTextFieldView.configure(placeholder: "Last Name")
+        lastNameTextFieldView.configure(placeholder: "Last Name", textFieldInputType: .latters)
         scrollView.addSubview(lastNameTextFieldView)
         makeConstrain(downView: lastNameTextFieldView, upperView: firstNameTextFeildView)
 
-        birthdayTextFieldView.configure(placeholder: "Year of Birth")
+        birthdayTextFieldView.configure(placeholder: "Year of Birth", maxLenght: 4, textFieldInputType: .digits)
         scrollView.addSubview(birthdayTextFieldView)
         makeConstrain(downView: birthdayTextFieldView, upperView: lastNameTextFieldView)
 
-        zipCodeTextFieldView.configure(placeholder: "Zip Code")
+        zipCodeTextFieldView.configure(placeholder: "Zip Code", maxLenght: 5, textFieldInputType: .digits)
         scrollView.addSubview(zipCodeTextFieldView)
         makeConstrain(downView: zipCodeTextFieldView, upperView: birthdayTextFieldView)
 
@@ -216,6 +243,14 @@ class EditProfileViewController: UIViewController {
             saveButton.centerX == saveButton.superview!.centerX
             saveButton.width == saveButton.superview!.width - 4 * Constants.defaultInsets
             saveButton.height == 50
+        }
+
+        scrollView.addSubview(activityIndicator)
+
+        constrain(activityIndicator) { activityIndicator in
+
+            activityIndicator.centerX == activityIndicator.superview!.centerX
+            activityIndicator.centerY == activityIndicator.superview!.centerY - 3 * topbarHeight
         }
     }
 }
