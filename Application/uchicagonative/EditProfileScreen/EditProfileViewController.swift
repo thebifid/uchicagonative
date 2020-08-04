@@ -139,19 +139,19 @@ class EditProfileViewController: UIViewController {
                 self?.present(alert, animated: true)
 
             case .success:
-                self?.emailLabel.text = "Email: \(self?.viewModel.userInfo["email"] ?? "")"
-                self?.firstNameTextFeildView.text = self?.viewModel.userInfo["firstName"] as? String ?? ""
-                self?.lastNameTextFieldView.text = self?.viewModel.userInfo["lastName"] as? String ?? ""
-                self?.birthdayTextFieldView.text = "\(self?.viewModel.userInfo["birthYear"] ?? "")"
-                self?.zipCodeTextFieldView.text = "\(self?.viewModel.userInfo["zipCode"] ?? "")"
-                self?.selectGenderSelectView.setTitle(title: self?.viewModel.userInfo["gender"] as? String ?? "Select an item...")
-                self?.selectProjectSelectView.setTitle(title: self?.viewModel.userInfo["projectId"] as? String ?? "Select an item...")
+                self?.emailLabel.text = "Email: \(self?.viewModel.email ?? "")"
+                self?.firstNameTextFeildView.text = self?.viewModel.firstName ?? ""
+                self?.lastNameTextFieldView.text = self?.viewModel.lastName ?? ""
+                self?.birthdayTextFieldView.text = "\(self?.viewModel.birthYear ?? 0)"
+                self?.zipCodeTextFieldView.text = "\(self?.viewModel.zipCode ?? 0)"
+                self?.selectGenderSelectView.setTitle(title: self?.viewModel.gender ?? "Select an item...")
+                self?.selectProjectSelectView.setTitle(title: self?.viewModel.project ?? "Select an item...")
 
                 self?.activityIndicator.stopAnimating()
                 self?.scrollView.backgroundColor = .white
                 self?.scrollView.isUserInteractionEnabled = true
 
-                if self?.viewModel.userInfo["role"] as? String != "admin" {
+                if self?.viewModel.role != "admin" {
                     self?.selectProjectSelectView.disableButton()
                 }
             }
@@ -179,7 +179,7 @@ class EditProfileViewController: UIViewController {
             self?.scrollView.isUserInteractionEnabled = false
             self?.dismissKeyboard()
             self?.showPickerViewCard(items: self?.viewModel.genderList ?? [],
-                                     selectedItem: self?.viewModel.userInfo["gender"] as? String ?? "",
+                                     selectedItem: self?.viewModel.gender ?? "",
                                      title: "Select Your Gender") { [weak self] value in
                 self?.scrollView.isUserInteractionEnabled = true
                 self?.viewModel.setGender(value)
@@ -193,7 +193,7 @@ class EditProfileViewController: UIViewController {
             self?.scrollView.isUserInteractionEnabled = false
             self?.dismissKeyboard()
             self?.showPickerViewCard(items: self?.viewModel.groups ?? [],
-                                     selectedItem: self?.viewModel.userInfo["projectId"] as? String ?? "",
+                                     selectedItem: self?.viewModel.project ?? "",
                                      title: "Select Project") { [weak self] value in
                 self?.scrollView.isUserInteractionEnabled = true
                 self?.viewModel.setProject(value)
@@ -210,11 +210,11 @@ class EditProfileViewController: UIViewController {
         pickerViewCard = PickerViewController()
         view.addSubview(pickerViewCard.view)
         pickerViewCard.configure(items: items, selectedItem: selectedItem, labelText: title)
-        pickerViewCard.showPickerViewCard(didDoneButtonTapped: didDoneButtonTapped)
+        pickerViewCard.show(didDoneButtonTapped: didDoneButtonTapped)
     }
 
     private func hidePickerViewCard() {
-        pickerViewCard.hidePickerViewCard()
+        pickerViewCard.hide()
         pickerViewCard = nil
     }
 

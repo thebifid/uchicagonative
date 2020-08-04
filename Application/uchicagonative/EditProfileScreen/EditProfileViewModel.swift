@@ -11,18 +11,19 @@ import Foundation
 class EditProfileViewModel {
     // MARK: - Private Properties
 
-    private var firstName: String = ""
-    private var lastName: String = ""
-    private var birthYear: Int = 0
-    private var zipCode: Int = 0
-    private var gender: String = ""
-    private var project: String = ""
-    private var role: String = ""
+    private(set) var email: String = ""
+    private(set) var firstName: String = ""
+    private(set) var lastName: String = ""
+    private(set) var birthYear: Int = 0
+    private(set) var zipCode: Int = 0
+    private(set) var gender: String = ""
+    private(set) var project: String = ""
+    private(set) var role: String = ""
 
     private var availableGroupNameById = [String: String]()
     private var availableGroupIdByName = [String: String]()
 
-    private(set) var userInfo = [String: Any]()
+    private var userInfo = [String: Any]()
 
     // MARK: - Public Properties
 
@@ -108,6 +109,8 @@ class EditProfileViewModel {
                         userInfo["projectId"] = self?.availableGroupNameById[userInfo["projectId"] as? String ?? ""]
                         self?.userInfo = userInfo
 
+                        self?.email = userInfo["email"] as? String ?? ""
+                        self?.role = userInfo["role"] as? String ?? ""
                         self?.project = userInfo["projectId"] as? String ?? ""
                         self?.firstName = userInfo["firstName"] as? String ?? ""
                         self?.lastName = userInfo["lastName"] as? String ?? ""

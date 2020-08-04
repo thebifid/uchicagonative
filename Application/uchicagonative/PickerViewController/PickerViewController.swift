@@ -82,7 +82,7 @@ class PickerViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
         label.text = text
     }
 
-    func hidePickerViewCard() {
+    func hide() {
         let animation = { self.view.frame = .init(x: 0,
                                                   y: Constants.deviseHeight,
                                                   width: self.view.frame.width,
@@ -96,7 +96,7 @@ class PickerViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
         }
     }
 
-    func showPickerViewCard(didDoneButtonTapped: @escaping (String) -> Void) {
+    func show(didDoneButtonTapped: @escaping (String) -> Void) {
         let pickerViewCard = self
 
         pickerViewCard.view.frame = .init(x: 0, y: Constants.deviseHeight, width: view.frame.width, height: 300)
