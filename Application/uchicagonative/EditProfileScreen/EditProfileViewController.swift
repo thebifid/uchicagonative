@@ -27,7 +27,6 @@ class EditProfileViewController: UIViewController {
     private let spacing: CGFloat = 30
 
     private var pickerViewCard: PickerViewController!
-    private var currentPickerView: PickerViewType = .none
 
     // MARK: - Enums
 
@@ -179,72 +178,44 @@ class EditProfileViewController: UIViewController {
         selectGenderSelectView.didTapButton = { [weak self] in
             self?.scrollView.isUserInteractionEnabled = false
             self?.dismissKeyboard()
-            self?.currentPickerView = .gender
             self?.showPickerViewCard(items: self?.viewModel.genderList ?? [],
-                                     selectedItem: self?.viewModel.userInfo["gender"] as? String ?? "", title: "Select Your Gender")
+                                     selectedItem: self?.viewModel.userInfo["gender"] as? String ?? "",
+                                     title: "Select Your Gender") { [weak self] value in
+                self?.scrollView.isUserInteractionEnabled = true
+                self?.viewModel.setGender(value)
+                self?.selectGenderSelectView.setTitle(title: value)
+                self?.hidePickerViewCard()
+                self?.view.endEditing(true)
+            }
         }
 
         selectProjectSelectView.didTapButton = { [weak self] in
             self?.scrollView.isUserInteractionEnabled = false
             self?.dismissKeyboard()
-            self?.currentPickerView = .project
             self?.showPickerViewCard(items: self?.viewModel.groups ?? [],
-                                     selectedItem: self?.viewModel.userInfo["projectId"] as? String ?? "", title: "Select Project")
-        }
-    }
-
-    private func showPickerViewCard(items: [String], selectedItem: String, title: String = "") {
-        guard pickerViewCard == nil else { return }
-        pickerViewCard = PickerViewController()
-        pickerViewCard.configure(items: items, selectedItem: selectedItem, labelText: title)
-
-        pickerViewCard.view.layer.cornerRadius = 12
-
-        addChild(pickerViewCard)
-        view.addSubview(pickerViewCard.view)
-        pickerViewCard.didMove(toParent: self)
-
-        pickerViewCard.view.frame = .init(x: 0, y: view.frame.height, width: view.frame.width, height: 300)
-
-        UIView.animate(withDuration: 0.4) {
-            self.pickerViewCard.view.frame = .init(x: 0, y: self.view.frame.height - 300, width: self.view.frame.width, height: 300)
-        }
-
-        pickerViewCard.didDoneButtonTapped = { [weak self] value in
-            self?.scrollView.isUserInteractionEnabled = true
-            switch self?.currentPickerView {
-            case .none:
-                break
-
-            case .gender:
-                self?.viewModel.setGender(value)
-                self?.selectGenderSelectView.setTitle(title: value)
-                self?.pickerViewCard.hidePickerViewCard()
-
-            case .project:
+                                     selectedItem: self?.viewModel.userInfo["projectId"] as? String ?? "",
+                                     title: "Select Project") { [weak self] value in
+                self?.scrollView.isUserInteractionEnabled = true
                 self?.viewModel.setProject(value)
                 self?.selectProjectSelectView.setTitle(title: value)
                 self?.hidePickerViewCard()
-
-            case .some(.none):
-                break
+                self?.view.endEditing(true)
             }
-            self?.view.endEditing(true)
         }
     }
 
+    private func showPickerViewCard(items: [String], selectedItem: String,
+                                    title: String = "", didDoneButtonTapped: @escaping (String) -> Void) {
+        guard pickerViewCard == nil else { return }
+        pickerViewCard = PickerViewController()
+        view.addSubview(pickerViewCard.view)
+        pickerViewCard.configure(items: items, selectedItem: selectedItem, labelText: title)
+        pickerViewCard.showPickerViewCard(didDoneButtonTapped: didDoneButtonTapped)
+    }
+
     private func hidePickerViewCard() {
-        let animation = { self.pickerViewCard.view.frame = .init(x: 0,
-                                                                 y: self.view.frame.height,
-                                                                 width: self.view.frame.width,
-                                                                 height: 300) }
-
-        UIView.animate(withDuration: 0.4, animations: animation) { _ in
-
-            self.pickerViewCard.willMove(toParent: nil)
-            self.pickerViewCard.view.removeFromSuperview()
-            self.pickerViewCard.removeFromParent()
-        }
+        pickerViewCard.hidePickerViewCard()
+        pickerViewCard = nil
     }
 
     private func makeConstrain(downView: UIView, upperView: UIView, height: CGFloat = 30) {

@@ -51,7 +51,6 @@ class PickerViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
 
     init(selectedIndex: Int = 0) {
         self.selectedIndex = selectedIndex
-
         super.init(nibName: nil, bundle: nil)
         doneButton.addTarget(self, action: #selector(handleDoneButtonTapped), for: .touchUpInside)
     }
@@ -72,7 +71,6 @@ class PickerViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
         pickerView.delegate = self
 
         setupUI()
-        pickerView.selectRow(selectedIndex, inComponent: 0, animated: false)
     }
 
     // MARK: - Public Methods
@@ -86,7 +84,7 @@ class PickerViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
 
     func hidePickerViewCard() {
         let animation = { self.view.frame = .init(x: 0,
-                                                  y: self.view.frame.height,
+                                                  y: Constants.deviseHeight,
                                                   width: self.view.frame.width,
                                                   height: 300) }
 
@@ -98,42 +96,19 @@ class PickerViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
         }
     }
 
-    func showPickerViewCard(items: [String], selectedItem: String, title: String = "", didDoneButtonTapped: (String) -> Void) {
+    func showPickerViewCard(didDoneButtonTapped: @escaping (String) -> Void) {
         let pickerViewCard = self
-        pickerViewCard.configure(items: items, selectedItem: selectedItem, labelText: title)
 
-        pickerViewCard.view.layer.cornerRadius = 12
-
-        view.addSubview(pickerViewCard.view)
-        pickerViewCard.didMove(toParent: self)
-
-        pickerViewCard.view.frame = .init(x: 0, y: view.frame.height, width: view.frame.width, height: 300)
+        pickerViewCard.view.frame = .init(x: 0, y: Constants.deviseHeight, width: view.frame.width, height: 300)
 
         UIView.animate(withDuration: 0.4) {
-            pickerViewCard.view.frame = .init(x: 0, y: self.view.frame.height - 300, width: self.view.frame.width, height: 300)
+            pickerViewCard.view.frame = .init(x: 0, y: Constants.deviseHeight - 300, width: self.view.frame.width, height: 300)
         }
+        self.didDoneButtonTapped = didDoneButtonTapped
 
-//        pickerViewCard.didDoneButtonTapped = { [weak self] value in
-//            self?.scrollView.isUserInteractionEnabled = true
-//            switch self?.currentPickerView {
-//            case .none:
-//                break
-//
-//            case .gender:
-//                self?.viewModel.setGender(value)
-//                self?.selectGenderSelectView.setTitle(title: value)
-//                self?.pickerViewCard.hidePickerViewCard()
-//
-//            case .project:
-//                self?.viewModel.setProject(value)
-//                self?.selectProjectSelectView.setTitle(title: value)
-//                self?.hidePickerViewCard()
-//
-//            case .some(.none):
-//                break
-//            }
-//            self?.view.endEditing(true)
-//        }
+        DispatchQueue.main.async {
+            self.pickerView.selectRow(self.selectedIndex, inComponent: 0, animated: false)
+        }
     }
 
     // MARK: - Private Methods
