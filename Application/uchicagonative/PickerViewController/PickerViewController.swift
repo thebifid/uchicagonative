@@ -75,13 +75,6 @@ class PickerViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
 
     // MARK: - Public Methods
 
-    /// Configure pickerView
-    func configure(items: [String], selectedItem item: String = "", labelText text: String = "") {
-        self.items = items
-        selectedIndex = items.firstIndex(of: item) ?? 0
-        label.text = text
-    }
-
     func hide() {
         let animation = { self.view.frame = .init(x: 0,
                                                   y: Constants.deviseHeight,
@@ -96,15 +89,23 @@ class PickerViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
         }
     }
 
-    func show(didDoneButtonTapped: @escaping (String) -> Void) {
-        let pickerViewCard = self
+    /// Shows pickerView in controller
+    func show(in viewController: UIViewController, items: [String],
+              selectedItem: String = "", labelText: String = "",
+              didDoneButtonTapped: @escaping (String) -> Void) {
+        self.items = items
+        selectedIndex = items.firstIndex(of: selectedItem) ?? 0
+        label.text = labelText
+        self.didDoneButtonTapped = didDoneButtonTapped
 
-        pickerViewCard.view.frame = .init(x: 0, y: Constants.deviseHeight, width: view.frame.width, height: 300)
+        viewController.addChild(self)
+        viewController.view.addSubview(view)
+
+        view.frame = .init(x: 0, y: viewController.view.frame.height, width: viewController.view.frame.width, height: 300)
 
         UIView.animate(withDuration: 0.4) {
-            pickerViewCard.view.frame = .init(x: 0, y: Constants.deviseHeight - 300, width: self.view.frame.width, height: 300)
+            self.view.frame = .init(x: 0, y: viewController.view.frame.height - 300, width: viewController.view.frame.width, height: 300)
         }
-        self.didDoneButtonTapped = didDoneButtonTapped
 
         DispatchQueue.main.async {
             self.pickerView.selectRow(self.selectedIndex, inComponent: 0, animated: false)

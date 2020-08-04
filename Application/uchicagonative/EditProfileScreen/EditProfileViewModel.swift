@@ -23,9 +23,16 @@ class EditProfileViewModel {
     private var availableGroupNameById = [String: String]()
     private var availableGroupIdByName = [String: String]()
 
+    private let adminRole: String = "admin"
+
     private var userInfo = [String: Any]()
 
     // MARK: - Public Properties
+
+    /// Return true if User if Admin
+    var isAdmin: Bool {
+        return role == adminRole
+    }
 
     /// Returns names of groups
     var groups: [String] {

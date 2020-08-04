@@ -30,7 +30,7 @@ class CustomTextFieldView: UIView {
 
     // MARK: - Private Properties
 
-    private var maxLenght: Int = 0
+    private var maxLength: Int = 0
     private var textFieldInputType: TextFieldInputType = .any
 
     // MARK: - Public Properties
@@ -83,7 +83,7 @@ class CustomTextFieldView: UIView {
         textField.placeholder = placeholder
         textField.isSecureTextEntry = isSecureTextEntry
         textField.spellCheckingType = spellCheck
-        self.maxLenght = maxLenght
+        maxLength = maxLenght
         self.textFieldInputType = textFieldInputType
         textField.autocapitalizationType = autocapitalization
     }
@@ -92,15 +92,6 @@ class CustomTextFieldView: UIView {
 
     @objc private func editingChanged(_ sender: UITextField) {
         didChangeText?(text)
-    }
-
-    private func textLimit(existingText: String?,
-                           newText: String,
-                           limit: Int) -> Bool {
-        if maxLenght == 0 { return true }
-        let text = existingText ?? ""
-        let isAtLimit = text.count + newText.count <= limit
-        return isAtLimit
     }
 }
 
@@ -114,11 +105,11 @@ extension CustomTextFieldView: UITextFieldDelegate {
             if textField == textField {
                 let allowedCharacters = CharacterSet(charactersIn: "0123456789")
                 let characterSet = CharacterSet(charactersIn: string)
-
-                if allowedCharacters.isSuperset(of: characterSet) {
-                    return textLimit(existingText: textField.text,
-                                     newText: string,
-                                     limit: maxLenght)
+                guard let text = textField.text as NSString? else { return false }
+                let currentString: NSString = text
+                let newString: NSString = currentString.replacingCharacters(in: range, with: string) as NSString
+                if newString.length <= maxLength || maxLength == 0 {
+                    return allowedCharacters.isSuperset(of: characterSet)
                 }
             }
 
@@ -126,11 +117,11 @@ extension CustomTextFieldView: UITextFieldDelegate {
             if textField == textField {
                 let allowedCharacters = CharacterSet.letters
                 let characterSet = CharacterSet(charactersIn: string)
-
-                if allowedCharacters.isSuperset(of: characterSet) {
-                    return textLimit(existingText: textField.text,
-                                     newText: string,
-                                     limit: maxLenght)
+                guard let text = textField.text as NSString? else { return false }
+                let currentString: NSString = text
+                let newString: NSString = currentString.replacingCharacters(in: range, with: string) as NSString
+                if newString.length <= maxLength || maxLength == 0 {
+                    return allowedCharacters.isSuperset(of: characterSet)
                 }
             }
         }

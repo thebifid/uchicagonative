@@ -151,7 +151,8 @@ class EditProfileViewController: UIViewController {
                 self?.scrollView.backgroundColor = .white
                 self?.scrollView.isUserInteractionEnabled = true
 
-                if self?.viewModel.role != "admin" {
+                guard let isAdmin = self?.viewModel.isAdmin else { return }
+                if !isAdmin {
                     self?.selectProjectSelectView.disableButton()
                 }
             }
@@ -208,9 +209,8 @@ class EditProfileViewController: UIViewController {
                                     title: String = "", didDoneButtonTapped: @escaping (String) -> Void) {
         guard pickerViewCard == nil else { return }
         pickerViewCard = PickerViewController()
-        view.addSubview(pickerViewCard.view)
-        pickerViewCard.configure(items: items, selectedItem: selectedItem, labelText: title)
-        pickerViewCard.show(didDoneButtonTapped: didDoneButtonTapped)
+
+        pickerViewCard.show(in: self, items: items, selectedItem: selectedItem, labelText: title, didDoneButtonTapped: didDoneButtonTapped)
     }
 
     private func hidePickerViewCard() {
