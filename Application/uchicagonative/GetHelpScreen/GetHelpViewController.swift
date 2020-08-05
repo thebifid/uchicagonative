@@ -12,6 +12,17 @@ import UIKit
 
 /// Shows 'Get Help' info
 class GetHelpViewController: UIViewController {
+    // MARK: - Init
+
+    init(viewModel model: GetHelpViewModel) {
+        viewModel = model
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     // MARK: - UI Controlds
 
     let scrollView = UIScrollView()
@@ -38,30 +49,53 @@ class GetHelpViewController: UIViewController {
 
     private let visitSiteButton = PrimaryButton()
 
+    // MARK: - Private Properties
+
+    let viewModel: GetHelpViewModel
+
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        fetchUserEmail()
         setupUI()
-        scrollView.backgroundColor = R.color.appBackgroundColor()
 
         sendEmailButton.addTarget(self, action: #selector(handleSendEmail), for: .touchUpInside)
     }
 
     // MARK: - Private Methods
 
+    private func fetchUserEmail() {
+        viewModel.fetchUserEmail { [weak self] result in
+
+            switch result {
+            case let .failure(error):
+                let alert = AlertAssist.showErrorAlert(error)
+                self?.present(alert, animated: true)
+
+            case .success:
+                break
+            }
+        }
+    }
+
     @objc private func handleSendEmail() {
         showMailCompose()
     }
 
     private func showMailCompose() {
+        guard viewModel.isEmailFetched else {
+            let alert = AlertAssist.showCustomAlert("Error!", message: "Can't get your email. Please, try again.", optionHadler: nil)
+            present(alert, animated: true)
+            return
+        }
+
         if MFMailComposeViewController.canSendMail() {
             let mail = MFMailComposeViewController()
             mail.mailComposeDelegate = self
-            mail.setToRecipients(["xxx@gmail.com"])
-            mail.setSubject("MMA Support Request")
-            mail.setMessageBody("hi", isHTML: false)
+            mail.setToRecipients([viewModel.emailRecipient])
+            mail.setSubject(viewModel.emailSubject)
+            mail.setMessageBody("Sender: \(viewModel.userEmail)", isHTML: false)
 
             present(mail, animated: true)
         } else {
@@ -75,6 +109,7 @@ class GetHelpViewController: UIViewController {
     // MARK: - UI Actions
 
     private func setupUI() {
+        scrollView.backgroundColor = R.color.appBackgroundColor()
         view.addSubview(scrollView)
         scrollView.fillSuperView()
         scrollView.alwaysBounceVertical = true
@@ -116,8 +151,26 @@ extension GetHelpViewController: MFMailComposeViewControllerDelegate {
             let alert = AlertAssist.showErrorAlert(error)
             present(alert, animated: true)
             return
+
         } else {
-            controller.dismiss(animated: true)
+            controller.dismiss(animated: true) {
+                let message: String
+                switch result {
+                case .sent:
+                    message = "Message successfully sent!"
+                case .saved:
+                    message = "Message saved!"
+                case .cancelled:
+                    message = "Message Canceled!"
+                case .failed:
+                    message = "Unknown Error!"
+                @unknown default:
+                    message = "Unknown Error!"
+                }
+
+                let alert = AlertAssist.showCustomAlert("", message: message, optionHadler: nil)
+                self.present(alert, animated: true)
+            }
             return
         }
     }

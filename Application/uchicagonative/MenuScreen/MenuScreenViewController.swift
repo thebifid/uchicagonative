@@ -75,7 +75,7 @@ class MenuScreenViewController: UIViewController {
     }
 
     @objc private func handleGetHelp() {
-        let dvc = GetHelpViewController()
+        let dvc = GetHelpViewController(viewModel: GetHelpViewModel())
         dvc.navigationItem.title = "Get Help"
         navigationController?.pushViewController(dvc, animated: true)
     }
