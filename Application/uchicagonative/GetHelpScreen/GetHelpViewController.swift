@@ -23,7 +23,7 @@ class GetHelpViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - UI Controlds
+    // MARK: - UI Controls
 
     let scrollView = UIScrollView()
 
@@ -51,7 +51,7 @@ class GetHelpViewController: UIViewController {
 
     // MARK: - Private Properties
 
-    let viewModel: GetHelpViewModel
+    private let viewModel: GetHelpViewModel
 
     // MARK: - Lifecycle
 
@@ -61,6 +61,7 @@ class GetHelpViewController: UIViewController {
         setupUI()
 
         sendEmailButton.addTarget(self, action: #selector(handleSendEmail), for: .touchUpInside)
+        visitSiteButton.addTarget(self, action: #selector(handleVisitWebsite), for: .touchUpInside)
     }
 
     // MARK: - Private Methods
@@ -81,6 +82,17 @@ class GetHelpViewController: UIViewController {
 
     @objc private func handleSendEmail() {
         showMailCompose()
+    }
+
+    @objc private func handleVisitWebsite() {
+        if let url = URL(string: viewModel.websiteUrlString) {
+            UIApplication.shared.open(url)
+        } else {
+            let alert = AlertAssist.showCustomAlert("Error!",
+                                                    message: "The site cannot be opened. Please try again later.",
+                                                    optionHadler: nil)
+            present(alert, animated: true)
+        }
     }
 
     private func showMailCompose() {
