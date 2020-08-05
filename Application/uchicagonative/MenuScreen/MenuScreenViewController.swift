@@ -11,6 +11,19 @@ import FirebaseAuth
 import UIKit
 /// Main Menu View Controller
 class MenuScreenViewController: UIViewController {
+    private let viewModel: MenuScreenViewModel
+
+    // MARK: - Init
+
+    init(viewModel model: MenuScreenViewModel) {
+        viewModel = model
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     // MARK: - UI Controls
 
     private let scrollView = UIScrollView()
@@ -27,7 +40,7 @@ class MenuScreenViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        //  print(viewModel.user)
         scrollView.alwaysBounceVertical = true
         navigationController?.navigationBar.barTintColor = .white
         view.backgroundColor = R.color.appBackgroundColor()!
@@ -75,7 +88,7 @@ class MenuScreenViewController: UIViewController {
     }
 
     @objc private func handleGetHelp() {
-        let dvc = GetHelpViewController(viewModel: GetHelpViewModel())
+        let dvc = GetHelpViewController(viewModel: GetHelpViewModel(user: viewModel.user))
         dvc.navigationItem.title = "Get Help"
         navigationController?.pushViewController(dvc, animated: true)
     }

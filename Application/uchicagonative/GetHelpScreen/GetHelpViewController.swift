@@ -57,28 +57,13 @@ class GetHelpViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchUserEmail()
         setupUI()
-
+        print(viewModel.user)
         sendEmailButton.addTarget(self, action: #selector(handleSendEmail), for: .touchUpInside)
         visitSiteButton.addTarget(self, action: #selector(handleVisitWebsite), for: .touchUpInside)
     }
 
     // MARK: - Private Methods
-
-    private func fetchUserEmail() {
-        viewModel.fetchUserEmail { [weak self] result in
-
-            switch result {
-            case let .failure(error):
-                let alert = AlertAssist.showErrorAlert(error)
-                self?.present(alert, animated: true)
-
-            case .success:
-                break
-            }
-        }
-    }
 
     @objc private func handleSendEmail() {
         showMailCompose()
@@ -100,7 +85,7 @@ class GetHelpViewController: UIViewController {
             mail.mailComposeDelegate = self
             mail.setToRecipients([viewModel.emailRecipient])
             mail.setSubject(viewModel.emailSubject)
-            mail.setMessageBody("Sender: \(viewModel.userEmail)", isHTML: false)
+            mail.setMessageBody("Sender: \(viewModel.user.email)", isHTML: false)
 
             present(mail, animated: true)
         } else {

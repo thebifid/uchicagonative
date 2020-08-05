@@ -258,7 +258,9 @@ class CreateAccountViewController: UIViewController {
             switch result {
             case let .success(message):
                 let alert = AlertAssist.showSuccessAlert(withMessage: message) { _ in
-                    AppDelegate.shared.rootViewController.switchToMainScreen()
+                    AppDelegate.shared.rootViewController.switchToMainScreen(user:
+                        User(email: self?.viewModel.email ?? "",
+                             projectId: self?.viewModel.selectedGroup ?? ""))
                 }
                 self?.present(alert, animated: true)
 

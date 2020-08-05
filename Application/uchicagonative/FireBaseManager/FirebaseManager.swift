@@ -129,4 +129,27 @@ class FirebaseManager {
             }
         }
     }
+
+    /// Fetch user data
+    func fetchUser(completion: @escaping (User) -> Void) {
+        var user = User()
+
+        fetchUserInfo { result in
+
+            switch result {
+            case .failure:
+                completion(user)
+
+            case let .success(userInfo):
+                user.firstName = userInfo["firstName"] as? String ?? ""
+                user.lastName = userInfo["lastName"] as? String ?? ""
+                user.email = userInfo["email"] as? String ?? ""
+                user.birthYear = userInfo["birthYear"] as? Int ?? 0
+                user.gender = userInfo["gender"] as? String ?? ""
+                user.projectId = userInfo["projectId"] as? String ?? ""
+                user.zipCode = userInfo["zipCode"] as? Int ?? 0
+                completion(user)
+            }
+        }
+    }
 }

@@ -15,9 +15,9 @@ class CreateAccountViewModel {
 
     // MARK: - Private Properties
 
-    private var email: String?
+    private(set) var email: String?
     private var password: String?
-    private var selectedGroup: String?
+    private(set) var selectedGroup: String?
     private var groupNameIdDictionary = [String: String]()
 
     // MARK: - Public Properties
@@ -150,7 +150,9 @@ class CreateAccountViewModel {
                         self.addUserData(completion: { result in
                             switch result {
                             case .success:
-                                AppDelegate.shared.rootViewController.switchToMainScreen()
+                                AppDelegate.shared.rootViewController.switchToMainScreen(user:
+                                    User(email: self.email ?? "",
+                                         projectId: self.selectedGroup ?? ""))
                             case let .failure(error):
                                 completion(.failure(error))
                             }

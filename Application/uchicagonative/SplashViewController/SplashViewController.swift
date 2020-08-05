@@ -20,8 +20,11 @@ class SplashViewController: UIViewController {
     private func makeServiceCall() {
         DispatchQueue.main.async {
             if FirebaseAuth.Auth.auth().currentUser != nil {
-                // navigate to protected page
-                AppDelegate.shared.rootViewController.switchToMainScreen()
+                FirebaseManager.sharedInstance.fetchUser { user in
+                    // navigate to protected page
+                    AppDelegate.shared.rootViewController.switchToMainScreen(user: user)
+                }
+
             } else {
                 // navigate to login screen
                 AppDelegate.shared.rootViewController.switchToLogout()

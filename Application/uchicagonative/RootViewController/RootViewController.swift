@@ -32,8 +32,8 @@ class RootViewController: UIViewController {
         current = new
     }
 
-    func switchToMainScreen() {
-        let mainScreen = MenuScreenViewController()
+    func switchToMainScreen(user: User) {
+        let mainScreen = MenuScreenViewController(viewModel: MenuScreenViewModel(user: user))
         let navController = UINavigationController(rootViewController: mainScreen)
         animateFadeTransition(to: navController)
     }

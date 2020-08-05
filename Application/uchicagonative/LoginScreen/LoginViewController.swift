@@ -142,7 +142,9 @@ class LoginViewController: UIViewController {
             switch result {
             case let .success(state):
                 if state {
-                    AppDelegate.shared.rootViewController.switchToMainScreen()
+                    FirebaseManager.sharedInstance.fetchUser { user in
+                        AppDelegate.shared.rootViewController.switchToMainScreen(user: user)
+                    }
                 } else {
                     let message = "Your account data is not set. Please, try registering again with same password or reset it."
                     let alert = AlertAssist.showCustomAlert("Error!",

@@ -20,6 +20,8 @@
 		C13B712524D6C4D70035EF8F /* PickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13B712424D6C4D70035EF8F /* PickerViewController.swift */; };
 		C13F115024D14CAD001676C2 /* tos.html in Resources */ = {isa = PBXBuildFile; fileRef = C13F114F24D14CAD001676C2 /* tos.html */; };
 		C16DD95C24D9D58F00EAC82E /* GetHelpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16DD95B24D9D58F00EAC82E /* GetHelpViewModel.swift */; };
+		C16DD95E24DA7A4E00EAC82E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16DD95D24DA7A4E00EAC82E /* User.swift */; };
+		C16DD96024DA82DC00EAC82E /* MenuScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16DD95F24DA82DC00EAC82E /* MenuScreenViewModel.swift */; };
 		C1713C8624C937F9002D0E04 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C1713C8524C937F9002D0E04 /* GoogleService-Info.plist */; };
 		C1713C8B24C94B23002D0E04 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713C8A24C94B23002D0E04 /* RootViewController.swift */; };
 		C1713C8F24C9529E002D0E04 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713C8E24C9529E002D0E04 /* SplashViewController.swift */; };
@@ -76,6 +78,8 @@
 		C13B712424D6C4D70035EF8F /* PickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewController.swift; sourceTree = "<group>"; };
 		C13F114F24D14CAD001676C2 /* tos.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = tos.html; sourceTree = "<group>"; };
 		C16DD95B24D9D58F00EAC82E /* GetHelpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetHelpViewModel.swift; sourceTree = "<group>"; };
+		C16DD95D24DA7A4E00EAC82E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		C16DD95F24DA82DC00EAC82E /* MenuScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScreenViewModel.swift; sourceTree = "<group>"; };
 		C1713C8524C937F9002D0E04 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C1713C8A24C94B23002D0E04 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		C1713C8E24C9529E002D0E04 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -273,6 +277,8 @@
 			isa = PBXGroup;
 			children = (
 				C19693D224C6CE0E0054296F /* MenuScreenViewController.swift */,
+				C16DD95F24DA82DC00EAC82E /* MenuScreenViewModel.swift */,
+				C16DD95D24DA7A4E00EAC82E /* User.swift */,
 			);
 			path = MenuScreen;
 			sourceTree = "<group>";
@@ -579,8 +585,10 @@
 				C1713CF924CFE9E6002D0E04 /* CustomSelectButtonView.swift in Sources */,
 				C19693ED24C71C250054296F /* TermsOfServiceViewController.swift in Sources */,
 				C196940124C839320054296F /* UITextField+Extension.swift in Sources */,
+				C16DD96024DA82DC00EAC82E /* MenuScreenViewModel.swift in Sources */,
 				C19693EA24C710AF0054296F /* SendFeedbackViewController.swift in Sources */,
 				C1713C9324C99D3D002D0E04 /* UIView+ExtensionLayout.swift in Sources */,
+				C16DD95E24DA7A4E00EAC82E /* User.swift in Sources */,
 				C19693E424C6FC370054296F /* AboutUsViewController.swift in Sources */,
 				C19693D524C6CEF40054296F /* Constants.swift in Sources */,
 				C1713C9524CA88C4002D0E04 /* PrimaryButton.swift in Sources */,

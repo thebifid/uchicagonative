@@ -9,9 +9,13 @@
 import Foundation
 
 class GetHelpViewModel {
-    // MARK: - Private Properties
+    init(user: User) {
+        self.user = user
+    }
 
-    private(set) var userEmail: String = ""
+    let user: User
+
+    // MARK: - Private Properties
 
     // MARK: Public Protperties
 
@@ -22,21 +26,8 @@ class GetHelpViewModel {
     let websiteUrl: URL = URL(string: "https://awhvogellab.com")!
 
     var isEmailFetched: Bool {
-        return !userEmail.isEmpty
+        return !user.email.isEmpty
     }
 
     // MARK: - Public Methods
-
-    /// Fetches current user email address
-    func fetchUserEmail(completion: @escaping ((Result<Void, Error>) -> Void)) {
-        FirebaseManager.sharedInstance.fetchUserInfo { [weak self] result in
-
-            switch result {
-            case let .failure(error):
-                completion(.failure(error))
-            case let .success(userInfo):
-                self?.userEmail = userInfo["email"] as? String ?? ""
-            }
-        }
-    }
 }
