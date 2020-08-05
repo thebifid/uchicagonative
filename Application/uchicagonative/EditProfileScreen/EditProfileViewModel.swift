@@ -9,7 +9,15 @@
 import Foundation
 
 class EditProfileViewModel {
+    // MARK: - Init
+
+    init(userSession: UserSession) {
+        self.userSession = userSession
+    }
+
     // MARK: - Private Properties
+
+    private(set) var userSession: UserSession
 
     private(set) var email: String = ""
     private(set) var firstName: String = ""
@@ -150,6 +158,16 @@ class EditProfileViewModel {
                 competion(.failure(error))
 
             case .success:
+
+                let user = User(firstName: self?.firstName ?? "",
+                                lastName: self?.lastName ?? "",
+                                email: self?.email ?? "",
+                                birthYear: self?.birthYear ?? 0,
+                                gender: self?.gender ?? "",
+                                projectId: self?.project ?? "",
+                                zipCode: self?.zipCode ?? 0)
+                self?.userSession.setNewUserInfo(newUserInfo: user)
+
                 competion(.success(()))
             }
             self?.isRequesting = false

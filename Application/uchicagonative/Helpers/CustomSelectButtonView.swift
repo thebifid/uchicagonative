@@ -20,14 +20,14 @@ class CustomSelectButtonView: UIView {
 
     private let button: UIButton = {
         let button = UIButton()
-        button.setTitleColor(R.color.lightGrayCustom(), for: .normal)
+        button.setTitleColor(R.color.lightGrayCustom()!, for: .normal)
         button.contentHorizontalAlignment = .leading
         return button
     }()
 
     private let arrowDown: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = R.image.arrowDown()
+        imageView.image = R.image.arrowDown()!
         imageView.alpha = 0.5
         return imageView
     }()

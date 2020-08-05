@@ -142,8 +142,14 @@ class EditProfileViewController: UIViewController {
                 self?.emailLabel.text = "Email: \(self?.viewModel.email ?? "")"
                 self?.firstNameTextFeildView.text = self?.viewModel.firstName ?? ""
                 self?.lastNameTextFieldView.text = self?.viewModel.lastName ?? ""
-                self?.birthdayTextFieldView.text = "\(self?.viewModel.birthYear ?? 0)"
-                self?.zipCodeTextFieldView.text = "\(self?.viewModel.zipCode ?? 0)"
+
+                if self?.viewModel.birthYear != 0 {
+                    self?.birthdayTextFieldView.text = "\(self?.viewModel.birthYear ?? Int())"
+                }
+                if self?.viewModel.zipCode != 0 {
+                    self?.zipCodeTextFieldView.text = "\(self?.viewModel.zipCode ?? Int())"
+                }
+
                 self?.selectGenderSelectView.setTitle(title: self?.viewModel.gender ?? "Select an item...")
                 self?.selectProjectSelectView.setTitle(title: self?.viewModel.project ?? "Select an item...")
 

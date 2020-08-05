@@ -21,8 +21,10 @@ class SplashViewController: UIViewController {
         DispatchQueue.main.async {
             if FirebaseAuth.Auth.auth().currentUser != nil {
                 FirebaseManager.sharedInstance.fetchUser { user in
+                    let userSession = UserSession(user: user)
+
                     // navigate to protected page
-                    AppDelegate.shared.rootViewController.switchToMainScreen(user: user)
+                    AppDelegate.shared.rootViewController.switchToMainScreen(userSession: userSession)
                 }
 
             } else {

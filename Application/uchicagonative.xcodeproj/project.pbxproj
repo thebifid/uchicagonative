@@ -22,6 +22,7 @@
 		C16DD95C24D9D58F00EAC82E /* GetHelpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16DD95B24D9D58F00EAC82E /* GetHelpViewModel.swift */; };
 		C16DD95E24DA7A4E00EAC82E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16DD95D24DA7A4E00EAC82E /* User.swift */; };
 		C16DD96024DA82DC00EAC82E /* MenuScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16DD95F24DA82DC00EAC82E /* MenuScreenViewModel.swift */; };
+		C16DD96424DAAEBB00EAC82E /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16DD96324DAAEBB00EAC82E /* UserSession.swift */; };
 		C1713C8624C937F9002D0E04 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C1713C8524C937F9002D0E04 /* GoogleService-Info.plist */; };
 		C1713C8B24C94B23002D0E04 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713C8A24C94B23002D0E04 /* RootViewController.swift */; };
 		C1713C8F24C9529E002D0E04 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713C8E24C9529E002D0E04 /* SplashViewController.swift */; };
@@ -80,6 +81,7 @@
 		C16DD95B24D9D58F00EAC82E /* GetHelpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetHelpViewModel.swift; sourceTree = "<group>"; };
 		C16DD95D24DA7A4E00EAC82E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		C16DD95F24DA82DC00EAC82E /* MenuScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScreenViewModel.swift; sourceTree = "<group>"; };
+		C16DD96324DAAEBB00EAC82E /* UserSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
 		C1713C8524C937F9002D0E04 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C1713C8A24C94B23002D0E04 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		C1713C8E24C9529E002D0E04 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -279,6 +281,7 @@
 				C19693D224C6CE0E0054296F /* MenuScreenViewController.swift */,
 				C16DD95F24DA82DC00EAC82E /* MenuScreenViewModel.swift */,
 				C16DD95D24DA7A4E00EAC82E /* User.swift */,
+				C16DD96324DAAEBB00EAC82E /* UserSession.swift */,
 			);
 			path = MenuScreen;
 			sourceTree = "<group>";
@@ -600,6 +603,7 @@
 				C135296524D3F4380004D9B8 /* EditProfileViewModel.swift in Sources */,
 				C19693DC24C6D93F0054296F /* EmptyViewController.swift in Sources */,
 				C1713C9C24CAC27E002D0E04 /* LoginViewModel.swift in Sources */,
+				C16DD96424DAAEBB00EAC82E /* UserSession.swift in Sources */,
 				C135296724D4051B0004D9B8 /* Dictionary+Extension.swift in Sources */,
 				C13B712524D6C4D70035EF8F /* PickerViewController.swift in Sources */,
 				C1713CF724CFD7AB002D0E04 /* FirebaseManager.swift in Sources */,

@@ -76,7 +76,7 @@ class MenuScreenViewController: UIViewController {
     }
 
     @objc private func handleEditProfile() {
-        let dvc = EditProfileViewController(viewModel: EditProfileViewModel())
+        let dvc = EditProfileViewController(viewModel: EditProfileViewModel(userSession: viewModel.userSession))
         dvc.navigationItem.title = "Edit Your Profile"
         navigationController?.pushViewController(dvc, animated: true)
     }
@@ -88,7 +88,7 @@ class MenuScreenViewController: UIViewController {
     }
 
     @objc private func handleGetHelp() {
-        let dvc = GetHelpViewController(viewModel: GetHelpViewModel(user: viewModel.user))
+        let dvc = GetHelpViewController(viewModel: GetHelpViewModel(userSession: viewModel.userSession))
         dvc.navigationItem.title = "Get Help"
         navigationController?.pushViewController(dvc, animated: true)
     }

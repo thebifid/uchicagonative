@@ -9,9 +9,9 @@
 import Foundation
 
 class MenuScreenViewModel {
-    private(set) var user: User
+    private(set) var userSession: UserSession
 
-    init(user: User) {
-        self.user = user
+    init(userSession: UserSession) {
+        self.userSession = userSession
     }
 }

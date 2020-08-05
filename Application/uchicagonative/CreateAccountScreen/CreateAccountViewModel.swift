@@ -150,9 +150,7 @@ class CreateAccountViewModel {
                         self.addUserData(completion: { result in
                             switch result {
                             case .success:
-                                AppDelegate.shared.rootViewController.switchToMainScreen(user:
-                                    User(email: self.email ?? "",
-                                         projectId: self.selectedGroup ?? ""))
+                                completion(.success("Account Created!"))
                             case let .failure(error):
                                 completion(.failure(error))
                             }

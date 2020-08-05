@@ -58,7 +58,7 @@ class GetHelpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        print(viewModel.user)
+        print(viewModel.userSession.user)
         sendEmailButton.addTarget(self, action: #selector(handleSendEmail), for: .touchUpInside)
         visitSiteButton.addTarget(self, action: #selector(handleVisitWebsite), for: .touchUpInside)
     }
@@ -85,7 +85,7 @@ class GetHelpViewController: UIViewController {
             mail.mailComposeDelegate = self
             mail.setToRecipients([viewModel.emailRecipient])
             mail.setSubject(viewModel.emailSubject)
-            mail.setMessageBody("Sender: \(viewModel.user.email)", isHTML: false)
+            mail.setMessageBody("Sender: \(viewModel.userSession.user.email)", isHTML: false)
 
             present(mail, animated: true)
         } else {

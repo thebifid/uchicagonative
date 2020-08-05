@@ -36,4 +36,14 @@ struct User {
         self.projectId = projectId
         zipCode = 0
     }
+
+    init(firstName: String, lastName: String, email: String, birthYear: Int, gender: String, projectId: String, zipCode: Int) {
+        self.firstName = firstName
+        self.lastName = lastName
+        self.email = email
+        self.birthYear = birthYear
+        self.gender = gender
+        self.projectId = projectId
+        self.zipCode = zipCode
+    }
 }
