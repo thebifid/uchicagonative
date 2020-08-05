@@ -85,14 +85,7 @@ class GetHelpViewController: UIViewController {
     }
 
     @objc private func handleVisitWebsite() {
-        if let url = URL(string: viewModel.websiteUrlString) {
-            UIApplication.shared.open(url)
-        } else {
-            let alert = AlertAssist.showCustomAlert("Error!",
-                                                    message: "The site cannot be opened. Please try again later.",
-                                                    optionHadler: nil)
-            present(alert, animated: true)
-        }
+        UIApplication.shared.open(viewModel.websiteUrl)
     }
 
     private func showMailCompose() {
@@ -165,25 +158,7 @@ extension GetHelpViewController: MFMailComposeViewControllerDelegate {
             return
 
         } else {
-            controller.dismiss(animated: true) {
-                let message: String
-                switch result {
-                case .sent:
-                    message = "Message successfully sent!"
-                case .saved:
-                    message = "Message saved!"
-                case .cancelled:
-                    message = "Message Canceled!"
-                case .failed:
-                    message = "Unknown Error!"
-                @unknown default:
-                    message = "Unknown Error!"
-                }
-
-                let alert = AlertAssist.showCustomAlert("", message: message, optionHadler: nil)
-                self.present(alert, animated: true)
-            }
-            return
+            controller.dismiss(animated: true)
         }
     }
 }

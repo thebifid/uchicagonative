@@ -19,7 +19,7 @@ class GetHelpViewModel {
     let emailRecipient: String = "lazareva@saritasa.com"
     let emailSubject: String = "MMA Support Request"
 
-    let websiteUrlString: String = "https://awhvogellab.com"
+    let websiteUrl: URL = URL(string: "https://awhvogellab.com")!
 
     var isEmailFetched: Bool {
         return !userEmail.isEmpty
