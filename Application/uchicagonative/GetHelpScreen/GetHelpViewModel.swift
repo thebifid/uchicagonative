@@ -9,11 +9,11 @@
 import Foundation
 
 class GetHelpViewModel {
+    // MARK: - Init
+
     init(userSession: UserSession) {
         self.userSession = userSession
     }
-
-    let userSession: UserSession
 
     // MARK: - Private Properties
 
@@ -23,11 +23,10 @@ class GetHelpViewModel {
     let emailRecipient: String = "lazareva@saritasa.com"
     let emailSubject: String = "MMA Support Request"
 
+    private(set) var userSession: UserSession
     let websiteUrl: URL = URL(string: "https://awhvogellab.com")!
 
     var isEmailFetched: Bool {
         return !userSession.user.email.isEmpty
     }
-
-    // MARK: - Public Methods
 }

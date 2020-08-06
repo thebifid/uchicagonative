@@ -20,20 +20,29 @@ class TermsOfServiceViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
+        loadHtml()
+    }
 
+    // MARK: - UI Actions
+
+    private func setupUI() {
         webView.isOpaque = false
-        webView.backgroundColor = R.color.lightGrayCustom()
-
-        if let indexURL = Bundle.main.url(forResource: "tos",
-                                          withExtension: "html") {
-            webView.loadFileURL(indexURL,
-                                allowingReadAccessTo: indexURL)
-        }
-
+        webView.backgroundColor = R.color.webViewBackgroundColor()!
         view.addSubview(webView)
 
         constrain(webView) { webView in
             webView.edges == webView.superview!.edges
+        }
+    }
+
+    // MARK: - Private Methods
+
+    private func loadHtml() {
+        if let indexURL = Bundle.main.url(forResource: "tos",
+                                          withExtension: "html") {
+            webView.loadFileURL(indexURL,
+                                allowingReadAccessTo: indexURL)
         }
     }
 }

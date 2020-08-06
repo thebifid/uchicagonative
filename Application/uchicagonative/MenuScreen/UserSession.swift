@@ -10,19 +10,19 @@ import Foundation
 
 /// Provide information about user
 class UserSession {
-    
     // MARK: - Init
+
     init(user: User) {
         self.user = user
     }
-    
+
     // MARK: - Private properties
+
     private(set) var user: User
 
     // MARK: - Public Methods
+
     func setNewUserInfo(newUserInfo info: User) {
         user = info
     }
-
-    
 }
