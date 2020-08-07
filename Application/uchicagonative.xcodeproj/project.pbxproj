@@ -24,6 +24,9 @@
 		C16DD96424DAAEBB00EAC82E /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16DD96324DAAEBB00EAC82E /* UserSession.swift */; };
 		C16DD96624DBACA400EAC82E /* tos.html in Resources */ = {isa = PBXBuildFile; fileRef = C16DD96524DBACA400EAC82E /* tos.html */; };
 		C16DD96824DBB1DA00EAC82E /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = C16DD96724DBB1DA00EAC82E /* style.css */; };
+		C16DD96B24DD2D6F00EAC82E /* GameScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16DD96A24DD2D6F00EAC82E /* GameScreenViewController.swift */; };
+		C16DD96D24DD2D7C00EAC82E /* GameScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16DD96C24DD2D7C00EAC82E /* GameScreenViewModel.swift */; };
+		C16DD96F24DD3DCC00EAC82E /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16DD96E24DD3DCB00EAC82E /* UIColor+Extension.swift */; };
 		C1713C8624C937F9002D0E04 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C1713C8524C937F9002D0E04 /* GoogleService-Info.plist */; };
 		C1713C8B24C94B23002D0E04 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713C8A24C94B23002D0E04 /* RootViewController.swift */; };
 		C1713C8F24C9529E002D0E04 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713C8E24C9529E002D0E04 /* SplashViewController.swift */; };
@@ -84,6 +87,9 @@
 		C16DD96324DAAEBB00EAC82E /* UserSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
 		C16DD96524DBACA400EAC82E /* tos.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = tos.html; sourceTree = "<group>"; };
 		C16DD96724DBB1DA00EAC82E /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
+		C16DD96A24DD2D6F00EAC82E /* GameScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScreenViewController.swift; sourceTree = "<group>"; };
+		C16DD96C24DD2D7C00EAC82E /* GameScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScreenViewModel.swift; sourceTree = "<group>"; };
+		C16DD96E24DD3DCB00EAC82E /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		C1713C8524C937F9002D0E04 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C1713C8A24C94B23002D0E04 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		C1713C8E24C9529E002D0E04 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -166,6 +172,7 @@
 				C19693E524C70B150054296F /* GetHelpScreen */,
 				C19693E024C6E6D70054296F /* AboutUsScreen */,
 				C19693DD24C6DA5D0054296F /* EditProfileScreen */,
+				C16DD96924DD2D4000EAC82E /* GameScreen */,
 				C19693D124C6CDF40054296F /* MenuScreen */,
 				C116349024C6B3DA00B6C394 /* LoginScreen */,
 				C1713CE624CEA4AD002D0E04 /* RecoverPasswordScreen */,
@@ -226,6 +233,15 @@
 				C16DD96724DBB1DA00EAC82E /* style.css */,
 			);
 			path = HTML;
+			sourceTree = "<group>";
+		};
+		C16DD96924DD2D4000EAC82E /* GameScreen */ = {
+			isa = PBXGroup;
+			children = (
+				C16DD96A24DD2D6F00EAC82E /* GameScreenViewController.swift */,
+				C16DD96C24DD2D7C00EAC82E /* GameScreenViewModel.swift */,
+			);
+			path = GameScreen;
 			sourceTree = "<group>";
 		};
 		C1713C8924C94B11002D0E04 /* RootViewController */ = {
@@ -299,6 +315,7 @@
 				C1713CFA24D024B5002D0E04 /* String+Extension.swift */,
 				C135296224D3C2F10004D9B8 /* UIViewController+Extension.swift */,
 				C135296624D4051B0004D9B8 /* Dictionary+Extension.swift */,
+				C16DD96E24DD3DCB00EAC82E /* UIColor+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -576,6 +593,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C16DD96D24DD2D7C00EAC82E /* GameScreenViewModel.swift in Sources */,
 				C1713CEC24CEC7B3002D0E04 /* AlertAssist.swift in Sources */,
 				C1FD150324D152F700188BE0 /* CheckFields.swift in Sources */,
 				C19693D024C6C61A0054296F /* VerticalStackVIew.swift in Sources */,
@@ -588,8 +606,10 @@
 				C1713CFB24D024B5002D0E04 /* String+Extension.swift in Sources */,
 				C1713CF124CED5D1002D0E04 /* CreateAccountViewModel.swift in Sources */,
 				C1713CEA24CEAC50002D0E04 /* RecoverPasswordViewModel.swift in Sources */,
+				C16DD96B24DD2D6F00EAC82E /* GameScreenViewController.swift in Sources */,
 				C135296324D3C2F10004D9B8 /* UIViewController+Extension.swift in Sources */,
 				C1713CF924CFE9E6002D0E04 /* CustomSelectButtonView.swift in Sources */,
+				C16DD96F24DD3DCC00EAC82E /* UIColor+Extension.swift in Sources */,
 				C19693ED24C71C250054296F /* TermsOfServiceViewController.swift in Sources */,
 				C196940124C839320054296F /* UITextField+Extension.swift in Sources */,
 				C16DD96024DA82DC00EAC82E /* MenuScreenViewModel.swift in Sources */,

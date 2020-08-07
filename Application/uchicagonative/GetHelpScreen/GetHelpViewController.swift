@@ -58,7 +58,6 @@ class GetHelpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        print(viewModel.userSession.user)
         sendEmailButton.addTarget(self, action: #selector(handleSendEmail), for: .touchUpInside)
         visitSiteButton.addTarget(self, action: #selector(handleVisitWebsite), for: .touchUpInside)
     }

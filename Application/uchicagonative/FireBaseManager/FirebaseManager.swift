@@ -152,4 +152,42 @@ class FirebaseManager {
             }
         }
     }
+
+    func fetchSessionConfigurations(withSessionId id: String, completion: @escaping ((Result<[String: Any], Error>) -> Void)) {
+        let collection = "sessionConfigurations"
+        let document = db.collection(collection).document(id)
+
+        document.getDocument { document, error in
+
+            if error != nil {
+                completion(.failure(error!))
+
+            } else {
+                var sessionConfigurations = [String: Any]()
+                guard let data = document?.data() else { return }
+
+                sessionConfigurations["active"] = data["active"]
+                sessionConfigurations["backgroundColor"] = data["backgroundColor"]
+                sessionConfigurations["changeProbability"] = data["changeProbability"]
+                sessionConfigurations["colorPaletteId"] = data["colorPaletteId"]
+                sessionConfigurations["colorPaletteName"] = data["colorPaletteName"]
+                sessionConfigurations["colors"] = data["colors"]
+                sessionConfigurations["createdAt"] = data["createdAt"]
+                sessionConfigurations["delayPeriod"] = data["delayPeriod"]
+                sessionConfigurations["feedbackDuration"] = data["feedbackDuration"]
+                sessionConfigurations["feedbackTone"] = data["feedbackTone"]
+                sessionConfigurations["feedbackVibration"] = data["feedbackVibration"]
+                sessionConfigurations["iconName"] = data["iconName"]
+                sessionConfigurations["interTrialInterval"] = data["interTrialInterval"]
+                sessionConfigurations["name"] = data["name"]
+                sessionConfigurations["numberOfTrials"] = data["numberOfTrials"]
+                sessionConfigurations["sampleExposureDuration"] = data["sampleExposureDuration"]
+                sessionConfigurations["setSize"] = data["setSize"]
+                sessionConfigurations["stimulSize"] = data["stimulSize"]
+                sessionConfigurations["updatedAt"] = data["updatedAt"]
+
+                completion(.success(sessionConfigurations))
+            }
+        }
+    }
 }

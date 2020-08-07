@@ -40,7 +40,6 @@ class MenuScreenViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //  print(viewModel.user)
         scrollView.alwaysBounceVertical = true
         navigationController?.navigationBar.barTintColor = .white
         view.backgroundColor = R.color.appBackgroundColor()!
@@ -70,7 +69,7 @@ class MenuScreenViewController: UIViewController {
     // MARK: - Private Methods
 
     @objc private func handlePlay() {
-        let dvc = EmptyViewController()
+        let dvc = GameScreenViewController(viewModel: GameScreenViewModel(userSession: viewModel.userSession))
         dvc.navigationItem.title = "Game"
         navigationController?.pushViewController(dvc, animated: true)
     }
