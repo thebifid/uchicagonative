@@ -164,7 +164,7 @@ class EditProfileViewModel {
                                 email: self?.email ?? "",
                                 birthYear: self?.birthYear ?? 0,
                                 gender: self?.gender ?? "",
-                                projectId: self?.project ?? "",
+                                projectId: self?.availableGroupIdByName[self?.project ?? ""] ?? "",
                                 zipCode: self?.zipCode ?? 0)
                 self?.userSession.setNewUserInfo(newUserInfo: user)
 

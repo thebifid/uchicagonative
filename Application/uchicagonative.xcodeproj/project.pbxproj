@@ -27,6 +27,12 @@
 		C16DD96B24DD2D6F00EAC82E /* GameScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16DD96A24DD2D6F00EAC82E /* GameScreenViewController.swift */; };
 		C16DD96D24DD2D7C00EAC82E /* GameScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16DD96C24DD2D7C00EAC82E /* GameScreenViewModel.swift */; };
 		C16DD96F24DD3DCC00EAC82E /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16DD96E24DD3DCB00EAC82E /* UIColor+Extension.swift */; };
+		C16DD97224DD5EB300EAC82E /* diaspora.svg in Resources */ = {isa = PBXBuildFile; fileRef = C16DD97124DD5EB300EAC82E /* diaspora.svg */; };
+		C16DD97424DD60F400EAC82E /* SvgImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16DD97324DD60F400EAC82E /* SvgImageView.swift */; };
+		C16DD97924DD696B00EAC82E /* the-punisher-seeklogo.com.svg in Resources */ = {isa = PBXBuildFile; fileRef = C16DD97524DD696B00EAC82E /* the-punisher-seeklogo.com.svg */; };
+		C16DD97A24DD696B00EAC82E /* github-logo.svg in Resources */ = {isa = PBXBuildFile; fileRef = C16DD97624DD696B00EAC82E /* github-logo.svg */; };
+		C16DD97B24DD696B00EAC82E /* wrestling.svg in Resources */ = {isa = PBXBuildFile; fileRef = C16DD97724DD696B00EAC82E /* wrestling.svg */; };
+		C16DD97C24DD696B00EAC82E /* square.svg in Resources */ = {isa = PBXBuildFile; fileRef = C16DD97824DD696B00EAC82E /* square.svg */; };
 		C1713C8624C937F9002D0E04 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C1713C8524C937F9002D0E04 /* GoogleService-Info.plist */; };
 		C1713C8B24C94B23002D0E04 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713C8A24C94B23002D0E04 /* RootViewController.swift */; };
 		C1713C8F24C9529E002D0E04 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713C8E24C9529E002D0E04 /* SplashViewController.swift */; };
@@ -90,6 +96,12 @@
 		C16DD96A24DD2D6F00EAC82E /* GameScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScreenViewController.swift; sourceTree = "<group>"; };
 		C16DD96C24DD2D7C00EAC82E /* GameScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScreenViewModel.swift; sourceTree = "<group>"; };
 		C16DD96E24DD3DCB00EAC82E /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		C16DD97124DD5EB300EAC82E /* diaspora.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = diaspora.svg; sourceTree = "<group>"; };
+		C16DD97324DD60F400EAC82E /* SvgImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SvgImageView.swift; sourceTree = "<group>"; };
+		C16DD97524DD696B00EAC82E /* the-punisher-seeklogo.com.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "the-punisher-seeklogo.com.svg"; sourceTree = "<group>"; };
+		C16DD97624DD696B00EAC82E /* github-logo.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "github-logo.svg"; sourceTree = "<group>"; };
+		C16DD97724DD696B00EAC82E /* wrestling.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wrestling.svg; sourceTree = "<group>"; };
+		C16DD97824DD696B00EAC82E /* square.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = square.svg; sourceTree = "<group>"; };
 		C1713C8524C937F9002D0E04 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C1713C8A24C94B23002D0E04 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		C1713C8E24C9529E002D0E04 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -210,6 +222,7 @@
 		C116349224C6B3EA00B6C394 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C16DD97024DD5E4B00EAC82E /* SVG */,
 				C13F115124D14E5B001676C2 /* HTML */,
 				C19693F524C832D40054296F /* Fonts */,
 				C116348524C6B3D000B6C394 /* Assets.xcassets */,
@@ -242,6 +255,18 @@
 				C16DD96C24DD2D7C00EAC82E /* GameScreenViewModel.swift */,
 			);
 			path = GameScreen;
+			sourceTree = "<group>";
+		};
+		C16DD97024DD5E4B00EAC82E /* SVG */ = {
+			isa = PBXGroup;
+			children = (
+				C16DD97624DD696B00EAC82E /* github-logo.svg */,
+				C16DD97824DD696B00EAC82E /* square.svg */,
+				C16DD97524DD696B00EAC82E /* the-punisher-seeklogo.com.svg */,
+				C16DD97724DD696B00EAC82E /* wrestling.svg */,
+				C16DD97124DD5EB300EAC82E /* diaspora.svg */,
+			);
+			path = SVG;
 			sourceTree = "<group>";
 		};
 		C1713C8924C94B11002D0E04 /* RootViewController */ = {
@@ -330,6 +355,7 @@
 				C1713C9624CA8F10002D0E04 /* CustomTextFieldView.swift */,
 				C1713CEB24CEC7B3002D0E04 /* AlertAssist.swift */,
 				C1FD150224D152F700188BE0 /* CheckFields.swift */,
+				C16DD97324DD60F400EAC82E /* SvgImageView.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -479,11 +505,16 @@
 				C116348924C6B3D000B6C394 /* LaunchScreen.storyboard in Resources */,
 				C116348624C6B3D000B6C394 /* Assets.xcassets in Resources */,
 				C1713C8624C937F9002D0E04 /* GoogleService-Info.plist in Resources */,
+				C16DD97224DD5EB300EAC82E /* diaspora.svg in Resources */,
+				C16DD97924DD696B00EAC82E /* the-punisher-seeklogo.com.svg in Resources */,
 				C19693FE24C833D10054296F /* Karla-Italic.ttf in Resources */,
 				C19693FD24C833CE0054296F /* Karla-BoldItalic.ttf in Resources */,
+				C16DD97C24DD696B00EAC82E /* square.svg in Resources */,
 				C19693FF24C833D30054296F /* Karla-Regular.ttf in Resources */,
 				C16DD96624DBACA400EAC82E /* tos.html in Resources */,
+				C16DD97B24DD696B00EAC82E /* wrestling.svg in Resources */,
 				C19693FB24C833C90054296F /* Helvetica-Medium.ttf in Resources */,
+				C16DD97A24DD696B00EAC82E /* github-logo.svg in Resources */,
 				C19693FC24C833CC0054296F /* Karla-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -604,6 +635,7 @@
 				C116347F24C6B3CF00B6C394 /* SceneDelegate.swift in Sources */,
 				C1713CF424CFCCC4002D0E04 /* PopupMenu.swift in Sources */,
 				C1713CFB24D024B5002D0E04 /* String+Extension.swift in Sources */,
+				C16DD97424DD60F400EAC82E /* SvgImageView.swift in Sources */,
 				C1713CF124CED5D1002D0E04 /* CreateAccountViewModel.swift in Sources */,
 				C1713CEA24CEAC50002D0E04 /* RecoverPasswordViewModel.swift in Sources */,
 				C16DD96B24DD2D6F00EAC82E /* GameScreenViewController.swift in Sources */,

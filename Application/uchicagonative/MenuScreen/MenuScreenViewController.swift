@@ -9,6 +9,7 @@
 import Cartography
 import FirebaseAuth
 import UIKit
+
 /// Main Menu View Controller
 class MenuScreenViewController: UIViewController {
     private let viewModel: MenuScreenViewModel

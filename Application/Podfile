@@ -12,5 +12,6 @@ target 'uchicagonative' do
     pod 'SwiftLint'
     pod 'Firebase/Auth'
     pod 'Firebase/Firestore'
+    pod 'SVGKit'
 
 end

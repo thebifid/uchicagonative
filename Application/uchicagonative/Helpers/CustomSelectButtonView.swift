@@ -112,7 +112,11 @@ class CustomSelectButtonView: UIView {
     }
 
     func setTitle(title: String) {
-        button.setTitle(title, for: .normal)
+        if title == "" {
+            button.setTitle("Select an item...", for: .normal)
+        } else {
+            button.setTitle(title, for: .normal)
+        }
         button.setTitleColor(.black, for: .normal)
     }
 

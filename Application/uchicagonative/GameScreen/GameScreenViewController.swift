@@ -38,9 +38,9 @@ class GameScreenViewController: UIViewController {
 
     // MARK: - Private Properties
 
-    // MARK: - Lifecycle
-
     private let viewModel: GameScreenViewModel
+
+    // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,6 +57,31 @@ class GameScreenViewController: UIViewController {
         playButton.isHidden = true
 
         scrollView.backgroundColor = UIColor(hexString: viewModel.backgroundColor)
+        showImages()
+    }
+
+    private func showImages() {
+        for color in viewModel.colors {
+            addImage(color: color)
+        }
+    }
+
+    private var offsetX: CGFloat = 0
+    private var offsetY: CGFloat = 0
+
+    private func addImage(color: String) {
+        let svgImage = SvgImageView()
+        let size: CGFloat = 24 + viewModel.setSize
+        svgImage.configure(svgImageName: viewModel.iconName,
+                           size: .init(width: size, height: size),
+                           colorHex: color)
+        scrollView.addSubview(svgImage)
+
+        constrain(svgImage) { svgImage in
+            svgImage.left == svgImage.superview!.left + size * offsetX
+            svgImage.top == svgImage.superview!.top + 20
+        }
+        offsetX += 1
     }
 
     private func fetchSessionConfigurations() {
@@ -67,7 +92,7 @@ class GameScreenViewController: UIViewController {
                 self?.present(alert, animated: true)
 
             case .success:
-                print(self?.viewModel.backgroundColor ?? "")
+                print("")
             }
         }
     }

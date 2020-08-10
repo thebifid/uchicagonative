@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class GameScreenViewModel {
     // MARK: - Init
@@ -18,6 +19,9 @@ class GameScreenViewModel {
     // MARK: - Private Properties
 
     private(set) var backgroundColor: String = ""
+    private(set) var colors = [String]()
+    private(set) var iconName: String = ""
+    private(set) var setSize: CGFloat = 0
 
     private let userSession: UserSession
     private let sessionConfigurations = [String: Any]()
@@ -33,6 +37,9 @@ class GameScreenViewModel {
 
             case let .success(sessionConfigurations):
                 self?.backgroundColor = sessionConfigurations["backgroundColor"] as? String ?? ""
+                self?.colors = sessionConfigurations["colors"] as? [String] ?? []
+                self?.iconName = sessionConfigurations["iconName"] as? String ?? ""
+                self?.setSize = sessionConfigurations["setSize"] as? CGFloat ?? 0
                 completion(.success(()))
             }
         }
