@@ -23,41 +23,58 @@ class SvgImageView: UIView {
     // MARK: - Public Methods
 
     func configure(svgImageName name: String, size: CGSize, colorHex: String) {
-        let svgImage = SVGKImage(named: name)
-        svgImage?.size = size
-
-        let imageView = SVGKFastImageView(svgkImage: svgImage!)
-        imageView?.image = svgImage
-        imageView?.fillTintColor(colorImage: UIColor(hexString: colorHex))
-        addSubview(imageView!)
-
-        imageView?.fillSuperView()
+        let imageView = UIImageView()
+        imageView.image = SVGKImage.getImage(imageName: name, size: size, fillColor: UIColor(hexString: colorHex))
+        addSubview(imageView)
+        imageView.fillSuperView()
     }
 }
 
-// SVGKImageView - color SVG
-extension SVGKImageView {
-    func fillTintColor(colorImage: UIColor) {
-        if image != nil, image.caLayerTree != nil {
-            guard let sublayers = image.caLayerTree.sublayers else { return }
-            fillRecursively(sublayers: sublayers, color: colorImage)
-        }
-    }
+extension SVGKImage {
+    // MARK: - Private Method(s)
 
-    private func fillRecursively(sublayers: [CALayer], color: UIColor) {
-        for layer in sublayers {
-            if let l = layer as? CAShapeLayer {
-                colorThatImageWIthColor(color: color, layer: l)
+    private func fillColorForSubLayer(layer: CALayer, color: UIColor, opacity: Float) {
+        if layer is CAShapeLayer {
+            let shapeLayer = layer as! CAShapeLayer
+            shapeLayer.fillColor = color.cgColor
+            shapeLayer.opacity = opacity
+        }
+
+        if let sublayers = layer.sublayers {
+            for subLayer in sublayers {
+                fillColorForSubLayer(layer: subLayer, color: color, opacity: opacity)
             }
         }
     }
 
-    func colorThatImageWIthColor(color: UIColor, layer: CAShapeLayer) {
-        if layer.strokeColor != nil {
-            layer.strokeColor = color.cgColor
+    private func fillColorForOutter(layer: CALayer, color: UIColor, opacity: Float) {
+        if let shapeLayer = layer.sublayers?.first as? CAShapeLayer {
+            shapeLayer.fillColor = color.cgColor
+            shapeLayer.opacity = opacity
         }
-        if layer.fillColor != nil {
-            layer.fillColor = color.cgColor
+    }
+
+    // MARK: - Public Method(s)
+
+    func fillColor(color: UIColor, opacity: Float) {
+        if let layer = caLayerTree {
+            fillColorForSubLayer(layer: layer, color: color, opacity: opacity)
         }
+    }
+
+    func fillOutterLayerColor(color: UIColor, opacity: Float) {
+        if let layer = caLayerTree {
+            fillColorForOutter(layer: layer, color: color, opacity: opacity)
+        }
+    }
+
+    static func getImage(imageName: String, size: CGSize, fillColor color: UIColor?, opacity: Float = 1.0) -> UIImage? {
+        let svgImage: SVGKImage = SVGKImage(named: imageName)
+        svgImage.size = size
+        if let colorToFill = color {
+            svgImage.fillColor(color: colorToFill, opacity: opacity)
+        }
+
+        return svgImage.uiImage
     }
 }

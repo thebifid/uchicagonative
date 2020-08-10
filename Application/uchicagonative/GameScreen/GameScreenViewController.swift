@@ -39,6 +39,9 @@ class GameScreenViewController: UIViewController {
     // MARK: - Private Properties
 
     private let viewModel: GameScreenViewModel
+    
+    private var offsetX: CGFloat = 0
+    private var offsetY: CGFloat = 0
 
     // MARK: - Lifecycle
 
@@ -65,9 +68,6 @@ class GameScreenViewController: UIViewController {
             addImage(color: color)
         }
     }
-
-    private var offsetX: CGFloat = 0
-    private var offsetY: CGFloat = 0
 
     private func addImage(color: String) {
         let svgImage = SvgImageView()
