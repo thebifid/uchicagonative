@@ -45,11 +45,15 @@ class GameScreenViewModel {
                 completion(.failure(error))
 
             case let .success(sessionConfigurations):
-                self?.backgroundColor = sessionConfigurations["backgroundColor"] as? String ?? ""
-                self?.colors = sessionConfigurations["colors"] as? [String] ?? []
-                let iconName = sessionConfigurations["iconName"] as? String ?? ""
-                self?.iconName = self?.iconDictionary[iconName] ?? ""
-                self?.setSize = sessionConfigurations["setSize"] as? CGFloat ?? 0
+                guard let self = self else { return }
+
+                self.userSession.setSessionConfiguration(newSession: sessionConfigurations)
+
+                self.backgroundColor = self.userSession.sessionConfiguration.backgroundColor
+                self.colors = self.userSession.sessionConfiguration.colors
+                let iconName = self.userSession.sessionConfiguration.iconName
+                self.iconName = self.iconDictionary[iconName] ?? ""
+                self.setSize = self.userSession.sessionConfiguration.setSize
                 completion(.success(()))
             }
         }

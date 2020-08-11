@@ -174,7 +174,7 @@ class FirebaseManager {
         }
     }
 
-    func fetchSessionConfigurations(withSessionId id: String, completion: @escaping ((Result<[String: Any], Error>) -> Void)) {
+    func fetchSessionConfigurations(withSessionId id: String, completion: @escaping ((Result<SessionConfiguration, Error>) -> Void)) {
         let collection = "sessionConfigurations"
         let document = db.collection(collection).document(id)
 
@@ -184,30 +184,31 @@ class FirebaseManager {
                 completion(.failure(error!))
 
             } else {
-                var sessionConfigurations = [String: Any]()
                 guard let data = document?.data() else { return }
 
-                sessionConfigurations["active"] = data["active"]
-                sessionConfigurations["backgroundColor"] = data["backgroundColor"]
-                sessionConfigurations["changeProbability"] = data["changeProbability"]
-                sessionConfigurations["colorPaletteId"] = data["colorPaletteId"]
-                sessionConfigurations["colorPaletteName"] = data["colorPaletteName"]
-                sessionConfigurations["colors"] = data["colors"]
-                sessionConfigurations["createdAt"] = data["createdAt"]
-                sessionConfigurations["delayPeriod"] = data["delayPeriod"]
-                sessionConfigurations["feedbackDuration"] = data["feedbackDuration"]
-                sessionConfigurations["feedbackTone"] = data["feedbackTone"]
-                sessionConfigurations["feedbackVibration"] = data["feedbackVibration"]
-                sessionConfigurations["iconName"] = data["iconName"]
-                sessionConfigurations["interTrialInterval"] = data["interTrialInterval"]
-                sessionConfigurations["name"] = data["name"]
-                sessionConfigurations["numberOfTrials"] = data["numberOfTrials"]
-                sessionConfigurations["sampleExposureDuration"] = data["sampleExposureDuration"]
-                sessionConfigurations["setSize"] = data["setSize"]
-                sessionConfigurations["stimulSize"] = data["stimulSize"]
-                sessionConfigurations["updatedAt"] = data["updatedAt"]
+                var rawDict = [String: Any]()
+                rawDict["active"] = data["active"]
+                rawDict["backgroundColor"] = data["backgroundColor"]
+                rawDict["changeProbability"] = data["changeProbability"]
+                rawDict["colorPaletteId"] = data["colorPaletteId"]
+                rawDict["colorPaletteName"] = data["colorPaletteName"]
+                rawDict["colors"] = data["colors"]
+                rawDict["createdAt"] = data["createdAt"]
+                rawDict["delayPeriod"] = data["delayPeriod"]
+                rawDict["feedbackDuration"] = data["feedbackDuration"]
+                rawDict["feedbackTone"] = data["feedbackTone"]
+                rawDict["feedbackVibration"] = data["feedbackVibration"]
+                rawDict["iconName"] = data["iconName"]
+                rawDict["interTrialInterval"] = data["interTrialInterval"]
+                rawDict["name"] = data["name"]
+                rawDict["numberOfTrials"] = data["numberOfTrials"]
+                rawDict["sampleExposureDuration"] = data["sampleExposureDuration"]
+                rawDict["setSize"] = data["setSize"]
+                rawDict["stimulSize"] = data["stimulSize"]
+                rawDict["updatedAt"] = data["updatedAt"]
 
-                completion(.success(sessionConfigurations))
+                let sessionConfigurations = SessionConfiguration(rawDict: rawDict)
+                completion(.success(sessionConfigurations!))
             }
         }
     }

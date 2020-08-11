@@ -20,11 +20,4 @@ class MenuScreenViewModel {
     private(set) var userSession: UserSession
 
     // MARK: - Public Methods
-
-    /// Add listener for user info
-    func addUserChangeListener() {
-        FirebaseManager.sharedInstance.addUserInfoChangeListener { user in
-            self.userSession = UserSession(user: user)
-        }
-    }
 }
