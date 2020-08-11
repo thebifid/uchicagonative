@@ -152,25 +152,25 @@ class EditProfileViewModel {
         userInfo["projectId"] = availableGroupIdByName[project]
 
         FirebaseManager.sharedInstance.updateUserInfo(attributes: userInfo) { [weak self] result in
-
+            guard let self = self else { return }
             switch result {
             case let .failure(error):
                 competion(.failure(error))
 
             case .success:
 
-                let user = User(firstName: self?.firstName ?? "",
-                                lastName: self?.lastName ?? "",
-                                email: self?.email ?? "",
-                                birthYear: self?.birthYear ?? 0,
-                                gender: self?.gender ?? "",
-                                projectId: self?.availableGroupIdByName[self?.project ?? ""] ?? "",
-                                zipCode: self?.zipCode ?? 0)
-                self?.userSession.setNewUserInfo(newUserInfo: user)
+                let user = User(firstName: self.firstName,
+                                lastName: self.lastName,
+                                email: self.email,
+                                birthYear: self.birthYear,
+                                gender: self.gender,
+                                projectId: self.availableGroupIdByName[self.project] ?? "",
+                                zipCode: self.zipCode)
+                self.userSession.setNewUserInfo(newUserInfo: user)
 
                 competion(.success(()))
             }
-            self?.isRequesting = false
+            self.isRequesting = false
         }
     }
 

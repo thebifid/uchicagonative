@@ -122,7 +122,7 @@ class MenuScreenViewController: UIViewController {
         view.addSubview(scrollView)
         scrollView.fillSuperView()
 
-        let stackView = VerticalStackVIew(arrangedSubviews:
+        let stackView = VerticalStackView(arrangedSubviews:
             [
                 playButton,
                 editProfileButton,

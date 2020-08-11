@@ -308,7 +308,7 @@ PODS:
   - R.swift (5.2.2):
     - R.swift.Library (~> 5.2.0)
   - R.swift.Library (5.2.0)
-  - SVGKit (2.1.1):
+  - SVGKit (3.0.0-beta3):
     - CocoaLumberjack (~> 3.0)
   - SwiftFormat/CLI (0.44.17)
   - SwiftLint (0.39.2)
@@ -318,7 +318,7 @@ DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Firestore
   - R.swift
-  - SVGKit
+  - SVGKit (~> 3.0.0-beta3)
   - SwiftFormat/CLI (~> 0.44)
   - SwiftLint
 
@@ -367,10 +367,10 @@ SPEC CHECKSUMS:
   PromisesObjC: b48e0338dbbac2207e611750777895f7a5811b75
   R.swift: 7c52cdc57a66840ffe6cbd8a823d732059d42a32
   R.swift.Library: 5ba4f1631300caf9a4d890186930da85d540769d
-  SVGKit: 652cdf7bef8bec8564d04a8511d3ab50c7595fac
+  SVGKit: 35ddd1bb2f711bcb25227be8b356facccbffc32d
   SwiftFormat: 3b5caa6389b2b9adbc00e133b3ccc8c6e687a6a4
   SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
 
-PODFILE CHECKSUM: 3cdf74907268b9e27bd959d79a9de7d4838428c9
+PODFILE CHECKSUM: 6d4229693b5619e86f551b9e10dcbdbb8c46dc11
 
 COCOAPODS: 1.9.3

@@ -105,7 +105,7 @@ class GameScreenViewController: UIViewController {
         scrollView.fillSuperView()
         scrollView.backgroundColor = R.color.appBackgroundColor()!
 
-        let stackView = VerticalStackVIew(arrangedSubviews: [readyLabel, playButton], spacing: 20)
+        let stackView = VerticalStackView(arrangedSubviews: [readyLabel, playButton], spacing: 20)
         playButton.configure(title: "Start Game!", font: R.font.karlaBold(size: Constants.buttonFontSize)!)
 
         scrollView.addSubview(stackView)

@@ -51,7 +51,7 @@
 		C1713CF724CFD7AB002D0E04 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713CF624CFD7AB002D0E04 /* FirebaseManager.swift */; };
 		C1713CF924CFE9E6002D0E04 /* CustomSelectButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713CF824CFE9E6002D0E04 /* CustomSelectButtonView.swift */; };
 		C1713CFB24D024B5002D0E04 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713CFA24D024B5002D0E04 /* String+Extension.swift */; };
-		C19693D024C6C61A0054296F /* VerticalStackVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693CF24C6C61A0054296F /* VerticalStackVIew.swift */; };
+		C19693D024C6C61A0054296F /* VerticalStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693CF24C6C61A0054296F /* VerticalStackView.swift */; };
 		C19693D324C6CE0E0054296F /* MenuScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693D224C6CE0E0054296F /* MenuScreenViewController.swift */; };
 		C19693D524C6CEF40054296F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693D424C6CEF40054296F /* Constants.swift */; };
 		C19693D724C6D6090054296F /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693D624C6D6090054296F /* UIButton+Extension.swift */; };
@@ -119,7 +119,7 @@
 		C1713CF624CFD7AB002D0E04 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		C1713CF824CFE9E6002D0E04 /* CustomSelectButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSelectButtonView.swift; sourceTree = "<group>"; };
 		C1713CFA24D024B5002D0E04 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
-		C19693CF24C6C61A0054296F /* VerticalStackVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalStackVIew.swift; sourceTree = "<group>"; };
+		C19693CF24C6C61A0054296F /* VerticalStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalStackView.swift; sourceTree = "<group>"; };
 		C19693D224C6CE0E0054296F /* MenuScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScreenViewController.swift; sourceTree = "<group>"; };
 		C19693D424C6CEF40054296F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C19693D624C6D6090054296F /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
@@ -348,7 +348,7 @@
 		C19693D924C6D7140054296F /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				C19693CF24C6C61A0054296F /* VerticalStackVIew.swift */,
+				C19693CF24C6C61A0054296F /* VerticalStackView.swift */,
 				C19693DB24C6D93F0054296F /* EmptyViewController.swift */,
 				C1713C9424CA88C4002D0E04 /* PrimaryButton.swift */,
 				C1713CF824CFE9E6002D0E04 /* CustomSelectButtonView.swift */,
@@ -627,7 +627,7 @@
 				C16DD96D24DD2D7C00EAC82E /* GameScreenViewModel.swift in Sources */,
 				C1713CEC24CEC7B3002D0E04 /* AlertAssist.swift in Sources */,
 				C1FD150324D152F700188BE0 /* CheckFields.swift in Sources */,
-				C19693D024C6C61A0054296F /* VerticalStackVIew.swift in Sources */,
+				C19693D024C6C61A0054296F /* VerticalStackView.swift in Sources */,
 				C116348124C6B3CF00B6C394 /* LoginViewController.swift in Sources */,
 				C1713C8B24C94B23002D0E04 /* RootViewController.swift in Sources */,
 				C116347D24C6B3CF00B6C394 /* AppDelegate.swift in Sources */,

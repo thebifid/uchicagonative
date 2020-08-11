@@ -40,7 +40,7 @@ class AboutUsViewController: UIViewController {
         view.addSubview(scrollView)
 
         // stackView
-        let stackView = VerticalStackVIew(arrangedSubviews:
+        let stackView = VerticalStackView(arrangedSubviews:
             [
                 firstLabel,
                 secondLabel

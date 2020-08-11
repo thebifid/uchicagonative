@@ -109,10 +109,10 @@ class GetHelpViewController: UIViewController {
         visitSiteButton.configure(title: "Visit Website",
                                   font: R.font.karlaBold(size: 18)!, isEnabled: true)
 
-        let upStackView = VerticalStackVIew(arrangedSubviews: [contactEmailLabel, sendEmailButton], spacing: 20)
-        let downStackView = VerticalStackVIew(arrangedSubviews: [readAboutLabel, visitSiteButton], spacing: 20)
+        let upStackView = VerticalStackView(arrangedSubviews: [contactEmailLabel, sendEmailButton], spacing: 20)
+        let downStackView = VerticalStackView(arrangedSubviews: [readAboutLabel, visitSiteButton], spacing: 20)
 
-        let stackView = VerticalStackVIew(arrangedSubviews: [upStackView, downStackView], spacing: 35)
+        let stackView = VerticalStackView(arrangedSubviews: [upStackView, downStackView], spacing: 35)
 
         constrain(sendEmailButton, visitSiteButton) { sendEmailButton, visitSiteButton in
 

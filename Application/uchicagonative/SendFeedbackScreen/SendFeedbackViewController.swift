@@ -43,7 +43,7 @@ class SendFeedbackViewController: UIViewController {
 
         // StackView
 
-        let stackView = VerticalStackVIew(arrangedSubviews:
+        let stackView = VerticalStackView(arrangedSubviews:
             [
                 feedbackLabel,
                 feedbackTextField,
