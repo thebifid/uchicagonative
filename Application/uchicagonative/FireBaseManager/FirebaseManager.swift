@@ -187,28 +187,7 @@ class FirebaseManager {
             } else {
                 guard let data = document?.data() else { return }
 
-                var rawDict = [String: Any]()
-                rawDict["active"] = data["active"]
-                rawDict["backgroundColor"] = data["backgroundColor"]
-                rawDict["changeProbability"] = data["changeProbability"]
-                rawDict["colorPaletteId"] = data["colorPaletteId"]
-                rawDict["colorPaletteName"] = data["colorPaletteName"]
-                rawDict["colors"] = data["colors"]
-                rawDict["createdAt"] = data["createdAt"]
-                rawDict["delayPeriod"] = data["delayPeriod"]
-                rawDict["feedbackDuration"] = data["feedbackDuration"]
-                rawDict["feedbackTone"] = data["feedbackTone"]
-                rawDict["feedbackVibration"] = data["feedbackVibration"]
-                rawDict["iconName"] = data["iconName"]
-                rawDict["interTrialInterval"] = data["interTrialInterval"]
-                rawDict["name"] = data["name"]
-                rawDict["numberOfTrials"] = data["numberOfTrials"]
-                rawDict["sampleExposureDuration"] = data["sampleExposureDuration"]
-                rawDict["setSize"] = data["setSize"]
-                rawDict["stimulSize"] = data["stimulSize"]
-                rawDict["updatedAt"] = data["updatedAt"]
-
-                let sessionConfigurations = SessionConfiguration(rawDict: rawDict)
+                let sessionConfigurations = SessionConfiguration(rawDict: data)
                 completion(.success(sessionConfigurations!))
             }
         }

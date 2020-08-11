@@ -6,8 +6,8 @@
 //  Copyright © 2020 Vasiliy Matveev. All rights reserved.
 //
 
-import Foundation
 import Firebase
+import Foundation
 
 /// Provide information about user
 class UserSession {
@@ -23,17 +23,12 @@ class UserSession {
     // MARK: - Private properties
 
     private(set) var user: User
-    private(set) var sessionConfiguration = SessionConfiguration()
     private var listener: ListenerRegistration?
 
     // MARK: - Public Methods
 
     func setNewUserInfo(newUserInfo info: User) {
         user = info
-    }
-
-    func setSessionConfiguration(newSession session: SessionConfiguration) {
-        sessionConfiguration = session
     }
 
     // MARK: - Private Methods
@@ -43,9 +38,9 @@ class UserSession {
             completion(user)
         }
     }
-    
+
     // MARK: - Deinit
-    
+
     deinit {
         listener?.remove()
     }
