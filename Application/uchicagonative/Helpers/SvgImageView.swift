@@ -24,15 +24,14 @@ class SvgImageView: UIView {
 
     func configure(svgImageName name: String, size: CGSize, colorHex: String) {
         let imageView = UIImageView()
-        imageView.image = SVGKImage.getImage(imageName: name, size: size, fillColor: UIColor(hexString: colorHex))
+        imageView.image = SVGKImage.makeColoredImage(imageName: name, size: size, fillColor: UIColor(hexString: colorHex))
         addSubview(imageView)
         imageView.fillSuperView()
     }
 }
 
+/// Color for SVG images
 extension SVGKImage {
-    // MARK: - Private Method(s)
-
     private func fillColorForSubLayer(layer: CALayer, color: UIColor, opacity: Float) {
         if layer is CAShapeLayer {
             let shapeLayer = layer as! CAShapeLayer
@@ -54,8 +53,6 @@ extension SVGKImage {
         }
     }
 
-    // MARK: - Public Method(s)
-
     func fillColor(color: UIColor, opacity: Float) {
         if let layer = caLayerTree {
             fillColorForSubLayer(layer: layer, color: color, opacity: opacity)
@@ -68,7 +65,7 @@ extension SVGKImage {
         }
     }
 
-    static func getImage(imageName: String, size: CGSize, fillColor color: UIColor?, opacity: Float = 1.0) -> UIImage? {
+    static func makeColoredImage(imageName: String, size: CGSize, fillColor color: UIColor?, opacity: Float = 1.0) -> UIImage? {
         let svgImage: SVGKImage = SVGKImage(named: imageName)
         svgImage.size = size
         if let colorToFill = color {

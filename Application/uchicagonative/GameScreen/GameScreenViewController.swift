@@ -23,7 +23,7 @@ class GameScreenViewController: UIViewController {
         return label
     }()
 
-    let playButton = PrimaryButton()
+    private let playButton = PrimaryButton()
 
     // MARK: - Init
 
@@ -39,7 +39,7 @@ class GameScreenViewController: UIViewController {
     // MARK: - Private Properties
 
     private let viewModel: GameScreenViewModel
-    
+
     private var offsetX: CGFloat = 0
     private var offsetY: CGFloat = 0
 
@@ -92,7 +92,7 @@ class GameScreenViewController: UIViewController {
                 self?.present(alert, animated: true)
 
             case .success:
-                print("")
+                break
             }
         }
     }
