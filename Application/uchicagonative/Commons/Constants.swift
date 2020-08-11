@@ -13,6 +13,7 @@ struct Constants {
     static let defaultInsets: CGFloat = 20
     static let textFieldFontSize: CGFloat = 22
     static let buttonFontSize: CGFloat = 22
+    static let iconSize: CGFloat = 24
 
     static var deviseHeight: CGFloat {
         UIScreen.main.bounds.height

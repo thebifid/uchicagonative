@@ -42,7 +42,7 @@ class FirebaseManager {
         guard let uid = FirebaseAuth.Auth.auth().currentUser?.uid else { return }
         let document = db.collection("userProfiles").document(uid)
 
-        document.addSnapshotListener { document, error in
+        document.getDocument { document, error in
             if error != nil {
                 completion(.failure(error!))
             } else {
@@ -58,6 +58,26 @@ class FirebaseManager {
                 userInfo["role"] = data["role"]
 
                 completion(.success(userInfo))
+            }
+        }
+    }
+
+    /// Add listener for user info
+    func addUserInfoChangeListener(completion: @escaping ((User) -> Void)) {
+        guard let uid = FirebaseAuth.Auth.auth().currentUser?.uid else { return }
+        let document = db.collection("userProfiles").document(uid)
+
+        document.addSnapshotListener { document, error in
+            if error == nil {
+                guard let data = document?.data() else { return }
+                let user = User(firstName: data["firstName"] as? String ?? "",
+                                lastName: data["lastName"] as? String ?? "",
+                                email: data["email"] as? String ?? "",
+                                birthYear: data["birthYear"] as? Int ?? 0,
+                                gender: data["gender"] as? String ?? "",
+                                projectId: data["projectId"] as? String ?? "",
+                                zipCode: data["zipCode"] as? Int ?? 0)
+                completion(user)
             }
         }
     }

@@ -45,6 +45,7 @@ class MenuScreenViewController: UIViewController {
         navigationController?.navigationBar.barTintColor = .white
         view.backgroundColor = R.color.appBackgroundColor()!
 
+        viewModel.addUserChangeListener()
         setupUI()
 
         // setting button actions

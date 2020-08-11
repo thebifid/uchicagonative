@@ -71,7 +71,7 @@ class GameScreenViewController: UIViewController {
 
     private func addImage(color: String) {
         let svgImage = SvgImageView()
-        let size: CGFloat = 24 + viewModel.setSize
+        let size: CGFloat = Constants.iconSize + viewModel.setSize
         svgImage.configure(svgImageName: viewModel.iconName,
                            size: .init(width: size, height: size),
                            colorHex: color)
