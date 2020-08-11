@@ -26,6 +26,15 @@ class GameScreenViewModel {
     private let userSession: UserSession
     private let sessionConfigurations = [String: Any]()
 
+    /// Map icon name from server to icon name in app
+    private let iconDictionary = [
+        "the-punisher-seeklogo.com": "punisher",
+        "github-logo": "githublogo",
+        "square": "square",
+        "wrestling": "wrestling",
+        "diaspora": "diaspora"
+    ]
+
     // MARK: - Public Methods
 
     func fetchSessionConfigurations(completion: @escaping ((Result<Void, Error>) -> Void)) {
@@ -38,7 +47,8 @@ class GameScreenViewModel {
             case let .success(sessionConfigurations):
                 self?.backgroundColor = sessionConfigurations["backgroundColor"] as? String ?? ""
                 self?.colors = sessionConfigurations["colors"] as? [String] ?? []
-                self?.iconName = sessionConfigurations["iconName"] as? String ?? ""
+                let iconName = sessionConfigurations["iconName"] as? String ?? ""
+                self?.iconName = self?.iconDictionary[iconName] ?? ""
                 self?.setSize = sessionConfigurations["setSize"] as? CGFloat ?? 0
                 completion(.success(()))
             }

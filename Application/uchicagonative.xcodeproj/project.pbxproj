@@ -29,8 +29,8 @@
 		C16DD96F24DD3DCC00EAC82E /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16DD96E24DD3DCB00EAC82E /* UIColor+Extension.swift */; };
 		C16DD97224DD5EB300EAC82E /* diaspora.svg in Resources */ = {isa = PBXBuildFile; fileRef = C16DD97124DD5EB300EAC82E /* diaspora.svg */; };
 		C16DD97424DD60F400EAC82E /* SvgImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16DD97324DD60F400EAC82E /* SvgImageView.swift */; };
-		C16DD97924DD696B00EAC82E /* the-punisher-seeklogo.com.svg in Resources */ = {isa = PBXBuildFile; fileRef = C16DD97524DD696B00EAC82E /* the-punisher-seeklogo.com.svg */; };
-		C16DD97A24DD696B00EAC82E /* github-logo.svg in Resources */ = {isa = PBXBuildFile; fileRef = C16DD97624DD696B00EAC82E /* github-logo.svg */; };
+		C16DD97924DD696B00EAC82E /* punisher.svg in Resources */ = {isa = PBXBuildFile; fileRef = C16DD97524DD696B00EAC82E /* punisher.svg */; };
+		C16DD97A24DD696B00EAC82E /* githublogo.svg in Resources */ = {isa = PBXBuildFile; fileRef = C16DD97624DD696B00EAC82E /* githublogo.svg */; };
 		C16DD97B24DD696B00EAC82E /* wrestling.svg in Resources */ = {isa = PBXBuildFile; fileRef = C16DD97724DD696B00EAC82E /* wrestling.svg */; };
 		C16DD97C24DD696B00EAC82E /* square.svg in Resources */ = {isa = PBXBuildFile; fileRef = C16DD97824DD696B00EAC82E /* square.svg */; };
 		C1713C8624C937F9002D0E04 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C1713C8524C937F9002D0E04 /* GoogleService-Info.plist */; };
@@ -98,8 +98,8 @@
 		C16DD96E24DD3DCB00EAC82E /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		C16DD97124DD5EB300EAC82E /* diaspora.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = diaspora.svg; sourceTree = "<group>"; };
 		C16DD97324DD60F400EAC82E /* SvgImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SvgImageView.swift; sourceTree = "<group>"; };
-		C16DD97524DD696B00EAC82E /* the-punisher-seeklogo.com.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "the-punisher-seeklogo.com.svg"; sourceTree = "<group>"; };
-		C16DD97624DD696B00EAC82E /* github-logo.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "github-logo.svg"; sourceTree = "<group>"; };
+		C16DD97524DD696B00EAC82E /* punisher.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = punisher.svg; sourceTree = "<group>"; };
+		C16DD97624DD696B00EAC82E /* githublogo.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = githublogo.svg; sourceTree = "<group>"; };
 		C16DD97724DD696B00EAC82E /* wrestling.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wrestling.svg; sourceTree = "<group>"; };
 		C16DD97824DD696B00EAC82E /* square.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = square.svg; sourceTree = "<group>"; };
 		C1713C8524C937F9002D0E04 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -260,9 +260,9 @@
 		C16DD97024DD5E4B00EAC82E /* SVG */ = {
 			isa = PBXGroup;
 			children = (
-				C16DD97624DD696B00EAC82E /* github-logo.svg */,
+				C16DD97624DD696B00EAC82E /* githublogo.svg */,
 				C16DD97824DD696B00EAC82E /* square.svg */,
-				C16DD97524DD696B00EAC82E /* the-punisher-seeklogo.com.svg */,
+				C16DD97524DD696B00EAC82E /* punisher.svg */,
 				C16DD97724DD696B00EAC82E /* wrestling.svg */,
 				C16DD97124DD5EB300EAC82E /* diaspora.svg */,
 			);
@@ -506,7 +506,7 @@
 				C116348624C6B3D000B6C394 /* Assets.xcassets in Resources */,
 				C1713C8624C937F9002D0E04 /* GoogleService-Info.plist in Resources */,
 				C16DD97224DD5EB300EAC82E /* diaspora.svg in Resources */,
-				C16DD97924DD696B00EAC82E /* the-punisher-seeklogo.com.svg in Resources */,
+				C16DD97924DD696B00EAC82E /* punisher.svg in Resources */,
 				C19693FE24C833D10054296F /* Karla-Italic.ttf in Resources */,
 				C19693FD24C833CE0054296F /* Karla-BoldItalic.ttf in Resources */,
 				C16DD97C24DD696B00EAC82E /* square.svg in Resources */,
@@ -514,7 +514,7 @@
 				C16DD96624DBACA400EAC82E /* tos.html in Resources */,
 				C16DD97B24DD696B00EAC82E /* wrestling.svg in Resources */,
 				C19693FB24C833C90054296F /* Helvetica-Medium.ttf in Resources */,
-				C16DD97A24DD696B00EAC82E /* github-logo.svg in Resources */,
+				C16DD97A24DD696B00EAC82E /* githublogo.svg in Resources */,
 				C19693FC24C833CC0054296F /* Karla-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -42,7 +42,7 @@ class FirebaseManager {
         guard let uid = FirebaseAuth.Auth.auth().currentUser?.uid else { return }
         let document = db.collection("userProfiles").document(uid)
 
-        document.getDocument { document, error in
+        document.addSnapshotListener { document, error in
             if error != nil {
                 completion(.failure(error!))
             } else {
@@ -56,6 +56,7 @@ class FirebaseManager {
                 userInfo["zipCode"] = data["zipCode"]
                 userInfo["projectId"] = data["projectId"]
                 userInfo["role"] = data["role"]
+
                 completion(.success(userInfo))
             }
         }
