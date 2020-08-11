@@ -63,11 +63,11 @@ class FirebaseManager {
     }
 
     /// Add listener for user info
-    func addUserInfoChangeListener(completion: @escaping ((User) -> Void)) {
-        guard let uid = FirebaseAuth.Auth.auth().currentUser?.uid else { return }
+    func addUserInfoChangeListener(completion: @escaping ((User) -> Void)) -> ListenerRegistration? {
+        guard let uid = FirebaseAuth.Auth.auth().currentUser?.uid else { return nil }
         let document = db.collection("userProfiles").document(uid)
 
-        document.addSnapshotListener { document, error in
+        let listener = document.addSnapshotListener { document, error in
             if error == nil {
                 guard let data = document?.data() else { return }
                 let user = User(firstName: data["firstName"] as? String ?? "",
@@ -80,6 +80,7 @@ class FirebaseManager {
                 completion(user)
             }
         }
+        return listener
     }
 
     /// Add new document (userInfo) to userProfiles collection

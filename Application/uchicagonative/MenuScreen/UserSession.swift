@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Firebase
 
 /// Provide information about user
 class UserSession {
@@ -23,6 +24,7 @@ class UserSession {
 
     private(set) var user: User
     private(set) var sessionConfiguration = SessionConfiguration()
+    private var listener: ListenerRegistration?
 
     // MARK: - Public Methods
 
@@ -37,8 +39,14 @@ class UserSession {
     // MARK: - Private Methods
 
     private func addUserInfoChangeListener(completion: @escaping ((User) -> Void)) {
-        FirebaseManager.sharedInstance.addUserInfoChangeListener { user in
+        listener = FirebaseManager.sharedInstance.addUserInfoChangeListener { user in
             completion(user)
         }
+    }
+    
+    // MARK: - Deinit
+    
+    deinit {
+        listener?.remove()
     }
 }
