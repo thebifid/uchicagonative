@@ -23,13 +23,15 @@ class GameScreenViewModel {
     private(set) var iconName: String = ""
 
     // size of cells
-    private(set) var stimulSize: CGFloat = 0
+    private(set) var stimuliSize: CGFloat = 0
 
     // number of cells
     private(set) var setSize: Int = 0
 
     private let userSession: UserSession
     private let sessionConfigurations = [String: Any]()
+
+    private(set) var locations = [[Int]]()
 
     /// Map icon name from server to icon name in app
     private let iconDictionary = [
@@ -39,6 +41,10 @@ class GameScreenViewModel {
         "wrestling": "wrestling",
         "diaspora": "diaspora"
     ]
+
+    // MARK: - Handlers
+
+    var didUpdate: (() -> Void)?
 
     // MARK: - Public Methods
 
@@ -57,9 +63,50 @@ class GameScreenViewModel {
                 let iconName = sessionConfigurations.iconName
                 self.iconName = self.iconDictionary[iconName] ?? ""
                 self.setSize = sessionConfigurations.setSize
-                self.stimulSize = sessionConfigurations.stimuliSize
+                self.stimuliSize = sessionConfigurations.stimuliSize
                 completion(.success(()))
             }
         }
+    }
+
+    func generateNewCellsLocation(forView view: UIView, count: Int) {
+        locations.removeAll()
+        didUpdate?()
+        generateCellsLocation(forView: view, count: count)
+    }
+
+    // MARK: - Private Methods
+
+    private func generateCellsLocation(forView view: UIView, count: Int) {
+        for _ in 0 ..< count {
+            let xCoordinate = Int.random(in: 0 ..< Int(view.frame.width - stimuliSize))
+            let yCoordinate = Int.random(in: 0 ..< Int(view.frame.height - stimuliSize - 100)) // ?? - topbar
+            let newLocation = [xCoordinate, yCoordinate]
+
+            if checkIsFree(locations: locations, checkZone: newLocation, size: Int(stimuliSize)) {
+                locations.append(newLocation)
+            } else {
+                generateCellsLocation(forView: view, count: 1)
+            }
+        }
+    }
+
+    private func checkIsFree(locations: [[Int]], checkZone: [Int], size: Int) -> Bool {
+        if locations.isEmpty {
+            return true
+        }
+
+        for location in locations {
+            let xStart = location[0] - size
+            let xEnd = location[0] + size
+
+            let yStart = location[1] - size
+            let yEnd = location[1] + size
+
+            if xStart ..< xEnd ~= checkZone[0], yStart ..< yEnd ~= checkZone[1] {
+                return false
+            }
+        }
+        return true
     }
 }
