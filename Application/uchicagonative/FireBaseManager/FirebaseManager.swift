@@ -186,7 +186,6 @@ class FirebaseManager {
 
             } else {
                 guard let data = document?.data() else { return }
-
                 let sessionConfigurations = SessionConfiguration(rawDict: data)
                 completion(.success(sessionConfigurations!))
             }

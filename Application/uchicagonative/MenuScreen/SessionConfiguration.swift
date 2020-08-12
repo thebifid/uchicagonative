@@ -25,8 +25,8 @@ struct SessionConfiguration {
     let name: String
     let numberOfTrials: Int
     let sampleExposureDuration: Int
-    let setSize: CGFloat
-    let stimulSize: Int
+    let setSize: Int
+    let stimuliSize: CGFloat
     let updatedAt: Any
 
     init() {
@@ -47,7 +47,7 @@ struct SessionConfiguration {
         numberOfTrials = 0
         sampleExposureDuration = 0
         setSize = 0
-        stimulSize = 0
+        stimuliSize = 0
         updatedAt = ""
     }
 
@@ -68,8 +68,8 @@ struct SessionConfiguration {
         name = rawDict["name"] as? String ?? ""
         numberOfTrials = rawDict["numberOfTrials"] as? Int ?? 0
         sampleExposureDuration = rawDict["sampleExposureDuration"] as? Int ?? 0
-        setSize = rawDict["setSize"] as? CGFloat ?? 0
-        stimulSize = rawDict["stimulSize"] as? Int ?? 0
+        setSize = rawDict["setSize"] as? Int ?? 0
+        stimuliSize = rawDict["stimuliSize"] as? CGFloat ?? 0
         updatedAt = rawDict["updatedAt"] ?? ""
     }
 }

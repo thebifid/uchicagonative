@@ -21,7 +21,12 @@ class GameScreenViewModel {
     private(set) var backgroundColor: String = ""
     private(set) var colors = [String]()
     private(set) var iconName: String = ""
-    private(set) var setSize: CGFloat = 0
+
+    // size of cells
+    private(set) var stimulSize: CGFloat = 0
+
+    // number of cells
+    private(set) var setSize: Int = 0
 
     private let userSession: UserSession
     private let sessionConfigurations = [String: Any]()
@@ -52,6 +57,7 @@ class GameScreenViewModel {
                 let iconName = sessionConfigurations.iconName
                 self.iconName = self.iconDictionary[iconName] ?? ""
                 self.setSize = sessionConfigurations.setSize
+                self.stimulSize = sessionConfigurations.stimuliSize
                 completion(.success(()))
             }
         }
