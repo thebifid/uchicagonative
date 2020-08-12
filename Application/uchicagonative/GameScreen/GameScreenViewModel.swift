@@ -31,7 +31,11 @@ class GameScreenViewModel {
     private let userSession: UserSession
     private let sessionConfigurations = [String: Any]()
 
-    private(set) var locations = [[Int]]()
+    private(set) var roundLocations = [[Int]]()
+    private var roundColors = [String]()
+
+    /// Struct for saving game session result
+    private var gameResult = GameResult()
 
     /// Map icon name from server to icon name in app
     private let iconDictionary = [
@@ -48,6 +52,19 @@ class GameScreenViewModel {
     var didFetchSession: (() -> Void)?
 
     // MARK: - Public Methods
+
+    /// Write round info in GameResult struct
+    func setRoundInfo() {
+        gameResult.setGameRoundLocationsInfo(locationInfo: roundLocations)
+        gameResult.setGameRoundColorsInfo(colorsInfo: roundColors)
+
+        roundLocations.removeAll()
+        roundColors.removeAll()
+    }
+
+    func setRoundColors(color: String) {
+        roundColors.append(color)
+    }
 
     func fetchSessionConfigurations(completion: @escaping ((Result<Void, Error>) -> Void)) {
         FirebaseManager.sharedInstance.fetchSessionConfigurations(withSessionId: userSession.user.projectId) { [weak self] result in
@@ -71,24 +88,25 @@ class GameScreenViewModel {
         }
     }
 
-    func generateNewCellsLocation(forView view: UIView, count: Int) {
-        locations.removeAll()
+    func generateNewCellLocations(forView view: UIView) {
+        roundLocations.removeAll()
         didUpdateLocation?()
-        generateCellsLocation(forView: view, count: count)
+        generateCellLocations(forView: view)
     }
 
     // MARK: - Private Methods
 
-    private func generateCellsLocation(forView view: UIView, count: Int) {
+    private func generateCellLocations(forView view: UIView, recursively: Bool = false) {
+        let count = !recursively ? setSize : 1
         for _ in 0 ..< count {
             let xCoordinate = Int.random(in: 0 ..< Int(view.frame.width - stimuliSize))
             let yCoordinate = Int.random(in: 0 ..< Int(view.frame.height - stimuliSize - 100))
             let newLocation = [xCoordinate, yCoordinate]
 
-            if isFreeZone(locations: locations, newLocation: newLocation, iconSize: Int(stimuliSize)) {
-                locations.append(newLocation)
+            if isFreeZone(locations: roundLocations, newLocation: newLocation, iconSize: Int(stimuliSize)) {
+                roundLocations.append(newLocation)
             } else {
-                generateCellsLocation(forView: view, count: 1)
+                generateCellLocations(forView: view, recursively: true)
             }
         }
     }

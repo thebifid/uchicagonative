@@ -34,6 +34,7 @@
 		C16DD97B24DD696B00EAC82E /* wrestling.svg in Resources */ = {isa = PBXBuildFile; fileRef = C16DD97724DD696B00EAC82E /* wrestling.svg */; };
 		C16DD97C24DD696B00EAC82E /* square.svg in Resources */ = {isa = PBXBuildFile; fileRef = C16DD97824DD696B00EAC82E /* square.svg */; };
 		C16DD97E24E27A1200EAC82E /* SessionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16DD97D24E27A1200EAC82E /* SessionConfiguration.swift */; };
+		C16DD98024E3F65000EAC82E /* GameResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16DD97F24E3F64F00EAC82E /* GameResult.swift */; };
 		C1713C8624C937F9002D0E04 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C1713C8524C937F9002D0E04 /* GoogleService-Info.plist */; };
 		C1713C8B24C94B23002D0E04 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713C8A24C94B23002D0E04 /* RootViewController.swift */; };
 		C1713C8F24C9529E002D0E04 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713C8E24C9529E002D0E04 /* SplashViewController.swift */; };
@@ -104,6 +105,7 @@
 		C16DD97724DD696B00EAC82E /* wrestling.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wrestling.svg; sourceTree = "<group>"; };
 		C16DD97824DD696B00EAC82E /* square.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = square.svg; sourceTree = "<group>"; };
 		C16DD97D24E27A1200EAC82E /* SessionConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionConfiguration.swift; sourceTree = "<group>"; };
+		C16DD97F24E3F64F00EAC82E /* GameResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameResult.swift; sourceTree = "<group>"; };
 		C1713C8524C937F9002D0E04 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C1713C8A24C94B23002D0E04 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		C1713C8E24C9529E002D0E04 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 			children = (
 				C16DD96A24DD2D6F00EAC82E /* GameScreenViewController.swift */,
 				C16DD96C24DD2D7C00EAC82E /* GameScreenViewModel.swift */,
+				C16DD97F24E3F64F00EAC82E /* GameResult.swift */,
 			);
 			path = GameScreen;
 			sourceTree = "<group>";
@@ -631,6 +634,7 @@
 				C1713CEC24CEC7B3002D0E04 /* AlertAssist.swift in Sources */,
 				C1FD150324D152F700188BE0 /* CheckFields.swift in Sources */,
 				C19693D024C6C61A0054296F /* VerticalStackView.swift in Sources */,
+				C16DD98024E3F65000EAC82E /* GameResult.swift in Sources */,
 				C116348124C6B3CF00B6C394 /* LoginViewController.swift in Sources */,
 				C1713C8B24C94B23002D0E04 /* RootViewController.swift in Sources */,
 				C116347D24C6B3CF00B6C394 /* AppDelegate.swift in Sources */,

@@ -78,15 +78,17 @@ class GameScreenViewController: UIViewController {
         showImages()
     }
 
+    // setSize = number of cells
     private func showImages() {
-        viewModel.generateNewCellsLocation(forView: view, count: viewModel.setSize)
+        viewModel.generateNewCellLocations(forView: view)
         for index in 0 ..< viewModel.setSize {
-            let color = setNewColor(index)
+            let color = newColorForImage(index)
+            viewModel.setRoundColors(color: color)
             addImage(colorHex: color, index: index)
         }
     }
 
-    private func setNewColor(_ index: Int) -> String { // SET remove
+    private func newColorForImage(_ index: Int) -> String {
         var newIndex = index
         if newIndex >= viewModel.colors.count {
             newIndex = index % viewModel.colors.count
@@ -97,9 +99,10 @@ class GameScreenViewController: UIViewController {
         return color
     }
 
+    // stimuliSize = size of icon
     private func addImage(colorHex: String, index: Int) {
         let size: CGFloat = viewModel.stimuliSize
-        let location = viewModel.locations[index]
+        let location = viewModel.roundLocations[index]
         let xLocation = location[0]
         let yLocation = location[1]
         let svgImage = SvgImageView()
@@ -130,6 +133,7 @@ class GameScreenViewController: UIViewController {
     }
 
     @objc private func handleRefresh() {
+        viewModel.setRoundInfo()
         showImages()
     }
 
