@@ -47,21 +47,28 @@ class GameScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchSessionConfigurations()
+        setupHandlers()
         setupUI()
 
         playButton.addTarget(self, action: #selector(handlePlay), for: .touchUpInside)
 
-        viewModel.didUpdate = { [weak self] in
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Refresh", style: .done, target: self, action: #selector(handleRefresh))
+    }
+
+    // MARK: - Private Methods
+
+    private func setupHandlers() {
+        viewModel.didUpdateLocation = { [weak self] in
             self?.imagesOnScreen.forEach { image in
                 image.removeFromSuperview()
             }
             self?.imagesOnScreen.removeAll()
         }
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Refresh", style: .done, target: self, action: #selector(handleRefresh))
+        viewModel.didFetchSession = { [weak self] in
+            self?.playButton.isEnabled = true
+        }
     }
-
-    // MARK: - Private Methods
 
     @objc private func handlePlay() {
         readyLabel.isHidden = true
@@ -73,15 +80,15 @@ class GameScreenViewController: UIViewController {
 
     private func showImages() {
         viewModel.generateNewCellsLocation(forView: view, count: viewModel.setSize)
-        print(viewModel.locations)
         for index in 0 ..< viewModel.setSize {
-            addImage(colorHex: "color", index: index)
+            let color = setNewColor(index)
+            addImage(colorHex: color, index: index)
         }
     }
 
-    private func setNewColor(_ index: Int) -> String {
+    private func setNewColor(_ index: Int) -> String { // SET remove
         var newIndex = index
-        if newIndex > viewModel.colors.count {
+        if newIndex >= viewModel.colors.count {
             newIndex = index % viewModel.colors.count
         } else {
             newIndex = index
@@ -134,7 +141,7 @@ class GameScreenViewController: UIViewController {
         scrollView.backgroundColor = R.color.appBackgroundColor()!
 
         let stackView = VerticalStackView(arrangedSubviews: [readyLabel, playButton], spacing: 20)
-        playButton.configure(title: "Start Game!", font: R.font.karlaBold(size: Constants.buttonFontSize)!)
+        playButton.configure(title: "Start Game!", font: R.font.karlaBold(size: Constants.buttonFontSize)!, isEnabled: false)
 
         scrollView.addSubview(stackView)
 

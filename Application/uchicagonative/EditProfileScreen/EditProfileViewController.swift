@@ -172,11 +172,9 @@ class EditProfileViewController: UIViewController {
             case .animating:
                 self?.buttonActivityIndicator.startAnimating()
                 self?.saveButton.isEnabled = false
-                self?.saveButton.backgroundColor = R.color.lightGrayCustom()
             case let .enabled(status):
                 self?.buttonActivityIndicator.stopAnimating()
                 self?.saveButton.isEnabled = status ? true : false
-                self?.saveButton.backgroundColor = status ? R.color.mediumAquamarine() : R.color.lightGrayCustom()
             case .none:
                 break
             }
@@ -199,7 +197,7 @@ class EditProfileViewController: UIViewController {
         selectProjectSelectView.didTapButton = { [weak self] in
             self?.scrollView.isUserInteractionEnabled = false
             self?.dismissKeyboard()
-            self?.showPickerViewCard(items: self?.viewModel.groups ?? [],
+            self?.showPickerViewCard(items: self?.viewModel.groups.sorted() ?? [],
                                      selectedItem: self?.viewModel.project ?? "",
                                      title: "Select Project") { [weak self] value in
                 self?.scrollView.isUserInteractionEnabled = true
