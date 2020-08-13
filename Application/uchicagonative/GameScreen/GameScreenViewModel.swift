@@ -88,16 +88,16 @@ class GameScreenViewModel {
         }
     }
 
-    func generateCells(viewBounds: CGRect) {
+    func generateCells(viewBounds: CGRect, topbarHeight: CGFloat) {
         clearCells()
         roundLocations.removeAll()
-        generateCellLocations(viewBounds: viewBounds)
+        generateCellLocations(viewBounds: viewBounds, topbarHeight: topbarHeight)
 
         for index in 0 ..< setSize {
             let location = roundLocations[index]
             let xLocation = location[0]
             let yLocation = location[1]
-            let cell = SvgImageView(frame: .init(origin: .init(x: xLocation, y: yLocation + 100),
+            let cell = SvgImageView(frame: .init(origin: .init(x: xLocation, y: yLocation + Int(topbarHeight) + 50),
                                                  size: .init(width: stimuliSize, height: stimuliSize)))
             let colorHex = newColorForImage(index)
             cell.configure(svgImageName: iconName, colorHex: colorHex)
@@ -114,17 +114,14 @@ class GameScreenViewModel {
         cells.removeAll()
     }
 
-    private func generateCellLocations(viewBounds: CGRect, recursively: Bool = false) {
-        let count = !recursively ? setSize : 1
-        for _ in 0 ..< count {
+    private func generateCellLocations(viewBounds: CGRect, topbarHeight: CGFloat) {
+        while roundLocations.count < setSize {
             let xCoordinate = Int.random(in: 0 ..< Int(viewBounds.width - stimuliSize))
-            let yCoordinate = Int.random(in: 0 ..< Int(viewBounds.height - stimuliSize - 100))
+            let yCoordinate = Int.random(in: 0 ..< Int(viewBounds.height - stimuliSize - 100 - topbarHeight))
             let newLocation = [xCoordinate, yCoordinate]
 
             if isFreeZone(locations: roundLocations, newLocation: newLocation, iconSize: Int(stimuliSize)) {
                 roundLocations.append(newLocation)
-            } else {
-                generateCellLocations(viewBounds: viewBounds, recursively: true)
             }
         }
     }

@@ -70,7 +70,7 @@ class GameScreenViewController: UIViewController {
 
     // setSize = number of cells
     private func showImages() {
-        viewModel.generateCells(viewBounds: view.bounds)
+        viewModel.generateCells(viewBounds: view.bounds, topbarHeight: topbarHeight)
         for cell in viewModel.cells {
             view.addSubview(cell)
         }
