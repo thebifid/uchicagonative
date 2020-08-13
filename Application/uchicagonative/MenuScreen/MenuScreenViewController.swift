@@ -29,7 +29,7 @@ class MenuScreenViewController: UIViewController {
 
     private let scrollView = UIScrollView()
 
-    private let playButton = UIButton(titleColor: .green, title: "Play Again!")
+    private let playButton = UIButton(titleColor: .lightGray, title: "Play Again!")
     private let editProfileButton = UIButton(titleColor: .black, title: "Edit Profile")
     private let termsOfServiceButton = UIButton(titleColor: .black, title: "Terms Of Service")
     private let getHelpButton = UIButton(titleColor: .black, title: "Get Help")
@@ -44,8 +44,11 @@ class MenuScreenViewController: UIViewController {
         scrollView.alwaysBounceVertical = true
         navigationController?.navigationBar.barTintColor = .white
         view.backgroundColor = R.color.appBackgroundColor()!
+        playButton.isEnabled = false
 
+        fetchSessionConfiguration()
         setupUI()
+        setupHandlers()
 
         // setting button actions
         playButton.addTarget(self, action: #selector(handlePlay), for: .touchUpInside)
@@ -69,8 +72,31 @@ class MenuScreenViewController: UIViewController {
 
     // MARK: - Private Methods
 
+    private func setupHandlers() {
+        viewModel.didFechSessionConfiguration = { [weak self] in
+            self?.playButton.setTitleColor(.green, for: .normal)
+            self?.playButton.isEnabled = true
+        }
+    }
+
+    private func fetchSessionConfiguration() {
+        viewModel.fetchSessionConfigurations { [weak self] result in
+            switch result {
+            case let .failure(error):
+                let alert = AlertAssist.showErrorAlertWithCancelAndOption(error, optionName: "Try Again") { _ in
+                    self?.fetchSessionConfiguration()
+                }
+                self?.present(alert, animated: true)
+            case .success:
+                break
+            }
+        }
+    }
+
     @objc private func handlePlay() {
-        let dvc = GameScreenViewController(viewModel: GameScreenViewModel(userSession: viewModel.userSession))
+        guard let sessionConfiguration = viewModel.sessionConfiguration else { return }
+        let dvc = GameScreenViewController(viewModel: GameScreenViewModel(userSession: viewModel.userSession,
+                                                                          sessionConfiguration: sessionConfiguration))
         dvc.navigationItem.title = "Game"
         navigationController?.pushViewController(dvc, animated: true)
     }

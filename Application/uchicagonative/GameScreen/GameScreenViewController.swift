@@ -46,8 +46,6 @@ class GameScreenViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchSessionConfigurations()
-        setupHandlers()
         setupUI()
         playButton.addTarget(self, action: #selector(handlePlay), for: .touchUpInside)
 
@@ -55,13 +53,6 @@ class GameScreenViewController: UIViewController {
     }
 
     // MARK: - Private Methods
-
-    private func setupHandlers() {
-        viewModel.didFetchSession = { [weak self] in
-            self?.playButton.isEnabled = true
-            self?.scrollView.backgroundColor = self?.viewModel.backgroundColor
-        }
-    }
 
     @objc private func handlePlay() {
         readyLabel.isHidden = true
@@ -93,19 +84,6 @@ class GameScreenViewController: UIViewController {
         }
     }
 
-    private func fetchSessionConfigurations() {
-        viewModel.fetchSessionConfigurations { [weak self] result in
-            switch result {
-            case let .failure(error):
-                let alert = AlertAssist.showErrorAlert(error)
-                self?.present(alert, animated: true)
-
-            case .success:
-                break
-            }
-        }
-    }
-
     @objc private func handleRefresh() {
         viewModel.setRoundInfo()
         showImages()
@@ -116,10 +94,10 @@ class GameScreenViewController: UIViewController {
     private func setupUI() {
         view.addSubview(scrollView)
         scrollView.fillSuperView()
-        scrollView.backgroundColor = R.color.appBackgroundColor()!
+        scrollView.backgroundColor = viewModel.backgroundColor
 
         let stackView = VerticalStackView(arrangedSubviews: [readyLabel, playButton], spacing: 20)
-        playButton.configure(title: "Start Game!", font: R.font.karlaBold(size: Constants.buttonFontSize)!, isEnabled: false)
+        playButton.configure(title: "Start Game!", font: R.font.karlaBold(size: Constants.buttonFontSize)!)
 
         scrollView.addSubview(stackView)
 

@@ -22,14 +22,15 @@ class GameScreenViewModel {
 
     // MARK: - Init
 
-    init(userSession: UserSession) {
+    init(userSession: UserSession, sessionConfiguration: SessionConfiguration) {
         self.userSession = userSession
+        self.sessionConfiguration = sessionConfiguration
     }
 
     // MARK: - Private Properties
 
     private let userSession: UserSession
-    private var sessionConfiguration: SessionConfiguration?
+    private var sessionConfiguration: SessionConfiguration
     private(set) var cells = [Cell]()
 
     /// Struct for saving game session result
@@ -44,19 +45,19 @@ class GameScreenViewModel {
         "diaspora": "diaspora"
     ]
 
+    // MARK: - Public Properties
+
     /// Background color for the whole view. Available when session configuration is available.
     var backgroundColor: UIColor? {
-        return sessionConfiguration.map { UIColor(hexString: $0.backgroundColor) }
+        return UIColor(hexString: sessionConfiguration.backgroundColor)
     }
 
     /// The svg image name to show.
     var svgImageName: String {
-        return sessionConfiguration.flatMap { iconDictionary[$0.iconName] } ?? "square"
+        return iconDictionary[sessionConfiguration.iconName] ?? "square"
     }
 
     // MARK: - Handlers
-
-    var didFetchSession: (() -> Void)?
 
     // MARK: - Public Methods
 
@@ -66,25 +67,9 @@ class GameScreenViewModel {
         gameResult.setGameRoundColorsInfo(colorsInfo: cells.map { $0.color })
     }
 
-    func fetchSessionConfigurations(completion: @escaping ((Result<Void, Error>) -> Void)) {
-        FirebaseManager.sharedInstance.fetchSessionConfigurations(withSessionId: userSession.user.projectId) { [weak self] result in
-            switch result {
-            case let .failure(error):
-                completion(.failure(error))
-
-            case let .success(sessionConfiguration):
-                guard let self = self else { return }
-
-                self.sessionConfiguration = sessionConfiguration
-                self.didFetchSession?()
-                completion(.success(()))
-            }
-        }
-    }
-
     /// Generates new cells to show on a screen. See `cells`.
     func generateCells(viewBounds: CGRect) {
-        guard let config = sessionConfiguration else { return }
+        let config = sessionConfiguration
         cells = []
         for index in 0 ..< config.setSize {
             let cell = Cell(frame: generateRect(viewBounds: viewBounds, config: config, occupiedRects: cells.map { $0.frame }),

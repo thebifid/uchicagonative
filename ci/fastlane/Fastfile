@@ -1,0 +1,72 @@
+# update plugins
+bundle_install
+
+# configuration
+BUILD_NUMBER = ENV['BUILD_NUMBER']
+IPA_PATH = ENV['IPA_PATH']
+XCODE_PROJECT = ENV['XCODE_PROJECT']
+XCODE_WORKSPACE = ENV['XCODE_WORKSPACE']
+XCODE_INFO_PLIST = ENV['XCODE_INFO_PLIST']
+XCODE_SCHEME = ENV['XCODE_SCHEME']
+XCODE_CONFIG = ENV['XCODE_CONFIG']
+EXPORT_METHOD = ENV['EXPORT_METHOD']
+CODESIGN_IDENTITY = ENV['CODESIGN_IDENTITY']
+PROVISION_PROFILE = ENV['PROVISION_PROFILE']
+PROVISION_PROFILE_PATH = ENV['PROVISION_PROFILE_PATH']
+BUNDLE_ID = ENV['BUNDLE_ID']
+TEAM_ID = ENV['TEAM_ID']
+
+default_platform(:ios)
+platform :ios do
+
+  desc "build ios application"
+  lane :build do
+
+    disable_automatic_code_signing(
+      path: XCODE_PROJECT
+    )
+
+    update_project_team(
+      path: XCODE_PROJECT,
+      teamid: TEAM_ID
+    )
+
+    install_provisioning_profile(
+      path: PROVISION_PROFILE_PATH
+    )
+
+    update_project_provisioning(
+      xcodeproj: XCODE_PROJECT,
+      profile: PROVISION_PROFILE_PATH,
+      target_filter: XCODE_SCHEME,
+      build_configuration: XCODE_CONFIG
+    )
+
+    update_app_identifier(
+      xcodeproj: XCODE_PROJECT,
+      plist_path: XCODE_INFO_PLIST,
+      app_identifier: BUNDLE_ID
+    )
+
+    increment_build_number(
+      build_number: BUILD_NUMBER,
+      xcodeproj: XCODE_PROJECT
+    )
+
+    gym(
+      clean: true,
+      workspace: XCODE_WORKSPACE,
+      scheme: XCODE_SCHEME,
+      configuration: XCODE_CONFIG,
+      output_name: IPA_PATH,
+      export_method: EXPORT_METHOD,
+      xcargs: "PROVISIONING_PROFILE_SPECIFIER='#{PROVISION_PROFILE}' CODE_SIGN_IDENTITY='#{CODESIGN_IDENTITY}'",
+      export_team_id: TEAM_ID,
+      export_options: {
+        provisioningProfiles: {
+          "#{BUNDLE_ID}" => PROVISION_PROFILE
+        }
+      },
+    )
+  end
+end
