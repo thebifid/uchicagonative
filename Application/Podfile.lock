@@ -298,6 +298,7 @@ PODS:
     - gRPC-Core/Interface (= 1.28.2)
   - gRPC-Core/Interface (1.28.2)
   - GTMSessionFetcher/Core (1.4.0)
+  - KeyboardNotificationsObserver (0.2.0)
   - leveldb-library (1.22)
   - nanopb (1.30905.0):
     - nanopb/decode (= 1.30905.0)
@@ -317,6 +318,7 @@ DEPENDENCIES:
   - Cartography (~> 3.0)
   - Firebase/Auth
   - Firebase/Firestore
+  - KeyboardNotificationsObserver (~> 0.2)
   - R.swift
   - SVGKit (~> 3.0.0-beta3)
   - SwiftFormat/CLI (~> 0.44)
@@ -338,6 +340,7 @@ SPEC REPOS:
     - "gRPC-C++"
     - gRPC-Core
     - GTMSessionFetcher
+    - KeyboardNotificationsObserver
     - leveldb-library
     - nanopb
     - PromisesObjC
@@ -362,6 +365,7 @@ SPEC CHECKSUMS:
   "gRPC-C++": 13d8ccef97d5c3c441b7e3c529ef28ebee86fad2
   gRPC-Core: 4afa11bfbedf7cdecd04de535a9e046893404ed5
   GTMSessionFetcher: 6f5c8abbab8a9bce4bb3f057e317728ec6182b10
+  KeyboardNotificationsObserver: 551a9a508057697dfc3de39f1ec3e55b9c71eff9
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: c43f40fadfe79e8b8db116583945847910cbabc9
   PromisesObjC: b48e0338dbbac2207e611750777895f7a5811b75
@@ -371,6 +375,6 @@ SPEC CHECKSUMS:
   SwiftFormat: 3b5caa6389b2b9adbc00e133b3ccc8c6e687a6a4
   SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
 
-PODFILE CHECKSUM: 6d4229693b5619e86f551b9e10dcbdbb8c46dc11
+PODFILE CHECKSUM: a9c7f3115cec9a8acd385e310bd0453ac39f6fda
 
 COCOAPODS: 1.9.3

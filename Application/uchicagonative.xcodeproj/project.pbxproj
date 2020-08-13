@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -43,7 +43,6 @@
 		C1713C9724CA8F10002D0E04 /* CustomTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713C9624CA8F10002D0E04 /* CustomTextFieldView.swift */; };
 		C1713C9A24CABBA2002D0E04 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1713C9924CABBA2002D0E04 /* Colors.xcassets */; };
 		C1713C9C24CAC27E002D0E04 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713C9B24CAC27E002D0E04 /* LoginViewModel.swift */; };
-		C1713C9F24CAED4D002D0E04 /* KeyboardNotificationsObserver in Frameworks */ = {isa = PBXBuildFile; productRef = C1713C9E24CAED4D002D0E04 /* KeyboardNotificationsObserver */; };
 		C1713CE824CEA4D8002D0E04 /* RecoverPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713CE724CEA4D8002D0E04 /* RecoverPasswordViewController.swift */; };
 		C1713CEA24CEAC50002D0E04 /* RecoverPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713CE924CEAC50002D0E04 /* RecoverPasswordViewModel.swift */; };
 		C1713CEC24CEC7B3002D0E04 /* AlertAssist.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713CEB24CEC7B3002D0E04 /* AlertAssist.swift */; };
@@ -148,7 +147,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C1713C9F24CAED4D002D0E04 /* KeyboardNotificationsObserver in Frameworks */,
 				B83A5679695AA9C4FA514F5A /* Pods_uchicagonative.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -459,7 +457,6 @@
 			);
 			name = uchicagonative;
 			packageProductDependencies = (
-				C1713C9E24CAED4D002D0E04 /* KeyboardNotificationsObserver */,
 			);
 			productName = uchicagonative;
 			productReference = C116347924C6B3CF00B6C394 /* uchicagonative.app */;
@@ -490,7 +487,6 @@
 			);
 			mainGroup = C116347024C6B3CF00B6C394;
 			packageReferences = (
-				C1713C9D24CAED4D002D0E04 /* XCRemoteSwiftPackageReference "KeyboardNotificationsObserver" */,
 			);
 			productRefGroup = C116347A24C6B3CF00B6C394 /* Products */;
 			projectDirPath = "";
@@ -867,25 +863,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		C1713C9D24CAED4D002D0E04 /* XCRemoteSwiftPackageReference "KeyboardNotificationsObserver" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/zummenix/KeyboardNotificationsObserver.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		C1713C9E24CAED4D002D0E04 /* KeyboardNotificationsObserver */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C1713C9D24CAED4D002D0E04 /* XCRemoteSwiftPackageReference "KeyboardNotificationsObserver" */;
-			productName = KeyboardNotificationsObserver;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C116347124C6B3CF00B6C394 /* Project object */;
 }
