@@ -50,6 +50,10 @@ class MenuScreenViewController: UIViewController {
         setupUI()
         setupHandlers()
 
+        viewModel.userSession.didUpdateUser = { [weak self] in
+            self?.fetchSessionConfiguration()
+        }
+
         // setting button actions
         playButton.addTarget(self, action: #selector(handlePlay), for: .touchUpInside)
         editProfileButton.addTarget(self, action: #selector(handleEditProfile), for: .touchUpInside)

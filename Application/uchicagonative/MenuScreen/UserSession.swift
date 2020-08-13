@@ -17,6 +17,7 @@ class UserSession {
         self.user = user
         addUserInfoChangeListener { user in
             self.user = user
+            self.didUpdateUser?()
         }
     }
 
@@ -30,6 +31,10 @@ class UserSession {
     func setNewUserInfo(newUserInfo info: User) {
         user = info
     }
+
+    // MARK: - Handlers
+
+    var didUpdateUser: (() -> Void)?
 
     // MARK: - Private Methods
 
