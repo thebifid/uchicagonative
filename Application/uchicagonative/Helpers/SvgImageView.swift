@@ -9,7 +9,7 @@
 import SVGKit
 import UIKit
 
-class SvgImageView: UIView {
+class SvgImageView: UIImageView {
     // MARK: - Init
 
     override init(frame: CGRect) {
@@ -22,11 +22,8 @@ class SvgImageView: UIView {
 
     // MARK: - Public Methods
 
-    func configure(svgImageName name: String, colorHex: String) {
-        let imageView = UIImageView()
-        imageView.image = SVGKImage.makeColoredImage(imageName: name, fillColor: UIColor(hexString: colorHex))
-        addSubview(imageView)
-        imageView.fillSuperView()
+    func configure(svgImageName: String, colorHex: String) {
+        image = SVGKImage.makeColoredImage(imageName: svgImageName, fillColor: UIColor(hexString: colorHex))
     }
 }
 

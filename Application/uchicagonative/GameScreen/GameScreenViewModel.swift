@@ -10,6 +10,16 @@ import Foundation
 import UIKit
 
 class GameScreenViewModel {
+    /// Represents position, size and color of a cell.
+    struct Cell {
+        let frame: CGRect
+        let color: String
+
+        var location: [Int] {
+            return [Int(frame.origin.x), Int(frame.origin.y)]
+        }
+    }
+
     // MARK: - Init
 
     init(userSession: UserSession) {
@@ -18,22 +28,9 @@ class GameScreenViewModel {
 
     // MARK: - Private Properties
 
-    private(set) var backgroundColor: String = ""
-    private(set) var colors = [String]()
-    private(set) var iconName: String = ""
-    private(set) var cells = [SvgImageView]()
-
-    // size of cells
-    private(set) var stimuliSize: CGFloat = 0
-
-    // number of cells
-    private(set) var setSize: Int = 0
-
     private let userSession: UserSession
-    private let sessionConfigurations = [String: Any]()
-
-    private(set) var roundLocations = [[Int]]()
-    private var roundColors = [String]()
+    private var sessionConfiguration: SessionConfiguration?
+    private(set) var cells = [Cell]()
 
     /// Struct for saving game session result
     private var gameResult = GameResult()
@@ -47,6 +44,16 @@ class GameScreenViewModel {
         "diaspora": "diaspora"
     ]
 
+    /// Background color for the whole view. Available when session configuration is available.
+    var backgroundColor: UIColor? {
+        return sessionConfiguration.map { UIColor(hexString: $0.backgroundColor) }
+    }
+
+    /// The svg image name to show.
+    var svgImageName: String {
+        return sessionConfiguration.flatMap { iconDictionary[$0.iconName] } ?? "square"
+    }
+
     // MARK: - Handlers
 
     var didFetchSession: (() -> Void)?
@@ -55,104 +62,69 @@ class GameScreenViewModel {
 
     /// Write round info in GameResult struct
     func setRoundInfo() {
-        gameResult.setGameRoundLocationsInfo(locationInfo: roundLocations)
-        gameResult.setGameRoundColorsInfo(colorsInfo: roundColors)
-
-        roundLocations.removeAll()
-        roundColors.removeAll()
-    }
-
-    func setRoundColors(color: String) {
-        roundColors.append(color)
+        gameResult.setGameRoundLocationsInfo(locationInfo: cells.map { $0.location })
+        gameResult.setGameRoundColorsInfo(colorsInfo: cells.map { $0.color })
     }
 
     func fetchSessionConfigurations(completion: @escaping ((Result<Void, Error>) -> Void)) {
         FirebaseManager.sharedInstance.fetchSessionConfigurations(withSessionId: userSession.user.projectId) { [weak self] result in
-
             switch result {
             case let .failure(error):
                 completion(.failure(error))
 
-            case let .success(sessionConfigurations):
+            case let .success(sessionConfiguration):
                 guard let self = self else { return }
 
-                self.backgroundColor = sessionConfigurations.backgroundColor
-                self.colors = sessionConfigurations.colors
-                let iconName = sessionConfigurations.iconName
-                self.iconName = self.iconDictionary[iconName] ?? ""
-                self.setSize = sessionConfigurations.setSize
-                self.stimuliSize = sessionConfigurations.stimuliSize
+                self.sessionConfiguration = sessionConfiguration
                 self.didFetchSession?()
                 completion(.success(()))
             }
         }
     }
 
-    func generateCells(viewBounds: CGRect, topbarHeight: CGFloat) {
-        clearCells()
-        roundLocations.removeAll()
-        generateCellLocations(viewBounds: viewBounds, topbarHeight: topbarHeight)
-
-        for index in 0 ..< setSize {
-            let location = roundLocations[index]
-            let xLocation = location[0]
-            let yLocation = location[1]
-            let cell = SvgImageView(frame: .init(origin: .init(x: xLocation, y: yLocation + Int(topbarHeight) + 50),
-                                                 size: .init(width: stimuliSize, height: stimuliSize)))
-            let colorHex = newColorForImage(index)
-            cell.configure(svgImageName: iconName, colorHex: colorHex)
+    /// Generates new cells to show on a screen. See `cells`.
+    func generateCells(viewBounds: CGRect) {
+        guard let config = sessionConfiguration else { return }
+        cells = []
+        for index in 0 ..< config.setSize {
+            let cell = Cell(frame: generateRect(viewBounds: viewBounds, config: config, occupiedRects: cells.map { $0.frame }),
+                            color: chooseColor(index, config: config))
             cells.append(cell)
         }
     }
+}
 
-    // MARK: - Private Methods
-
-    private func clearCells() {
-        cells.forEach { cell in
-            cell.removeFromSuperview()
+private func generateRect(viewBounds: CGRect, config: SessionConfiguration, occupiedRects: [CGRect]) -> CGRect {
+    while true {
+        let xCoordinate = Int.random(in: Int(viewBounds.origin.x) ..< Int(viewBounds.width - config.stimuliSize))
+        let yCoordinate = Int.random(in: Int(viewBounds.origin.y) ..< Int(viewBounds.height - config.stimuliSize))
+        let rect = CGRect(x: CGFloat(xCoordinate), y: CGFloat(yCoordinate),
+                          width: CGFloat(config.stimuliSize), height: CGFloat(config.stimuliSize))
+        if !rect.intersectsAny(occupiedRects) {
+            return rect
         }
-        cells.removeAll()
     }
+}
 
-    private func generateCellLocations(viewBounds: CGRect, topbarHeight: CGFloat) {
-        while roundLocations.count < setSize {
-            let xCoordinate = Int.random(in: 0 ..< Int(viewBounds.width - stimuliSize))
-            let yCoordinate = Int.random(in: 0 ..< Int(viewBounds.height - stimuliSize - 100 - topbarHeight))
-            let newLocation = [xCoordinate, yCoordinate]
+private func chooseColor(_ index: Int, config: SessionConfiguration) -> String {
+    var newIndex = index
+    if newIndex >= config.colors.count {
+        newIndex = index % config.colors.count
+    } else {
+        newIndex = index
+    }
+    let color = config.colors[newIndex]
+    return color
+}
 
-            if isFreeZone(locations: roundLocations, newLocation: newLocation, iconSize: Int(stimuliSize)) {
-                roundLocations.append(newLocation)
+private extension CGRect {
+    /// Returns true if intersects at least one rect.
+    func intersectsAny(_ rects: [CGRect]) -> Bool {
+        for rect in rects {
+            if intersects(rect) {
+                return true
             }
         }
-    }
-
-    private func isFreeZone(locations: [[Int]], newLocation: [Int], iconSize: Int) -> Bool {
-        if locations.isEmpty {
-            return true
-        }
-
-        for location in locations {
-            let xStart = location[0] - iconSize
-            let xEnd = location[0] + iconSize
-
-            let yStart = location[1] - iconSize
-            let yEnd = location[1] + iconSize
-
-            if xStart ..< xEnd ~= newLocation[0], yStart ..< yEnd ~= newLocation[1] {
-                return false
-            }
-        }
-        return true
-    }
-
-    private func newColorForImage(_ index: Int) -> String {
-        var newIndex = index
-        if newIndex >= colors.count {
-            newIndex = index % colors.count
-        } else {
-            newIndex = index
-        }
-        let color = colors[newIndex]
-        return color
+        return false
     }
 }

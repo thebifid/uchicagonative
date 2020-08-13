@@ -25,6 +25,8 @@ class GameScreenViewController: UIViewController {
 
     private let playButton = PrimaryButton()
 
+    private var cellImageViews: [SvgImageView] = []
+
     // MARK: - Init
 
     init(viewModel model: GameScreenViewModel) {
@@ -57,22 +59,37 @@ class GameScreenViewController: UIViewController {
     private func setupHandlers() {
         viewModel.didFetchSession = { [weak self] in
             self?.playButton.isEnabled = true
+            self?.scrollView.backgroundColor = self?.viewModel.backgroundColor
         }
     }
 
     @objc private func handlePlay() {
         readyLabel.isHidden = true
         playButton.isHidden = true
-
-        scrollView.backgroundColor = UIColor(hexString: viewModel.backgroundColor)
         showImages()
     }
 
-    // setSize = number of cells
     private func showImages() {
-        viewModel.generateCells(viewBounds: view.bounds, topbarHeight: topbarHeight)
-        for cell in viewModel.cells {
-            view.addSubview(cell)
+        let insets = UIEdgeInsets(top: view.safeAreaInsets.top + 20.0, left: 10.0, bottom: view.safeAreaInsets.bottom + 20.0, right: 10.0)
+        viewModel.generateCells(viewBounds: view.bounds.inset(by: insets))
+        layoutCellImageViews()
+    }
+
+    private func layoutCellImageViews() {
+        cellImageViews.forEach { $0.isHidden = true }
+        for (i, cell) in viewModel.cells.enumerated() {
+            // Reuse or create new image views.
+            let view: SvgImageView
+            if i >= cellImageViews.count {
+                view = SvgImageView(frame: .zero)
+                scrollView.addSubview(view)
+                cellImageViews.append(view)
+            } else {
+                view = cellImageViews[i]
+                view.isHidden = false
+            }
+            view.frame = cell.frame
+            view.configure(svgImageName: viewModel.svgImageName, colorHex: cell.color)
         }
     }
 
