@@ -25,8 +25,6 @@ class GameScreenViewController: UIViewController {
 
     private let playButton = PrimaryButton()
 
-    private var imagesOnScreen = [SvgImageView]()
-
     // MARK: - Init
 
     init(viewModel model: GameScreenViewModel) {
@@ -49,7 +47,6 @@ class GameScreenViewController: UIViewController {
         fetchSessionConfigurations()
         setupHandlers()
         setupUI()
-
         playButton.addTarget(self, action: #selector(handlePlay), for: .touchUpInside)
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Refresh", style: .done, target: self, action: #selector(handleRefresh))
@@ -58,13 +55,6 @@ class GameScreenViewController: UIViewController {
     // MARK: - Private Methods
 
     private func setupHandlers() {
-        viewModel.didUpdateLocation = { [weak self] in
-            self?.imagesOnScreen.forEach { image in
-                image.removeFromSuperview()
-            }
-            self?.imagesOnScreen.removeAll()
-        }
-
         viewModel.didFetchSession = { [weak self] in
             self?.playButton.isEnabled = true
         }
@@ -80,42 +70,9 @@ class GameScreenViewController: UIViewController {
 
     // setSize = number of cells
     private func showImages() {
-        viewModel.generateNewCellLocations(forView: view)
-        for index in 0 ..< viewModel.setSize {
-            let color = newColorForImage(index)
-            viewModel.setRoundColors(color: color)
-            addImage(colorHex: color, index: index)
-        }
-    }
-
-    private func newColorForImage(_ index: Int) -> String {
-        var newIndex = index
-        if newIndex >= viewModel.colors.count {
-            newIndex = index % viewModel.colors.count
-        } else {
-            newIndex = index
-        }
-        let color = viewModel.colors[newIndex]
-        return color
-    }
-
-    // stimuliSize = size of icon
-    private func addImage(colorHex: String, index: Int) {
-        let size: CGFloat = viewModel.stimuliSize
-        let location = viewModel.roundLocations[index]
-        let xLocation = location[0]
-        let yLocation = location[1]
-        let svgImage = SvgImageView()
-
-        svgImage.configure(svgImageName: viewModel.iconName,
-                           size: .init(width: size, height: size),
-                           colorHex: colorHex)
-        scrollView.addSubview(svgImage)
-        imagesOnScreen.append(svgImage)
-
-        constrain(svgImage) { svgImage in
-            svgImage.left == svgImage.superview!.left + CGFloat(xLocation)
-            svgImage.top == svgImage.superview!.top + CGFloat(yLocation)
+        viewModel.generateCells(viewBounds: view.bounds)
+        for cell in viewModel.cells {
+            view.addSubview(cell)
         }
     }
 

@@ -22,9 +22,9 @@ class SvgImageView: UIView {
 
     // MARK: - Public Methods
 
-    func configure(svgImageName name: String, size: CGSize, colorHex: String) {
+    func configure(svgImageName name: String, colorHex: String) {
         let imageView = UIImageView()
-        imageView.image = SVGKImage.makeColoredImage(imageName: name, size: size, fillColor: UIColor(hexString: colorHex))
+        imageView.image = SVGKImage.makeColoredImage(imageName: name, fillColor: UIColor(hexString: colorHex))
         addSubview(imageView)
         imageView.fillSuperView()
     }
@@ -65,9 +65,8 @@ extension SVGKImage {
         }
     }
 
-    static func makeColoredImage(imageName: String, size: CGSize, fillColor color: UIColor?, opacity: Float = 1.0) -> UIImage? {
+    static func makeColoredImage(imageName: String, fillColor color: UIColor?, opacity: Float = 1.0) -> UIImage? {
         let svgImage: SVGKImage = SVGKImage(named: imageName)
-        svgImage.size = size
         if let colorToFill = color {
             svgImage.fillColor(color: colorToFill, opacity: opacity)
         }
