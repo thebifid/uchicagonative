@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		B83A5679695AA9C4FA514F5A /* Pods_uchicagonative.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E697667E164833CBEE3BF86 /* Pods_uchicagonative.framework */; };
 		C116347D24C6B3CF00B6C394 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C116347C24C6B3CF00B6C394 /* AppDelegate.swift */; };
-		C116347F24C6B3CF00B6C394 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C116347E24C6B3CF00B6C394 /* SceneDelegate.swift */; };
 		C116348124C6B3CF00B6C394 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C116348024C6B3CF00B6C394 /* LoginViewController.swift */; };
 		C116348624C6B3D000B6C394 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C116348524C6B3D000B6C394 /* Assets.xcassets */; };
 		C116348924C6B3D000B6C394 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C116348724C6B3D000B6C394 /* LaunchScreen.storyboard */; };
@@ -78,7 +77,6 @@
 		C0FA2B54450C2D1DEFCE8148 /* Pods-uchicagonative.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-uchicagonative.debug.xcconfig"; path = "Target Support Files/Pods-uchicagonative/Pods-uchicagonative.debug.xcconfig"; sourceTree = "<group>"; };
 		C116347924C6B3CF00B6C394 /* uchicagonative.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = uchicagonative.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C116347C24C6B3CF00B6C394 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C116347E24C6B3CF00B6C394 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		C116348024C6B3CF00B6C394 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		C116348524C6B3D000B6C394 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C116348824C6B3D000B6C394 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -213,7 +211,6 @@
 				C1713C8524C937F9002D0E04 /* GoogleService-Info.plist */,
 				C116349424C6B6E100B6C394 /* R.generated.swift */,
 				C116347C24C6B3CF00B6C394 /* AppDelegate.swift */,
-				C116347E24C6B3CF00B6C394 /* SceneDelegate.swift */,
 				C116348724C6B3D000B6C394 /* LaunchScreen.storyboard */,
 				C116348A24C6B3D000B6C394 /* Info.plist */,
 				C19693D424C6CEF40054296F /* Constants.swift */,
@@ -635,7 +632,6 @@
 				C1713C8B24C94B23002D0E04 /* RootViewController.swift in Sources */,
 				C116347D24C6B3CF00B6C394 /* AppDelegate.swift in Sources */,
 				C1713C9724CA8F10002D0E04 /* CustomTextFieldView.swift in Sources */,
-				C116347F24C6B3CF00B6C394 /* SceneDelegate.swift in Sources */,
 				C1713CF424CFCCC4002D0E04 /* PopupMenu.swift in Sources */,
 				C1713CFB24D024B5002D0E04 /* String+Extension.swift in Sources */,
 				C16DD97424DD60F400EAC82E /* SvgImageView.swift in Sources */,
@@ -739,7 +735,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -793,7 +789,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

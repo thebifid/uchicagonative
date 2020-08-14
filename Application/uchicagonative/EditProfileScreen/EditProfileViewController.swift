@@ -56,7 +56,12 @@ class EditProfileViewController: UIViewController {
     private let activityIndicator: UIActivityIndicatorView = {
         let ai = UIActivityIndicatorView()
         ai.hidesWhenStopped = true
-        ai.style = .large
+        if #available(iOS 13.0, *) {
+            ai.style = .large
+            ai.color = .white
+        } else {
+            ai.style = .whiteLarge
+        }
         ai.color = .white
         return ai
     }()
