@@ -23,7 +23,7 @@ class EditProfileViewModel {
     private(set) var firstName: String = ""
     private(set) var lastName: String = ""
     private(set) var birthYear: Int = 0
-    private(set) var zipCode: Int = 0
+    private(set) var zipCode: String = ""
     private(set) var gender: String = ""
     private(set) var project: String = ""
     private(set) var role: String = ""
@@ -66,6 +66,25 @@ class EditProfileViewModel {
         }
     }
 
+    // MARK: - Private Properties
+
+    private var isCorrectYear: Bool {
+        let currentYear = Calendar.current.component(.year, from: Date())
+        let minYear = currentYear - 100
+        if birthYear > minYear, birthYear <= currentYear {
+            return true
+        }
+        return false
+    }
+
+    private var isCorrectZipCode: Bool {
+        if zipCode.filter({ $0 == "0" }).count > 1 {
+            return false
+        }
+
+        return true
+    }
+
     // MARK: - Handlers
 
     /// Calls when get updated
@@ -95,10 +114,12 @@ class EditProfileViewModel {
     }
 
     private func isAllFieldsAreFill() -> Bool {
-        let isFilled = !firstName.isEmpty && !lastName.isEmpty && birthYear != 0 &&
-            zipCode != 0 && !gender.isEmpty && gender != genderList[0]
+        let isFilled = !firstName.isEmpty && !lastName.isEmpty && birthYear != 0 && !gender.isEmpty && gender != genderList[0]
 
         let isFullyFilled = isFilled && String(birthYear).count == 4 && String(zipCode).count == 5
+
+        print(String(zipCode).count)
+        print(String(zipCode))
 
         return isFullyFilled
     }
@@ -130,7 +151,10 @@ class EditProfileViewModel {
                         self?.firstName = userInfo["firstName"] as? String ?? ""
                         self?.lastName = userInfo["lastName"] as? String ?? ""
                         self?.birthYear = userInfo["birthYear"] as? Int ?? 0
-                        self?.zipCode = userInfo["zipCode"] as? Int ?? 0
+                        self?.zipCode = String(userInfo["zipCode"] as? Int ?? 0)
+                        if self?.zipCode.count == 4 {
+                            self?.zipCode.insert("0", at: (self?.zipCode.startIndex)!)
+                        }
                         self?.gender = userInfo["gender"] as? String ?? ""
 
                         completion(.success(()))
@@ -140,14 +164,30 @@ class EditProfileViewModel {
         }
     }
 
+    enum EditProfileFieldsCheckResult {
+        case correct, incorrectYear, incorrectZip, incorrectYearAndZip
+    }
+
     /// Save User Information in Firebase
     func sendUserInfo(competion: @escaping ((Result<Void, Error>) -> Void)) {
+        if !isCorrectYear {
+            let error = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Incorrect year"])
+            competion(.failure(error))
+            return
+        }
+
+        if !isCorrectZipCode {
+            let error = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Incorrect zip"])
+            competion(.failure(error))
+            return
+        }
+
         isRequesting = true
         userInfo["firstName"] = firstName
         userInfo["lastName"] = lastName
         userInfo["gender"] = gender
         userInfo["birthYear"] = birthYear
-        userInfo["zipCode"] = zipCode
+        userInfo["zipCode"] = Int(zipCode)
 
         userInfo["projectId"] = availableGroupIdByName[project]
 
@@ -165,7 +205,7 @@ class EditProfileViewModel {
                                 birthYear: self.birthYear,
                                 gender: self.gender,
                                 projectId: self.availableGroupIdByName[self.project] ?? "",
-                                zipCode: self.zipCode)
+                                zipCode: Int(self.zipCode) ?? 0)
                 self.userSession.setNewUserInfo(newUserInfo: user)
 
                 competion(.success(()))
@@ -190,7 +230,7 @@ class EditProfileViewModel {
         didUpdateState?()
     }
 
-    func setZipCode(_ zipCode: Int) {
+    func setZipCode(_ zipCode: String) {
         self.zipCode = zipCode
         didUpdateState?()
     }

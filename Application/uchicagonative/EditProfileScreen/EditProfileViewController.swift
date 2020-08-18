@@ -124,7 +124,6 @@ class EditProfileViewController: UIViewController {
         }
 
         zipCodeTextFieldView.didChangeText = { [weak self] zipCode in
-            guard let zipCode = Int(zipCode) else { return }
             self?.viewModel.setZipCode(zipCode)
         }
     }
@@ -145,8 +144,8 @@ class EditProfileViewController: UIViewController {
                 if self?.viewModel.birthYear != 0 {
                     self?.birthdayTextFieldView.text = "\(self?.viewModel.birthYear ?? Int())"
                 }
-                if self?.viewModel.zipCode != 0 {
-                    self?.zipCodeTextFieldView.text = "\(self?.viewModel.zipCode ?? Int())"
+                if self?.viewModel.zipCode != "" {
+                    self?.zipCodeTextFieldView.text = "\(self?.viewModel.zipCode ?? "")"
                 }
 
                 self?.selectGenderSelectView.setTitle(title: self?.viewModel.gender ?? "Select an item...")
@@ -260,11 +259,13 @@ class EditProfileViewController: UIViewController {
         scrollView.addSubview(lastNameTextFieldView)
         makeConstrain(downView: lastNameTextFieldView, upperView: firstNameTextFeildView)
 
-        birthdayTextFieldView.configure(placeholder: "Year of Birth", maxLenght: 4, textFieldInputType: .digits)
+        birthdayTextFieldView.configure(placeholder: "Year of Birth", maxLenght: 4, textFieldInputType: .digits,
+                                        keyboardType: .numberPad)
         scrollView.addSubview(birthdayTextFieldView)
         makeConstrain(downView: birthdayTextFieldView, upperView: lastNameTextFieldView)
 
-        zipCodeTextFieldView.configure(placeholder: "Zip Code", maxLenght: 5, textFieldInputType: .digits)
+        zipCodeTextFieldView.configure(placeholder: "Zip Code", maxLenght: 5, textFieldInputType: .digits,
+                                       keyboardType: .numberPad)
         scrollView.addSubview(zipCodeTextFieldView)
         makeConstrain(downView: zipCodeTextFieldView, upperView: birthdayTextFieldView)
 
