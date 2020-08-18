@@ -54,7 +54,7 @@ class CreateAccountViewController: UIViewController {
 
     let lblPrivacyTerm: UILabel = {
         let label = UILabel()
-        label.textAlignment = .center
+//        label.textAlignment = .center
         label.font = R.font.karlaRegular(size: 14)!
         label.textColor = .gray
         label.numberOfLines = 0
