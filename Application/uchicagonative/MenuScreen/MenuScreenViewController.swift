@@ -44,15 +44,10 @@ class MenuScreenViewController: UIViewController {
         scrollView.alwaysBounceVertical = true
         navigationController?.navigationBar.barTintColor = .white
         view.backgroundColor = R.color.appBackgroundColor()!
-        playButton.isEnabled = false
+        playButton.setTitleColor(.green, for: .normal)
+        playButton.isEnabled = true
 
-        fetchSessionConfiguration()
         setupUI()
-        setupHandlers()
-
-        viewModel.userSession.didUpdateUser = { [weak self] in
-            self?.fetchSessionConfiguration()
-        }
 
         // setting button actions
         playButton.addTarget(self, action: #selector(handlePlay), for: .touchUpInside)
@@ -76,31 +71,9 @@ class MenuScreenViewController: UIViewController {
 
     // MARK: - Private Methods
 
-    private func setupHandlers() {
-        viewModel.didFechSessionConfiguration = { [weak self] in
-            self?.playButton.setTitleColor(.green, for: .normal)
-            self?.playButton.isEnabled = true
-        }
-    }
-
-    private func fetchSessionConfiguration() {
-        viewModel.fetchSessionConfigurations { [weak self] result in
-            switch result {
-            case let .failure(error):
-                let alert = AlertAssist.showErrorAlertWithCancelAndOption(error, optionName: "Try Again") { _ in
-                    self?.fetchSessionConfiguration()
-                }
-                self?.present(alert, animated: true)
-            case .success:
-                break
-            }
-        }
-    }
-
     @objc private func handlePlay() {
-        guard let sessionConfiguration = viewModel.sessionConfiguration else { return }
         let dvc = GameScreenViewController(viewModel: GameScreenViewModel(userSession: viewModel.userSession,
-                                                                          sessionConfiguration: sessionConfiguration))
+                                                                          sessionConfiguration: viewModel.sessionConfiguration))
         dvc.navigationItem.title = "Game"
         navigationController?.pushViewController(dvc, animated: true)
     }

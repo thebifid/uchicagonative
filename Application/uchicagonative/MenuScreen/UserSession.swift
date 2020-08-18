@@ -17,7 +17,6 @@ class UserSession {
         self.user = user
         addUserInfoChangeListener { user in
             self.user = user
-            self.didUpdateUser?()
         }
     }
 
@@ -33,8 +32,6 @@ class UserSession {
     }
 
     // MARK: - Handlers
-
-    var didUpdateUser: (() -> Void)?
 
     // MARK: - Private Methods
 

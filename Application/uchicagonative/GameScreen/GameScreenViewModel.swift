@@ -59,12 +59,30 @@ class GameScreenViewModel {
 
     // MARK: - Handlers
 
+    var didFetchSessionConfiguration: (() -> Void)?
+
     // MARK: - Public Methods
 
     /// Write round info in GameResult struct
     func setRoundInfo() {
         gameResult.setGameRoundLocationsInfo(locationInfo: cells.map { $0.location })
         gameResult.setGameRoundColorsInfo(colorsInfo: cells.map { $0.color })
+    }
+
+    func fetchSessionConfigurations(completion: @escaping ((Result<Void, Error>) -> Void)) {
+        FirebaseManager.sharedInstance.fetchSessionConfigurations(withSessionId: userSession.user.projectId) { [weak self] result in
+            switch result {
+            case let .failure(error):
+                completion(.failure(error))
+
+            case let .success(sessionConfiguration):
+                guard let self = self else { return }
+
+                self.sessionConfiguration = sessionConfiguration
+                self.didFetchSessionConfiguration?()
+                completion(.success(()))
+            }
+        }
     }
 
     /// Generates new cells to show on a screen. See `cells`.
