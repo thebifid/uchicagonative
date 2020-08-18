@@ -59,6 +59,7 @@ class LoginViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        scrollView.keyboardDismissMode = .interactive
 
         /// Handler for change 'Log In' button state and start/stop activity indicator
         let didUpdateHandler = {

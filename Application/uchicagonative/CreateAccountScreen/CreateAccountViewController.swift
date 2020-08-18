@@ -78,6 +78,7 @@ class CreateAccountViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        scrollView.keyboardDismissMode = .interactive
 
         // Fetching data for dropDown list
         viewModel.fetchAvailableGroups { [weak self] result in

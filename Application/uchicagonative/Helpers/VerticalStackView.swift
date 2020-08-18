@@ -11,7 +11,7 @@ import UIKit
 class VerticalStackView: UIStackView {
     init(arrangedSubviews: [UIView], spacing: CGFloat = 0) {
         super.init(frame: .zero)
-
+        translatesAutoresizingMaskIntoConstraints = false
         arrangedSubviews.forEach { addArrangedSubview($0) }
 
         self.spacing = spacing
