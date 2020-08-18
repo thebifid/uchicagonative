@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SystemConfiguration
 
 class EditProfileViewModel {
     // MARK: - Init
@@ -118,9 +119,6 @@ class EditProfileViewModel {
 
         let isFullyFilled = isFilled && String(birthYear).count == 4 && String(zipCode).count == 5
 
-        print(String(zipCode).count)
-        print(String(zipCode))
-
         return isFullyFilled
     }
 
@@ -164,10 +162,6 @@ class EditProfileViewModel {
         }
     }
 
-    enum EditProfileFieldsCheckResult {
-        case correct, incorrectYear, incorrectZip, incorrectYearAndZip
-    }
-
     /// Save User Information in Firebase
     func sendUserInfo(competion: @escaping ((Result<Void, Error>) -> Void)) {
         if !isCorrectYear {
@@ -178,6 +172,12 @@ class EditProfileViewModel {
 
         if !isCorrectZipCode {
             let error = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Incorrect zip"])
+            competion(.failure(error))
+            return
+        }
+
+        if !isInternetAvailable() {
+            let error = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Check your Internet connection"])
             competion(.failure(error))
             return
         }
@@ -243,5 +243,25 @@ class EditProfileViewModel {
     func setProject(_ project: String) {
         self.project = project
         didUpdateState?()
+    }
+
+    func isInternetAvailable() -> Bool {
+        var zeroAddress = sockaddr_in()
+        zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
+        zeroAddress.sin_family = sa_family_t(AF_INET)
+
+        let defaultRouteReachability = withUnsafePointer(to: &zeroAddress) {
+            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) { zeroSockAddress in
+                SCNetworkReachabilityCreateWithAddress(nil, zeroSockAddress)
+            }
+        }
+
+        var flags = SCNetworkReachabilityFlags()
+        if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
+            return false
+        }
+        let isReachable = flags.contains(.reachable)
+        let needsConnection = flags.contains(.connectionRequired)
+        return (isReachable && !needsConnection)
     }
 }

@@ -63,7 +63,7 @@ class PopupMenu: UIView {
             self.addSubview(button)
 
             constrain(button) { button in
-                button.top == 35 + button.superview!.top + CGFloat(30 * index)
+                button.top == 45 + button.superview!.top + CGFloat(40 * index)
                 button.height == 30
                 button.right == button.superview!.right
                 button.left == button.superview!.left + 15

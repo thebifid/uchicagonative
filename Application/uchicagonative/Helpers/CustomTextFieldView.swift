@@ -18,7 +18,8 @@ class CustomTextFieldView: UIView {
         tf.spellCheckingType = .no
         tf.autocorrectionType = .no
         tf.autocapitalizationType = .none
-        tf.font = R.font.karlaRegular(size: Constants.textFieldFontSize)!
+        tf.font = R.font.karlaBold(size: Constants.textFieldFontSize)!
+        tf.textColor = R.color.lightBlack()
         return tf
     }()
 

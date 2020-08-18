@@ -315,7 +315,7 @@ class CreateAccountViewController: UIViewController {
         // when groups fetched from FireBase
         viewModel.didFetchedGroups = { [weak self] in
             if let strongSelf = self {
-                let height: CGFloat = CGFloat(strongSelf.viewModel.availableGroups.count * 30) + 35
+                let height: CGFloat = CGFloat(strongSelf.viewModel.availableGroups.count * 40) + 40
                 self?.setupPopUpMenu(withHeight: height)
             }
             self?.popupMenu.layoutIfNeeded()

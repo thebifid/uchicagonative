@@ -28,18 +28,12 @@ class EditProfileViewController: UIViewController {
 
     private var pickerViewCard: PickerViewController!
 
-    // MARK: - Enums
-
-    enum PickerViewType {
-        case none, gender, project
-    }
-
     // MARK: - UI Controls
 
     private let scrollView = UIScrollView()
 
     private let emailLabel: UILabel = {
-        let label = UILabel(title: "Email:", font: R.font.karlaBold(size: Constants.fontSize)!, color: R.color.lightBlack()!)
+        let label = UILabel(title: "Email:", font: R.font.karlaRegular(size: Constants.fontSize)!, color: .black)
         return label
     }()
 
