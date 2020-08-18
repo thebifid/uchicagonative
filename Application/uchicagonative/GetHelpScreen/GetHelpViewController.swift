@@ -29,7 +29,7 @@ class GetHelpViewController: UIViewController {
 
     private let contactEmailLabel: UILabel = {
         let label = UILabel()
-        label.text = "Thank you for using our app. If you have an issue to report, please contact us via email"
+        label.text = "Thanks for using our app. If you have an issue to report, please contact us via email"
         label.font = R.font.karlaRegular(size: Constants.buttonFontSize)!
         label.textColor = R.color.lightBlack()!
         label.numberOfLines = 0
