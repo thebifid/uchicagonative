@@ -17,6 +17,7 @@
 		C135296524D3F4380004D9B8 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C135296424D3F4380004D9B8 /* EditProfileViewModel.swift */; };
 		C135296724D4051B0004D9B8 /* Dictionary+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C135296624D4051B0004D9B8 /* Dictionary+Extension.swift */; };
 		C13B712524D6C4D70035EF8F /* PickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13B712424D6C4D70035EF8F /* PickerViewController.swift */; };
+		C15166C224EBB9E3008B6DB0 /* UITapGestureRecognizer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15166C124EBB9E3008B6DB0 /* UITapGestureRecognizer+Extension.swift */; };
 		C16DD95C24D9D58F00EAC82E /* GetHelpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16DD95B24D9D58F00EAC82E /* GetHelpViewModel.swift */; };
 		C16DD95E24DA7A4E00EAC82E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16DD95D24DA7A4E00EAC82E /* User.swift */; };
 		C16DD96024DA82DC00EAC82E /* MenuScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16DD95F24DA82DC00EAC82E /* MenuScreenViewModel.swift */; };
@@ -50,7 +51,6 @@
 		C1713CF424CFCCC4002D0E04 /* PopupMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713CF324CFCCC4002D0E04 /* PopupMenu.swift */; };
 		C1713CF724CFD7AB002D0E04 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713CF624CFD7AB002D0E04 /* FirebaseManager.swift */; };
 		C1713CF924CFE9E6002D0E04 /* CustomSelectButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713CF824CFE9E6002D0E04 /* CustomSelectButtonView.swift */; };
-		C1713CFB24D024B5002D0E04 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713CFA24D024B5002D0E04 /* String+Extension.swift */; };
 		C19693D024C6C61A0054296F /* VerticalStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693CF24C6C61A0054296F /* VerticalStackView.swift */; };
 		C19693D324C6CE0E0054296F /* MenuScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693D224C6CE0E0054296F /* MenuScreenViewController.swift */; };
 		C19693D524C6CEF40054296F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19693D424C6CEF40054296F /* Constants.swift */; };
@@ -86,6 +86,7 @@
 		C135296424D3F4380004D9B8 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
 		C135296624D4051B0004D9B8 /* Dictionary+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Extension.swift"; sourceTree = "<group>"; };
 		C13B712424D6C4D70035EF8F /* PickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewController.swift; sourceTree = "<group>"; };
+		C15166C124EBB9E3008B6DB0 /* UITapGestureRecognizer+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITapGestureRecognizer+Extension.swift"; sourceTree = "<group>"; };
 		C16DD95B24D9D58F00EAC82E /* GetHelpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetHelpViewModel.swift; sourceTree = "<group>"; };
 		C16DD95D24DA7A4E00EAC82E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		C16DD95F24DA82DC00EAC82E /* MenuScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScreenViewModel.swift; sourceTree = "<group>"; };
@@ -119,7 +120,6 @@
 		C1713CF324CFCCC4002D0E04 /* PopupMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupMenu.swift; sourceTree = "<group>"; };
 		C1713CF624CFD7AB002D0E04 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		C1713CF824CFE9E6002D0E04 /* CustomSelectButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSelectButtonView.swift; sourceTree = "<group>"; };
-		C1713CFA24D024B5002D0E04 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		C19693CF24C6C61A0054296F /* VerticalStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalStackView.swift; sourceTree = "<group>"; };
 		C19693D224C6CE0E0054296F /* MenuScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScreenViewController.swift; sourceTree = "<group>"; };
 		C19693D424C6CEF40054296F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -338,10 +338,10 @@
 				C19693E124C6FA820054296F /* UILabel+Extension.swift */,
 				C196940024C839320054296F /* UITextField+Extension.swift */,
 				C1713C9224C99D3D002D0E04 /* UIView+ExtensionLayout.swift */,
-				C1713CFA24D024B5002D0E04 /* String+Extension.swift */,
 				C135296224D3C2F10004D9B8 /* UIViewController+Extension.swift */,
 				C135296624D4051B0004D9B8 /* Dictionary+Extension.swift */,
 				C16DD96E24DD3DCB00EAC82E /* UIColor+Extension.swift */,
+				C15166C124EBB9E3008B6DB0 /* UITapGestureRecognizer+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -623,6 +623,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C15166C224EBB9E3008B6DB0 /* UITapGestureRecognizer+Extension.swift in Sources */,
 				C16DD96D24DD2D7C00EAC82E /* GameScreenViewModel.swift in Sources */,
 				C1713CEC24CEC7B3002D0E04 /* AlertAssist.swift in Sources */,
 				C1FD150324D152F700188BE0 /* CheckFields.swift in Sources */,
@@ -633,7 +634,6 @@
 				C116347D24C6B3CF00B6C394 /* AppDelegate.swift in Sources */,
 				C1713C9724CA8F10002D0E04 /* CustomTextFieldView.swift in Sources */,
 				C1713CF424CFCCC4002D0E04 /* PopupMenu.swift in Sources */,
-				C1713CFB24D024B5002D0E04 /* String+Extension.swift in Sources */,
 				C16DD97424DD60F400EAC82E /* SvgImageView.swift in Sources */,
 				C1713CF124CED5D1002D0E04 /* CreateAccountViewModel.swift in Sources */,
 				C1713CEA24CEAC50002D0E04 /* RecoverPasswordViewModel.swift in Sources */,

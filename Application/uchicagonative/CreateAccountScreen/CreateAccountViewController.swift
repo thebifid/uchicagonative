@@ -52,17 +52,14 @@ class CreateAccountViewController: UIViewController {
 
     private let signUpButton = PrimaryButton()
 
-    private let termText = "By signing up, you agree to our Terms of Service and Privacy Policy"
-    private let term = "Terms of Service"
-    private let termLabel: UILabel = {
+    let lblPrivacyTerm: UILabel = {
         let label = UILabel()
-        label.numberOfLines = 0
-        label.isUserInteractionEnabled = true
         label.textAlignment = .center
+        label.font = R.font.karlaRegular(size: 14)!
+        label.textColor = .gray
+        label.numberOfLines = 0
         return label
     }()
-
-    private var formattedText: NSAttributedString?
 
     private let alreadyMemberButton = UIButton(titleColor: R.color.lightRed()!, title: "Already a member? Log In!",
                                                font: R.font.karlaBold(size: 20)!, breakMode: .byWordWrapping)
@@ -78,6 +75,9 @@ class CreateAccountViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        setupMultipleTapLabel()
+
         scrollView.keyboardDismissMode = .interactive
 
         // Fetching data for dropDown list
@@ -97,7 +97,6 @@ class CreateAccountViewController: UIViewController {
 
         setupHandlers()
         setupTextFieldsHandlers()
-        setupGestures()
 
         // Handler for update state of signUp button and start/stop animating
         viewModel.didUpdateState = { [weak self] in
@@ -181,28 +180,19 @@ class CreateAccountViewController: UIViewController {
             signUpButton.width == dropDownSelectView.width
         }
 
-        formattedText = String.format(strings: [term],
-                                      boldFont: UIFont.boldSystemFont(ofSize: 15),
-                                      boldColor: R.color.lightRed()!,
-                                      inString: termText,
-                                      font: UIFont.systemFont(ofSize: 15),
-                                      color: .gray)
+        scrollView.addSubview(lblPrivacyTerm)
 
-        termLabel.attributedText = formattedText
+        constrain(signUpButton, lblPrivacyTerm) { signUpButton, lblPrivacyTerm in
 
-        scrollView.addSubview(termLabel)
-
-        constrain(signUpButton, termLabel) { signUpButton, termLabel in
-
-            termLabel.top == signUpButton.bottom + 20
-            termLabel.centerX == termLabel.superview!.centerX
-            termLabel.width == signUpButton.width
-            termLabel.height == 50
+            lblPrivacyTerm.top == signUpButton.bottom + 10
+            lblPrivacyTerm.centerX == lblPrivacyTerm.superview!.centerX
+            lblPrivacyTerm.width == signUpButton.width - 40
+            lblPrivacyTerm.height == 50
         }
 
         scrollView.addSubview(alreadyMemberButton)
 
-        constrain(termLabel, alreadyMemberButton) { termLabel, alreadyMemberButton in
+        constrain(lblPrivacyTerm, alreadyMemberButton) { termLabel, alreadyMemberButton in
 
             alreadyMemberButton.top == termLabel.bottom + 70
             alreadyMemberButton.centerX == alreadyMemberButton.superview!.centerX
@@ -221,7 +211,7 @@ class CreateAccountViewController: UIViewController {
         popupMenu.alpha = 0
         popupMenu.transform = .init(scaleX: 1, y: 0)
         signUpButton.isHidden = false
-        termLabel.isHidden = false
+        lblPrivacyTerm.isHidden = false
         alreadyMemberButton.isHidden = false
     }
 
@@ -236,22 +226,8 @@ class CreateAccountViewController: UIViewController {
 
     // MARK: - Private Methods
 
-    private func setupGestures() {
-        let termTap = UITapGestureRecognizer(target: self, action: #selector(handleTermTapped))
-        termLabel.addGestureRecognizer(termTap)
-
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboardAndPopUp))
-        view.addGestureRecognizer(tap)
-    }
-
     @objc private func handleAlreadyMember() {
         navigationController?.popToRootViewController(animated: true)
-    }
-
-    @objc private func handleTermTapped(gesture: UITapGestureRecognizer) {
-        let termOfServiceController = TermsOfServiceViewController()
-        termOfServiceController.navigationItem.title = "Term of Service"
-        navigationController?.pushViewController(termOfServiceController, animated: true)
     }
 
     @objc private func handleSignIn() {
@@ -307,7 +283,7 @@ class CreateAccountViewController: UIViewController {
                 self?.popupMenu.alpha = 1
                 self?.popupMenu.transform = .identity
                 self?.signUpButton.isHidden = true
-                self?.termLabel.isHidden = true
+                self?.lblPrivacyTerm.isHidden = true
                 self?.alreadyMemberButton.isHidden = true
             }
         }
@@ -333,6 +309,26 @@ class CreateAccountViewController: UIViewController {
                 self?.emailTextFieldView.isUserInteractionEnabled = true
                 self?.passwordTextFieldView.isUserInteractionEnabled = true
             })
+        }
+    }
+
+    private func setupMultipleTapLabel() {
+        lblPrivacyTerm.text = "By signing up, you agree to our Terms of Service and Privacy Policy"
+        let text = (lblPrivacyTerm.text)!
+        let underlineAttriString = NSMutableAttributedString(string: text)
+        let termsRange = (text as NSString).range(of: "Terms of Service")
+        underlineAttriString.addAttribute(.foregroundColor, value: R.color.lightRed()!, range: termsRange)
+        lblPrivacyTerm.attributedText = underlineAttriString
+        let tapAction = UITapGestureRecognizer(target: self, action: #selector(tapLabel(gesture:)))
+        lblPrivacyTerm.isUserInteractionEnabled = true
+        lblPrivacyTerm.addGestureRecognizer(tapAction)
+    }
+
+    @objc private func tapLabel(gesture: UITapGestureRecognizer) {
+        if gesture.didTapAttributedTextInLabel(label: lblPrivacyTerm, targetText: "Terms of Service") {
+            let termOfServiceController = TermsOfServiceViewController()
+            termOfServiceController.navigationItem.title = "Term of Service"
+            navigationController?.pushViewController(termOfServiceController, animated: true)
         }
     }
 }
