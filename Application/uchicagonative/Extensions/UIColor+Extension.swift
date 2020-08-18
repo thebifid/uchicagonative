@@ -13,11 +13,7 @@ extension UIColor {
         let hexString: String = hexString.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         let scanner = Scanner(string: hexString)
         if hexString.hasPrefix("#") {
-            if #available(iOS 13.0, *) {
-                scanner.currentIndex = .init(utf16Offset: 1, in: hexString)
-            } else {
-                scanner.scanLocation = 1
-            }
+            scanner.scanLocation = 1
         }
         var color: UInt64 = 0
         scanner.scanHexInt64(&color)

@@ -14,7 +14,7 @@ extension UIViewController {
             return (view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0.0) +
                 (navigationController?.navigationBar.frame.height ?? 0.0)
         } else {
-            return view.safeAreaLayoutGuide.layoutFrame.minY
+            return view.safeAreaLayoutGuide.layoutFrame.minY + (navigationController?.navigationBar.frame.height ?? 0.0)
         }
     }
 }

@@ -19,6 +19,7 @@ class CreateAccountViewModel {
     private var password: String?
     private(set) var selectedGroup: String?
     private var groupNameIdDictionary = [String: String]()
+    private var userInfo = [String: Any]()
 
     // MARK: - Public Properties
 
@@ -69,8 +70,6 @@ class CreateAccountViewModel {
         selectedGroup = group
         didUpdateState?()
     }
-
-    var userInfo = [String: Any]()
 
     func addUserData(completion: @escaping ((Result<Void, Error>) -> Void)) {
         setUserInfo()
