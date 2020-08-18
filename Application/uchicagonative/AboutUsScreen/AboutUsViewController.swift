@@ -12,12 +12,26 @@ import UIKit
 class AboutUsViewController: UIViewController {
     let scrollView = UIScrollView()
 
-    let firstLabel = UILabel(title:
-        "This app was developed as part of a research project led by Ed Awh and Ed Vogel at University of Chicago", numberOfLines: 0)
+    let firstLabel: UILabel = {
+        let label = UILabel()
+        label.text = "This app was developed as part of a research project led by Ed Awh and Ed Vogel at University of Chicago."
+        label.numberOfLines = 0
+        label.font = R.font.karlaRegular(size: 20)
+        label.textColor = .black
+        return label
+    }()
 
-    let secondLabel = UILabel(title:
-        "Our goal is to better understand the limits of attention and working memory. Thank you for helping us comlete our research",
-                              numberOfLines: 0)
+    let secondLabel: UILabel = {
+        let label = UILabel()
+        label.text = """
+        Our goal is to better understand the limits of attention
+        and working memory. Thank you for helping us comlete our research.
+        """
+        label.numberOfLines = 0
+        label.font = R.font.karlaRegular(size: 20)
+        label.textColor = .black
+        return label
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,15 +41,9 @@ class AboutUsViewController: UIViewController {
     }
 
     private func setupUI() {
-        let navBarHeight = navigationController?.navigationBar.frame.size.height ?? 0
-        let navBarFrameY = navigationController?.navigationBar.frame.origin.y ?? 0
-        let statusBarHeight = navBarHeight + navBarFrameY
-
         // ScrollView
         scrollView.backgroundColor = R.color.appBackgroundColor()!
-        scrollView.isScrollEnabled = true
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height - statusBarHeight)
+        scrollView.alwaysBounceVertical = true
 
         view.addSubview(scrollView)
 
@@ -56,7 +64,7 @@ class AboutUsViewController: UIViewController {
             scrollView.bottom == scrollView.superview!.bottom
 
             stackView.width == scrollView.superview!.width - Constants.defaultInsets
-            stackView.centerY == stackView.superview!.centerY
+            stackView.centerY == stackView.superview!.centerY - topbarHeight
             stackView.centerX == stackView.superview!.centerX
         }
     }

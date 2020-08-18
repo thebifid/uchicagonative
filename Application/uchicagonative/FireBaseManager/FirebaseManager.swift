@@ -29,8 +29,11 @@ class FirebaseManager {
             var groups = [String: String]()
             snapshot?.documents.forEach { document in
                 let data = document.data()
-                let group = data["name"] as? String ?? ""
-                groups[group] = document.documentID
+                let isActive = data["active"] as? Bool ?? false
+                if isActive {
+                    let group = data["name"] as? String ?? ""
+                    groups[group] = document.documentID
+                }
             }
 
             completion(.success(groups))
