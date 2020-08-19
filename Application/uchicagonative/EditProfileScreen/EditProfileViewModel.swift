@@ -78,14 +78,6 @@ class EditProfileViewModel {
         return false
     }
 
-    private var isCorrectZipCode: Bool {
-        if zipCode.filter({ $0 == "0" }).count > 1 {
-            return false
-        }
-
-        return true
-    }
-
     // MARK: - Handlers
 
     /// Calls when get updated
@@ -154,26 +146,33 @@ class EditProfileViewModel {
 
             case .success:
                 FirebaseManager.sharedInstance.fetchUserInfo { [weak self] result in
+                    guard let self = self else { return }
 
                     switch result {
                     case let .failure(error):
                         completion(.failure(error))
 
                     case var .success(userInfo):
-                        userInfo["projectId"] = self?.availableGroupNameById[userInfo["projectId"] as? String ?? ""]
-                        self?.userInfo = userInfo
+                        userInfo["projectId"] = self.availableGroupNameById[userInfo["projectId"] as? String ?? ""]
+                        self.userInfo = userInfo
 
-                        self?.email = userInfo["email"] as? String ?? ""
-                        self?.role = userInfo["role"] as? String ?? ""
-                        self?.project = userInfo["projectId"] as? String ?? ""
-                        self?.firstName = userInfo["firstName"] as? String ?? ""
-                        self?.lastName = userInfo["lastName"] as? String ?? ""
-                        self?.birthYear = userInfo["birthYear"] as? Int ?? 0
-                        self?.zipCode = String(userInfo["zipCode"] as? Int ?? 0)
-                        if self?.zipCode.count == 4 {
-                            self?.zipCode.insert("0", at: (self?.zipCode.startIndex)!)
+                        self.email = userInfo["email"] as? String ?? ""
+                        self.role = userInfo["role"] as? String ?? ""
+                        self.project = userInfo["projectId"] as? String ?? ""
+                        self.firstName = userInfo["firstName"] as? String ?? ""
+                        self.lastName = userInfo["lastName"] as? String ?? ""
+                        self.birthYear = userInfo["birthYear"] as? Int ?? 0
+                        let zipCode = userInfo["zipCode"] as? Int ?? 0
+                        if zipCode == 0 {
+                            self.zipCode = ""
+                        } else {
+                            self.zipCode = String(zipCode)
+                            while self.zipCode.count < 5 {
+                                self.zipCode.insert("0", at: self.zipCode.startIndex)
+                            }
                         }
-                        self?.gender = userInfo["gender"] as? String ?? ""
+
+                        self.gender = userInfo["gender"] as? String ?? ""
 
                         completion(.success(()))
                     }
@@ -190,7 +189,7 @@ class EditProfileViewModel {
             return
         }
 
-        if !isCorrectZipCode {
+        if Int(zipCode) == 0 {
             let error = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Incorrect zip"])
             competion(.failure(error))
             return
