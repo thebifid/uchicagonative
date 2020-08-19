@@ -54,7 +54,7 @@ class CreateAccountViewController: UIViewController {
 
     let lblPrivacyTerm: UILabel = {
         let label = UILabel()
-//        label.textAlignment = .center
+        label.textAlignment = .center
         label.font = R.font.karlaRegular(size: 14)!
         label.textColor = .gray
         label.numberOfLines = 0
@@ -327,7 +327,7 @@ class CreateAccountViewController: UIViewController {
     }
 
     @objc private func tapLabel(gesture: UITapGestureRecognizer) {
-        if gesture.didTapAttributedTextInLabel(label: lblPrivacyTerm, targetText: "Terms of Service") {
+        if gesture.didTapAttributedTextInLabel(label: lblPrivacyTerm, targetText: "Terms of Service and Pri") {
             let termOfServiceController = TermsOfServiceViewController()
             termOfServiceController.navigationItem.title = "Term of Service"
             navigationController?.pushViewController(termOfServiceController, animated: true)
