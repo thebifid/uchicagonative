@@ -121,6 +121,8 @@ class CreateAccountViewController: UIViewController {
 
         signUpButton.addTarget(self, action: #selector(handleSignIn), for: .touchUpInside)
         alreadyMemberButton.addTarget(self, action: #selector(handleAlreadyMember), for: .touchUpInside)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboardAndPopUp))
+        scrollView.addGestureRecognizer(tapGesture)
     }
 
     // MARK: - UI Actions
@@ -275,8 +277,6 @@ class CreateAccountViewController: UIViewController {
         // when user press button to show popUpMenu
         dropDownSelectView.didTapButton = { [weak self] in
             self?.view.endEditing(true)
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self?.dismissKeyboardAndPopUp))
-            self?.scrollView.addGestureRecognizer(tapGesture)
             UIView.animate(withDuration: 0.2) {
                 self?.scrollView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
                 self?.navigationController?.navigationBar.alpha = 0.5
