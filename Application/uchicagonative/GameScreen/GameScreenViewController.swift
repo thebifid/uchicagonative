@@ -26,6 +26,7 @@ class GameScreenViewController: UIViewController {
     private let playButton = PrimaryButton()
 
     private var cellImageViews: [SvgImageView] = []
+    private var testCellImageView = SvgImageView(frame: .zero)
 
     // MARK: - Init
 
@@ -52,8 +53,6 @@ class GameScreenViewController: UIViewController {
 
         setupUI()
         playButton.addTarget(self, action: #selector(handlePlay), for: .touchUpInside)
-
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Refresh", style: .done, target: self, action: #selector(handleRefresh))
     }
 
     // MARK: - Private Methods
@@ -68,13 +67,35 @@ class GameScreenViewController: UIViewController {
     @objc private func handlePlay() {
         readyLabel.isHidden = true
         playButton.isHidden = true
-        showImages()
+
+        // will be loop for trials
+        playRound()
     }
 
-    private func showImages() {
+    private func playRound() {
         let insets = UIEdgeInsets(top: view.safeAreaInsets.top + 20.0, left: 10.0, bottom: view.safeAreaInsets.bottom + 20.0, right: 10.0)
         viewModel.generateCells(viewBounds: view.bounds.inset(by: insets))
-        layoutCellImageViews()
+
+        // show icons
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(viewModel.interTrialInterval)) {
+            self.layoutCellImageViews()
+
+            // hide icons
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(self.viewModel.sampleExposureDuration)) {
+                self.cellImageViews.forEach { $0.isHidden = true }
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(self.viewModel.delayPeriod)) {
+                    self.layoutTestCellImageView()
+                    self.testCellImageView.isHidden = false
+                }
+            }
+        }
+    }
+
+    private func layoutTestCellImageView() {
+        testCellImageView.configure(svgImageName: viewModel.svgImageName, colorHex: viewModel.testCell.color)
+        testCellImageView.frame = viewModel.testCell.frame
+        testCellImageView.isHidden = true
     }
 
     private func layoutCellImageViews() {
@@ -95,11 +116,6 @@ class GameScreenViewController: UIViewController {
         }
     }
 
-    @objc private func handleRefresh() {
-        viewModel.setRoundInfo()
-        showImages()
-    }
-
     private func fetchSessionConfiguration() {
         viewModel.fetchSessionConfigurations { [weak self] result in
             switch result {
@@ -118,6 +134,7 @@ class GameScreenViewController: UIViewController {
 
     private func setupUI() {
         view.addSubview(scrollView)
+        scrollView.addSubview(testCellImageView) // !!!
         scrollView.fillSuperView()
         scrollView.backgroundColor = R.color.appBackgroundColor()
 

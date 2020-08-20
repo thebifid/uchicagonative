@@ -32,6 +32,7 @@ class GameScreenViewModel {
     private let userSession: UserSession
     private var sessionConfiguration: SessionConfiguration
     private(set) var cells = [Cell]()
+    private(set) var testCell = Cell(frame: .zero, color: "#fffff")
 
     /// Struct for saving game session result
     private var gameResult = GameResult()
@@ -55,6 +56,26 @@ class GameScreenViewModel {
     /// The svg image name to show.
     var svgImageName: String {
         return iconDictionary[sessionConfiguration.iconName] ?? "square"
+    }
+
+    /// Number of Trials.
+    var numberOfTrials: Int {
+        return sessionConfiguration.numberOfTrials
+    }
+
+    /// Time between user answer and show new trial
+    var interTrialInterval: Int {
+        return sessionConfiguration.interTrialInterval
+    }
+
+    /// Time for show sample
+    var sampleExposureDuration: Int {
+        return sessionConfiguration.sampleExposureDuration
+    }
+
+    /// Time of showing all elements and test element
+    var delayPeriod: Int {
+        return sessionConfiguration.delayPeriod
     }
 
     // MARK: - Handlers
@@ -94,30 +115,48 @@ class GameScreenViewModel {
                             color: chooseColor(index, config: config))
             cells.append(cell)
         }
+        generateTestCell(viewBounds: viewBounds, change: false) // !!!
     }
-}
 
-private func generateRect(viewBounds: CGRect, config: SessionConfiguration, occupiedRects: [CGRect]) -> CGRect {
-    while true {
-        let xCoordinate = Int.random(in: Int(viewBounds.origin.x) ..< Int(viewBounds.width - config.stimuliSize))
-        let yCoordinate = Int.random(in: Int(viewBounds.origin.y) ..< Int(viewBounds.height - config.stimuliSize))
-        let rect = CGRect(x: CGFloat(xCoordinate), y: CGFloat(yCoordinate),
-                          width: CGFloat(config.stimuliSize), height: CGFloat(config.stimuliSize))
-        if !rect.intersectsAny(occupiedRects) {
-            return rect
+    // MARK: - Private Methods
+
+    // change = is Correct or not
+    private func generateTestCell(viewBounds: CGRect, change: Bool) {
+        if change {
+            let randomNumber = Int.random(in: 0 ... cells.count)
+            let cell = cells[randomNumber]
+            testCell = cell
+        } else {
+            let config = sessionConfiguration
+            let randomNumberForColor = Int.random(in: 0 ... config.colors.count)
+            let cell = Cell(frame: generateRect(viewBounds: viewBounds, config: config, occupiedRects: cells.map { $0.frame }),
+                            color: chooseColor(randomNumberForColor, config: config))
+            testCell = cell
         }
     }
-}
 
-private func chooseColor(_ index: Int, config: SessionConfiguration) -> String {
-    var newIndex = index
-    if newIndex >= config.colors.count {
-        newIndex = index % config.colors.count
-    } else {
-        newIndex = index
+    private func generateRect(viewBounds: CGRect, config: SessionConfiguration, occupiedRects: [CGRect]) -> CGRect {
+        while true {
+            let xCoordinate = Int.random(in: Int(viewBounds.origin.x) ..< Int(viewBounds.width - config.stimuliSize))
+            let yCoordinate = Int.random(in: Int(viewBounds.origin.y) ..< Int(viewBounds.height - config.stimuliSize))
+            let rect = CGRect(x: CGFloat(xCoordinate), y: CGFloat(yCoordinate),
+                              width: CGFloat(config.stimuliSize), height: CGFloat(config.stimuliSize))
+            if !rect.intersectsAny(occupiedRects) {
+                return rect
+            }
+        }
     }
-    let color = config.colors[newIndex]
-    return color
+
+    private func chooseColor(_ index: Int, config: SessionConfiguration) -> String {
+        var newIndex = index
+        if newIndex >= config.colors.count {
+            newIndex = index % config.colors.count
+        } else {
+            newIndex = index
+        }
+        let color = config.colors[newIndex]
+        return color
+    }
 }
 
 private extension CGRect {
