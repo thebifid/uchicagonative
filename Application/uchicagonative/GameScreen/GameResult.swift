@@ -9,19 +9,35 @@
 import Foundation
 
 struct GameResult {
-    private(set) var cellsLocationsInfo = [[[Int]]]()
-    private(set) var cellsColorsInfo = [[String]]()
+    private var cellsLocationsInfo = [[[Int]]]()
+    private var cellsColorsInfo = [[String]]()
 
-    private(set) var testPresentationTime = [String]()
-    private(set) var responseStartTime = [String]()
-    private(set) var responseEndTime = [String]()
+    private var testCellLocationsInfo = [[Int]]()
+    private var testCellColorsInfo = [String]()
 
-    mutating func setGameRoundLocationsInfo(locationInfo location: [[Int]]) {
+    private var testPresentationTime = [String]()
+    private var responseStartTime = [String]()
+    private var responseEndTime = [String]()
+    private var gestureDuration = [Int]()
+    private var reactionTime = [Int]()
+
+    private var swipeDistanceX: Float = 0
+    private var swipeDistanceY: Float = 0
+
+    mutating func setGameRoundCellsLocationInfo(locationInfo location: [[Int]]) {
         cellsLocationsInfo.append(location)
     }
 
-    mutating func setGameRoundColorsInfo(colorsInfo color: [String]) {
+    mutating func setGameRoundCellsColorInfo(colorsInfo color: [String]) {
         cellsColorsInfo.append(color)
+    }
+
+    mutating func setGameRoundTestCellLocationInfo(locationInfo location: [Int]) {
+        testCellLocationsInfo.append(location)
+    }
+
+    mutating func setGameRoundTestCellColorInfo(colorInfo color: String) {
+        testCellColorsInfo.append(color)
     }
 
     mutating func setTestPresentationTime(testPresentationTime: String) {
@@ -34,5 +50,21 @@ struct GameResult {
 
     mutating func setResponseEndTime(responseEndTime: String) {
         self.responseEndTime.append(responseEndTime)
+    }
+
+    mutating func setGestureDuration(gestureDuration: Int) {
+        self.gestureDuration.append(gestureDuration)
+    }
+
+    mutating func setReactionTime(reactionTime: Int) {
+        self.reactionTime.append(reactionTime)
+    }
+
+    mutating func setSwipeDistanceX(distanceX: Float) {
+        swipeDistanceX = distanceX
+    }
+
+    mutating func setSwipeDistanceY(distanceY: Float) {
+        swipeDistanceY = distanceY
     }
 }

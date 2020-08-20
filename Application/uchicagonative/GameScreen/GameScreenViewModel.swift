@@ -54,10 +54,34 @@ class GameScreenViewModel {
         "diaspora": "diaspora"
     ]
 
-    // MARK: - Public Properties
+    private var startPoint: CGPoint = .zero
+    private var endPoint: CGPoint = .zero
 
-    private(set) var startPoint: CGPoint = .zero
-    private(set) var endPoint: CGPoint = .zero
+    private var gestureDuration: Int {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        let responseEndTime = dateFormatter.date(from: self.responseEndTime) ?? Date()
+        let testPresentationTime = dateFormatter.date(from: self.testPresentationTime) ?? Date()
+
+        let responseEndTimeMiliseconds = convertDateToMiliseconds(date: responseEndTime)
+        let testPresentationTimeMiliseconds = convertDateToMiliseconds(date: testPresentationTime)
+
+        return responseEndTimeMiliseconds - testPresentationTimeMiliseconds
+    }
+
+    private var reactionTime: Int {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        let responseStartTime = dateFormatter.date(from: self.responseStartTime) ?? Date()
+        let testPresentationTime = dateFormatter.date(from: self.testPresentationTime) ?? Date()
+
+        let responseStartTimeMiliseconds = convertDateToMiliseconds(date: responseStartTime)
+        let testPresentationTimeMiliseconds = convertDateToMiliseconds(date: testPresentationTime)
+
+        return responseStartTimeMiliseconds - testPresentationTimeMiliseconds
+    }
+
+    // MARK: - Public Properties
 
     /// Background color for the whole view. Available when session configuration is available.
     var backgroundColor: UIColor? {
@@ -89,6 +113,14 @@ class GameScreenViewModel {
         return sessionConfiguration.delayPeriod
     }
 
+    var swipeDistanceX: CGFloat {
+        return abs(startPoint.x - endPoint.x)
+    }
+
+    var swipeDistanceY: CGFloat {
+        return abs(startPoint.y - endPoint.y)
+    }
+
     // MARK: - Handlers
 
     var didFetchSessionConfiguration: (() -> Void)?
@@ -97,12 +129,20 @@ class GameScreenViewModel {
 
     /// Write round info in GameResult struct
     func setRoundInfo() {
-        gameResult.setGameRoundLocationsInfo(locationInfo: cells.map { $0.location })
-        gameResult.setGameRoundColorsInfo(colorsInfo: cells.map { $0.color })
+        gameResult.setGameRoundCellsLocationInfo(locationInfo: cells.map { $0.location })
+        gameResult.setGameRoundCellsColorInfo(colorsInfo: cells.map { $0.color })
+
+        gameResult.setGameRoundTestCellLocationInfo(locationInfo: testCell.location)
+        gameResult.setGameRoundTestCellColorInfo(colorInfo: testCell.color)
 
         gameResult.setTestPresentationTime(testPresentationTime: testPresentationTime)
         gameResult.setResponseStartTime(responseStartTime: responseStartTime)
         gameResult.setResponseEndTime(responseEndTime: responseEndTime)
+        gameResult.setGestureDuration(gestureDuration: gestureDuration)
+        gameResult.setReactionTime(reactionTime: reactionTime)
+
+        gameResult.setSwipeDistanceX(distanceX: Float(swipeDistanceX))
+        gameResult.setSwipeDistanceY(distanceY: Float(swipeDistanceY))
 
         print(gameResult)
     }
@@ -221,6 +261,11 @@ class GameScreenViewModel {
         let date = Date()
         let formattedDate = dateFormatter.string(from: date)
         return formattedDate
+    }
+
+    func convertDateToMiliseconds(date: Date) -> Int {
+        let since1970 = date.timeIntervalSince1970
+        return Int(since1970 * 1000)
     }
 }
 

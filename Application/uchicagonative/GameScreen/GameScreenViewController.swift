@@ -113,9 +113,7 @@ class GameScreenViewController: UIViewController {
             viewModel.setResponseEndTime()
             viewModel.setEndPoint(endPoint: gesture.location(in: view))
 
-            let xDistance = abs(viewModel.startPoint.x - viewModel.endPoint.x)
-
-            if xDistance > 60 || abs(gesture.velocity(in: testCellImageView).x) > 500 {
+            if viewModel.swipeDistanceX > 60 || abs(gesture.velocity(in: testCellImageView).x) > 500 {
                 let swipeDirection = gesture.velocity(in: testCellImageView).x < 0 ? -1 : 1
                 let offsetDistance = 400 * swipeDirection
                 UIView.animate(withDuration: 0.3) {
