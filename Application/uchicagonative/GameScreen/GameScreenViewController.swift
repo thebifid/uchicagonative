@@ -86,6 +86,7 @@ class GameScreenViewController: UIViewController {
 
                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(self.viewModel.delayPeriod)) {
                     self.layoutTestCellImageView()
+                    self.viewModel.setTestPresentationTime()
                     self.testCellImageView.isHidden = false
 
                     let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.draggedView))
@@ -105,9 +106,11 @@ class GameScreenViewController: UIViewController {
 
         if gesture.state == .began {
             viewModel.setStartPoint(startPoint: gesture.location(in: view))
+            viewModel.setResponseStartTime()
         }
 
         if gesture.state == .ended {
+            viewModel.setResponseEndTime()
             viewModel.setEndPoint(endPoint: gesture.location(in: view))
 
             let xDistance = abs(viewModel.startPoint.x - viewModel.endPoint.x)
@@ -120,6 +123,7 @@ class GameScreenViewController: UIViewController {
                                                                        y: originalFrame.minY),
                                                          size: self.viewModel.testCell.frame.size)
                 }
+                viewModel.setRoundInfo()
             } else {
                 UIView.animate(withDuration: 0.3) {
                     self.testCellImageView.frame = .init(origin: originalFrame.origin,

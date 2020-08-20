@@ -36,6 +36,10 @@ class GameScreenViewModel {
 
     private var currentRound = 0
 
+    private var testPresentationTime = ""
+    private var responseStartTime = ""
+    private var responseEndTime = ""
+
     private var changeProbabilityArray = [Int]()
 
     /// Struct for saving game session result
@@ -95,14 +99,34 @@ class GameScreenViewModel {
     func setRoundInfo() {
         gameResult.setGameRoundLocationsInfo(locationInfo: cells.map { $0.location })
         gameResult.setGameRoundColorsInfo(colorsInfo: cells.map { $0.color })
+
+        gameResult.setTestPresentationTime(testPresentationTime: testPresentationTime)
+        gameResult.setResponseStartTime(responseStartTime: responseStartTime)
+        gameResult.setResponseEndTime(responseEndTime: responseEndTime)
+
+        print(gameResult)
     }
 
+    /// Set start point of user swipe
     func setStartPoint(startPoint: CGPoint) {
         self.startPoint = startPoint
     }
 
+    /// Set end point of user swipe
     func setEndPoint(endPoint: CGPoint) {
         self.endPoint = endPoint
+    }
+
+    func setTestPresentationTime() {
+        testPresentationTime = currentStringDate()
+    }
+
+    func setResponseStartTime() {
+        responseStartTime = currentStringDate()
+    }
+
+    func setResponseEndTime() {
+        responseEndTime = currentStringDate()
     }
 
     func fetchSessionConfigurations(completion: @escaping ((Result<Void, Error>) -> Void)) {
@@ -189,6 +213,14 @@ class GameScreenViewModel {
                 changeProbabilityArray.append(1)
             }
         }
+    }
+
+    private func currentStringDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        let date = Date()
+        let formattedDate = dateFormatter.string(from: date)
+        return formattedDate
     }
 }
 

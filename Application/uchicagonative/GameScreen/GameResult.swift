@@ -9,14 +9,30 @@
 import Foundation
 
 struct GameResult {
-    private(set) var gameLocationsInfo = [[[Int]]]()
-    private(set) var gameColorsInfo = [[String]]()
+    private(set) var cellsLocationsInfo = [[[Int]]]()
+    private(set) var cellsColorsInfo = [[String]]()
+
+    private(set) var testPresentationTime = [String]()
+    private(set) var responseStartTime = [String]()
+    private(set) var responseEndTime = [String]()
 
     mutating func setGameRoundLocationsInfo(locationInfo location: [[Int]]) {
-        gameLocationsInfo.append(location)
+        cellsLocationsInfo.append(location)
     }
 
     mutating func setGameRoundColorsInfo(colorsInfo color: [String]) {
-        gameColorsInfo.append(color)
+        cellsColorsInfo.append(color)
+    }
+
+    mutating func setTestPresentationTime(testPresentationTime: String) {
+        self.testPresentationTime.append(testPresentationTime)
+    }
+
+    mutating func setResponseStartTime(responseStartTime: String) {
+        self.responseStartTime.append(responseStartTime)
+    }
+
+    mutating func setResponseEndTime(responseEndTime: String) {
+        self.responseEndTime.append(responseEndTime)
     }
 }
