@@ -47,7 +47,7 @@ class GameScreenViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         setupHandlers()
         fetchSessionConfiguration()
 
@@ -87,6 +87,43 @@ class GameScreenViewController: UIViewController {
                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(self.viewModel.delayPeriod)) {
                     self.layoutTestCellImageView()
                     self.testCellImageView.isHidden = false
+
+                    let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.draggedView))
+                    self.view.isUserInteractionEnabled = true
+                    self.view.addGestureRecognizer(panGesture)
+                }
+            }
+        }
+    }
+
+    @objc private func draggedView(gesture: UIPanGestureRecognizer) {
+        view.bringSubviewToFront(testCellImageView)
+        let translation = gesture.translation(in: view)
+        testCellImageView.center = CGPoint(x: testCellImageView.center.x + translation.x, y: testCellImageView.center.y)
+        gesture.setTranslation(CGPoint.zero, in: view)
+        let originalFrame = viewModel.testCell.frame
+
+        if gesture.state == .began {
+            viewModel.setStartPoint(startPoint: gesture.location(in: view))
+        }
+
+        if gesture.state == .ended {
+            viewModel.setEndPoint(endPoint: gesture.location(in: view))
+
+            let xDistance = abs(viewModel.startPoint.x - viewModel.endPoint.x)
+
+            if xDistance > 60 || abs(gesture.velocity(in: testCellImageView).x) > 500 {
+                let swipeDirection = gesture.velocity(in: testCellImageView).x < 0 ? -1 : 1
+                let offsetDistance = 400 * swipeDirection
+                UIView.animate(withDuration: 0.3) {
+                    self.testCellImageView.frame = .init(origin: .init(x: originalFrame.minX + CGFloat(offsetDistance),
+                                                                       y: originalFrame.minY),
+                                                         size: self.viewModel.testCell.frame.size)
+                }
+            } else {
+                UIView.animate(withDuration: 0.3) {
+                    self.testCellImageView.frame = .init(origin: originalFrame.origin,
+                                                         size: originalFrame.size)
                 }
             }
         }

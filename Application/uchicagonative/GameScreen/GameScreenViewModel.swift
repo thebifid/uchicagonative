@@ -52,6 +52,9 @@ class GameScreenViewModel {
 
     // MARK: - Public Properties
 
+    private(set) var startPoint: CGPoint = .zero
+    private(set) var endPoint: CGPoint = .zero
+
     /// Background color for the whole view. Available when session configuration is available.
     var backgroundColor: UIColor? {
         return UIColor(hexString: sessionConfiguration.backgroundColor)
@@ -94,6 +97,14 @@ class GameScreenViewModel {
         gameResult.setGameRoundColorsInfo(colorsInfo: cells.map { $0.color })
     }
 
+    func setStartPoint(startPoint: CGPoint) {
+        self.startPoint = startPoint
+    }
+
+    func setEndPoint(endPoint: CGPoint) {
+        self.endPoint = endPoint
+    }
+
     func fetchSessionConfigurations(completion: @escaping ((Result<Void, Error>) -> Void)) {
         FirebaseManager.sharedInstance.fetchSessionConfigurations(withSessionId: userSession.user.projectId) { [weak self] result in
             switch result {
@@ -131,7 +142,7 @@ class GameScreenViewModel {
     // change = is Correct or not
     private func generateTestCell(viewBounds: CGRect, change: Bool) {
         if change {
-            let randomNumber = Int.random(in: 0 ... cells.count)
+            let randomNumber = Int.random(in: 0 ... cells.count - 1)
             let cell = cells[randomNumber]
             testCell = cell
         } else {
