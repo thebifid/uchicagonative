@@ -54,7 +54,9 @@ struct SessionConfiguration {
     init?(rawDict: [String: Any]) {
         active = rawDict["active"] as? String ?? ""
         backgroundColor = rawDict["backgroundColor"] as? String ?? ""
-        changeProbability = rawDict["changeProbability"] as? Float ?? 0
+//        changeProbability = rawDict["changeProbability"] as? Float ?? 0
+        let change = rawDict["changeProbability"] as? Double ?? 0
+        changeProbability = Float(change)
         colorPaletteId = rawDict["colorPaletteId"] as? String ?? ""
         colorPaletteName = rawDict["colorPaletteName"] as? String ?? ""
         colors = rawDict["colors"] as? [String] ?? []

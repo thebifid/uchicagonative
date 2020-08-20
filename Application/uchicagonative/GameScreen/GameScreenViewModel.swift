@@ -34,6 +34,10 @@ class GameScreenViewModel {
     private(set) var cells = [Cell]()
     private(set) var testCell = Cell(frame: .zero, color: "#fffff")
 
+    private var currentRound = 0
+
+    private var changeProbabilityArray = [Int]()
+
     /// Struct for saving game session result
     private var gameResult = GameResult()
 
@@ -102,6 +106,7 @@ class GameScreenViewModel {
                 self.sessionConfiguration = sessionConfiguration
                 self.didFetchSessionConfiguration?()
                 completion(.success(()))
+                self.generateChangeProbability()
             }
         }
     }
@@ -115,7 +120,10 @@ class GameScreenViewModel {
                             color: chooseColor(index, config: config))
             cells.append(cell)
         }
-        generateTestCell(viewBounds: viewBounds, change: false) // !!!
+
+        let change = changeProbabilityArray[currentRound] == 1 ? true : false
+        currentRound += 1
+        generateTestCell(viewBounds: viewBounds, change: change)
     }
 
     // MARK: - Private Methods
@@ -156,6 +164,20 @@ class GameScreenViewModel {
         }
         let color = config.colors[newIndex]
         return color
+    }
+
+    private func generateChangeProbability() {
+        changeProbabilityArray.removeAll()
+        for _ in 0 ... sessionConfiguration.numberOfTrials {
+            let chance = 100 * sessionConfiguration.changeProbability
+            let generatedValue = Float.random(in: 0 ... 99)
+
+            if generatedValue > chance {
+                changeProbabilityArray.append(0)
+            } else {
+                changeProbabilityArray.append(1)
+            }
+        }
     }
 }
 
