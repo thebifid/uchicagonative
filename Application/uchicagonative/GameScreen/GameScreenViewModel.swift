@@ -124,10 +124,13 @@ class GameScreenViewModel {
 
     /// Write round info in GameResult struct
     func setRoundInfo() {
-        roundResult.setGameRoundCellsLocationInfo(locationInfo: cells.map { $0.location })
-        roundResult.setGameRoundCellsColorInfo(colorsInfo: cells.map { $0.color })
+        let locationInfo = cells.map { $0.location }
+        roundResult.setGameRoundCellsLocationInfo(locationInfo: fromTwoDimensionalArrayToString(array: locationInfo))
+        let colorsInfo = cells.map { $0.color }
+        roundResult.setGameRoundCellsColorInfo(colorsInfo: fromOneDimensionalArrayToString(array: colorsInfo))
+        roundResult.setGameRoundTestCellLocationInfo(locationInfo: fromOneDimensionalArrayToString(array: testCell.location,
+                                                                                                   withSeparator: ":"))
 
-        roundResult.setGameRoundTestCellLocationInfo(locationInfo: testCell.location)
         roundResult.setGameRoundTestCellColorInfo(colorInfo: testCell.color)
 
         roundResult.setTestPresentationTime(testPresentationTime: testPresentationTime)
@@ -142,6 +145,7 @@ class GameScreenViewModel {
         roundResult.setGestureDirection(direction: gestureDirection)
         roundResult.setShouldMatch(shouldMatch: shouldMatch)
 
+        FirebaseManager.sharedInstance.addDocumentToBlocks(attributes: ["test": roundResult.locations])
 
         print(roundResult)
     }
@@ -266,9 +270,40 @@ class GameScreenViewModel {
         return formattedDate
     }
 
-    func convertDateToMiliseconds(date: Date) -> Int {
+    private func convertDateToMiliseconds(date: Date) -> Int {
         let since1970 = date.timeIntervalSince1970
         return Int(since1970 * 1000)
+    }
+
+    private func fromTwoDimensionalArrayToString<T: LosslessStringConvertible>(array: [[T]]) -> String {
+        var stringFromArray: String = ""
+
+        array.forEach { OneDimensionalArray in
+            stringFromArray.append(contentsOf: fromOneDimensionalArrayToString(array: OneDimensionalArray, withSeparator: ":"))
+            stringFromArray.append(contentsOf: ";")
+        }
+
+        stringFromArray.insert("[", at: stringFromArray.startIndex)
+        stringFromArray.removeLast()
+        stringFromArray.insert("]", at: stringFromArray.endIndex)
+
+        return stringFromArray
+    }
+
+    private func fromOneDimensionalArrayToString<T: LosslessStringConvertible>(array: [T], withSeparator: String = ";") -> String {
+        var stringFromArray: String = ""
+        let separator = withSeparator
+
+        array.forEach {
+            stringFromArray.append(contentsOf: String($0))
+            stringFromArray.append(contentsOf: separator)
+        }
+
+        stringFromArray.insert("[", at: stringFromArray.startIndex)
+        stringFromArray.removeLast()
+        stringFromArray.insert("]", at: stringFromArray.endIndex)
+
+        return stringFromArray
     }
 }
 

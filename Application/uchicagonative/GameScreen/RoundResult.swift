@@ -21,21 +21,21 @@ struct RoundResult {
     private(set) var testPresentationTime: String = ""
     private(set) var gestureDuration: Int = 0
 
-    private(set) var locations = [[Int]]()
-    private(set) var colors = [String]()
+    private(set) var locations: String = ""
+    private(set) var colors: String = ""
 
-    private(set) var testLocation = [Int]()
+    private(set) var testLocation: String = ""
     private(set) var testColor: String = ""
 
-    mutating func setGameRoundCellsLocationInfo(locationInfo location: [[Int]]) {
+    mutating func setGameRoundCellsLocationInfo(locationInfo location: String) {
         locations = location
     }
 
-    mutating func setGameRoundCellsColorInfo(colorsInfo color: [String]) {
+    mutating func setGameRoundCellsColorInfo(colorsInfo color: String) {
         colors = color
     }
 
-    mutating func setGameRoundTestCellLocationInfo(locationInfo location: [Int]) {
+    mutating func setGameRoundTestCellLocationInfo(locationInfo location: String) {
         testLocation = location
     }
 
