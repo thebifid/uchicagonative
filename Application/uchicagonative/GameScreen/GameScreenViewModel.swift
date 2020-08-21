@@ -34,7 +34,7 @@ class GameScreenViewModel {
     private var changeProbabilityArray = [Int]()
 
     /// Struct for saving game session result
-    private var gameResult = RoundResult()
+    private var roundResult = RoundResult()
 
     /// Map icon name from server to icon name in app
     private let iconDictionary = [
@@ -124,25 +124,26 @@ class GameScreenViewModel {
 
     /// Write round info in GameResult struct
     func setRoundInfo() {
-        gameResult.setGameRoundCellsLocationInfo(locationInfo: cells.map { $0.location })
-        gameResult.setGameRoundCellsColorInfo(colorsInfo: cells.map { $0.color })
+        roundResult.setGameRoundCellsLocationInfo(locationInfo: cells.map { $0.location })
+        roundResult.setGameRoundCellsColorInfo(colorsInfo: cells.map { $0.color })
 
-        gameResult.setGameRoundTestCellLocationInfo(locationInfo: testCell.location)
-        gameResult.setGameRoundTestCellColorInfo(colorInfo: testCell.color)
+        roundResult.setGameRoundTestCellLocationInfo(locationInfo: testCell.location)
+        roundResult.setGameRoundTestCellColorInfo(colorInfo: testCell.color)
 
-        gameResult.setTestPresentationTime(testPresentationTime: testPresentationTime)
-        gameResult.setResponseStartTime(responseStartTime: responseStartTime)
-        gameResult.setResponseEndTime(responseEndTime: responseEndTime)
-        gameResult.setGestureDuration(gestureDuration: gestureDuration)
-        gameResult.setReactionTime(reactionTime: reactionTime)
+        roundResult.setTestPresentationTime(testPresentationTime: testPresentationTime)
+        roundResult.setResponseStartTime(responseStartTime: responseStartTime)
+        roundResult.setResponseEndTime(responseEndTime: responseEndTime)
+        roundResult.setGestureDuration(gestureDuration: gestureDuration)
+        roundResult.setReactionTime(reactionTime: reactionTime)
 
-        gameResult.setSwipeDistanceX(distanceX: Float(swipeDistanceX))
-        gameResult.setSwipeDistanceY(distanceY: Float(swipeDistanceY))
+        roundResult.setSwipeDistanceX(distanceX: Float(swipeDistanceX))
+        roundResult.setSwipeDistanceY(distanceY: Float(swipeDistanceY))
 
-        gameResult.setGestureDirection(direction: gestureDirection)
-        gameResult.setShouldMatch(shouldMatch: shouldMatch)
+        roundResult.setGestureDirection(direction: gestureDirection)
+        roundResult.setShouldMatch(shouldMatch: shouldMatch)
 
-        print(gameResult)
+
+        print(roundResult)
     }
 
     /// Set start point of user swipe

@@ -95,6 +95,13 @@ class FirebaseManager {
                               attributes: attributes, completion: completion)
     }
 
+    /// TEMP
+    func addDocumentToBlocks(attributes: [String: Any]) {
+        let collection = "blocks"
+        addDocumentToFireBase(collection: collection, documentName: "testDocument", attributes: attributes) { _ in
+        }
+    }
+
     /// Main method for add documents in firestore. Add document to collection from params.
     private func addDocumentToFireBase(collection: String, documentName: String, attributes: [String: Any],
                                        completion: @escaping (Result<Void, Error>) -> Void) {

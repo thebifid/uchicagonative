@@ -9,23 +9,23 @@
 import Foundation
 
 struct RoundResult {
-    private var accuracy: Int = 0 //
-    private var gestureDirection: String = ""
-    private var reactionTime: Int = 0
-    private var responseEndTime: String = ""
-    private var responseStartTime: String = ""
-    private var shouldMatch: Bool = false //
-    private var startedAt: String = "" // ??
-    private var swipeDistanceX: Float = 0
-    private var swipeDistanceY: Float = 0
-    private var testPresentationTime: String = ""
-    private var gestureDuration: Int = 0
+    private(set) var accuracy: Int = 0 //
+    private(set) var gestureDirection: String = ""
+    private(set) var reactionTime: Int = 0
+    private(set) var responseEndTime: String = ""
+    private(set) var responseStartTime: String = ""
+    private(set) var shouldMatch: Bool = false //
+    private(set) var startedAt: String = "" // ??
+    private(set) var swipeDistanceX: Float = 0
+    private(set) var swipeDistanceY: Float = 0
+    private(set) var testPresentationTime: String = ""
+    private(set) var gestureDuration: Int = 0
 
-    private var locations = [[Int]]()
-    private var colors = [String]()
+    private(set) var locations = [[Int]]()
+    private(set) var colors = [String]()
 
-    private var testLocation = [Int]()
-    private var testColor: String = ""
+    private(set) var testLocation = [Int]()
+    private(set) var testColor: String = ""
 
     mutating func setGameRoundCellsLocationInfo(locationInfo location: [[Int]]) {
         locations = location
