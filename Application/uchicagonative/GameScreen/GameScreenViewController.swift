@@ -82,6 +82,14 @@ class GameScreenViewController: UIViewController {
             let timeToShowNotification = Float(self.viewModel.interTrialInterval) * 0.6
             self.notification.show(type: type, withDelay: Int(timeToShowNotification))
         }
+
+        viewModel.didGameEnd = { [weak self] in
+            guard let self = self else { return }
+            self.scrollView.backgroundColor = .orange
+            self.view.gestureRecognizers?.forEach { recognizer in
+                self.view.removeGestureRecognizer(recognizer)
+            }
+        }
     }
 
     @objc private func handlePlay() {
@@ -113,8 +121,8 @@ class GameScreenViewController: UIViewController {
                     self.viewModel.setTestPresentationTime()
                     self.testCellImageView.isHidden = false
 
-                    let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.draggedView))
                     self.view.isUserInteractionEnabled = true
+                    let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.draggedView))
                     self.view.addGestureRecognizer(panGesture)
                 }
             }

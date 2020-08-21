@@ -123,6 +123,7 @@ class GameScreenViewModel {
     var didFetchSessionConfiguration: (() -> Void)?
     var didRoundEnd: (() -> Void)?
     var showNotificationToUser: (() -> Void)?
+    var didGameEnd: (() -> Void)?
 
     // MARK: - Public Methods
 
@@ -168,6 +169,8 @@ class GameScreenViewModel {
     private func nextRound() {
         if currentRound < numberOfTrials {
             didRoundEnd?()
+        } else {
+            didGameEnd?()
         }
     }
 
