@@ -28,6 +28,8 @@ class GameScreenViewController: UIViewController {
     private var cellImageViews: [SvgImageView] = []
     private var testCellImageView = SvgImageView(frame: .zero)
 
+    private lazy var notification = NotificationView(to: self)
+
     // MARK: - Enums
 
     enum SwipeDirection: String {
@@ -68,6 +70,18 @@ class GameScreenViewController: UIViewController {
             self?.scrollView.backgroundColor = self?.viewModel.backgroundColor
             self?.playButton.isEnabled = true
         }
+
+        viewModel.didRoundEnd = { [weak self] in
+            self?.playRound()
+            self?.view.isUserInteractionEnabled = false
+        }
+
+        viewModel.showNotificationToUser = { [weak self] in
+            guard let self = self else { return }
+            let type = self.viewModel.roundResult.accuracy == 0 ? NotificationView.TypeNotification.failure : .success
+            let timeToShowNotification = Float(self.viewModel.interTrialInterval) * 0.6
+            self.notification.show(type: type, withDelay: Int(timeToShowNotification))
+        }
     }
 
     @objc private func handlePlay() {
@@ -79,10 +93,6 @@ class GameScreenViewController: UIViewController {
     }
 
     private func playGame() {
-        viewModel.didRoundEnd = { [weak self] in
-
-            self?.playRound()
-        }
         viewModel.startGame()
     }
 
@@ -142,7 +152,7 @@ class GameScreenViewController: UIViewController {
                                                          size: self.viewModel.testCell.frame.size)
                 }
                 viewModel.setGestureDirection(direction: swipeDirection.rawValue)
-                viewModel.setRoundInfo()
+                viewModel.roundEnded()
             } else {
                 UIView.animate(withDuration: 0.3) {
                     self.testCellImageView.frame = .init(origin: originalFrame.origin,

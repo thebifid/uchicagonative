@@ -20,7 +20,7 @@ class PickerViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
 
     private let menuView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white // R.color.lightGrayCustom()
+        view.backgroundColor = .white
         return view
     }()
 

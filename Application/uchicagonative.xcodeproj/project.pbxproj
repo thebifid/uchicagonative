@@ -73,6 +73,7 @@
 		C1DDE19F24EF81F8004C2DAD /* Sample.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DDE19E24EF81F8004C2DAD /* Sample.swift */; };
 		C1DDE1AF24EF9FB7004C2DAD /* GameScreenViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DDE1AE24EF9FB7004C2DAD /* GameScreenViewModelTests.swift */; };
 		C1DDE1B124EFB8D4004C2DAD /* Trials.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DDE1B024EFB8D4004C2DAD /* Trials.swift */; };
+		C1DDE1B824EFD636004C2DAD /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DDE1B724EFD636004C2DAD /* NotificationView.swift */; };
 		C1FD150324D152F700188BE0 /* CheckFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1FD150224D152F700188BE0 /* CheckFields.swift */; };
 		DCFE8439F703789B6F951BAD /* libPods-uchicagonativeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 69FB28B26A8E0665B1F2328E /* libPods-uchicagonativeTests.a */; };
 /* End PBXBuildFile section */
@@ -163,6 +164,7 @@
 		C1DDE1A824EF9DF1004C2DAD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C1DDE1AE24EF9FB7004C2DAD /* GameScreenViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScreenViewModelTests.swift; sourceTree = "<group>"; };
 		C1DDE1B024EFB8D4004C2DAD /* Trials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trials.swift; sourceTree = "<group>"; };
+		C1DDE1B724EFD636004C2DAD /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		C1FD150224D152F700188BE0 /* CheckFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckFields.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -209,6 +211,7 @@
 		C116347B24C6B3CF00B6C394 /* uchicagonative */ = {
 			isa = PBXGroup;
 			children = (
+				C1DDE1B624EFD625004C2DAD /* NotificationView */,
 				C13B712324D6C4C70035EF8F /* PickerViewController */,
 				C1713CF524CFD79C002D0E04 /* FireBaseManager */,
 				C1713CF224CFCC93002D0E04 /* PopupMenu */,
@@ -462,6 +465,14 @@
 				C1DDE1A824EF9DF1004C2DAD /* Info.plist */,
 			);
 			path = uchicagonativeTests;
+			sourceTree = "<group>";
+		};
+		C1DDE1B624EFD625004C2DAD /* NotificationView */ = {
+			isa = PBXGroup;
+			children = (
+				C1DDE1B724EFD636004C2DAD /* NotificationView.swift */,
+			);
+			path = NotificationView;
 			sourceTree = "<group>";
 		};
 		E11E9708F4C4490F52D0621F /* Frameworks */ = {
@@ -734,6 +745,7 @@
 				C116348124C6B3CF00B6C394 /* LoginViewController.swift in Sources */,
 				C1713C8B24C94B23002D0E04 /* RootViewController.swift in Sources */,
 				C116347D24C6B3CF00B6C394 /* AppDelegate.swift in Sources */,
+				C1DDE1B824EFD636004C2DAD /* NotificationView.swift in Sources */,
 				C1713C9724CA8F10002D0E04 /* CustomTextFieldView.swift in Sources */,
 				C1713CF424CFCCC4002D0E04 /* PopupMenu.swift in Sources */,
 				C16DD97424DD60F400EAC82E /* SvgImageView.swift in Sources */,

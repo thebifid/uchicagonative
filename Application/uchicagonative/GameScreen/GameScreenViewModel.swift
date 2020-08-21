@@ -115,18 +115,26 @@ class GameScreenViewModel {
     }
 
     var shouldMatch: Bool {
-        return changeProbabilityArray[currentRound] == 0 ? false : true
+        return changeProbabilityArray[currentRound] == 1 ? true : false
     }
 
     // MARK: - Handlers
 
     var didFetchSessionConfiguration: (() -> Void)?
     var didRoundEnd: (() -> Void)?
+    var showNotificationToUser: (() -> Void)?
 
     // MARK: - Public Methods
 
+    func roundEnded() {
+        setRoundInfo()
+        showNotification()
+        currentRound += 1
+        nextRound()
+    }
+
     /// Write round info in GameResult class
-    func setRoundInfo() {
+    private func setRoundInfo() {
         let locationInfo = cells.map { $0.location }
         roundResult.setGameRoundCellsLocationInfo(locationInfo: fromTwoDimensionalArrayToString(array: locationInfo))
         let colorsInfo = cells.map { $0.color }
@@ -150,19 +158,21 @@ class GameScreenViewModel {
         trials.addResult(result: roundResult)
         trials.addSample(sample: Sample(cells: cells))
         trials.addTest(test: Test(cell: testCell))
-
-        nextRound()
     }
 
     func startGame() {
         nextRound()
+        print(changeProbabilityArray)
     }
 
     private func nextRound() {
         if currentRound < numberOfTrials {
             didRoundEnd?()
         }
-        currentRound += 1
+    }
+
+    private func showNotification() {
+        showNotificationToUser?()
     }
 
     /// Set start point of user swipe
@@ -265,7 +275,7 @@ class GameScreenViewModel {
 
     private func generateChangeProbability() {
         changeProbabilityArray.removeAll()
-        for _ in 0 ... sessionConfiguration.numberOfTrials {
+        for _ in 0 ..< sessionConfiguration.numberOfTrials {
             let chance = 100 * sessionConfiguration.changeProbability
             let generatedValue = Float.random(in: 0 ... 99)
 
