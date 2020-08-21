@@ -28,6 +28,12 @@ class GameScreenViewController: UIViewController {
     private var cellImageViews: [SvgImageView] = []
     private var testCellImageView = SvgImageView(frame: .zero)
 
+    // MARK: - Enums
+
+    enum SwipeDirection: String {
+        case left, right
+    }
+
     // MARK: - Init
 
     init(viewModel model: GameScreenViewModel) {
@@ -114,13 +120,20 @@ class GameScreenViewController: UIViewController {
             viewModel.setEndPoint(endPoint: gesture.location(in: view))
 
             if viewModel.swipeDistanceX > 60 || abs(gesture.velocity(in: testCellImageView).x) > 500 {
-                let swipeDirection = gesture.velocity(in: testCellImageView).x < 0 ? -1 : 1
-                let offsetDistance = 400 * swipeDirection
+                let swipeDirection = gesture.velocity(in: testCellImageView).x < 0 ? SwipeDirection.left : .right
+                var offsetDistance = 400
+                switch swipeDirection {
+                case .left:
+                    offsetDistance = -offsetDistance
+                case .right:
+                    break
+                }
                 UIView.animate(withDuration: 0.3) {
                     self.testCellImageView.frame = .init(origin: .init(x: originalFrame.minX + CGFloat(offsetDistance),
                                                                        y: originalFrame.minY),
                                                          size: self.viewModel.testCell.frame.size)
                 }
+                viewModel.setGestureDirection(direction: swipeDirection.rawValue)
                 viewModel.setRoundInfo()
             } else {
                 UIView.animate(withDuration: 0.3) {

@@ -8,44 +8,47 @@
 
 import Foundation
 
-struct GameResult {
-    private var cellsLocationsInfo = [[[Int]]]()
-    private var cellsColorsInfo = [[String]]()
-
-    private var testCellLocationsInfo = [[Int]]()
-    private var testCellColorsInfo = [String]()
-
-    private var testPresentationTime = [String]()
-    private var responseStartTime = [String]()
-    private var responseEndTime = [String]()
-    private var gestureDuration = [Int]()
-    private var reactionTime = [Int]()
-
+struct RoundResult {
+    private var accuracy: Int = 0 //
+    private var gestureDirection: String = ""
+    private var reactionTime: Int = 0
+    private var responseEndTime: String = ""
+    private var responseStartTime: String = ""
+    private var shouldMatch: Bool = false //
+    private var startedAt: String = "" // ??
     private var swipeDistanceX: Float = 0
     private var swipeDistanceY: Float = 0
+    private var testPresentationTime: String = ""
+    private var gestureDuration: Int = 0
+
+    private var locations = [[Int]]()
+    private var colors = [String]()
+
+    private var testLocation = [Int]()
+    private var testColor: String = ""
 
     mutating func setGameRoundCellsLocationInfo(locationInfo location: [[Int]]) {
-        cellsLocationsInfo.append(location)
+        locations = location
     }
 
     mutating func setGameRoundCellsColorInfo(colorsInfo color: [String]) {
-        cellsColorsInfo.append(color)
+        colors = color
     }
 
     mutating func setGameRoundTestCellLocationInfo(locationInfo location: [Int]) {
-        testCellLocationsInfo.append(location)
+        testLocation = location
     }
 
     mutating func setGameRoundTestCellColorInfo(colorInfo color: String) {
-        testCellColorsInfo.append(color)
+        testColor = color
     }
 
     mutating func setTestPresentationTime(testPresentationTime: String) {
-        self.testPresentationTime.append(testPresentationTime)
+        self.testPresentationTime = testPresentationTime
     }
 
     mutating func setResponseStartTime(responseStartTime: String) {
-        self.responseStartTime.append(responseStartTime)
+        self.responseStartTime = responseStartTime
     }
 
     mutating func setResponseEndTime(responseEndTime: String) {
@@ -53,11 +56,11 @@ struct GameResult {
     }
 
     mutating func setGestureDuration(gestureDuration: Int) {
-        self.gestureDuration.append(gestureDuration)
+        self.gestureDuration = gestureDuration
     }
 
     mutating func setReactionTime(reactionTime: Int) {
-        self.reactionTime.append(reactionTime)
+        self.reactionTime = reactionTime
     }
 
     mutating func setSwipeDistanceX(distanceX: Float) {
@@ -66,5 +69,13 @@ struct GameResult {
 
     mutating func setSwipeDistanceY(distanceY: Float) {
         swipeDistanceY = distanceY
+    }
+
+    mutating func setGestureDirection(direction: String) {
+        gestureDirection = direction
+    }
+
+    mutating func setShouldMatch(shouldMatch: Bool) {
+        self.shouldMatch = shouldMatch
     }
 }

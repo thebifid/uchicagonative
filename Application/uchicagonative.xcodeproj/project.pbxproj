@@ -34,7 +34,7 @@
 		C16DD97B24DD696B00EAC82E /* wrestling.svg in Resources */ = {isa = PBXBuildFile; fileRef = C16DD97724DD696B00EAC82E /* wrestling.svg */; };
 		C16DD97C24DD696B00EAC82E /* square.svg in Resources */ = {isa = PBXBuildFile; fileRef = C16DD97824DD696B00EAC82E /* square.svg */; };
 		C16DD97E24E27A1200EAC82E /* SessionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16DD97D24E27A1200EAC82E /* SessionConfiguration.swift */; };
-		C16DD98024E3F65000EAC82E /* GameResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16DD97F24E3F64F00EAC82E /* GameResult.swift */; };
+		C16DD98024E3F65000EAC82E /* RoundResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16DD97F24E3F64F00EAC82E /* RoundResult.swift */; };
 		C1713C8624C937F9002D0E04 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C1713C8524C937F9002D0E04 /* GoogleService-Info.plist */; };
 		C1713C8B24C94B23002D0E04 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713C8A24C94B23002D0E04 /* RootViewController.swift */; };
 		C1713C8F24C9529E002D0E04 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1713C8E24C9529E002D0E04 /* SplashViewController.swift */; };
@@ -68,6 +68,9 @@
 		C19693FE24C833D10054296F /* Karla-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C19693F724C832EF0054296F /* Karla-Italic.ttf */; };
 		C19693FF24C833D30054296F /* Karla-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C19693F824C832F00054296F /* Karla-Regular.ttf */; };
 		C196940124C839320054296F /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C196940024C839320054296F /* UITextField+Extension.swift */; };
+		C1DDE19B24EF7BB0004C2DAD /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DDE19A24EF7BB0004C2DAD /* Cell.swift */; };
+		C1DDE19D24EF817F004C2DAD /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DDE19C24EF817F004C2DAD /* Test.swift */; };
+		C1DDE19F24EF81F8004C2DAD /* Sample.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DDE19E24EF81F8004C2DAD /* Sample.swift */; };
 		C1FD150324D152F700188BE0 /* CheckFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1FD150224D152F700188BE0 /* CheckFields.swift */; };
 /* End PBXBuildFile section */
 
@@ -103,7 +106,7 @@
 		C16DD97724DD696B00EAC82E /* wrestling.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wrestling.svg; sourceTree = "<group>"; };
 		C16DD97824DD696B00EAC82E /* square.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = square.svg; sourceTree = "<group>"; };
 		C16DD97D24E27A1200EAC82E /* SessionConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionConfiguration.swift; sourceTree = "<group>"; };
-		C16DD97F24E3F64F00EAC82E /* GameResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameResult.swift; sourceTree = "<group>"; };
+		C16DD97F24E3F64F00EAC82E /* RoundResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundResult.swift; sourceTree = "<group>"; };
 		C1713C8524C937F9002D0E04 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C1713C8A24C94B23002D0E04 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		C1713C8E24C9529E002D0E04 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -137,6 +140,9 @@
 		C19693F924C832F00054296F /* Helvetica-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Helvetica-Medium.ttf"; sourceTree = "<group>"; };
 		C19693FA24C832F00054296F /* Karla-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Karla-BoldItalic.ttf"; sourceTree = "<group>"; };
 		C196940024C839320054296F /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
+		C1DDE19A24EF7BB0004C2DAD /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
+		C1DDE19C24EF817F004C2DAD /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
+		C1DDE19E24EF81F8004C2DAD /* Sample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sample.swift; sourceTree = "<group>"; };
 		C1FD150224D152F700188BE0 /* CheckFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckFields.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -252,7 +258,10 @@
 			children = (
 				C16DD96A24DD2D6F00EAC82E /* GameScreenViewController.swift */,
 				C16DD96C24DD2D7C00EAC82E /* GameScreenViewModel.swift */,
-				C16DD97F24E3F64F00EAC82E /* GameResult.swift */,
+				C16DD97F24E3F64F00EAC82E /* RoundResult.swift */,
+				C1DDE19E24EF81F8004C2DAD /* Sample.swift */,
+				C1DDE19C24EF817F004C2DAD /* Test.swift */,
+				C1DDE19A24EF7BB0004C2DAD /* Cell.swift */,
 			);
 			path = GameScreen;
 			sourceTree = "<group>";
@@ -628,7 +637,7 @@
 				C1713CEC24CEC7B3002D0E04 /* AlertAssist.swift in Sources */,
 				C1FD150324D152F700188BE0 /* CheckFields.swift in Sources */,
 				C19693D024C6C61A0054296F /* VerticalStackView.swift in Sources */,
-				C16DD98024E3F65000EAC82E /* GameResult.swift in Sources */,
+				C16DD98024E3F65000EAC82E /* RoundResult.swift in Sources */,
 				C116348124C6B3CF00B6C394 /* LoginViewController.swift in Sources */,
 				C1713C8B24C94B23002D0E04 /* RootViewController.swift in Sources */,
 				C116347D24C6B3CF00B6C394 /* AppDelegate.swift in Sources */,
@@ -637,6 +646,7 @@
 				C16DD97424DD60F400EAC82E /* SvgImageView.swift in Sources */,
 				C1713CF124CED5D1002D0E04 /* CreateAccountViewModel.swift in Sources */,
 				C1713CEA24CEAC50002D0E04 /* RecoverPasswordViewModel.swift in Sources */,
+				C1DDE19B24EF7BB0004C2DAD /* Cell.swift in Sources */,
 				C16DD96B24DD2D6F00EAC82E /* GameScreenViewController.swift in Sources */,
 				C135296324D3C2F10004D9B8 /* UIViewController+Extension.swift in Sources */,
 				C1713CF924CFE9E6002D0E04 /* CustomSelectButtonView.swift in Sources */,
@@ -647,12 +657,14 @@
 				C19693EA24C710AF0054296F /* SendFeedbackViewController.swift in Sources */,
 				C1713C9324C99D3D002D0E04 /* UIView+ExtensionLayout.swift in Sources */,
 				C16DD95E24DA7A4E00EAC82E /* User.swift in Sources */,
+				C1DDE19F24EF81F8004C2DAD /* Sample.swift in Sources */,
 				C19693E424C6FC370054296F /* AboutUsViewController.swift in Sources */,
 				C19693D524C6CEF40054296F /* Constants.swift in Sources */,
 				C1713C9524CA88C4002D0E04 /* PrimaryButton.swift in Sources */,
 				C19693E724C70B270054296F /* GetHelpViewController.swift in Sources */,
 				C116349524C6B6E100B6C394 /* R.generated.swift in Sources */,
 				C19693E224C6FA820054296F /* UILabel+Extension.swift in Sources */,
+				C1DDE19D24EF817F004C2DAD /* Test.swift in Sources */,
 				C1713CEF24CED257002D0E04 /* CreateAccountViewController.swift in Sources */,
 				C1713C8F24C9529E002D0E04 /* SplashViewController.swift in Sources */,
 				C135296524D3F4380004D9B8 /* EditProfileViewModel.swift in Sources */,

@@ -10,16 +10,6 @@ import Foundation
 import UIKit
 
 class GameScreenViewModel {
-    /// Represents position, size and color of a cell.
-    struct Cell {
-        let frame: CGRect
-        let color: String
-
-        var location: [Int] {
-            return [Int(frame.origin.x), Int(frame.origin.y)]
-        }
-    }
-
     // MARK: - Init
 
     init(userSession: UserSession, sessionConfiguration: SessionConfiguration) {
@@ -32,18 +22,19 @@ class GameScreenViewModel {
     private let userSession: UserSession
     private var sessionConfiguration: SessionConfiguration
     private(set) var cells = [Cell]()
-    private(set) var testCell = Cell(frame: .zero, color: "#fffff")
+    private(set) var testCell = Cell(frame: .zero, color: "#ffff", iconName: "square", stimuliSize: 0)
 
-    private var currentRound = 0
+    private var currentRound = 0 // Переключения пока нет
 
     private var testPresentationTime = ""
     private var responseStartTime = ""
     private var responseEndTime = ""
+    private var gestureDirection = ""
 
     private var changeProbabilityArray = [Int]()
 
     /// Struct for saving game session result
-    private var gameResult = GameResult()
+    private var gameResult = RoundResult()
 
     /// Map icon name from server to icon name in app
     private let iconDictionary = [
@@ -121,6 +112,10 @@ class GameScreenViewModel {
         return abs(startPoint.y - endPoint.y)
     }
 
+    var shouldMatch: Bool {
+        return changeProbabilityArray[currentRound] == 0 ? false : true
+    }
+
     // MARK: - Handlers
 
     var didFetchSessionConfiguration: (() -> Void)?
@@ -143,6 +138,9 @@ class GameScreenViewModel {
 
         gameResult.setSwipeDistanceX(distanceX: Float(swipeDistanceX))
         gameResult.setSwipeDistanceY(distanceY: Float(swipeDistanceY))
+
+        gameResult.setGestureDirection(direction: gestureDirection)
+        gameResult.setShouldMatch(shouldMatch: shouldMatch)
 
         print(gameResult)
     }
@@ -169,6 +167,10 @@ class GameScreenViewModel {
         responseEndTime = currentStringDate()
     }
 
+    func setGestureDirection(direction: String) {
+        gestureDirection = direction
+    }
+
     func fetchSessionConfigurations(completion: @escaping ((Result<Void, Error>) -> Void)) {
         FirebaseManager.sharedInstance.fetchSessionConfigurations(withSessionId: userSession.user.projectId) { [weak self] result in
             switch result {
@@ -192,12 +194,11 @@ class GameScreenViewModel {
         cells = []
         for index in 0 ..< config.setSize {
             let cell = Cell(frame: generateRect(viewBounds: viewBounds, config: config, occupiedRects: cells.map { $0.frame }),
-                            color: chooseColor(index, config: config))
+                            color: chooseColor(index, config: config), iconName: config.iconName, stimuliSize: Int(config.stimuliSize))
             cells.append(cell)
         }
 
         let change = changeProbabilityArray[currentRound] == 1 ? true : false
-        currentRound += 1
         generateTestCell(viewBounds: viewBounds, change: change)
     }
 
@@ -213,7 +214,8 @@ class GameScreenViewModel {
             let config = sessionConfiguration
             let randomNumberForColor = Int.random(in: 0 ... config.colors.count)
             let cell = Cell(frame: generateRect(viewBounds: viewBounds, config: config, occupiedRects: cells.map { $0.frame }),
-                            color: chooseColor(randomNumberForColor, config: config))
+                            color: chooseColor(randomNumberForColor, config: config),
+                            iconName: config.iconName, stimuliSize: Int(config.stimuliSize))
             testCell = cell
         }
     }
