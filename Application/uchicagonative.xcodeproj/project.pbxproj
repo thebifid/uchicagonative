@@ -72,6 +72,7 @@
 		C1DDE19D24EF817F004C2DAD /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DDE19C24EF817F004C2DAD /* Test.swift */; };
 		C1DDE19F24EF81F8004C2DAD /* Sample.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DDE19E24EF81F8004C2DAD /* Sample.swift */; };
 		C1DDE1AF24EF9FB7004C2DAD /* GameScreenViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DDE1AE24EF9FB7004C2DAD /* GameScreenViewModelTests.swift */; };
+		C1DDE1B124EFB8D4004C2DAD /* Trials.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DDE1B024EFB8D4004C2DAD /* Trials.swift */; };
 		C1FD150324D152F700188BE0 /* CheckFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1FD150224D152F700188BE0 /* CheckFields.swift */; };
 		DCFE8439F703789B6F951BAD /* libPods-uchicagonativeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 69FB28B26A8E0665B1F2328E /* libPods-uchicagonativeTests.a */; };
 /* End PBXBuildFile section */
@@ -161,6 +162,7 @@
 		C1DDE1A424EF9DF1004C2DAD /* uchicagonativeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = uchicagonativeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1DDE1A824EF9DF1004C2DAD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C1DDE1AE24EF9FB7004C2DAD /* GameScreenViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScreenViewModelTests.swift; sourceTree = "<group>"; };
+		C1DDE1B024EFB8D4004C2DAD /* Trials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trials.swift; sourceTree = "<group>"; };
 		C1FD150224D152F700188BE0 /* CheckFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckFields.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -286,6 +288,7 @@
 			children = (
 				C16DD96A24DD2D6F00EAC82E /* GameScreenViewController.swift */,
 				C16DD96C24DD2D7C00EAC82E /* GameScreenViewModel.swift */,
+				C1DDE1B024EFB8D4004C2DAD /* Trials.swift */,
 				C16DD97F24E3F64F00EAC82E /* RoundResult.swift */,
 				C1DDE19E24EF81F8004C2DAD /* Sample.swift */,
 				C1DDE19C24EF817F004C2DAD /* Test.swift */,
@@ -756,6 +759,7 @@
 				C19693E224C6FA820054296F /* UILabel+Extension.swift in Sources */,
 				C1DDE19D24EF817F004C2DAD /* Test.swift in Sources */,
 				C1713CEF24CED257002D0E04 /* CreateAccountViewController.swift in Sources */,
+				C1DDE1B124EFB8D4004C2DAD /* Trials.swift in Sources */,
 				C1713C8F24C9529E002D0E04 /* SplashViewController.swift in Sources */,
 				C135296524D3F4380004D9B8 /* EditProfileViewModel.swift in Sources */,
 				C19693DC24C6D93F0054296F /* EmptyViewController.swift in Sources */,

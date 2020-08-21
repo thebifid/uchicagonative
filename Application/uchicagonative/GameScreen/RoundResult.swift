@@ -9,12 +9,21 @@
 import Foundation
 
 struct RoundResult {
-    private(set) var accuracy: Int = 0 //
+    var accuracy: Int {
+        if shouldMatch, gestureDirection == "right" {
+            return 1
+        } else if !shouldMatch, gestureDirection == "left" {
+            return 1
+        } else {
+            return 0
+        }
+    }
+
     private(set) var gestureDirection: String = ""
     private(set) var reactionTime: Int = 0
     private(set) var responseEndTime: String = ""
     private(set) var responseStartTime: String = ""
-    private(set) var shouldMatch: Bool = false //
+    private(set) var shouldMatch: Bool = false
     private(set) var startedAt: String = "" // ??
     private(set) var swipeDistanceX: Float = 0
     private(set) var swipeDistanceY: Float = 0

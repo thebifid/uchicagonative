@@ -33,8 +33,10 @@ class GameScreenViewModel {
 
     private var changeProbabilityArray = [Int]()
 
-    /// Struct for saving game session result
-    private var roundResult = RoundResult()
+    private var trials = Trials()
+    private var sample = Sample()
+    private var test = Test()
+    private(set) var roundResult = RoundResult()
 
     /// Map icon name from server to icon name in app
     private let iconDictionary = [
@@ -119,10 +121,11 @@ class GameScreenViewModel {
     // MARK: - Handlers
 
     var didFetchSessionConfiguration: (() -> Void)?
+    var didRoundEnd: (() -> Void)?
 
     // MARK: - Public Methods
 
-    /// Write round info in GameResult struct
+    /// Write round info in GameResult class
     func setRoundInfo() {
         let locationInfo = cells.map { $0.location }
         roundResult.setGameRoundCellsLocationInfo(locationInfo: fromTwoDimensionalArrayToString(array: locationInfo))
@@ -130,7 +133,6 @@ class GameScreenViewModel {
         roundResult.setGameRoundCellsColorInfo(colorsInfo: fromOneDimensionalArrayToString(array: colorsInfo))
         roundResult.setGameRoundTestCellLocationInfo(locationInfo: fromOneDimensionalArrayToString(array: testCell.location,
                                                                                                    withSeparator: ":"))
-
         roundResult.setGameRoundTestCellColorInfo(colorInfo: testCell.color)
 
         roundResult.setTestPresentationTime(testPresentationTime: testPresentationTime)
@@ -145,9 +147,22 @@ class GameScreenViewModel {
         roundResult.setGestureDirection(direction: gestureDirection)
         roundResult.setShouldMatch(shouldMatch: shouldMatch)
 
-        FirebaseManager.sharedInstance.addDocumentToBlocks(attributes: ["test": roundResult.locations])
+        trials.addResult(result: roundResult)
+        trials.addSample(sample: Sample(cells: cells))
+        trials.addTest(test: Test(cell: testCell))
 
-        print(roundResult)
+        nextRound()
+    }
+
+    func startGame() {
+        nextRound()
+    }
+
+    private func nextRound() {
+        if currentRound < numberOfTrials {
+            didRoundEnd?()
+        }
+        currentRound += 1
     }
 
     /// Set start point of user swipe

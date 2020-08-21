@@ -75,7 +75,15 @@ class GameScreenViewController: UIViewController {
         playButton.isHidden = true
 
         // will be loop for trials
-        playRound()
+        playGame()
+    }
+
+    private func playGame() {
+        viewModel.didRoundEnd = { [weak self] in
+
+            self?.playRound()
+        }
+        viewModel.startGame()
     }
 
     private func playRound() {
