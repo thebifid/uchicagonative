@@ -9,7 +9,7 @@
 import Foundation
 
 struct Trials {
-    private var id: Int {
+    var id: Int {
         return Int.random(in: 12 ... 12345)
     }
 

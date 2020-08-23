@@ -9,7 +9,7 @@
 import UIKit
 
 struct SessionConfiguration {
-    let active: String
+    let active: Bool
     let backgroundColor: String
     let changeProbability: Float
     let colorPaletteId: String
@@ -30,7 +30,7 @@ struct SessionConfiguration {
     let updatedAt: Any
 
     init() {
-        active = ""
+        active = false
         backgroundColor = ""
         changeProbability = 0
         colorPaletteId = ""
@@ -52,9 +52,8 @@ struct SessionConfiguration {
     }
 
     init?(rawDict: [String: Any]) {
-        active = rawDict["active"] as? String ?? ""
+        active = rawDict["active"] as? Bool ?? false
         backgroundColor = rawDict["backgroundColor"] as? String ?? ""
-//        changeProbability = rawDict["changeProbability"] as? Float ?? 0
         let change = rawDict["changeProbability"] as? Double ?? 0
         changeProbability = Float(change)
         colorPaletteId = rawDict["colorPaletteId"] as? String ?? ""

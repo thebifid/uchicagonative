@@ -38,6 +38,8 @@ class GameScreenViewModel {
     private var test = Test()
     private(set) var roundResult = RoundResult()
 
+    private var attributes = [String: Any]()
+
     /// Map icon name from server to icon name in app
     private let iconDictionary = [
         "the-punisher-seeklogo.com": "punisher",
@@ -134,48 +136,9 @@ class GameScreenViewModel {
         nextRound()
     }
 
-    /// Write round info in GameResult class
-    private func setRoundInfo() {
-        let locationInfo = cells.map { $0.location }
-        roundResult.setGameRoundCellsLocationInfo(locationInfo: fromTwoDimensionalArrayToString(array: locationInfo))
-        let colorsInfo = cells.map { $0.color }
-        roundResult.setGameRoundCellsColorInfo(colorsInfo: fromOneDimensionalArrayToString(array: colorsInfo))
-        roundResult.setGameRoundTestCellLocationInfo(locationInfo: fromOneDimensionalArrayToString(array: testCell.location,
-                                                                                                   withSeparator: ":"))
-        roundResult.setGameRoundTestCellColorInfo(colorInfo: testCell.color)
-
-        roundResult.setTestPresentationTime(testPresentationTime: testPresentationTime)
-        roundResult.setResponseStartTime(responseStartTime: responseStartTime)
-        roundResult.setResponseEndTime(responseEndTime: responseEndTime)
-        roundResult.setGestureDuration(gestureDuration: gestureDuration)
-        roundResult.setReactionTime(reactionTime: reactionTime)
-
-        roundResult.setSwipeDistanceX(distanceX: Float(swipeDistanceX))
-        roundResult.setSwipeDistanceY(distanceY: Float(swipeDistanceY))
-
-        roundResult.setGestureDirection(direction: gestureDirection)
-        roundResult.setShouldMatch(shouldMatch: shouldMatch)
-
-        trials.addResult(result: roundResult)
-        trials.addSample(sample: Sample(cells: cells))
-        trials.addTest(test: Test(cell: testCell))
-    }
-
     func startGame() {
         nextRound()
         print(changeProbabilityArray)
-    }
-
-    private func nextRound() {
-        if currentRound < numberOfTrials {
-            didRoundEnd?()
-        } else {
-            didGameEnd?()
-        }
-    }
-
-    private func showNotification() {
-        showNotificationToUser?()
     }
 
     /// Set start point of user swipe
@@ -236,6 +199,108 @@ class GameScreenViewModel {
     }
 
     // MARK: - Private Methods
+
+    private func sendDataToFirebase() {
+        formData()
+        FirebaseManager.sharedInstance.addDocumentToBlocks(attributes: attributes)
+    }
+
+    private func formData() {
+        attributes["config"] = formConfig()
+        attributes["trials"] = formTrials()
+    }
+
+    private func formConfig() -> [String: Any] {
+        let config: [String: Any] = [
+            "active": sessionConfiguration.active,
+            "backgroundColor": sessionConfiguration.backgroundColor,
+            "changeProbability": sessionConfiguration.changeProbability,
+            "colorPaletteId": sessionConfiguration.colorPaletteId,
+            "colorPaletteName": sessionConfiguration.colorPaletteName,
+            "colors": sessionConfiguration.colors,
+            "delayPeriod": sessionConfiguration.delayPeriod,
+            "iconName": sessionConfiguration.iconName,
+            "id": userSession.user.projectId,
+            "interTrialInterval": sessionConfiguration.interTrialInterval,
+            "name": sessionConfiguration.name,
+            "numberOfTrials": sessionConfiguration.numberOfTrials,
+            "sampleExposureDuration": sessionConfiguration.sampleExposureDuration,
+            "setSize": sessionConfiguration.setSize,
+            "stimuliSize": sessionConfiguration.stimuliSize
+        ]
+        return config
+    }
+
+    private func formTrials() -> [[String: Any]] {
+        var arrayOfTrials = [[String: Any]]()
+        for index in 0 ..< sessionConfiguration.numberOfTrials {
+            var trialToSend = [String: Any]()
+            trialToSend["id"] = trials.id
+
+            let currentTrial = trials.results[index]
+            var result = [String: Any]()
+            result["accuracy"] = currentTrial.accuracy
+            result["colors"] = currentTrial.colors
+            result["gestureDirection"] = currentTrial.gestureDirection
+            result["gestureDuration"] = currentTrial.gestureDuration
+            result["locations"] = currentTrial.locations
+            result["reactionTime"] = currentTrial.reactionTime
+            result["responseEndTime"] = currentTrial.responseEndTime
+            result["responseStartTime"] = currentTrial.responseStartTime
+            result["shouldMatch"] = currentTrial.shouldMatch
+            result["startedAt"] = currentTrial.startedAt
+            result["swipeDistanceX"] = currentTrial.swipeDistanceX
+            result["swipeDistanceY"] = currentTrial.swipeDistanceY
+            result["testColor"] = currentTrial.testColor
+            result["testLocation"] = currentTrial.testLocation
+            result["testPresentationTime"] = currentTrial.testPresentationTime
+
+            trialToSend["results"] = result
+
+            arrayOfTrials.append(trialToSend)
+        }
+        return arrayOfTrials
+    }
+
+    /// Write round info in GameResult class
+    private func setRoundInfo() {
+        let locationInfo = cells.map { $0.location }
+        roundResult.setGameRoundCellsLocationInfo(locationInfo: fromTwoDimensionalArrayToString(array: locationInfo))
+        let colorsInfo = cells.map { $0.color }
+        roundResult.setGameRoundCellsColorInfo(colorsInfo: fromOneDimensionalArrayToString(array: colorsInfo))
+        roundResult.setGameRoundTestCellLocationInfo(locationInfo: fromOneDimensionalArrayToString(array: testCell.location,
+                                                                                                   withSeparator: ":"))
+        roundResult.setGameRoundTestCellColorInfo(colorInfo: testCell.color)
+
+        roundResult.setTestPresentationTime(testPresentationTime: testPresentationTime)
+        roundResult.setResponseStartTime(responseStartTime: responseStartTime)
+        roundResult.setResponseEndTime(responseEndTime: responseEndTime)
+        roundResult.setGestureDuration(gestureDuration: gestureDuration)
+        roundResult.setReactionTime(reactionTime: reactionTime)
+
+        roundResult.setSwipeDistanceX(distanceX: Float(swipeDistanceX))
+        roundResult.setSwipeDistanceY(distanceY: Float(swipeDistanceY))
+
+        roundResult.setGestureDirection(direction: gestureDirection)
+        roundResult.setShouldMatch(shouldMatch: shouldMatch)
+
+        trials.addResult(result: roundResult)
+        trials.addSample(sample: Sample(cells: cells))
+        trials.addTest(test: Test(cell: testCell))
+    }
+
+    private func nextRound() {
+        if currentRound < numberOfTrials {
+            didRoundEnd?()
+        } else {
+            sendDataToFirebase()
+            didGameEnd?()
+        }
+    }
+
+    private func showNotification() {
+        showNotificationToUser?()
+    }
 
     // change = is Correct or not
     private func generateTestCell(viewBounds: CGRect, change: Bool) {
