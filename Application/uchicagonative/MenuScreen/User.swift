@@ -16,6 +16,7 @@ struct User {
     var gender: String
     var projectId: String
     var zipCode: Int
+    var id: String
 
     init() {
         firstName = ""
@@ -25,9 +26,10 @@ struct User {
         gender = ""
         projectId = ""
         zipCode = 0
+        id = ""
     }
 
-    init(email: String, projectId: String) {
+    init(email: String, projectId: String, id: String) {
         firstName = ""
         lastName = ""
         self.email = email
@@ -35,9 +37,10 @@ struct User {
         gender = ""
         self.projectId = projectId
         zipCode = 0
+        self.id = id
     }
 
-    init(firstName: String, lastName: String, email: String, birthYear: Int, gender: String, projectId: String, zipCode: Int) {
+    init(firstName: String, lastName: String, email: String, birthYear: Int, gender: String, projectId: String, zipCode: Int, id: String) {
         self.firstName = firstName
         self.lastName = lastName
         self.email = email
@@ -45,5 +48,6 @@ struct User {
         self.gender = gender
         self.projectId = projectId
         self.zipCode = zipCode
+        self.id = id
     }
 }

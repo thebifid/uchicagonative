@@ -87,4 +87,8 @@ struct RoundResult {
     mutating func setShouldMatch(shouldMatch: Bool) {
         self.shouldMatch = shouldMatch
     }
+
+    mutating func setStartedAt(startedAt: String) {
+        self.startedAt = startedAt
+    }
 }

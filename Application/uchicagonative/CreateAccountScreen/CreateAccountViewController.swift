@@ -237,7 +237,8 @@ class CreateAccountViewController: UIViewController {
             switch result {
             case let .success(message):
                 let alert = AlertAssist.showSuccessAlert(withMessage: message) { _ in
-                    let user = User(email: self?.viewModel.email ?? "", projectId: self?.viewModel.selectedGroup ?? "")
+                    let user = User(email: self?.viewModel.email ?? "", projectId: self?.viewModel.selectedGroup ?? "",
+                                    id: FirebaseAuth.Auth.auth().currentUser?.uid ?? "")
                     AppDelegate.shared.rootViewController.switchToMainScreen(userSession: UserSession(user: user))
                 }
                 self?.present(alert, animated: true)

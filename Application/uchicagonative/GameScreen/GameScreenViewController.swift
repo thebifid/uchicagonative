@@ -111,6 +111,7 @@ class GameScreenViewController: UIViewController {
         // show icons
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(viewModel.interTrialInterval)) {
             self.layoutCellImageViews()
+            self.viewModel.setStartedAt()
 
             // hide icons
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(self.viewModel.sampleExposureDuration)) {

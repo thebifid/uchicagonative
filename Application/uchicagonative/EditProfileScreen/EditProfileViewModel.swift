@@ -224,7 +224,9 @@ class EditProfileViewModel {
                                 birthYear: self.birthYear,
                                 gender: self.gender,
                                 projectId: self.availableGroupIdByName[self.project] ?? "",
-                                zipCode: Int(self.zipCode) ?? 0)
+                                zipCode: Int(self.zipCode) ?? 0,
+                                id: self.userSession.user.id)
+
                 self.userSession.setNewUserInfo(newUserInfo: user)
 
                 competion(.success(()))

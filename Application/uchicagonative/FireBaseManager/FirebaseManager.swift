@@ -59,6 +59,7 @@ class FirebaseManager {
                 userInfo["zipCode"] = data["zipCode"]
                 userInfo["projectId"] = data["projectId"]
                 userInfo["role"] = data["role"]
+                userInfo["id"] = uid
 
                 completion(.success(userInfo))
             }
@@ -79,7 +80,8 @@ class FirebaseManager {
                                 birthYear: data["birthYear"] as? Int ?? 0,
                                 gender: data["gender"] as? String ?? "",
                                 projectId: data["projectId"] as? String ?? "",
-                                zipCode: data["zipCode"] as? Int ?? 0)
+                                zipCode: data["zipCode"] as? Int ?? 0,
+                                id: uid)
                 completion(user)
             }
         }
@@ -95,10 +97,18 @@ class FirebaseManager {
                               attributes: attributes, completion: completion)
     }
 
-    /// TEMP
-    func addDocumentToBlocks(attributes: [String: Any]) {
+    /// Add new document to blocks collection.
+    func addDocumentToBlocks(attributes: [String: Any], completion: @escaping (Result<Void, Error>) -> Void) {
         let collection = "blocks"
-        addDocumentToFireBase(collection: collection, documentName: "testDocument", attributes: attributes) { _ in
+
+        db.collection(collection).document().setData(attributes) { error in
+
+            if let error = error {
+                completion(.failure(error))
+                return
+            } else {
+                completion(.success(()))
+            }
         }
     }
 
@@ -180,6 +190,7 @@ class FirebaseManager {
                 user.gender = userInfo["gender"] as? String ?? ""
                 user.projectId = userInfo["projectId"] as? String ?? ""
                 user.zipCode = userInfo["zipCode"] as? Int ?? 0
+                user.id = userInfo["id"] as? String ?? ""
                 completion(user)
             }
         }

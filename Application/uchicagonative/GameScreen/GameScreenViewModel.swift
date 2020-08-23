@@ -30,6 +30,7 @@ class GameScreenViewModel {
     private var responseStartTime = ""
     private var responseEndTime = ""
     private var gestureDirection = ""
+    private var startedAt = ""
 
     private var changeProbabilityArray = [Int]()
 
@@ -167,6 +168,10 @@ class GameScreenViewModel {
         gestureDirection = direction
     }
 
+    func setStartedAt() {
+        startedAt = currentStringDate()
+    }
+
     func fetchSessionConfigurations(completion: @escaping ((Result<Void, Error>) -> Void)) {
         FirebaseManager.sharedInstance.fetchSessionConfigurations(withSessionId: userSession.user.projectId) { [weak self] result in
             switch result {
@@ -202,12 +207,26 @@ class GameScreenViewModel {
 
     private func sendDataToFirebase() {
         formData()
-        FirebaseManager.sharedInstance.addDocumentToBlocks(attributes: attributes)
+
+        FirebaseManager.sharedInstance.addDocumentToBlocks(attributes: attributes) { result in
+            switch result {
+            case let .failure(error):
+                print(error.localizedDescription)
+            case .success:
+                print("ss") // !!
+            }
+        }
     }
 
     private func formData() {
         attributes["config"] = formConfig()
+
+//        attributes["createdAt"] ??
+        attributes["endedAt"] = currentStringDate()
+        attributes["startedAt"] = trials.results[0].startedAt
+
         attributes["trials"] = formTrials()
+        attributes["user"] = formUser()
     }
 
     private func formConfig() -> [String: Any] {
@@ -219,6 +238,8 @@ class GameScreenViewModel {
             "colorPaletteName": sessionConfiguration.colorPaletteName,
             "colors": sessionConfiguration.colors,
             "delayPeriod": sessionConfiguration.delayPeriod,
+            "feedbackDuration": sessionConfiguration.feedbackDuration,
+            "feedbackVibration": sessionConfiguration.feedbackVibration,
             "iconName": sessionConfiguration.iconName,
             "id": userSession.user.projectId,
             "interTrialInterval": sessionConfiguration.interTrialInterval,
@@ -237,58 +258,90 @@ class GameScreenViewModel {
             var trialToSend = [String: Any]()
             trialToSend["id"] = trials.id
 
-            let currentTrial = trials.results[index]
-            var result = [String: Any]()
-            result["accuracy"] = currentTrial.accuracy
-            result["colors"] = currentTrial.colors
-            result["gestureDirection"] = currentTrial.gestureDirection
-            result["gestureDuration"] = currentTrial.gestureDuration
-            result["locations"] = currentTrial.locations
-            result["reactionTime"] = currentTrial.reactionTime
-            result["responseEndTime"] = currentTrial.responseEndTime
-            result["responseStartTime"] = currentTrial.responseStartTime
-            result["shouldMatch"] = currentTrial.shouldMatch
-            result["startedAt"] = currentTrial.startedAt
-            result["swipeDistanceX"] = currentTrial.swipeDistanceX
-            result["swipeDistanceY"] = currentTrial.swipeDistanceY
-            result["testColor"] = currentTrial.testColor
-            result["testLocation"] = currentTrial.testLocation
-            result["testPresentationTime"] = currentTrial.testPresentationTime
-
-            var cells = [[String: Any]]()
-            trials.sample[index].cells.forEach { cell in
-                var cellToSend = [String: Any]()
-                cellToSend["color"] = cell.color
-                cellToSend["iconName"] = cell.iconName
-                cellToSend["id"] = cell.id
-                cellToSend["stimuliSize"] = cell.stimuliSize
-                cellToSend["x"] = cell.location[0]
-                cellToSend["y"] = cell.location[1]
-
-                cells.append(cellToSend)
-            }
-            let sample: [String: Any] = ["cells": cells]
-
-            var test = [[String: Any]]()
-
-            let testCell = trials.test[index].cell
-            var testCellToSend = [String: Any]()
-            testCellToSend["color"] = testCell.color
-            testCellToSend["iconName"] = testCell.iconName
-            testCellToSend["id"] = testCell.id
-            testCellToSend["stimuliSize"] = testCell.stimuliSize
-            testCellToSend["x"] = testCell.location[0]
-            testCellToSend["y"] = testCell.location[1]
-
-            test.append(testCellToSend)
+            let result = formResult(index: index)
+            let sample = formSample(index: index)
+            let test = formTest(index: index)
 
             trialToSend["results"] = result
             trialToSend["sample"] = sample
             trialToSend["test"] = test
 
+            trialToSend["updatedAt"] = ""
+
             arrayOfTrials.append(trialToSend)
         }
         return arrayOfTrials
+    }
+
+    private func formResult(index: Int) -> [String: Any] {
+        let currentTrial = trials.results[index]
+        var result = [String: Any]()
+        result["accuracy"] = currentTrial.accuracy
+        result["colors"] = currentTrial.colors
+        result["gestureDirection"] = currentTrial.gestureDirection
+        result["gestureDuration"] = currentTrial.gestureDuration
+        result["locations"] = currentTrial.locations
+        result["reactionTime"] = currentTrial.reactionTime
+        result["responseEndTime"] = currentTrial.responseEndTime
+        result["responseStartTime"] = currentTrial.responseStartTime
+        result["shouldMatch"] = currentTrial.shouldMatch
+        result["startedAt"] = currentTrial.startedAt
+        result["swipeDistanceX"] = currentTrial.swipeDistanceX
+        result["swipeDistanceY"] = currentTrial.swipeDistanceY
+        result["testColor"] = currentTrial.testColor
+        result["testLocation"] = currentTrial.testLocation
+        result["testPresentationTime"] = currentTrial.testPresentationTime
+
+        return result
+    }
+
+    private func formSample(index: Int) -> [String: Any] {
+        var cells = [[String: Any]]()
+        trials.sample[index].cells.forEach { cell in
+            var cellToSend = [String: Any]()
+            cellToSend["color"] = cell.color
+            cellToSend["iconName"] = cell.iconName
+            cellToSend["id"] = cell.id
+            cellToSend["stimuliSize"] = cell.stimuliSize
+            cellToSend["x"] = cell.location[0]
+            cellToSend["y"] = cell.location[1]
+
+            cells.append(cellToSend)
+        }
+        let sample: [String: Any] = ["cells": cells]
+
+        return sample
+    }
+
+    private func formTest(index: Int) -> [String: Any] {
+        var cells = [[String: Any]]()
+
+        let testCell = trials.test[index].cell
+        var testCellToSend = [String: Any]()
+        testCellToSend["color"] = testCell.color
+        testCellToSend["iconName"] = testCell.iconName
+        testCellToSend["id"] = testCell.id
+        testCellToSend["stimuliSize"] = testCell.stimuliSize
+        testCellToSend["x"] = testCell.location[0]
+        testCellToSend["y"] = testCell.location[1]
+
+        cells.append(testCellToSend)
+
+        let test: [String: Any] = ["cells": cells]
+
+        return test
+    }
+
+    private func formUser() -> [String: Any] {
+        var user = [String: Any]()
+
+        user["birthYear"] = userSession.user.birthYear
+        user["gender"] = userSession.user.gender
+        user["id"] = userSession.user.id
+        user["projectId"] = userSession.user.projectId
+        user["zipCode"] = userSession.user.zipCode
+
+        return user
     }
 
     /// Write round info in GameResult class
@@ -312,6 +365,8 @@ class GameScreenViewModel {
 
         roundResult.setGestureDirection(direction: gestureDirection)
         roundResult.setShouldMatch(shouldMatch: shouldMatch)
+
+        roundResult.setStartedAt(startedAt: startedAt)
 
         trials.addResult(result: roundResult)
         trials.addSample(sample: Sample(cells: cells))
