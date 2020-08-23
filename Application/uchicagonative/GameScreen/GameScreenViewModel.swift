@@ -255,7 +255,36 @@ class GameScreenViewModel {
             result["testLocation"] = currentTrial.testLocation
             result["testPresentationTime"] = currentTrial.testPresentationTime
 
+            var cells = [[String: Any]]()
+            trials.sample[index].cells.forEach { cell in
+                var cellToSend = [String: Any]()
+                cellToSend["color"] = cell.color
+                cellToSend["iconName"] = cell.iconName
+                cellToSend["id"] = cell.id
+                cellToSend["stimuliSize"] = cell.stimuliSize
+                cellToSend["x"] = cell.location[0]
+                cellToSend["y"] = cell.location[1]
+
+                cells.append(cellToSend)
+            }
+            let sample: [String: Any] = ["cells": cells]
+
+            var test = [[String: Any]]()
+
+            let testCell = trials.test[index].cell
+            var testCellToSend = [String: Any]()
+            testCellToSend["color"] = testCell.color
+            testCellToSend["iconName"] = testCell.iconName
+            testCellToSend["id"] = testCell.id
+            testCellToSend["stimuliSize"] = testCell.stimuliSize
+            testCellToSend["x"] = testCell.location[0]
+            testCellToSend["y"] = testCell.location[1]
+
+            test.append(testCellToSend)
+
             trialToSend["results"] = result
+            trialToSend["sample"] = sample
+            trialToSend["test"] = test
 
             arrayOfTrials.append(trialToSend)
         }

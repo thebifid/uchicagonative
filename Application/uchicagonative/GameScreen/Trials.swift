@@ -14,8 +14,8 @@ struct Trials {
     }
 
     private(set) var results = [RoundResult]()
-    private var sample = [Sample]()
-    private var test = [Test]()
+    private(set) var sample = [Sample]()
+    private(set) var test = [Test]()
 
     mutating func addResult(result: RoundResult) {
         results.append(result)
