@@ -30,12 +30,6 @@ class GameScreenViewController: UIViewController {
 
     private lazy var notification = NotificationView(to: self)
 
-    // MARK: - Enums
-
-    enum SwipeDirection: String {
-        case left, right
-    }
-
     // MARK: - Init
 
     init(viewModel model: GameScreenViewModel) {
@@ -96,7 +90,6 @@ class GameScreenViewController: UIViewController {
         readyLabel.isHidden = true
         playButton.isHidden = true
 
-        // will be loop for trials
         playGame()
     }
 
@@ -147,20 +140,17 @@ class GameScreenViewController: UIViewController {
             viewModel.setEndPoint(endPoint: gesture.location(in: view))
 
             if viewModel.swipeDistanceX > 60 || abs(gesture.velocity(in: testCellImageView).x) > 500 {
-                let swipeDirection = gesture.velocity(in: testCellImageView).x < 0 ? SwipeDirection.left : .right
+                let swipeDirection = gesture.velocity(in: testCellImageView).x < 0 ? GameScreenViewModel.SwipeDirection.left : .right
                 var offsetDistance = 400
-                switch swipeDirection {
-                case .left:
+                if swipeDirection == .left {
                     offsetDistance = -offsetDistance
-                case .right:
-                    break
                 }
                 UIView.animate(withDuration: 0.3) {
                     self.testCellImageView.frame = .init(origin: .init(x: originalFrame.minX + CGFloat(offsetDistance),
                                                                        y: originalFrame.minY),
                                                          size: self.viewModel.testCell.frame.size)
                 }
-                viewModel.setGestureDirection(direction: swipeDirection.rawValue)
+                viewModel.setGestureDirection(direction: swipeDirection)
                 viewModel.roundEnded()
             } else {
                 UIView.animate(withDuration: 0.3) {

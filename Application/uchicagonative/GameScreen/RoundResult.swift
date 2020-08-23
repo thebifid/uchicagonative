@@ -10,16 +10,16 @@ import Foundation
 
 struct RoundResult {
     var accuracy: Int {
-        if shouldMatch, gestureDirection == "right" {
+        if shouldMatch, gestureDirection == .right {
             return 1
-        } else if !shouldMatch, gestureDirection == "left" {
+        } else if !shouldMatch, gestureDirection == .left {
             return 1
         } else {
             return 0
         }
     }
 
-    private(set) var gestureDirection: String = ""
+    private(set) var gestureDirection: GameScreenViewModel.SwipeDirection = .none
     private(set) var reactionTime: Int = 0
     private(set) var responseEndTime: String = ""
     private(set) var responseStartTime: String = ""
@@ -80,7 +80,7 @@ struct RoundResult {
         swipeDistanceY = distanceY
     }
 
-    mutating func setGestureDirection(direction: String) {
+    mutating func setGestureDirection(direction: GameScreenViewModel.SwipeDirection) {
         gestureDirection = direction
     }
 
