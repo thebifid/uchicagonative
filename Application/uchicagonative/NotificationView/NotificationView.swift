@@ -20,7 +20,7 @@ class NotificationView: UIViewController {
 
     // MARK: - Private Properties
 
-    private var viewController: UIViewController?
+    private weak var viewController: UIViewController?
 
     private var delayTime: Int = 1000
 
