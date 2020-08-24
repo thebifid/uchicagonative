@@ -106,26 +106,6 @@ class EditProfileViewModel {
         }
     }
 
-    private func isInternetAvailable() -> Bool {
-        var zeroAddress = sockaddr_in()
-        zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
-        zeroAddress.sin_family = sa_family_t(AF_INET)
-
-        let defaultRouteReachability = withUnsafePointer(to: &zeroAddress) {
-            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) { zeroSockAddress in
-                SCNetworkReachabilityCreateWithAddress(nil, zeroSockAddress)
-            }
-        }
-
-        var flags = SCNetworkReachabilityFlags()
-        if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
-            return false
-        }
-        let isReachable = flags.contains(.reachable)
-        let needsConnection = flags.contains(.connectionRequired)
-        return (isReachable && !needsConnection)
-    }
-
     private func isAllFieldsAreFill() -> Bool {
         let isFilled = !firstName.isEmpty && !lastName.isEmpty && birthYear != 0 && !gender.isEmpty && gender != genderList[0]
 
@@ -195,10 +175,10 @@ class EditProfileViewModel {
             return
         }
 
-        if !isInternetAvailable() {
-            let error = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Check your Internet connection"])
+        if !FirebaseManager.sharedInstance.isConnected {
+            let message = "The connection is lost. Your data will be recorded automatically the next time you connect to the Internet."
+            let error = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: message])
             competion(.failure(error))
-            return
         }
 
         isRequesting = true

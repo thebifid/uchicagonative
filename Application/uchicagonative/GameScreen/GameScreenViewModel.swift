@@ -193,7 +193,14 @@ class GameScreenViewModel {
     func sendDataToFirebase(completion: @escaping ((Result<Void, Error>) -> Void)) {
         formData()
 
+        if !FirebaseManager.sharedInstance.isConnected {
+            let message = "The connection is lost. Your data will be recorded automatically the next time you connect to the Internet."
+            let error = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: message])
+            completion(.failure(error))
+        }
+
         FirebaseManager.sharedInstance.addDocumentToBlocks(attributes: attributes) { result in
+
             switch result {
             case let .failure(error):
                 completion(.failure(error))

@@ -13,7 +13,8 @@ target 'uchicagonative' do
     pod 'Firebase/Auth'
     pod 'Firebase/Firestore'
     pod 'SVGKit', '~> 3.0.0-beta3' 
-    pod 'KeyboardNotificationsObserver', '~> 0.2' 
+    pod 'KeyboardNotificationsObserver', '~> 0.2'
+    pod 'Firebase/Database'
 
 end
 

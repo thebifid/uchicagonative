@@ -7,6 +7,8 @@
 //
 
 import FirebaseAuth
+import FirebaseCore
+import FirebaseDatabase
 import FirebaseFirestore
 import Foundation
 
@@ -110,6 +112,20 @@ class FirebaseManager {
                 completion(.success(()))
             }
         }
+    }
+
+    var isConnected: Bool = false
+    func isInternetAvailable() {
+        let connectedRef = Database.database().reference(withPath: ".info/connected")
+        connectedRef.observe(.value, with: { snapshot in
+            if snapshot.value as? Bool ?? false {
+                self.isConnected = true
+                print(self.isConnected)
+            } else {
+                self.isConnected = false
+                print(self.isConnected)
+            }
+        })
     }
 
     /// Main method for add documents in firestore. Add document to collection from params.

@@ -18,6 +18,7 @@ class SplashViewController: UIViewController {
     }
 
     private func makeServiceCall() {
+        FirebaseManager.sharedInstance.isInternetAvailable()
         DispatchQueue.main.async {
             if FirebaseAuth.Auth.auth().currentUser != nil {
                 FirebaseManager.sharedInstance.fetchUser { user in
