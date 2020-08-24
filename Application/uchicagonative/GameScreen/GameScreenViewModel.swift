@@ -221,11 +221,11 @@ class GameScreenViewModel {
 
     private func formData() {
         attributes["config"] = formConfig()
-        attributes["createdAt"] = Int(Date().timeIntervalSince1970)
+        attributes["createdAt"] = convertDateToMiliseconds(date: Date())
         attributes["endedAt"] = currentStringDate()
         attributes["startedAt"] = trials.results[0].startedAt
         attributes["trials"] = formTrials()
-        attributes["updatedAt"] = Int(Date().timeIntervalSince1970)
+        attributes["updatedAt"] = convertDateToMiliseconds(date: Date())
         attributes["user"] = formUser()
     }
 
