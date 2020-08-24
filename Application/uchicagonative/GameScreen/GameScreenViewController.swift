@@ -103,7 +103,6 @@ class GameScreenViewController: UIViewController {
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         readyLabel.isHidden = true
         playButton.isHidden = true
-
         viewModel.startGame()
     }
 

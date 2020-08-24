@@ -213,9 +213,9 @@
 		C116347B24C6B3CF00B6C394 /* uchicagonative */ = {
 			isa = PBXGroup;
 			children = (
+				C1713CF524CFD79C002D0E04 /* FireBaseManager */,
 				C1DDE1B624EFD625004C2DAD /* NotificationView */,
 				C13B712324D6C4C70035EF8F /* PickerViewController */,
-				C1713CF524CFD79C002D0E04 /* FireBaseManager */,
 				C1713CF224CFCC93002D0E04 /* PopupMenu */,
 				C1713C8C24C95284002D0E04 /* SplashViewController */,
 				C1713C8924C94B11002D0E04 /* RootViewController */,

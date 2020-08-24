@@ -32,7 +32,6 @@ class GameScreenViewModel {
     private(set) var cells = [Cell]()
     private(set) var testCell = Cell(frame: .zero, color: "#ffff", iconName: "square", stimuliSize: 0)
     private var currentRound = 0
-
     private var testPresentationTime = ""
     private var responseStartTime = ""
     private var responseEndTime = ""
@@ -44,7 +43,7 @@ class GameScreenViewModel {
 
     private var attributes = [String: Any]()
 
-    /// Map icon name from server to icon name in app
+    /// Map icon name from server to icon name in app.
     private let iconDictionary = [
         "the-punisher-seeklogo.com": "punisher",
         "github-logo": "githublogo",
@@ -64,6 +63,7 @@ class GameScreenViewModel {
 
         let responseEndTimeMiliseconds = convertDateToMiliseconds(date: responseEndTime)
         let testPresentationTimeMiliseconds = convertDateToMiliseconds(date: testPresentationTime)
+
         return responseEndTimeMiliseconds - testPresentationTimeMiliseconds
     }
 
@@ -96,17 +96,17 @@ class GameScreenViewModel {
         return sessionConfiguration.numberOfTrials
     }
 
-    /// Time between user answer and show new trial
+    /// Time between user answer and show new trial.
     var interTrialInterval: Int {
         return sessionConfiguration.interTrialInterval
     }
 
-    /// Time for show sample
+    /// Time for show sample.
     var sampleExposureDuration: Int {
         return sessionConfiguration.sampleExposureDuration
     }
 
-    /// Time of showing all elements and test element
+    /// Time of showing all elements and test element.
     var delayPeriod: Int {
         return sessionConfiguration.delayPeriod
     }
@@ -143,12 +143,12 @@ class GameScreenViewModel {
         nextRound()
     }
 
-    /// Set start point of user swipe
+    /// Set start point of user swipe.
     func setStartPoint(startPoint: CGPoint) {
         self.startPoint = startPoint
     }
 
-    /// Set end point of user swipe
+    /// Set end point of user swipe.
     func setEndPoint(endPoint: CGPoint) {
         self.endPoint = endPoint
     }
@@ -349,21 +349,16 @@ class GameScreenViewModel {
         roundResult.setGameRoundTestCellLocationInfo(locationInfo: fromOneDimensionalArrayToString(array: testCell.location,
                                                                                                    withSeparator: ":"))
         roundResult.setGameRoundTestCellColorInfo(colorInfo: testCell.color)
-
         roundResult.setTestPresentationTime(testPresentationTime: testPresentationTime)
         roundResult.setResponseStartTime(responseStartTime: responseStartTime)
         roundResult.setResponseEndTime(responseEndTime: responseEndTime)
         roundResult.setGestureDuration(gestureDuration: gestureDuration)
         roundResult.setReactionTime(reactionTime: reactionTime)
-
         roundResult.setSwipeDistanceX(distanceX: Float(swipeDistanceX))
         roundResult.setSwipeDistanceY(distanceY: Float(swipeDistanceY))
-
         roundResult.setGestureDirection(direction: gestureDirection)
         roundResult.setShouldMatch(shouldMatch: shouldMatch)
-
         roundResult.setStartedAt(startedAt: startedAt)
-
         trials.addResult(result: roundResult)
         trials.addSample(sample: Sample(cells: cells))
         trials.addTest(test: Test(cell: testCell))

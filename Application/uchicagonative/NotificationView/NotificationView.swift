@@ -86,10 +86,15 @@ class NotificationView: UIViewController {
 
         guard let viewController = self.viewController else { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(self.delayTime)) {
-            UIView.animate(withDuration: 0.2) {
+            UIView.animate(withDuration: 0.2, animations: {
                 self.view.frame = .init(x: 0, y: viewController.view.frame.height, width: viewController.view.frame.width, height: 150)
-            }
+            }, completion: self.removeHandler)
         }
+    }
+
+    private lazy var removeHandler: ((Bool) -> Void) = { _ in
+        self.view.removeFromSuperview()
+        self.removeFromParent()
     }
 
     // MARK: - Init
