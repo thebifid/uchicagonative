@@ -18,6 +18,13 @@ class NotificationView: UIViewController {
         return view
     }()
 
+    private let icon = UIImageView()
+    private let label: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        return label
+    }()
+
     // MARK: - Private Properties
 
     private weak var viewController: UIViewController?
@@ -45,6 +52,22 @@ class NotificationView: UIViewController {
 
             notificationRectangle.top == notificationRectangle.superview!.top + 20
             notificationRectangle.centerX == notificationRectangle.superview!.centerX
+        }
+
+        notificationRectangle.addSubview(icon)
+
+        constrain(icon) { icon in
+            icon.width == 20
+            icon.height == 20
+            icon.left == icon.superview!.left + 20
+            icon.top == icon.superview!.top + 15
+        }
+
+        notificationRectangle.addSubview(label)
+
+        constrain(label, icon) { label, icon in
+            label.left == icon.right + 10
+            label.top == icon.top
         }
     }
 
@@ -76,9 +99,12 @@ class NotificationView: UIViewController {
         switch type {
         case .success:
             notificationRectangle.backgroundColor = .green
-
+            icon.image = R.image.tick()
+            label.text = "Success!"
         case .failure:
             notificationRectangle.backgroundColor = R.color.lightRed()
+            icon.image = R.image.x()
+            label.text = "Failure!"
         }
     }
 
