@@ -49,12 +49,16 @@ class GameScreenViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         setupHandlers()
         fetchSessionConfiguration()
 
         setupUI()
         playButton.addTarget(self, action: #selector(handlePlay), for: .touchUpInside)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
 
     // MARK: - Private Methods
@@ -66,8 +70,8 @@ class GameScreenViewController: UIViewController {
         }
 
         viewModel.didRoundEnd = { [weak self] in
-            self?.playRound()
             self?.view.isUserInteractionEnabled = false
+            self?.playRound()
         }
 
         viewModel.showNotificationToUser = { [weak self] in
@@ -79,6 +83,15 @@ class GameScreenViewController: UIViewController {
 
         viewModel.didGameEnd = { [weak self] in
             guard let self = self else { return }
+            self.viewModel.sendDataToFirebase { result in
+                switch result {
+                case let .failure(error):
+                    let alert = AlertAssist.showErrorAlert(error)
+                    self.present(alert, animated: true)
+                case .success:
+                    break
+                }
+            }
             self.scrollView.backgroundColor = .orange
             self.view.gestureRecognizers?.forEach { recognizer in
                 self.view.removeGestureRecognizer(recognizer)
@@ -87,13 +100,10 @@ class GameScreenViewController: UIViewController {
     }
 
     @objc private func handlePlay() {
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         readyLabel.isHidden = true
         playButton.isHidden = true
 
-        playGame()
-    }
-
-    private func playGame() {
         viewModel.startGame()
     }
 
@@ -102,20 +112,24 @@ class GameScreenViewController: UIViewController {
         viewModel.generateCells(viewBounds: view.bounds.inset(by: insets))
 
         // show icons
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(viewModel.interTrialInterval)) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(viewModel.interTrialInterval)) { [weak self] in
+            guard let self = self else { return }
             self.layoutCellImageViews()
             self.viewModel.setStartedAt()
 
             // hide icons
-            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(self.viewModel.sampleExposureDuration)) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(self.viewModel.sampleExposureDuration)) { [weak self] in
+                guard let self = self else { return }
                 self.cellImageViews.forEach { $0.isHidden = true }
 
-                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(self.viewModel.delayPeriod)) {
+                // show test element
+                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(self.viewModel.delayPeriod)) { [weak self] in
+                    guard let self = self else { return }
                     self.layoutTestCellImageView()
                     self.viewModel.setTestPresentationTime()
                     self.testCellImageView.isHidden = false
-
                     self.view.isUserInteractionEnabled = true
+
                     let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.draggedView))
                     self.view.addGestureRecognizer(panGesture)
                 }
@@ -203,7 +217,7 @@ class GameScreenViewController: UIViewController {
 
     private func setupUI() {
         view.addSubview(scrollView)
-        scrollView.addSubview(testCellImageView) // !!!
+        scrollView.addSubview(testCellImageView)
         scrollView.fillSuperView()
         scrollView.backgroundColor = R.color.appBackgroundColor()
 

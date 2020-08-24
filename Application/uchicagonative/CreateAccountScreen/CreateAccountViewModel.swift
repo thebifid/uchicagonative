@@ -132,7 +132,7 @@ class CreateAccountViewModel {
                         }
                         // document exists
                         else {
-                            completion(.success("Accoun's Already exist. You will be redirected to the main menu."))
+                            completion(.success("Account already exists. You will be redirected to the main menu."))
                         }
 
                     case let .failure(error):

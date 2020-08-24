@@ -61,7 +61,7 @@ struct RoundResult {
     }
 
     mutating func setResponseEndTime(responseEndTime: String) {
-        self.responseEndTime.append(responseEndTime)
+        self.responseEndTime = responseEndTime
     }
 
     mutating func setGestureDuration(gestureDuration: Int) {

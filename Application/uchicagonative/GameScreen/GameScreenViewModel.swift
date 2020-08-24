@@ -27,22 +27,19 @@ class GameScreenViewModel {
 
     private let userSession: UserSession
     private var sessionConfiguration: SessionConfiguration
+
+    /// Sample cells.
     private(set) var cells = [Cell]()
     private(set) var testCell = Cell(frame: .zero, color: "#ffff", iconName: "square", stimuliSize: 0)
-
-    private var currentRound = 0 // Переключения пока нет
+    private var currentRound = 0
 
     private var testPresentationTime = ""
     private var responseStartTime = ""
     private var responseEndTime = ""
     private var gestureDirection: GameScreenViewModel.SwipeDirection = .none
     private var startedAt = ""
-
     private var changeProbabilityArray = [Int]()
-
     private var trials = Trials()
-    private var sample = Sample()
-    private var test = Test()
     private(set) var roundResult = RoundResult()
 
     private var attributes = [String: Any]()
@@ -135,16 +132,15 @@ class GameScreenViewModel {
 
     // MARK: - Public Methods
 
+    func startGame() {
+        nextRound()
+    }
+
     func roundEnded() {
         setRoundInfo()
         showNotification()
         currentRound += 1
         nextRound()
-    }
-
-    func startGame() {
-        nextRound()
-        print(changeProbabilityArray)
     }
 
     /// Set start point of user swipe
@@ -194,6 +190,19 @@ class GameScreenViewModel {
         }
     }
 
+    func sendDataToFirebase(completion: @escaping ((Result<Void, Error>) -> Void)) {
+        formData()
+
+        FirebaseManager.sharedInstance.addDocumentToBlocks(attributes: attributes) { result in
+            switch result {
+            case let .failure(error):
+                completion(.failure(error))
+            case .success:
+                completion(.success(()))
+            }
+        }
+    }
+
     /// Generates new cells to show on a screen. See `cells`.
     func generateCells(viewBounds: CGRect) {
         let config = sessionConfiguration
@@ -210,25 +219,13 @@ class GameScreenViewModel {
 
     // MARK: - Private Methods
 
-    private func sendDataToFirebase() {
-        formData()
-
-        FirebaseManager.sharedInstance.addDocumentToBlocks(attributes: attributes) { result in
-            switch result {
-            case let .failure(error):
-                print(error.localizedDescription)
-            case .success:
-                print("ss") // !!
-            }
-        }
-    }
-
     private func formData() {
         attributes["config"] = formConfig()
-//        attributes["createdAt"] ??
+        attributes["createdAt"] = Int(Date().timeIntervalSince1970)
         attributes["endedAt"] = currentStringDate()
         attributes["startedAt"] = trials.results[0].startedAt
         attributes["trials"] = formTrials()
+        attributes["updatedAt"] = Int(Date().timeIntervalSince1970)
         attributes["user"] = formUser()
     }
 
@@ -268,8 +265,6 @@ class GameScreenViewModel {
             trialToSend["results"] = result
             trialToSend["sample"] = sample
             trialToSend["test"] = test
-
-            trialToSend["updatedAt"] = ""
 
             arrayOfTrials.append(trialToSend)
         }
@@ -315,7 +310,6 @@ class GameScreenViewModel {
         let testCell = trials.test[index].cell
         var cellToSend = [String: Any]()
         cellToSend = formCell(cell: testCell)
-
         cells.append(cellToSend)
         let test: [String: Any] = ["cells": cells]
 
@@ -379,7 +373,6 @@ class GameScreenViewModel {
         if currentRound < numberOfTrials {
             didRoundEnd?()
         } else {
-            sendDataToFirebase()
             didGameEnd?()
         }
     }
@@ -388,7 +381,7 @@ class GameScreenViewModel {
         showNotificationToUser?()
     }
 
-    // change = is Correct or not
+    // change = is Correct or not test cell
     private func generateTestCell(viewBounds: CGRect, change: Bool) {
         if change {
             let randomNumber = Int.random(in: 0 ... cells.count - 1)
@@ -469,9 +462,10 @@ class GameScreenViewModel {
         return stringFromArray
     }
 
-    private func fromOneDimensionalArrayToString<T: LosslessStringConvertible>(array: [T], withSeparator: String = ";") -> String {
+    private func fromOneDimensionalArrayToString<T: LosslessStringConvertible>(array: [T],
+                                                                               withSeparator separator: String = ";") -> String {
         var stringFromArray: String = ""
-        let separator = withSeparator
+        let separator = separator
 
         array.forEach {
             stringFromArray.append(contentsOf: String($0))
