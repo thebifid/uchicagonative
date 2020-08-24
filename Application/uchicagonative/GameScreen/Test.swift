@@ -9,9 +9,5 @@
 import Foundation
 
 struct Test {
-    private(set) var cell = Cell(frame: .zero, color: "#ffff", iconName: "square", stimuliSize: 0)
-
-    mutating func setTestCell(cell: Cell) {
-        self.cell = cell
-    }
+    var cell = Cell(frame: .zero, color: "#ffff", iconName: "square", stimuliSize: 0)
 }

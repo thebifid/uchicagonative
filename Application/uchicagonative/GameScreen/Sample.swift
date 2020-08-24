@@ -9,9 +9,5 @@
 import Foundation
 
 struct Sample {
-    private(set) var cells = [Cell]()
-
-    mutating func setSampleCells(cells: [Cell]) {
-        self.cells = cells
-    }
+    var cells = [Cell]()
 }

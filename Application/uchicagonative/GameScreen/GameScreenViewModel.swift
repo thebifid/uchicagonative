@@ -343,25 +343,24 @@ class GameScreenViewModel {
     /// Write round info in GameResult class
     private func setRoundInfo() {
         let locationInfo = cells.map { $0.location }
-        roundResult.setGameRoundCellsLocationInfo(locationInfo: fromTwoDimensionalArrayToString(array: locationInfo))
+        roundResult.locations = fromTwoDimensionalArrayToString(array: locationInfo)
         let colorsInfo = cells.map { $0.color }
-        roundResult.setGameRoundCellsColorInfo(colorsInfo: fromOneDimensionalArrayToString(array: colorsInfo))
-        roundResult.setGameRoundTestCellLocationInfo(locationInfo: fromOneDimensionalArrayToString(array: testCell.location,
-                                                                                                   withSeparator: ":"))
-        roundResult.setGameRoundTestCellColorInfo(colorInfo: testCell.color)
-        roundResult.setTestPresentationTime(testPresentationTime: testPresentationTime)
-        roundResult.setResponseStartTime(responseStartTime: responseStartTime)
-        roundResult.setResponseEndTime(responseEndTime: responseEndTime)
-        roundResult.setGestureDuration(gestureDuration: gestureDuration)
-        roundResult.setReactionTime(reactionTime: reactionTime)
-        roundResult.setSwipeDistanceX(distanceX: Float(swipeDistanceX))
-        roundResult.setSwipeDistanceY(distanceY: Float(swipeDistanceY))
-        roundResult.setGestureDirection(direction: gestureDirection)
-        roundResult.setShouldMatch(shouldMatch: shouldMatch)
-        roundResult.setStartedAt(startedAt: startedAt)
-        trials.addResult(result: roundResult)
-        trials.addSample(sample: Sample(cells: cells))
-        trials.addTest(test: Test(cell: testCell))
+        roundResult.colors = fromOneDimensionalArrayToString(array: colorsInfo)
+        roundResult.testLocation = fromOneDimensionalArrayToString(array: testCell.location, withSeparator: ":")
+        roundResult.testColor = testCell.color
+        roundResult.testPresentationTime = testPresentationTime
+        roundResult.responseStartTime = responseStartTime
+        roundResult.responseEndTime = responseEndTime
+        roundResult.gestureDuration = gestureDuration
+        roundResult.reactionTime = reactionTime
+        roundResult.swipeDistanceX = Float(swipeDistanceX)
+        roundResult.swipeDistanceY = Float(swipeDistanceY)
+        roundResult.gestureDirection = gestureDirection
+        roundResult.shouldMatch = shouldMatch
+        roundResult.startedAt = startedAt
+        trials.results.append(roundResult)
+        trials.sample.append(Sample(cells: cells))
+        trials.test.append(Test(cell: testCell))
     }
 
     private func nextRound() {

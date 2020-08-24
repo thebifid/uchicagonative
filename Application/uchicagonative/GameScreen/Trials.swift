@@ -13,19 +13,7 @@ struct Trials {
         return Int.random(in: 12 ... 12345)
     }
 
-    private(set) var results = [RoundResult]()
-    private(set) var sample = [Sample]()
-    private(set) var test = [Test]()
-
-    mutating func addResult(result: RoundResult) {
-        results.append(result)
-    }
-
-    mutating func addSample(sample: Sample) {
-        self.sample.append(sample)
-    }
-
-    mutating func addTest(test: Test) {
-        self.test.append(test)
-    }
+    var results = [RoundResult]()
+    var sample = [Sample]()
+    var test = [Test]()
 }
