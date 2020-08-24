@@ -13,7 +13,7 @@
 		C116348624C6B3D000B6C394 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C116348524C6B3D000B6C394 /* Assets.xcassets */; };
 		C116348924C6B3D000B6C394 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C116348724C6B3D000B6C394 /* LaunchScreen.storyboard */; };
 		C116349524C6B6E100B6C394 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C116349424C6B6E100B6C394 /* R.generated.swift */; };
-		C1297DAC24F279C800764027 /* ViewControllerWithMiddleBackSwipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1297DAB24F279C800764027 /* ViewControllerWithMiddleBackSwipe.swift */; };
+		C1297DAC24F279C800764027 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1297DAB24F279C800764027 /* NavigationController.swift */; };
 		C135296324D3C2F10004D9B8 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C135296224D3C2F10004D9B8 /* UIViewController+Extension.swift */; };
 		C135296524D3F4380004D9B8 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C135296424D3F4380004D9B8 /* EditProfileViewModel.swift */; };
 		C135296724D4051B0004D9B8 /* Dictionary+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C135296624D4051B0004D9B8 /* Dictionary+Extension.swift */; };
@@ -103,7 +103,7 @@
 		C116348824C6B3D000B6C394 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C116348A24C6B3D000B6C394 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C116349424C6B6E100B6C394 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
-		C1297DAB24F279C800764027 /* ViewControllerWithMiddleBackSwipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerWithMiddleBackSwipe.swift; sourceTree = "<group>"; };
+		C1297DAB24F279C800764027 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		C135296224D3C2F10004D9B8 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		C135296424D3F4380004D9B8 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
 		C135296624D4051B0004D9B8 /* Dictionary+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Extension.swift"; sourceTree = "<group>"; };
@@ -402,7 +402,7 @@
 				C1713CEB24CEC7B3002D0E04 /* AlertAssist.swift */,
 				C1FD150224D152F700188BE0 /* CheckFields.swift */,
 				C16DD97324DD60F400EAC82E /* SvgImageView.swift */,
-				C1297DAB24F279C800764027 /* ViewControllerWithMiddleBackSwipe.swift */,
+				C1297DAB24F279C800764027 /* NavigationController.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -761,7 +761,7 @@
 				C16DD96F24DD3DCC00EAC82E /* UIColor+Extension.swift in Sources */,
 				C19693ED24C71C250054296F /* TermsOfServiceViewController.swift in Sources */,
 				C196940124C839320054296F /* UITextField+Extension.swift in Sources */,
-				C1297DAC24F279C800764027 /* ViewControllerWithMiddleBackSwipe.swift in Sources */,
+				C1297DAC24F279C800764027 /* NavigationController.swift in Sources */,
 				C16DD96024DA82DC00EAC82E /* MenuScreenViewModel.swift in Sources */,
 				C19693EA24C710AF0054296F /* SendFeedbackViewController.swift in Sources */,
 				C1713C9324C99D3D002D0E04 /* UIView+ExtensionLayout.swift in Sources */,
