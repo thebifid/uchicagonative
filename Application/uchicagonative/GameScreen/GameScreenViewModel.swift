@@ -282,6 +282,7 @@ class GameScreenViewModel {
         let currentTrial = trials.results[index]
         var result = [String: Any]()
         result["accuracy"] = currentTrial.accuracy
+        result["change"] = currentTrial.change
         result["colors"] = currentTrial.colors
         result["gestureDirection"] = currentTrial.gestureDirection.rawValue
         result["gestureDuration"] = currentTrial.gestureDuration

@@ -19,6 +19,10 @@ struct RoundResult {
         }
     }
 
+    var change: Int {
+        return shouldMatch == true ? 0 : 1
+    }
+
     var gestureDirection: GameScreenViewModel.SwipeDirection = .none
     var reactionTime: Int = 0
     var responseEndTime: String = ""
