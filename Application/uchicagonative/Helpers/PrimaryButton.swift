@@ -14,8 +14,10 @@ class PrimaryButton: UIButton {
         didSet {
             if isEnabled {
                 self.backgroundColor = R.color.mediumAquamarine()!
+                self.setTitleColor(.black, for: .normal)
             } else {
                 self.backgroundColor = R.color.lightGrayCustom()
+                self.setTitleColor(.white, for: .normal)
             }
         }
     }
