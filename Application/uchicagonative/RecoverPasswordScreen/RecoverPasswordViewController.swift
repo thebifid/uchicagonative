@@ -107,7 +107,7 @@ class RecoverPasswordViewController: UIViewController {
         view.addSubview(scrollView)
 
         scrollView.addSubview(emailTextField)
-        emailTextField.configure(placeholder: "name@email.com", spellCheck: .no)
+        emailTextField.configure(placeholder: "name@email.com", spellCheck: .no, nextTextField: nil)
 
         scrollView.addSubview(requestNewPasswordButton)
         requestNewPasswordButton.configure(title: "Request New Password",

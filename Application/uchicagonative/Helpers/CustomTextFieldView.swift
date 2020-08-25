@@ -28,13 +28,19 @@ class CustomTextFieldView: UIView {
     // MARK: - Handlers
 
     var didChangeText: ((String) -> Void)?
+    var didReturnLastTextField: (() -> Void)?
 
     // MARK: - Private Properties
 
     private var maxLength: Int = 0
     private var textFieldInputType: TextFieldInputType = .any
+    private weak var nextTextField: UITextField?
 
     // MARK: - Public Properties
+
+    var tf: UITextField {
+        return textField
+    }
 
     var text: String {
         set {
@@ -82,7 +88,8 @@ class CustomTextFieldView: UIView {
                    spellCheck: UITextSpellCheckingType = .default, maxLenght: Int = 0,
                    textFieldInputType: TextFieldInputType = .any,
                    autocapitalization: UITextAutocapitalizationType = .none,
-                   keyboardType: UIKeyboardType = .default) {
+                   keyboardType: UIKeyboardType = .default,
+                   nextTextField: UITextField?) {
         textField.keyboardType = keyboardType
         textField.placeholder = placeholder
         textField.isSecureTextEntry = isSecureTextEntry
@@ -90,6 +97,7 @@ class CustomTextFieldView: UIView {
         maxLength = maxLenght
         self.textFieldInputType = textFieldInputType
         textField.autocapitalizationType = autocapitalization
+        self.nextTextField = nextTextField
     }
 
     // MARK: - Private Methods
@@ -129,6 +137,19 @@ extension CustomTextFieldView: UITextFieldDelegate {
                 }
             }
         }
+        return false
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // Try to find next responder
+        if let nextField = nextTextField {
+            nextField.becomeFirstResponder()
+        } else {
+            // Not found, so remove keyboard.
+            didReturnLastTextField?()
+            textField.resignFirstResponder()
+        }
+        // Do not add a line break
         return false
     }
 }

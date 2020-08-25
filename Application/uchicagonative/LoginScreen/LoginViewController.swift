@@ -61,6 +61,10 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         scrollView.keyboardDismissMode = .interactive
 
+        passwordTextFieldView.didReturnLastTextField = {
+            self.handleLogin()
+        }
+
         /// Handler for change 'Log In' button state and start/stop activity indicator
         let didUpdateHandler = {
             let buttonState = self.viewModel.loginButtonState
@@ -212,7 +216,7 @@ class LoginViewController: UIViewController {
 
         // emailTextFieldView
         emailTextFieldView.configure(placeholder: "email",
-                                     spellCheck: .no)
+                                     spellCheck: .no, nextTextField: passwordTextFieldView.tf)
         scrollView.addSubview(emailTextFieldView)
         constrain(loginLabel, emailTextFieldView) { loginLabel, emailTextFieldView in
             emailTextFieldView.top == loginLabel.bottom + 30
@@ -223,7 +227,7 @@ class LoginViewController: UIViewController {
 
         // passwordTextFieldView
         passwordTextFieldView.configure(placeholder: "password",
-                                        isSecureTextEntry: true)
+                                        isSecureTextEntry: true, nextTextField: nil)
         scrollView.addSubview(passwordTextFieldView)
         constrain(emailTextFieldView, passwordTextFieldView) { emailTextFieldView, passwordTextFieldView in
             passwordTextFieldView.top == emailTextFieldView.bottom + 30

@@ -228,7 +228,6 @@ class EditProfileViewController: UIViewController {
 
     private func setupUI() {
         scrollView.alwaysBounceVertical = true
-
         // ScrollView
         scrollView.backgroundColor = R.color.appBackgroundColor()!
         scrollView.isScrollEnabled = true
@@ -245,21 +244,23 @@ class EditProfileViewController: UIViewController {
             emailLabel.width == emailLabel.superview!.width - 2 * Constants.defaultInsets
         }
 
-        firstNameTextFeildView.configure(placeholder: "First Name", textFieldInputType: .latters, autocapitalization: .words)
+        firstNameTextFeildView.configure(placeholder: "First Name", textFieldInputType: .latters, autocapitalization: .words,
+                                         nextTextField: lastNameTextFieldView.tf)
         scrollView.addSubview(firstNameTextFeildView)
         makeConstrain(downView: firstNameTextFeildView, upperView: emailLabel)
 
-        lastNameTextFieldView.configure(placeholder: "Last Name", textFieldInputType: .latters, autocapitalization: .words)
+        lastNameTextFieldView.configure(placeholder: "Last Name", textFieldInputType: .latters, autocapitalization: .words,
+                                        nextTextField: birthdayTextFieldView.tf)
         scrollView.addSubview(lastNameTextFieldView)
         makeConstrain(downView: lastNameTextFieldView, upperView: firstNameTextFeildView)
 
         birthdayTextFieldView.configure(placeholder: "Year of Birth", maxLenght: 4, textFieldInputType: .digits,
-                                        keyboardType: .numberPad)
+                                        keyboardType: .numberPad, nextTextField: zipCodeTextFieldView.tf)
         scrollView.addSubview(birthdayTextFieldView)
         makeConstrain(downView: birthdayTextFieldView, upperView: lastNameTextFieldView)
 
         zipCodeTextFieldView.configure(placeholder: "Zip Code", maxLenght: 5, textFieldInputType: .digits,
-                                       keyboardType: .numberPad)
+                                       keyboardType: .numberPad, nextTextField: nil)
         scrollView.addSubview(zipCodeTextFieldView)
         makeConstrain(downView: zipCodeTextFieldView, upperView: birthdayTextFieldView)
 

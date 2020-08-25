@@ -131,10 +131,10 @@ class CreateAccountViewController: UIViewController {
         view.addSubview(scrollView)
 
         scrollView.addSubview(emailTextFieldView)
-        emailTextFieldView.configure(placeholder: "name@email.com", spellCheck: .no)
+        emailTextFieldView.configure(placeholder: "name@email.com", spellCheck: .no, nextTextField: passwordTextFieldView.tf)
 
         scrollView.addSubview(passwordTextFieldView)
-        passwordTextFieldView.configure(placeholder: "password", isSecureTextEntry: true)
+        passwordTextFieldView.configure(placeholder: "password", isSecureTextEntry: true, nextTextField: nil)
 
         scrollView.addSubview(dropDownButton)
 
