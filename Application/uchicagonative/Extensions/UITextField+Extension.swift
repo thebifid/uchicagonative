@@ -19,4 +19,14 @@ extension UITextField {
         self.isSecureTextEntry = isSecureTextEntry
         spellCheckingType = spellCheck
     }
+
+    func addDoneButtonOnKeyBoardWithControl() {
+        let keyboardToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44))
+        keyboardToolbar.sizeToFit()
+        keyboardToolbar.barStyle = .default
+        let flexBarButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let doneBarButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(endEditing(_:)))
+        keyboardToolbar.items = [flexBarButton, doneBarButton]
+        inputAccessoryView = keyboardToolbar
+    }
 }

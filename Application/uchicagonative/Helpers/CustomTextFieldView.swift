@@ -98,6 +98,10 @@ class CustomTextFieldView: UIView {
         self.textFieldInputType = textFieldInputType
         textField.autocapitalizationType = autocapitalization
         self.nextTextField = nextTextField
+
+        if keyboardType == .numberPad {
+            textField.addDoneButtonOnKeyBoardWithControl()
+        }
     }
 
     // MARK: - Private Methods
