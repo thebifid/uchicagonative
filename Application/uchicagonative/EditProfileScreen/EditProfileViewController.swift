@@ -273,7 +273,7 @@ class EditProfileViewController: UIViewController {
         scrollView.addSubview(selectProjectSelectView)
         makeConstrain(downView: selectProjectSelectView, upperView: selectGenderSelectView, height: 90)
 
-        saveButton.configure(title: "Save Changes", font: R.font.karlaBold(size: 18)!)
+        saveButton.configure(title: "Save Changes", font: R.font.karlaBold(size: Constants.buttonFontSize)!)
         scrollView.addSubview(saveButton)
 
         constrain(saveButton, selectProjectSelectView) { saveButton, selectProjectSelectView in

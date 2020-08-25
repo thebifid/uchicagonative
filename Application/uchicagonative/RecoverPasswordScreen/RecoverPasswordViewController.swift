@@ -111,7 +111,7 @@ class RecoverPasswordViewController: UIViewController {
 
         scrollView.addSubview(requestNewPasswordButton)
         requestNewPasswordButton.configure(title: "Request New Password",
-                                           font: R.font.karlaBold(size: 18)!, isEnabled: false)
+                                           font: R.font.karlaBold(size: Constants.buttonFontSize)!, isEnabled: false)
 
         constrain(scrollView, emailTextField, requestNewPasswordButton) { scrollView, emailTextField, requestNewPasswordButton in
 

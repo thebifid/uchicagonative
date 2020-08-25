@@ -6,7 +6,7 @@
 //  Copyright © 2020 Vasiliy Matveev. All rights reserved.
 //
 
-import Firebase
+import FirebaseFirestore
 import Foundation
 
 /// Provide information about user

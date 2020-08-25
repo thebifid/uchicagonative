@@ -194,7 +194,7 @@ class LoginViewController: UIViewController {
     private func setupUI() {
         // configure Log In button
         loginButton.configure(title: "Log In",
-                              font: R.font.karlaBold(size: 18)!,
+                              font: R.font.karlaBold(size: Constants.buttonFontSize)!,
                               isEnabled: false)
 
         // adding components on screen

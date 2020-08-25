@@ -170,7 +170,7 @@ class CreateAccountViewController: UIViewController {
         popupMenu.transform = .init(scaleX: 1, y: 0)
 
         signUpButton.configure(title: "Sign Up with Email",
-                               font: R.font.karlaBold(size: 18)!, isEnabled: false)
+                               font: R.font.karlaBold(size: Constants.buttonFontSize)!, isEnabled: false)
 
         scrollView.addSubview(signUpButton)
 

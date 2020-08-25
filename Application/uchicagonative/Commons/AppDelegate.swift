@@ -16,7 +16,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
 
-        let attributes = [NSAttributedString.Key.font: R.font.karlaRegular(size: 26)!]
+        let attributes = [
+            NSAttributedString.Key.font: R.font.karlaBold(size: 26)!,
+            NSAttributedString.Key.foregroundColor: R.color.lightBlack()!
+        ]
         UINavigationBar.appearance().titleTextAttributes = attributes
 
         window = UIWindow()

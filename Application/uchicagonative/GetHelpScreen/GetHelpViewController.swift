@@ -104,10 +104,10 @@ class GetHelpViewController: UIViewController {
         scrollView.alwaysBounceVertical = true
 
         sendEmailButton.configure(title: "Send Email",
-                                  font: R.font.karlaBold(size: 18)!, isEnabled: true)
+                                  font: R.font.karlaBold(size: Constants.buttonFontSize)!, isEnabled: true)
 
         visitSiteButton.configure(title: "Visit Website",
-                                  font: R.font.karlaBold(size: 18)!, isEnabled: true)
+                                  font: R.font.karlaBold(size: Constants.buttonFontSize)!, isEnabled: true)
 
         let upStackView = VerticalStackView(arrangedSubviews: [contactEmailLabel, sendEmailButton], spacing: 20)
         let downStackView = VerticalStackView(arrangedSubviews: [readAboutLabel, visitSiteButton], spacing: 20)

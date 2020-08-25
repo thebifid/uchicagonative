@@ -29,22 +29,31 @@ class MenuScreenViewController: UIViewController {
 
     private let scrollView = UIScrollView()
 
-    private let playButton = UIButton(titleColor: .lightGray, title: "Play Again!")
-    private let editProfileButton = UIButton(titleColor: .black, title: "Edit Profile")
-    private let termsOfServiceButton = UIButton(titleColor: .black, title: "Terms Of Service")
-    private let getHelpButton = UIButton(titleColor: .black, title: "Get Help")
-    private let sendFeedbackButton = UIButton(titleColor: .black, title: "Send Feedback")
-    private let aboutUsButton = UIButton(titleColor: .black, title: "About Us")
-    private let logoutButton = UIButton(titleColor: .red, title: "Logout")
+    private let playButton = UIButton(titleColor: .lightGray, title: "Play Again!",
+                                      font: R.font.karlaBold(size: 26)!)
+    private let editProfileButton = UIButton(titleColor: .black, title: "Edit Profile",
+                                             font: R.font.karlaBold(size: 26)!)
+    private let termsOfServiceButton = UIButton(titleColor: .black, title: "Terms Of Service",
+                                                font: R.font.karlaBold(size: 26)!)
+    private let getHelpButton = UIButton(titleColor: .black, title: "Get Help",
+                                         font: R.font.karlaBold(size: 26)!)
+    private let sendFeedbackButton = UIButton(titleColor: .black, title: "Send Feedback",
+                                              font: R.font.karlaBold(size: 26)!)
+    private let aboutUsButton = UIButton(titleColor: .black, title: "About Us",
+                                         font: R.font.karlaBold(size: 26)!)
+    private let logoutButton = UIButton(titleColor: .red, title: "Logout",
+                                        font: R.font.karlaBold(size: 26)!)
 
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = ""
+        navigationController?.navigationBar.tintColor = .black
         scrollView.alwaysBounceVertical = true
         navigationController?.navigationBar.barTintColor = .white
         view.backgroundColor = R.color.appBackgroundColor()!
-        playButton.setTitleColor(.green, for: .normal)
+        playButton.setTitleColor(R.color.darkGreen(), for: .normal)
         playButton.isEnabled = true
 
         setupUI()
@@ -133,7 +142,7 @@ class MenuScreenViewController: UIViewController {
                 sendFeedbackButton,
                 aboutUsButton,
                 logoutButton
-            ], spacing: 12)
+            ], spacing: 14)
 
         scrollView.addSubview(stackView)
 
