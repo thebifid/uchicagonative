@@ -112,11 +112,11 @@ class GameScreenViewModel {
     }
 
     var swipeDistanceX: CGFloat {
-        return abs(startPoint.x - endPoint.x)
+        return endPoint.x - abs(startPoint.x)
     }
 
     var swipeDistanceY: CGFloat {
-        return abs(startPoint.y - endPoint.y)
+        return startPoint.y - abs(endPoint.y)
     }
 
     var shouldMatch: Bool {
