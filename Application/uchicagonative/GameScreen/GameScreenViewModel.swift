@@ -123,6 +123,14 @@ class GameScreenViewModel {
         return changeProbabilityArray[currentRound] == 1 ? true : false
     }
 
+    var feedbackTone: SessionConfiguration.FeedbackType {
+        return sessionConfiguration.feedbackTone
+    }
+
+    var feedbackVibration: SessionConfiguration.FeedbackType {
+        return sessionConfiguration.feedbackVibration
+    }
+
     // MARK: - Handlers
 
     var didFetchSessionConfiguration: (() -> Void)?
@@ -184,6 +192,7 @@ class GameScreenViewModel {
 
                 self.sessionConfiguration = sessionConfiguration
                 self.didFetchSessionConfiguration?()
+                print(sessionConfiguration.feedbackVibration)
                 completion(.success(()))
                 self.generateChangeProbability()
             }
@@ -219,7 +228,6 @@ class GameScreenViewModel {
                             color: chooseColor(index, config: config), iconName: config.iconName, stimuliSize: Int(config.stimuliSize))
             cells.append(cell)
         }
-
         let change = changeProbabilityArray[currentRound] == 1 ? true : false
         generateTestCell(viewBounds: viewBounds, change: change)
     }
@@ -246,7 +254,8 @@ class GameScreenViewModel {
             "colors": sessionConfiguration.colors,
             "delayPeriod": sessionConfiguration.delayPeriod,
             "feedbackDuration": sessionConfiguration.feedbackDuration,
-            "feedbackVibration": sessionConfiguration.feedbackVibration,
+            "feedbackTone": sessionConfiguration.feedbackTone.rawValue,
+            "feedbackVibration": sessionConfiguration.feedbackVibration.rawValue,
             "iconName": sessionConfiguration.iconName,
             "id": userSession.user.projectId,
             "interTrialInterval": sessionConfiguration.interTrialInterval,
@@ -456,11 +465,9 @@ class GameScreenViewModel {
             stringFromArray.append(contentsOf: fromOneDimensionalArrayToString(array: OneDimensionalArray, withSeparator: ":"))
             stringFromArray.append(contentsOf: ";")
         }
-
         stringFromArray.insert("[", at: stringFromArray.startIndex)
         stringFromArray.removeLast()
         stringFromArray.insert("]", at: stringFromArray.endIndex)
-
         return stringFromArray
     }
 
@@ -473,11 +480,9 @@ class GameScreenViewModel {
             stringFromArray.append(contentsOf: String($0))
             stringFromArray.append(contentsOf: separator)
         }
-
         stringFromArray.insert("[", at: stringFromArray.startIndex)
         stringFromArray.removeLast()
         stringFromArray.insert("]", at: stringFromArray.endIndex)
-
         return stringFromArray
     }
 }

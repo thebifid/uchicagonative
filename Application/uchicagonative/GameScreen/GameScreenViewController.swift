@@ -63,6 +63,12 @@ class GameScreenViewController: UIViewController {
 
     // MARK: - Private Methods
 
+    private func vibrate() {
+        let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .medium)
+        impactFeedbackgenerator.prepare()
+        impactFeedbackgenerator.impactOccurred()
+    }
+
     private func setupHandlers() {
         viewModel.didFetchSessionConfiguration = { [weak self] in
             self?.scrollView.backgroundColor = self?.viewModel.backgroundColor
@@ -79,6 +85,24 @@ class GameScreenViewController: UIViewController {
             let type = self.viewModel.roundResult.accuracy == 0 ? NotificationView.TypeNotification.failure : .success
             let timeToShowNotification = Float(self.viewModel.interTrialInterval) * 0.6
             self.notification.show(type: type, withDelay: Int(timeToShowNotification))
+
+            switch self.viewModel.feedbackVibration {
+            case .onsuccess:
+                if type == .success {
+                    self.vibrate()
+                }
+
+            case .onfailure:
+                if type == .failure {
+                    self.vibrate()
+                }
+
+            case .both:
+                self.vibrate()
+
+            case .none:
+                break
+            }
         }
 
         viewModel.didGameEnd = { [weak self] in

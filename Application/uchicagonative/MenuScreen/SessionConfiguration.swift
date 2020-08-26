@@ -18,8 +18,8 @@ struct SessionConfiguration {
     let createdAt: Any
     let delayPeriod: Int
     let feedbackDuration: Int
-    let feedbackTone: String
-    let feedbackVibration: String
+    let feedbackTone: FeedbackType
+    let feedbackVibration: FeedbackType
     let iconName: String
     let interTrialInterval: Int
     let name: String
@@ -28,6 +28,13 @@ struct SessionConfiguration {
     let setSize: Int
     let stimuliSize: CGFloat
     let updatedAt: Any
+
+    enum FeedbackType: String {
+        case none = "None"
+        case onsuccess = "On success"
+        case onfailure = "On failure"
+        case both = "Both"
+    }
 
     init() {
         active = false
@@ -39,8 +46,8 @@ struct SessionConfiguration {
         createdAt = ""
         delayPeriod = 0
         feedbackDuration = 0
-        feedbackTone = ""
-        feedbackVibration = ""
+        feedbackTone = .none
+        feedbackVibration = .none
         iconName = ""
         interTrialInterval = 0
         name = ""
@@ -62,8 +69,35 @@ struct SessionConfiguration {
         createdAt = rawDict["createdAt"] ?? ""
         delayPeriod = rawDict["delayPeriod"] as? Int ?? 0
         feedbackDuration = rawDict["feedbackDuration"] as? Int ?? 0
-        feedbackTone = rawDict["feedbackTone"] as? String ?? ""
-        feedbackVibration = rawDict["feedbackVibration"] as? String ?? ""
+
+        let toneType = rawDict["feedbackTone"] as? String ?? ""
+        switch toneType.lowercased() {
+        case FeedbackType.onsuccess.rawValue.lowercased():
+            feedbackTone = .onsuccess
+        case FeedbackType.onfailure.rawValue.lowercased():
+            feedbackTone = .onfailure
+        case FeedbackType.both.rawValue.lowercased():
+            feedbackTone = .both
+        case FeedbackType.none.rawValue.lowercased():
+            feedbackTone = .none
+        default:
+            feedbackTone = .none
+        }
+
+        let vibrationType = rawDict["feedbackVibration"] as? String ?? ""
+        switch vibrationType.lowercased() {
+        case FeedbackType.onsuccess.rawValue.lowercased():
+            feedbackVibration = .onsuccess
+        case FeedbackType.onfailure.rawValue.lowercased():
+            feedbackVibration = .onfailure
+        case FeedbackType.both.rawValue.lowercased():
+            feedbackVibration = .both
+        case FeedbackType.none.rawValue.lowercased():
+            feedbackVibration = .none
+        default:
+            feedbackVibration = .none
+        }
+
         iconName = rawDict["iconName"] as? String ?? ""
         interTrialInterval = rawDict["interTrialInterval"] as? Int ?? 0
         name = rawDict["name"] as? String ?? ""
