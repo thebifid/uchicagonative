@@ -86,22 +86,16 @@ class GameScreenViewController: UIViewController {
             let timeToShowNotification = Float(self.viewModel.interTrialInterval) * 0.6
             self.notification.show(type: type, withDelay: Int(timeToShowNotification))
 
-            switch self.viewModel.feedbackVibration {
-            case .onsuccess:
-                if type == .success {
+            switch type {
+            case .success:
+                if self.viewModel.feedbackVibration == .onsuccess || self.viewModel.feedbackVibration == .both {
                     self.vibrate()
                 }
 
-            case .onfailure:
-                if type == .failure {
+            case .failure:
+                if self.viewModel.feedbackVibration == .onfailure {
                     self.vibrate()
                 }
-
-            case .both:
-                self.vibrate()
-
-            case .none:
-                break
             }
         }
 
