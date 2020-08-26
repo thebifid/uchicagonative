@@ -6,6 +6,7 @@
 //  Copyright © 2020 Vasiliy Matveev. All rights reserved.
 //
 
+import AVFoundation
 import Cartography
 import UIKit
 
@@ -45,6 +46,12 @@ class GameScreenViewController: UIViewController {
 
     private let viewModel: GameScreenViewModel
 
+    private lazy var handleEndRound: ((Bool) -> Void) = { _ in
+        self.viewModel.roundEnded()
+    }
+
+    private var player: AVAudioPlayer?
+
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
@@ -64,9 +71,27 @@ class GameScreenViewController: UIViewController {
     // MARK: - Private Methods
 
     private func vibrate() {
-        let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .medium)
+        let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .heavy)
         impactFeedbackgenerator.prepare()
         impactFeedbackgenerator.impactOccurred()
+    }
+
+    private func playSound(type: NotificationView.TypeNotification) {
+        let url: URL!
+
+        switch type {
+        case .success:
+            url = Bundle.main.url(forResource: R.file.correctMp3.name, withExtension: "mp3")
+
+        case .failure:
+            url = Bundle.main.url(forResource: R.file.incorrectMp3.name, withExtension: "mp3")
+        }
+
+        do {
+            player = try AVAudioPlayer(contentsOf: url)
+            player?.prepareToPlay()
+            player?.play()
+        } catch {}
     }
 
     private func setupHandlers() {
@@ -92,9 +117,17 @@ class GameScreenViewController: UIViewController {
                     self.vibrate()
                 }
 
+                if self.viewModel.feedbackTone == .onsuccess || self.viewModel.feedbackTone == .both {
+                    self.playSound(type: .success)
+                }
+
             case .failure:
-                if self.viewModel.feedbackVibration == .onfailure {
+                if self.viewModel.feedbackVibration == .onfailure || self.viewModel.feedbackVibration == .both {
                     self.vibrate()
+                }
+
+                if self.viewModel.feedbackTone == .onfailure || self.viewModel.feedbackTone == .both {
+                    self.playSound(type: .failure)
                 }
             }
         }
@@ -176,13 +209,12 @@ class GameScreenViewController: UIViewController {
                 if swipeDirection == .left {
                     offsetDistance = -offsetDistance
                 }
-                UIView.animate(withDuration: 0.3) {
+                UIView.animate(withDuration: 0.3, animations: {
                     self.testCellImageView.frame = .init(origin: .init(x: originalFrame.minX + CGFloat(offsetDistance),
                                                                        y: originalFrame.minY),
                                                          size: self.viewModel.testCell.frame.size)
-                }
+                }, completion: handleEndRound)
                 viewModel.setGestureDirection(direction: swipeDirection)
-                viewModel.roundEnded()
             } else {
                 UIView.animate(withDuration: 0.3) {
                     self.testCellImageView.frame = .init(origin: originalFrame.origin,

@@ -120,10 +120,8 @@ class FirebaseManager {
         connectedRef.observe(.value, with: { snapshot in
             if snapshot.value as? Bool ?? false {
                 self.isConnected = true
-                print(self.isConnected)
             } else {
                 self.isConnected = false
-                print(self.isConnected)
             }
         })
     }

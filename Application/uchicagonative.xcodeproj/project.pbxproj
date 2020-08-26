@@ -14,6 +14,8 @@
 		C116348924C6B3D000B6C394 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C116348724C6B3D000B6C394 /* LaunchScreen.storyboard */; };
 		C116349524C6B6E100B6C394 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C116349424C6B6E100B6C394 /* R.generated.swift */; };
 		C1297DAC24F279C800764027 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1297DAB24F279C800764027 /* NavigationController.swift */; };
+		C1297DB224F6300000764027 /* correct.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C1297DB024F62FFF00764027 /* correct.mp3 */; };
+		C1297DB324F6300000764027 /* incorrect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C1297DB124F62FFF00764027 /* incorrect.mp3 */; };
 		C135296324D3C2F10004D9B8 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C135296224D3C2F10004D9B8 /* UIViewController+Extension.swift */; };
 		C135296524D3F4380004D9B8 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C135296424D3F4380004D9B8 /* EditProfileViewModel.swift */; };
 		C135296724D4051B0004D9B8 /* Dictionary+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C135296624D4051B0004D9B8 /* Dictionary+Extension.swift */; };
@@ -104,6 +106,8 @@
 		C116348A24C6B3D000B6C394 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C116349424C6B6E100B6C394 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
 		C1297DAB24F279C800764027 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		C1297DB024F62FFF00764027 /* correct.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = correct.mp3; sourceTree = "<group>"; };
+		C1297DB124F62FFF00764027 /* incorrect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = incorrect.mp3; sourceTree = "<group>"; };
 		C135296224D3C2F10004D9B8 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		C135296424D3F4380004D9B8 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
 		C135296624D4051B0004D9B8 /* Dictionary+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Extension.swift"; sourceTree = "<group>"; };
@@ -262,6 +266,7 @@
 		C116349224C6B3EA00B6C394 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C1297DAF24F62FEE00764027 /* Sounds */,
 				C16DD97024DD5E4B00EAC82E /* SVG */,
 				C13F115124D14E5B001676C2 /* HTML */,
 				C19693F524C832D40054296F /* Fonts */,
@@ -269,6 +274,15 @@
 				C1713C9924CABBA2002D0E04 /* Colors.xcassets */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		C1297DAF24F62FEE00764027 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				C1297DB024F62FFF00764027 /* correct.mp3 */,
+				C1297DB124F62FFF00764027 /* incorrect.mp3 */,
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 		C13B712324D6C4C70035EF8F /* PickerViewController */ = {
@@ -593,6 +607,7 @@
 				C1713C8624C937F9002D0E04 /* GoogleService-Info.plist in Resources */,
 				C16DD97224DD5EB300EAC82E /* diaspora.svg in Resources */,
 				C16DD97924DD696B00EAC82E /* punisher.svg in Resources */,
+				C1297DB224F6300000764027 /* correct.mp3 in Resources */,
 				C19693FE24C833D10054296F /* Karla-Italic.ttf in Resources */,
 				C19693FD24C833CE0054296F /* Karla-BoldItalic.ttf in Resources */,
 				C16DD97C24DD696B00EAC82E /* square.svg in Resources */,
@@ -601,6 +616,7 @@
 				C16DD97B24DD696B00EAC82E /* wrestling.svg in Resources */,
 				C19693FB24C833C90054296F /* Helvetica-Medium.ttf in Resources */,
 				C16DD97A24DD696B00EAC82E /* githublogo.svg in Resources */,
+				C1297DB324F6300000764027 /* incorrect.mp3 in Resources */,
 				C19693FC24C833CC0054296F /* Karla-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
