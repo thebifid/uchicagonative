@@ -8,6 +8,7 @@
 
 import AVFoundation
 import Cartography
+import os.log
 import UIKit
 
 class GameScreenViewController: UIViewController {
@@ -91,7 +92,9 @@ class GameScreenViewController: UIViewController {
             player = try AVAudioPlayer(contentsOf: url)
             player?.prepareToPlay()
             player?.play()
-        } catch {}
+        } catch {
+            os_log("Failed to play sound. %{public}@", type: .error, error.localizedDescription)
+        }
     }
 
     private func setupHandlers() {

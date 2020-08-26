@@ -216,7 +216,7 @@ class LoginViewController: UIViewController {
 
         // emailTextFieldView
         emailTextFieldView.configure(placeholder: "email",
-                                     spellCheck: .no, nextTextField: passwordTextFieldView.tf)
+                                     spellCheck: .no, nextTextField: passwordTextFieldView.actualTextField)
         scrollView.addSubview(emailTextFieldView)
         constrain(loginLabel, emailTextFieldView) { loginLabel, emailTextFieldView in
             emailTextFieldView.top == loginLabel.bottom + 30

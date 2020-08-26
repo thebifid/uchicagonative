@@ -131,7 +131,7 @@ class CreateAccountViewController: UIViewController {
         view.addSubview(scrollView)
 
         scrollView.addSubview(emailTextFieldView)
-        emailTextFieldView.configure(placeholder: "name@email.com", spellCheck: .no, nextTextField: passwordTextFieldView.tf)
+        emailTextFieldView.configure(placeholder: "name@email.com", spellCheck: .no, nextTextField: passwordTextFieldView.actualTextField)
 
         scrollView.addSubview(passwordTextFieldView)
         passwordTextFieldView.configure(placeholder: "password", isSecureTextEntry: true, nextTextField: nil)

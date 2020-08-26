@@ -38,7 +38,7 @@ class CustomTextFieldView: UIView {
 
     // MARK: - Public Properties
 
-    var tf: UITextField {
+    var actualTextField: UITextField {
         return textField
     }
 

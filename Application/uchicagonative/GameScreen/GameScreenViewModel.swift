@@ -442,7 +442,6 @@ class GameScreenViewModel {
                 changeProbabilityArray.append(1)
             }
         }
-        print(changeProbabilityArray)
     }
 
     private func currentStringDate() -> String {

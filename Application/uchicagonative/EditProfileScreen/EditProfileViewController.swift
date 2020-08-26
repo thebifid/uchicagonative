@@ -245,17 +245,17 @@ class EditProfileViewController: UIViewController {
         }
 
         firstNameTextFeildView.configure(placeholder: "First Name", textFieldInputType: .latters, autocapitalization: .words,
-                                         nextTextField: lastNameTextFieldView.tf)
+                                         nextTextField: lastNameTextFieldView.actualTextField)
         scrollView.addSubview(firstNameTextFeildView)
         makeConstrain(downView: firstNameTextFeildView, upperView: emailLabel)
 
         lastNameTextFieldView.configure(placeholder: "Last Name", textFieldInputType: .latters, autocapitalization: .words,
-                                        nextTextField: birthdayTextFieldView.tf)
+                                        nextTextField: birthdayTextFieldView.actualTextField)
         scrollView.addSubview(lastNameTextFieldView)
         makeConstrain(downView: lastNameTextFieldView, upperView: firstNameTextFeildView)
 
         birthdayTextFieldView.configure(placeholder: "Year of Birth", maxLenght: 4, textFieldInputType: .digits,
-                                        keyboardType: .numberPad, nextTextField: zipCodeTextFieldView.tf)
+                                        keyboardType: .numberPad, nextTextField: zipCodeTextFieldView.actualTextField)
         scrollView.addSubview(birthdayTextFieldView)
         makeConstrain(downView: birthdayTextFieldView, upperView: lastNameTextFieldView)
 
