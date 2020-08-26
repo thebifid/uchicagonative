@@ -61,6 +61,10 @@ class GameScreenViewController: UIViewController {
         fetchSessionConfiguration()
 
         setupUI()
+        let finalView = FinalView()
+        view.addSubview(finalView)
+        finalView.fillSuperView()
+
         playButton.addTarget(self, action: #selector(handlePlay), for: .touchUpInside)
     }
 
