@@ -72,9 +72,6 @@ class GameScreenViewController: UIViewController {
         fetchSessionConfiguration()
         setupUI()
         playButton.addTarget(self, action: #selector(handlePlay), for: .touchUpInside)
-        pauseImage.isUserInteractionEnabled = true
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handlePause))
-        pauseImage.addGestureRecognizer(tapGesture)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -230,7 +227,12 @@ class GameScreenViewController: UIViewController {
     /// For play/pause actions.
     private func pause() {
         viewModel.isPaused = true
+        view.isUserInteractionEnabled = false
         navigationItem.rightBarButtonItem?.image = R.image.play()
+        navigationItem.rightBarButtonItem?.isEnabled = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(viewModel.interTrialInterval)) {
+            self.navigationItem.rightBarButtonItem?.isEnabled = true
+        }
         cellImageViews.forEach { $0.isHidden = true }
         testCellImageView.isHidden = true
         pauseImage.isHidden = false
