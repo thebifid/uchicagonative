@@ -64,6 +64,8 @@ class GameScreenViewController: UIViewController {
 
     private var player: AVAudioPlayer?
 
+    private var isFinalScreenShowed: Bool = false
+
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
@@ -72,6 +74,13 @@ class GameScreenViewController: UIViewController {
         fetchSessionConfiguration()
         setupUI()
         playButton.addTarget(self, action: #selector(handlePlay), for: .touchUpInside)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if isFinalScreenShowed {
+            view.isUserInteractionEnabled = true
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -171,6 +180,7 @@ class GameScreenViewController: UIViewController {
     private func showFinalScreen() {
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         let finalScreen = FinishScreenView()
+        isFinalScreenShowed = true
         view.addSubview(finalScreen)
         finalScreen.fillSuperView()
 
@@ -183,6 +193,7 @@ class GameScreenViewController: UIViewController {
 
         finalScreen.didReplayButtonTapped = { [weak self] in
             finalScreen.removeFromSuperview()
+            self?.isFinalScreenShowed = false
             self?.pauseImage.isHidden = true
             self?.onPauseLabel.isHidden = true
             self?.readyLabel.isHidden = false
@@ -191,6 +202,7 @@ class GameScreenViewController: UIViewController {
 
         finalScreen.didEndButtonTapped = { [weak self] in
             finalScreen.removeFromSuperview()
+            self?.isFinalScreenShowed = false
             self?.pauseImage.isHidden = true
             self?.onPauseLabel.isHidden = true
             self?.viewModel.blockNumber = 0

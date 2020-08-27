@@ -142,10 +142,10 @@ class GetHelpViewController: UIViewController {
                                      font: R.font.karlaBold(size: Constants.buttonFontSize)!, isEnabled: true)
 
         let upStackView = VerticalStackView(arrangedSubviews: [contactEmailLabel, sendEmailButton], spacing: 15)
-        let downStackView = VerticalStackView(arrangedSubviews: [readAboutLabel, visitSiteButton], spacing: 15)
-        let feedbackstackView = VerticalStackView(arrangedSubviews: [sendFeedbackLabel, sendFeedbackButton], spacing: 15)
+        let middleStackView = VerticalStackView(arrangedSubviews: [readAboutLabel, visitSiteButton], spacing: 15)
+        let bottomStackView = VerticalStackView(arrangedSubviews: [sendFeedbackLabel, sendFeedbackButton], spacing: 15)
 
-        let stackView = VerticalStackView(arrangedSubviews: [upStackView, downStackView, feedbackstackView], spacing: 15)
+        let stackView = VerticalStackView(arrangedSubviews: [upStackView, middleStackView, bottomStackView], spacing: 15)
 
         constrain(sendEmailButton, visitSiteButton, sendFeedbackButton) { sendEmailButton, visitSiteButton, sendFeedbackButton in
 
