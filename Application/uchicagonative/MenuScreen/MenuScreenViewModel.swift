@@ -20,7 +20,21 @@ class MenuScreenViewModel {
     private(set) var userSession: UserSession
     private(set) var sessionConfiguration = SessionConfiguration()
 
-    // MARK: - Handlers
+    // MARK: - Public Properties
 
-    // MARK: - Public Methods
+    var isUserDataFilled: Bool {
+        return isAllUserDataFilled()
+    }
+
+    // MARK: - Private Methods
+
+    private func isAllUserDataFilled() -> Bool {
+        let user = userSession.user
+
+        return !user.firstName.isEmpty &&
+            !user.lastName.isEmpty &&
+            user.birthYear != 0 &&
+            user.zipCode != 0 &&
+            !user.gender.isEmpty
+    }
 }

@@ -63,7 +63,12 @@ class MenuScreenViewController: UITabBarController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        selectedIndex = 2
+
+        if viewModel.isUserDataFilled {
+            selectedIndex = 2
+        } else {
+            selectedIndex = 0
+        }
     }
 
     // MARK: - Private Methods
