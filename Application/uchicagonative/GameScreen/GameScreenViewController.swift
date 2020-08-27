@@ -153,17 +153,29 @@ class GameScreenViewController: UIViewController {
     }
 
     private func showFinalScreen() {
-        let finalScreen = FinalView()
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        let finalScreen = FinishScreenView()
         view.addSubview(finalScreen)
         finalScreen.fillSuperView()
-        finalScreen.configure(withBlockNumber: viewModel.blockNumber,
-                              accuracy: viewModel.accuracy,
-                              historicalTotal: viewModel.historicalAccuracy)
 
-        finalScreen.didReplayButtonTapped = {
+        viewModel.fetchUserHistoricalAccuracy { [weak self] in
+            guard let self = self else { return }
+            finalScreen.configure(withBlockNumber: self.viewModel.blockNumber,
+                                  accuracy: self.viewModel.accuracy,
+                                  historicalTotal: self.viewModel.historicalAccuracy)
+        }
+
+        finalScreen.didReplayButtonTapped = { [weak self] in
             finalScreen.removeFromSuperview()
-            self.readyLabel.isHidden = false
-            self.playButton.isHidden = false
+            self?.readyLabel.isHidden = false
+            self?.playButton.isHidden = false
+        }
+
+        finalScreen.didEndButtonTapped = { [weak self] in
+            finalScreen.removeFromSuperview()
+            self?.viewModel.blockNumber = 0
+            self?.readyLabel.isHidden = false
+            self?.playButton.isHidden = false
         }
     }
 

@@ -16,8 +16,9 @@
 		C1297DAC24F279C800764027 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1297DAB24F279C800764027 /* NavigationController.swift */; };
 		C1297DB224F6300000764027 /* correct.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C1297DB024F62FFF00764027 /* correct.mp3 */; };
 		C1297DB324F6300000764027 /* incorrect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C1297DB124F62FFF00764027 /* incorrect.mp3 */; };
-		C1297DB524F66B3000764027 /* FinalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1297DB424F66B3000764027 /* FinalView.swift */; };
+		C1297DB524F66B3000764027 /* FinishScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1297DB424F66B3000764027 /* FinishScreenView.swift */; };
 		C1297DB724F67B7700764027 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1297DB624F67B7700764027 /* RoundedButton.swift */; };
+		C1297DB924F787F900764027 /* CGRect+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1297DB824F787F900764027 /* CGRect+Extension.swift */; };
 		C135296324D3C2F10004D9B8 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C135296224D3C2F10004D9B8 /* UIViewController+Extension.swift */; };
 		C135296524D3F4380004D9B8 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C135296424D3F4380004D9B8 /* EditProfileViewModel.swift */; };
 		C135296724D4051B0004D9B8 /* Dictionary+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C135296624D4051B0004D9B8 /* Dictionary+Extension.swift */; };
@@ -110,8 +111,9 @@
 		C1297DAB24F279C800764027 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		C1297DB024F62FFF00764027 /* correct.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = correct.mp3; sourceTree = "<group>"; };
 		C1297DB124F62FFF00764027 /* incorrect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = incorrect.mp3; sourceTree = "<group>"; };
-		C1297DB424F66B3000764027 /* FinalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinalView.swift; sourceTree = "<group>"; };
+		C1297DB424F66B3000764027 /* FinishScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishScreenView.swift; sourceTree = "<group>"; };
 		C1297DB624F67B7700764027 /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
+		C1297DB824F787F900764027 /* CGRect+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+Extension.swift"; sourceTree = "<group>"; };
 		C135296224D3C2F10004D9B8 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		C135296424D3F4380004D9B8 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
 		C135296624D4051B0004D9B8 /* Dictionary+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Extension.swift"; sourceTree = "<group>"; };
@@ -405,6 +407,7 @@
 				C135296624D4051B0004D9B8 /* Dictionary+Extension.swift */,
 				C16DD96E24DD3DCB00EAC82E /* UIColor+Extension.swift */,
 				C15166C124EBB9E3008B6DB0 /* UITapGestureRecognizer+Extension.swift */,
+				C1297DB824F787F900764027 /* CGRect+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -421,7 +424,7 @@
 				C1FD150224D152F700188BE0 /* CheckFields.swift */,
 				C16DD97324DD60F400EAC82E /* SvgImageView.swift */,
 				C1297DAB24F279C800764027 /* NavigationController.swift */,
-				C1297DB424F66B3000764027 /* FinalView.swift */,
+				C1297DB424F66B3000764027 /* FinishScreenView.swift */,
 				C1297DB624F67B7700764027 /* RoundedButton.swift */,
 			);
 			path = Helpers;
@@ -793,7 +796,7 @@
 				C19693E424C6FC370054296F /* AboutUsViewController.swift in Sources */,
 				C19693D524C6CEF40054296F /* Constants.swift in Sources */,
 				C1713C9524CA88C4002D0E04 /* PrimaryButton.swift in Sources */,
-				C1297DB524F66B3000764027 /* FinalView.swift in Sources */,
+				C1297DB524F66B3000764027 /* FinishScreenView.swift in Sources */,
 				C19693E724C70B270054296F /* GetHelpViewController.swift in Sources */,
 				C116349524C6B6E100B6C394 /* R.generated.swift in Sources */,
 				C19693E224C6FA820054296F /* UILabel+Extension.swift in Sources */,
@@ -806,6 +809,7 @@
 				C16DD97E24E27A1200EAC82E /* SessionConfiguration.swift in Sources */,
 				C1713C9C24CAC27E002D0E04 /* LoginViewModel.swift in Sources */,
 				C16DD96424DAAEBB00EAC82E /* UserSession.swift in Sources */,
+				C1297DB924F787F900764027 /* CGRect+Extension.swift in Sources */,
 				C135296724D4051B0004D9B8 /* Dictionary+Extension.swift in Sources */,
 				C13B712524D6C4D70035EF8F /* PickerViewController.swift in Sources */,
 				C1713CF724CFD7AB002D0E04 /* FirebaseManager.swift in Sources */,

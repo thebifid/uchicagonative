@@ -9,11 +9,15 @@
 import Cartography
 import UIKit
 
-class FinalView: UIView {
+class FinishScreenView: UIView {
     // MARK: - Init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+
+        leftActivityIndicator.startAnimating()
+        rightActivityIndicator.startAnimating()
+
         replayButton.addTarget(self, action: #selector(handleReplayButtonTapped), for: .touchUpInside)
         endButton.addTarget(self, action: #selector(handleEndButtonTapped), for: .touchUpInside)
         setupUI()
@@ -54,7 +58,6 @@ class FinalView: UIView {
 
     private let accuracyPercentLabel: UILabel = {
         let label = UILabel()
-        label.text = "-"
         label.textColor = .black
         label.font = R.font.helveticaNeueCyrMedium(size: 20)!
         return label
@@ -62,7 +65,6 @@ class FinalView: UIView {
 
     private let historicalAccuracyPercentLabel: UILabel = {
         let label = UILabel()
-        label.text = "-"
         label.textColor = .black
         label.font = R.font.helveticaNeueCyrMedium(size: 20)!
         return label
@@ -88,6 +90,24 @@ class FinalView: UIView {
         return label
     }()
 
+    private let leftActivityIndicator: UIActivityIndicatorView = {
+        let ai = UIActivityIndicatorView()
+        ai.hidesWhenStopped = true
+        ai.style = .white
+        ai.color = .black
+        return ai
+    }()
+
+    private let rightActivityIndicator: UIActivityIndicatorView = {
+        let ai = UIActivityIndicatorView()
+        ai.hidesWhenStopped = true
+        ai.style = .white
+        ai.color = .black
+        return ai
+    }()
+
+    private let separatorView = UIView()
+
     // MARK: - Handlers
 
     var didReplayButtonTapped: (() -> Void)?
@@ -97,6 +117,9 @@ class FinalView: UIView {
 
     func configure(withBlockNumber number: Int, accuracy: [Int], historicalTotal historicalAccuracy: [Int]) {
         blockCompleteLabel.text = "Block \(number) Complete!"
+
+        leftActivityIndicator.stopAnimating()
+        rightActivityIndicator.stopAnimating()
         accuracyPercentLabel.text = percent(array: accuracy)
         historicalAccuracyPercentLabel.text = percent(array: historicalAccuracy)
     }
@@ -146,7 +169,7 @@ class FinalView: UIView {
         constrain(statisticsView, blockCompleteLabel) { view, label in
             view.width == view.superview!.width
             view.height == 100
-            view.top == label.bottom + 100
+            view.top == label.bottom + 50
         }
 
         statisticsView.addSubview(accuracyLabel)
@@ -205,6 +228,30 @@ class FinalView: UIView {
         constrain(endLabel, endButton) { label, button in
             label.top == button.bottom + 10
             label.centerX == button.centerX
+        }
+
+        statisticsView.addSubview(leftActivityIndicator)
+        statisticsView.addSubview(rightActivityIndicator)
+
+        constrain(leftActivityIndicator, accuracyPercentLabel) { ai, label in
+            ai.height == 100
+            ai.width == 100
+            ai.center == label.center
+        }
+
+        constrain(rightActivityIndicator, historicalAccuracyPercentLabel) { ai, label in
+            ai.height == 100
+            ai.width == 100
+            ai.center == label.center
+        }
+
+        buttonsView.addSubview(separatorView)
+        separatorView.backgroundColor = UIColor(white: 0.3, alpha: 0.3)
+        constrain(separatorView) { separatorView in
+            separatorView.top == separatorView.superview!.top
+            separatorView.height == 2
+            separatorView.left == separatorView.superview!.left
+            separatorView.right == separatorView.superview!.right
         }
     }
 }

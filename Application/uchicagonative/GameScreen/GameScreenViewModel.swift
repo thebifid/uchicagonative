@@ -75,7 +75,6 @@ class GameScreenViewModel {
     }
 
     private var historicalUserAccuracy = [Int]()
-    private(set) var blockNumber = 0
 
     // MARK: - Public Properties
 
@@ -134,14 +133,14 @@ class GameScreenViewModel {
         trials.results.forEach { result in
             array.append(result.accuracy)
         }
-        print("accuracy", array)
         return array
     }
 
     var historicalAccuracy: [Int] {
-        print("hist \(historicalUserAccuracy)")
         return historicalUserAccuracy + accuracy
     }
+
+    var blockNumber = 0
 
     // MARK: - Handlers
 
@@ -241,6 +240,18 @@ class GameScreenViewModel {
         generateTestCell(viewBounds: viewBounds, change: change)
     }
 
+    func fetchUserHistoricalAccuracy(completion: @escaping (() -> Void)) {
+        FirebaseManager.sharedInstance.fetchUserAccuracy { [weak self] result in
+            switch result {
+            case .failure:
+                break
+            case let .success(accuracy):
+                self?.historicalUserAccuracy = accuracy
+                completion()
+            }
+        }
+    }
+
     // MARK: - Private Methods
 
     private func formData() {
@@ -312,7 +323,6 @@ class GameScreenViewModel {
         result["testColor"] = currentTrial.testColor
         result["testLocation"] = currentTrial.testLocation
         result["testPresentationTime"] = currentTrial.testPresentationTime
-
         return result
     }
 
@@ -384,8 +394,8 @@ class GameScreenViewModel {
         if currentRound < numberOfTrials {
             didRoundEnd?()
         } else {
-            fetchUserHistoricalAccuracy {
-                self.blockNumber += 1
+            blockNumber += 1
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(interTrialInterval)) {
                 self.didGameEnd?()
             }
         }
@@ -395,7 +405,6 @@ class GameScreenViewModel {
         showNotificationToUser?()
     }
 
-    // change = is Correct or not test cell
     private func generateTestCell(viewBounds: CGRect, change: Bool) {
         if change {
             let randomNumber = Int.random(in: 0 ... cells.count - 1)
@@ -463,7 +472,6 @@ class GameScreenViewModel {
 
     private func fromTwoDimensionalArrayToString<T: LosslessStringConvertible>(array: [[T]]) -> String {
         var stringFromArray: String = ""
-
         array.forEach { OneDimensionalArray in
             stringFromArray.append(contentsOf: fromOneDimensionalArrayToString(array: OneDimensionalArray, withSeparator: ":"))
             stringFromArray.append(contentsOf: ";")
@@ -486,29 +494,5 @@ class GameScreenViewModel {
         stringFromArray.removeLast()
         stringFromArray.insert("]", at: stringFromArray.endIndex)
         return stringFromArray
-    }
-
-    private func fetchUserHistoricalAccuracy(completion: @escaping (() -> Void)) {
-        FirebaseManager.sharedInstance.fetchUserAccuracy { [weak self] result in
-            switch result {
-            case .failure:
-                break
-            case let .success(accuracy):
-                self?.historicalUserAccuracy = accuracy
-                completion()
-            }
-        }
-    }
-}
-
-private extension CGRect {
-    /// Returns true if intersects at least one rect.
-    func intersectsAny(_ rects: [CGRect]) -> Bool {
-        for rect in rects {
-            if intersects(rect) {
-                return true
-            }
-        }
-        return false
     }
 }
