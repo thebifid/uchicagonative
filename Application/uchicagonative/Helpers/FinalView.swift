@@ -10,6 +10,21 @@ import Cartography
 import UIKit
 
 class FinalView: UIView {
+    // MARK: - Init
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        replayButton.addTarget(self, action: #selector(handleReplayButtonTapped), for: .touchUpInside)
+        endButton.addTarget(self, action: #selector(handleEndButtonTapped), for: .touchUpInside)
+        setupUI()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - UI Controls
+
     private let logo = UIImageView(image: R.image.mainIcon()!)
     private let blockCompleteLabel: UILabel = {
         let label = UILabel()
@@ -73,14 +88,42 @@ class FinalView: UIView {
         return label
     }()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupUI()
+    // MARK: - Handlers
+
+    var didReplayButtonTapped: (() -> Void)?
+    var didEndButtonTapped: (() -> Void)?
+
+    // MARK: - Public Methods
+
+    func configure(withAccuracy accuracy: [Int], historicalTotal historicalAccuracy: [Int]) {
+        accuracyPercentLabel.text = percent(array: accuracy)
+        historicalAccuracyPercentLabel.text = percent(array: historicalAccuracy)
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    // MARK: - Private Methods
+
+    private func percent(array: [Int]) -> String {
+        var countOfOnes: Float = 0
+        array.forEach { element in
+            if element == 1 {
+                countOfOnes += 1
+            }
+        }
+
+        let percent: Float = countOfOnes / Float(array.count)
+        let roundedValue = (percent * 100).rounded()
+        return String("\(Int(roundedValue))%")
     }
+
+    @objc private func handleReplayButtonTapped() {
+        didReplayButtonTapped?()
+    }
+
+    @objc private func handleEndButtonTapped() {
+        didEndButtonTapped?()
+    }
+
+    // MARK: - UI Actions
 
     private func setupUI() {
         backgroundColor = .white
