@@ -142,6 +142,8 @@ class GameScreenViewModel {
 
     var blockNumber = 0
 
+    var isPaused: Bool = false
+
     // MARK: - Handlers
 
     var didFetchSessionConfiguration: (() -> Void)?

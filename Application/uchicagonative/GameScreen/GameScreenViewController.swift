@@ -32,6 +32,17 @@ class GameScreenViewController: UIViewController {
 
     private lazy var notification = NotificationView(to: self)
 
+    private let pauseImage = UIImageView(image: R.image.bigPause()!)
+
+    private let onPauseLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.text = "On Pause"
+        label.font = R.font.karlaBold(size: 36)!
+        label.textColor = .black
+        return label
+    }()
+
     // MARK: - Init
 
     init(viewModel model: GameScreenViewModel) {
@@ -145,6 +156,7 @@ class GameScreenViewController: UIViewController {
                     break
                 }
             }
+            self.changePauseButtonState()
             self.showFinalScreen()
             self.view.gestureRecognizers?.forEach { recognizer in
                 self.view.removeGestureRecognizer(recognizer)
@@ -184,26 +196,58 @@ class GameScreenViewController: UIViewController {
         readyLabel.isHidden = true
         playButton.isHidden = true
         viewModel.startGame()
+        changePauseButtonState()
+    }
+
+    private func changePauseButtonState() {
+        if navigationItem.rightBarButtonItem == nil {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: R.image.pause(), style: .plain,
+                                                                target: self, action: #selector(handlePause))
+        } else {
+            navigationItem.rightBarButtonItem = nil
+        }
+    }
+
+    @objc private func handlePause() {
+        if !viewModel.isPaused {
+            viewModel.isPaused = true
+            navigationItem.rightBarButtonItem?.image = R.image.play()
+            cellImageViews.forEach { $0.isHidden = true }
+            testCellImageView.isHidden = true
+            pauseImage.isHidden = false
+            onPauseLabel.isHidden = false
+        } else {
+            viewModel.isPaused = false
+            pauseImage.isHidden = true
+            onPauseLabel.isHidden = true
+            navigationItem.rightBarButtonItem?.image = R.image.pause()
+            playRound()
+        }
     }
 
     private func playRound() {
         let insets = UIEdgeInsets(top: view.safeAreaInsets.top + 20.0, left: 10.0, bottom: view.safeAreaInsets.bottom + 20.0, right: 10.0)
         viewModel.generateCells(viewBounds: view.bounds.inset(by: insets))
 
+        guard !viewModel.isPaused else { return }
+
         // show icons
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(viewModel.interTrialInterval)) { [weak self] in
             guard let self = self else { return }
+            guard !self.viewModel.isPaused else { return }
             self.layoutCellImageViews()
             self.viewModel.setStartedAt()
 
             // hide icons
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(self.viewModel.sampleExposureDuration)) { [weak self] in
                 guard let self = self else { return }
+                guard !self.viewModel.isPaused else { return }
                 self.cellImageViews.forEach { $0.isHidden = true }
 
                 // show test element
                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(self.viewModel.delayPeriod)) { [weak self] in
                     guard let self = self else { return }
+                    guard !self.viewModel.isPaused else { return }
                     self.layoutTestCellImageView()
                     self.viewModel.setTestPresentationTime()
                     self.testCellImageView.isHidden = false
@@ -312,6 +356,18 @@ class GameScreenViewController: UIViewController {
 
             playButton.width == stackView.width
             playButton.height == 50
+        }
+
+        scrollView.addSubview(pauseImage)
+        scrollView.addSubview(onPauseLabel)
+        pauseImage.isHidden = true
+        onPauseLabel.isHidden = true
+
+        constrain(pauseImage, onPauseLabel) { pauseImage, onPauseLabel in
+            pauseImage.centerX == pauseImage.superview!.centerX
+            pauseImage.centerY == pauseImage.superview!.centerY - topbarHeight
+            onPauseLabel.top == pauseImage.bottom + 15
+            onPauseLabel.centerX == onPauseLabel.superview!.centerX
         }
     }
 }

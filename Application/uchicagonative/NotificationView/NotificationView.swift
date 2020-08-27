@@ -89,7 +89,7 @@ class NotificationView: UIViewController {
         view.frame = .init(x: 0, y: viewController.view.frame.height, width: viewController.view.frame.width, height: 150)
 
         UIView.animate(withDuration: 0.2, animations: {
-            self.view.frame = .init(x: 0, y: viewController.view.frame.height - 150, width: viewController.view.frame.width, height: 150)
+            self.view.frame = .init(x: 0, y: viewController.view.frame.height - 200, width: viewController.view.frame.width, height: 150)
         }, completion: hideAction)
     }
 
