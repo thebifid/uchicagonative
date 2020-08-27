@@ -45,19 +45,19 @@ class MenuScreenViewController: UITabBarController {
 
         viewControllers = [
             createNavController(viewController: editProfileController, title: "Edit Your Profile",
-                                tabbarTitle: "Profile", imageName: ""),
+                                tabbarTitle: "Profile", imageName: R.image.person.name),
 
             createNavController(viewController: TermsOfServiceViewController(), title: "Terms Of Service",
-                                tabbarTitle: "ToS", imageName: ""),
+                                tabbarTitle: "ToS", imageName: R.image.documents.name),
 
             createNavController(viewController: gameController, title: "Game",
-                                tabbarTitle: "Play", imageName: ""),
+                                tabbarTitle: "Play", imageName: R.image.play.name),
 
             createNavController(viewController: getHelpController, title: "Get Help",
-                                tabbarTitle: "Help", imageName: ""),
+                                tabbarTitle: "Help", imageName: R.image.help.name),
 
             createNavController(viewController: AboutUsViewController(), title: "About Us",
-                                tabbarTitle: "About", imageName: "")
+                                tabbarTitle: "About", imageName: R.image.about.name)
         ]
     }
 
