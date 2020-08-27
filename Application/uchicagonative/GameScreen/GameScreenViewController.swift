@@ -186,12 +186,16 @@ class GameScreenViewController: UIViewController {
 
         finalScreen.didReplayButtonTapped = { [weak self] in
             finalScreen.removeFromSuperview()
+            self?.pauseImage.isHidden = true
+            self?.onPauseLabel.isHidden = true
             self?.readyLabel.isHidden = false
             self?.playButton.isHidden = false
         }
 
         finalScreen.didEndButtonTapped = { [weak self] in
             finalScreen.removeFromSuperview()
+            self?.pauseImage.isHidden = true
+            self?.onPauseLabel.isHidden = true
             self?.viewModel.blockNumber = 0
             self?.readyLabel.isHidden = false
             self?.playButton.isHidden = false

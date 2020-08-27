@@ -155,7 +155,7 @@ class FinishScreenView: UIView {
         constrain(logo) { logo in
             logo.height == 150
             logo.width == 150
-            logo.top == logo.superview!.top + 130
+            logo.top == logo.superview!.top + 90
             logo.centerX == logo.superview!.centerX
         }
 
@@ -169,7 +169,7 @@ class FinishScreenView: UIView {
         constrain(statisticsView, blockCompleteLabel) { view, label in
             view.width == view.superview!.width
             view.height == 100
-            view.top == label.bottom + 50
+            view.top == label.bottom + 35
         }
 
         statisticsView.addSubview(accuracyLabel)

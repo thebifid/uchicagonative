@@ -141,11 +141,11 @@ class GetHelpViewController: UIViewController {
         sendFeedbackButton.configure(title: "Send Feedback",
                                      font: R.font.karlaBold(size: Constants.buttonFontSize)!, isEnabled: true)
 
-        let upStackView = VerticalStackView(arrangedSubviews: [contactEmailLabel, sendEmailButton], spacing: 20)
-        let downStackView = VerticalStackView(arrangedSubviews: [readAboutLabel, visitSiteButton], spacing: 20)
-        let feedbackstackView = VerticalStackView(arrangedSubviews: [sendFeedbackLabel, sendFeedbackButton], spacing: 20)
+        let upStackView = VerticalStackView(arrangedSubviews: [contactEmailLabel, sendEmailButton], spacing: 15)
+        let downStackView = VerticalStackView(arrangedSubviews: [readAboutLabel, visitSiteButton], spacing: 15)
+        let feedbackstackView = VerticalStackView(arrangedSubviews: [sendFeedbackLabel, sendFeedbackButton], spacing: 15)
 
-        let stackView = VerticalStackView(arrangedSubviews: [upStackView, downStackView, feedbackstackView], spacing: 35)
+        let stackView = VerticalStackView(arrangedSubviews: [upStackView, downStackView, feedbackstackView], spacing: 15)
 
         constrain(sendEmailButton, visitSiteButton, sendFeedbackButton) { sendEmailButton, visitSiteButton, sendFeedbackButton in
 
