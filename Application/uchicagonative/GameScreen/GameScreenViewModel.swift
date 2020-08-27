@@ -79,6 +79,8 @@ class GameScreenViewModel {
         return responseStartTimeMiliseconds - testPresentationTimeMiliseconds
     }
 
+    private var historicalUserAccuracy = [Int]()
+
     // MARK: - Public Properties
 
     /// Background color for the whole view. Available when session configuration is available.
@@ -129,6 +131,20 @@ class GameScreenViewModel {
 
     var feedbackVibration: SessionConfiguration.FeedbackType {
         return sessionConfiguration.feedbackVibration
+    }
+
+    var accuracy: [Int] {
+        var array = [Int]()
+        trials.results.forEach { result in
+            array.append(result.accuracy)
+        }
+        print("accuracy", array)
+        return array
+    }
+
+    var historicalAccuracy: [Int] {
+        print("hist \(historicalUserAccuracy)")
+        return historicalUserAccuracy + accuracy
     }
 
     // MARK: - Handlers
@@ -186,10 +202,8 @@ class GameScreenViewModel {
             switch result {
             case let .failure(error):
                 completion(.failure(error))
-
             case let .success(sessionConfiguration):
                 guard let self = self else { return }
-
                 self.sessionConfiguration = sessionConfiguration
                 self.didFetchSessionConfiguration?()
                 completion(.success(()))
@@ -200,15 +214,12 @@ class GameScreenViewModel {
 
     func sendDataToFirebase(completion: @escaping ((Result<Void, Error>) -> Void)) {
         formData()
-
         if !FirebaseManager.sharedInstance.isConnected {
             let message = "The connection is lost. Your data will be recorded automatically the next time you connect to the Internet."
             let error = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: message])
             completion(.failure(error))
         }
-
         FirebaseManager.sharedInstance.addDocumentToBlocks(attributes: attributes) { result in
-
             switch result {
             case let .failure(error):
                 completion(.failure(error))
@@ -272,15 +283,12 @@ class GameScreenViewModel {
         for index in 0 ..< sessionConfiguration.numberOfTrials {
             var trialToSend = [String: Any]()
             trialToSend["id"] = trials.id
-
             let result = formResult(index: index)
             let sample = formSample(index: index)
             let test = formTest(index: index)
-
             trialToSend["results"] = result
             trialToSend["sample"] = sample
             trialToSend["test"] = test
-
             arrayOfTrials.append(trialToSend)
         }
         return arrayOfTrials
@@ -316,19 +324,16 @@ class GameScreenViewModel {
             cells.append(cellToSend)
         }
         let sample: [String: Any] = ["cells": cells]
-
         return sample
     }
 
     private func formTest(index: Int) -> [String: Any] {
         var cells = [[String: Any]]()
-
         let testCell = trials.test[index].cell
         var cellToSend = [String: Any]()
         cellToSend = formCell(cell: testCell)
         cells.append(cellToSend)
         let test: [String: Any] = ["cells": cells]
-
         return test
     }
 
@@ -340,19 +345,16 @@ class GameScreenViewModel {
         cellToSend["stimuliSize"] = cell.stimuliSize
         cellToSend["x"] = cell.location[0]
         cellToSend["y"] = cell.location[1]
-
         return cellToSend
     }
 
     private func formUser() -> [String: Any] {
         var user = [String: Any]()
-
         user["birthYear"] = userSession.user.birthYear
         user["gender"] = userSession.user.gender
         user["id"] = userSession.user.id
         user["projectId"] = userSession.user.projectId
         user["zipCode"] = userSession.user.zipCode
-
         return user
     }
 
@@ -383,7 +385,9 @@ class GameScreenViewModel {
         if currentRound < numberOfTrials {
             didRoundEnd?()
         } else {
-            didGameEnd?()
+            fetchUserHistoricalAccuracy {
+                self.didGameEnd?()
+            }
         }
     }
 
@@ -474,7 +478,6 @@ class GameScreenViewModel {
                                                                                withSeparator separator: String = ";") -> String {
         var stringFromArray: String = ""
         let separator = separator
-
         array.forEach {
             stringFromArray.append(contentsOf: String($0))
             stringFromArray.append(contentsOf: separator)
@@ -483,6 +486,18 @@ class GameScreenViewModel {
         stringFromArray.removeLast()
         stringFromArray.insert("]", at: stringFromArray.endIndex)
         return stringFromArray
+    }
+
+    private func fetchUserHistoricalAccuracy(completion: @escaping (() -> Void)) {
+        FirebaseManager.sharedInstance.fetchUserAccuracy { [weak self] result in
+            switch result {
+            case .failure:
+                break
+            case let .success(accuracy):
+                self?.historicalUserAccuracy = accuracy
+                completion()
+            }
+        }
     }
 }
 

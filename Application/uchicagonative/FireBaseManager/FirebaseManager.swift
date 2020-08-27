@@ -226,4 +226,29 @@ class FirebaseManager {
             }
         }
     }
+
+    func fetchUserAccuracy(completion: @escaping ((Result<[Int], Error>) -> Void)) {
+        var arrayOfAccuracy = [Int]()
+        db.collection("blocks").getDocuments { snapshot, error in
+
+            if error != nil {
+                completion(.failure(error!))
+            } else {
+                snapshot?.documents.forEach { document in
+                    let data = document.data()
+                    let user = data["user"] as? [String: Any] ?? [:]
+                    if user["id"] as? String == FirebaseAuth.Auth.auth().currentUser?.uid {
+                        let trials = data["trials"] as? [Any] ?? []
+                        trials.forEach { element in
+                            let trial = element as? [String: Any] ?? [:]
+                            let results = trial["results"] as? [String: Any] ?? [:]
+                            let accuracy = results["accuracy"]
+                            arrayOfAccuracy.append(accuracy as? Int ?? -1)
+                        }
+                    }
+                }
+                completion(.success(arrayOfAccuracy))
+            }
+        }
+    }
 }

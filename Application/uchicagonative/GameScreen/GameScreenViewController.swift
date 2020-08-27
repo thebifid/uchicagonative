@@ -59,13 +59,7 @@ class GameScreenViewController: UIViewController {
         super.viewDidLoad()
         setupHandlers()
         fetchSessionConfiguration()
-
         setupUI()
-        let finalView = FinalView()
-        view.addSubview(finalView)
-        finalView.fillSuperView()
-        finalView.configure(withAccuracy: [1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], historicalTotal: [0])
-
         playButton.addTarget(self, action: #selector(handlePlay), for: .touchUpInside)
     }
 
@@ -151,11 +145,20 @@ class GameScreenViewController: UIViewController {
                     break
                 }
             }
-            self.scrollView.backgroundColor = .orange
+            self.showFinalScreen()
             self.view.gestureRecognizers?.forEach { recognizer in
                 self.view.removeGestureRecognizer(recognizer)
             }
         }
+    }
+
+    private func showFinalScreen() {
+        let finalScreen = FinalView()
+        view.addSubview(finalScreen)
+        finalScreen.fillSuperView()
+        finalScreen.configure(withBlockNumber: 1,
+                              accuracy: viewModel.accuracy,
+                              historicalTotal: viewModel.historicalAccuracy)
     }
 
     @objc private func handlePlay() {

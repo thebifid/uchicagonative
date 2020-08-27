@@ -28,7 +28,7 @@ class FinalView: UIView {
     private let logo = UIImageView(image: R.image.mainIcon()!)
     private let blockCompleteLabel: UILabel = {
         let label = UILabel()
-        label.text = "Block 1 Complete!"
+        label.text = "Block - Complete!"
         label.font = R.font.helveticaNeueCyrMedium(size: 40)!
         label.textColor = R.color.lightBlack()!
         return label
@@ -95,7 +95,8 @@ class FinalView: UIView {
 
     // MARK: - Public Methods
 
-    func configure(withAccuracy accuracy: [Int], historicalTotal historicalAccuracy: [Int]) {
+    func configure(withBlockNumber number: Int, accuracy: [Int], historicalTotal historicalAccuracy: [Int]) {
+        blockCompleteLabel.text = "Block \(number) Complete!"
         accuracyPercentLabel.text = percent(array: accuracy)
         historicalAccuracyPercentLabel.text = percent(array: historicalAccuracy)
     }
