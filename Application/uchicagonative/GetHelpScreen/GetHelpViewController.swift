@@ -69,21 +69,32 @@ class GetHelpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        sendEmailButton.addTarget(self, action: #selector(handleSendEmail), for: .touchUpInside)
+        sendEmailButton.addTarget(self, action: #selector(handleSendSupportEmail), for: .touchUpInside)
         visitSiteButton.addTarget(self, action: #selector(handleVisitWebsite), for: .touchUpInside)
+        sendFeedbackButton.addTarget(self, action: #selector(handleSendFeedbackEmail), for: .touchUpInside)
+    }
+
+    // MARK: - Enums
+
+    private enum MailType {
+        case support, feedback
     }
 
     // MARK: - Private Methods
 
-    @objc private func handleSendEmail() {
-        showMailCompose()
+    @objc private func handleSendSupportEmail() {
+        showMailCompose(type: .support)
+    }
+
+    @objc private func handleSendFeedbackEmail() {
+        showMailCompose(type: .feedback)
     }
 
     @objc private func handleVisitWebsite() {
         UIApplication.shared.open(viewModel.websiteUrl)
     }
 
-    private func showMailCompose() {
+    private func showMailCompose(type: MailType) {
         guard viewModel.isEmailFetched else {
             let alert = AlertAssist.showCustomAlert("Error!", message: "Can't get your email. Please, try again.", optionHadler: nil)
             present(alert, animated: true)
@@ -94,7 +105,14 @@ class GetHelpViewController: UIViewController {
             let mail = MFMailComposeViewController()
             mail.mailComposeDelegate = self
             mail.setToRecipients([viewModel.emailRecipient])
-            mail.setSubject(viewModel.emailSubject)
+
+            switch type {
+            case .support:
+                mail.setSubject(viewModel.supportEmailSubject)
+            case .feedback:
+                mail.setSubject(viewModel.feedbackEmailSubject)
+            }
+
             mail.setMessageBody("Sender: \(viewModel.userSession.user.email)", isHTML: false)
 
             present(mail, animated: true)

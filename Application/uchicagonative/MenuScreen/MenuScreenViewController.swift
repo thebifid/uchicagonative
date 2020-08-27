@@ -44,28 +44,36 @@ class MenuScreenViewController: UITabBarController {
         let getHelpController = GetHelpViewController(viewModel: getHelpViewModel)
 
         viewControllers = [
-            createNavController(viewController: editProfileController, title: "Profile", imageName: ""),
-            createNavController(viewController: TermsOfServiceViewController(), title: "ToS", imageName: ""),
-            createNavController(viewController: gameController, title: "Play", imageName: ""),
-            createNavController(viewController: getHelpController, title: "Help", imageName: ""),
-            createNavController(viewController: AboutUsViewController(), title: "About", imageName: "")
-        ]
+            createNavController(viewController: editProfileController, title: "Edit Your Profile",
+                                tabbarTitle: "Profile", imageName: ""),
 
-        selectedIndex = 2
+            createNavController(viewController: TermsOfServiceViewController(), title: "Terms Of Service",
+                                tabbarTitle: "ToS", imageName: ""),
+
+            createNavController(viewController: gameController, title: "Game",
+                                tabbarTitle: "Play", imageName: ""),
+
+            createNavController(viewController: getHelpController, title: "Get Help",
+                                tabbarTitle: "Help", imageName: ""),
+
+            createNavController(viewController: AboutUsViewController(), title: "About Us",
+                                tabbarTitle: "About", imageName: "")
+        ]
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tabBarController?.selectedIndex = 1
+        selectedIndex = 2
     }
 
     // MARK: - Private Methods
 
-    private func createNavController(viewController: UIViewController, title: String, imageName: String) -> UIViewController {
+    private func createNavController(viewController: UIViewController, title: String,
+                                     tabbarTitle: String, imageName: String) -> UIViewController {
         let navController = UINavigationController(rootViewController: viewController)
         viewController.navigationItem.title = title
         viewController.view.backgroundColor = .white
-        navController.tabBarItem.title = title
+        navController.tabBarItem.title = tabbarTitle
         navController.tabBarItem.image = UIImage(named: imageName)
         return navController
     }

@@ -21,7 +21,8 @@ class GetHelpViewModel {
 
     /// Email address and subject to report
     let emailRecipient: String = "lazareva@saritasa.com"
-    let emailSubject: String = "MMA Support Request"
+    let supportEmailSubject: String = "MMA Support Request"
+    let feedbackEmailSubject: String = "MMA Feedback"
 
     private(set) var userSession: UserSession
     let websiteUrl: URL = URL(string: "https://awhvogellab.com")!
