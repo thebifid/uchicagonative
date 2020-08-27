@@ -40,7 +40,6 @@ class GameScreenViewModel {
     private var changeProbabilityArray = [Int]()
     private var trials = Trials()
     private(set) var roundResult = RoundResult()
-
     private var attributes = [String: Any]()
 
     /// Map icon name from server to icon name in app.
@@ -60,10 +59,8 @@ class GameScreenViewModel {
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
         let responseEndTime = dateFormatter.date(from: self.responseEndTime) ?? Date()
         let testPresentationTime = dateFormatter.date(from: self.testPresentationTime) ?? Date()
-
         let responseEndTimeMiliseconds = convertDateToMiliseconds(date: responseEndTime)
         let testPresentationTimeMiliseconds = convertDateToMiliseconds(date: testPresentationTime)
-
         return responseEndTimeMiliseconds - testPresentationTimeMiliseconds
     }
 
@@ -72,14 +69,13 @@ class GameScreenViewModel {
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
         let responseStartTime = dateFormatter.date(from: self.responseStartTime) ?? Date()
         let testPresentationTime = dateFormatter.date(from: self.testPresentationTime) ?? Date()
-
         let responseStartTimeMiliseconds = convertDateToMiliseconds(date: responseStartTime)
         let testPresentationTimeMiliseconds = convertDateToMiliseconds(date: testPresentationTime)
-
         return responseStartTimeMiliseconds - testPresentationTimeMiliseconds
     }
 
     private var historicalUserAccuracy = [Int]()
+    private(set) var blockNumber = 0
 
     // MARK: - Public Properties
 
@@ -157,6 +153,9 @@ class GameScreenViewModel {
     // MARK: - Public Methods
 
     func startGame() {
+        trials = Trials()
+        roundResult = RoundResult()
+        currentRound = 0
         nextRound()
     }
 
@@ -386,6 +385,7 @@ class GameScreenViewModel {
             didRoundEnd?()
         } else {
             fetchUserHistoricalAccuracy {
+                self.blockNumber += 1
                 self.didGameEnd?()
             }
         }

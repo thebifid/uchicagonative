@@ -156,9 +156,15 @@ class GameScreenViewController: UIViewController {
         let finalScreen = FinalView()
         view.addSubview(finalScreen)
         finalScreen.fillSuperView()
-        finalScreen.configure(withBlockNumber: 1,
+        finalScreen.configure(withBlockNumber: viewModel.blockNumber,
                               accuracy: viewModel.accuracy,
                               historicalTotal: viewModel.historicalAccuracy)
+
+        finalScreen.didReplayButtonTapped = {
+            finalScreen.removeFromSuperview()
+            self.readyLabel.isHidden = false
+            self.playButton.isHidden = false
+        }
     }
 
     @objc private func handlePlay() {
