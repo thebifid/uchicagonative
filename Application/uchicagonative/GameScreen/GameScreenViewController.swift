@@ -72,11 +72,18 @@ class GameScreenViewController: UIViewController {
         fetchSessionConfiguration()
         setupUI()
         playButton.addTarget(self, action: #selector(handlePlay), for: .touchUpInside)
+        pauseImage.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handlePause))
+        pauseImage.addGestureRecognizer(tapGesture)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+
+        if playButton.isHidden {
+            pause()
+        }
     }
 
     // MARK: - Private Methods
@@ -210,21 +217,32 @@ class GameScreenViewController: UIViewController {
 
     @objc private func handlePause() {
         if !viewModel.isPaused {
-            viewModel.isPaused = true
-            navigationItem.rightBarButtonItem?.image = R.image.play()
-            cellImageViews.forEach { $0.isHidden = true }
-            testCellImageView.isHidden = true
-            pauseImage.isHidden = false
-            onPauseLabel.isHidden = false
+            pause()
         } else {
-            viewModel.isPaused = false
-            pauseImage.isHidden = true
-            onPauseLabel.isHidden = true
-            navigationItem.rightBarButtonItem?.image = R.image.pause()
-            playRound()
+            play()
         }
     }
 
+    /// For play/pause actions.
+    private func pause() {
+        viewModel.isPaused = true
+        navigationItem.rightBarButtonItem?.image = R.image.play()
+        cellImageViews.forEach { $0.isHidden = true }
+        testCellImageView.isHidden = true
+        pauseImage.isHidden = false
+        onPauseLabel.isHidden = false
+    }
+
+    /// For play/pause actions.
+    private func play() {
+        viewModel.isPaused = false
+        pauseImage.isHidden = true
+        onPauseLabel.isHidden = true
+        navigationItem.rightBarButtonItem?.image = R.image.pause()
+        playRound()
+    }
+
+    /// Start the game.
     private func playRound() {
         let insets = UIEdgeInsets(top: view.safeAreaInsets.top + 20.0, left: 10.0, bottom: view.safeAreaInsets.bottom + 20.0, right: 10.0)
         viewModel.generateCells(viewBounds: view.bounds.inset(by: insets))

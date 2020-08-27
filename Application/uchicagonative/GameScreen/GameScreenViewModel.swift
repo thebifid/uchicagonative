@@ -50,7 +50,6 @@ class GameScreenViewModel {
         "wrestling": "wrestling",
         "diaspora": "diaspora"
     ]
-
     private var startPoint: CGPoint = .zero
     private var endPoint: CGPoint = .zero
 
@@ -142,7 +141,7 @@ class GameScreenViewModel {
 
     var blockNumber = 0
 
-    var isPaused: Bool = false
+    var isPaused: Bool = true
 
     // MARK: - Handlers
 
@@ -154,6 +153,7 @@ class GameScreenViewModel {
     // MARK: - Public Methods
 
     func startGame() {
+        isPaused = false
         trials = Trials()
         roundResult = RoundResult()
         currentRound = 0
