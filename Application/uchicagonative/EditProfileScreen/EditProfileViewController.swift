@@ -7,7 +7,9 @@
 //
 
 import Cartography
+import FirebaseAuth
 import UIKit
+
 ///  Shows editing user's profile
 class EditProfileViewController: UIViewController {
     // MARK: - Init
@@ -24,7 +26,7 @@ class EditProfileViewController: UIViewController {
     // MARK: - Private Properties
 
     private let viewModel: EditProfileViewModel
-    private let spacing: CGFloat = 30
+    private let spacing: CGFloat = 25
 
     private var pickerViewCard: PickerViewController!
 
@@ -80,6 +82,9 @@ class EditProfileViewController: UIViewController {
 
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log out", style: .plain, target: self, action: #selector(handleLogout))
+        navigationItem.rightBarButtonItem?.tintColor = .red
     }
 
     // MARK: - Private Methods
@@ -224,6 +229,16 @@ class EditProfileViewController: UIViewController {
         }
     }
 
+    @objc private func handleLogout() {
+        do {
+            try FirebaseAuth.Auth.auth().signOut()
+            AppDelegate.shared.rootViewController.switchToLogout()
+        } catch let logOutError {
+            let alert = AlertAssist.showErrorAlert(logOutError)
+            present(alert, animated: true)
+        }
+    }
+
     // MARK: - UI Actions
 
     private func setupUI() {
@@ -267,12 +282,12 @@ class EditProfileViewController: UIViewController {
         selectGenderSelectView.setAnimation(enabled: false)
         selectGenderSelectView.configure(labelTitle: "Select Your Gender", buttonTitle: "Select an item...")
         scrollView.addSubview(selectGenderSelectView)
-        makeConstrain(downView: selectGenderSelectView, upperView: zipCodeTextFieldView, height: 90)
+        makeConstrain(downView: selectGenderSelectView, upperView: zipCodeTextFieldView, height: 80)
 
         selectProjectSelectView.setAnimation(enabled: false)
         selectProjectSelectView.configure(labelTitle: "Select Project", buttonTitle: "Select an item...")
         scrollView.addSubview(selectProjectSelectView)
-        makeConstrain(downView: selectProjectSelectView, upperView: selectGenderSelectView, height: 90)
+        makeConstrain(downView: selectProjectSelectView, upperView: selectGenderSelectView, height: 80)
 
         saveButton.configure(title: "Save Changes", font: R.font.karlaBold(size: Constants.buttonFontSize)!)
         scrollView.addSubview(saveButton)

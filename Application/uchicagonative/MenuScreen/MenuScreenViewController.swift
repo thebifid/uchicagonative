@@ -7,11 +7,10 @@
 //
 
 import Cartography
-import FirebaseAuth
 import UIKit
 
 /// Main Menu View Controller
-class MenuScreenViewController: UIViewController {
+class MenuScreenViewController: UITabBarController {
     private let viewModel: MenuScreenViewModel
 
     // MARK: - Init
@@ -27,128 +26,47 @@ class MenuScreenViewController: UIViewController {
 
     // MARK: - UI Controls
 
-    private let scrollView = UIScrollView()
-
-    private let playButton = UIButton(titleColor: .lightGray, title: "Play Again!",
-                                      font: R.font.karlaBold(size: 26)!)
-    private let editProfileButton = UIButton(titleColor: .black, title: "Edit Profile",
-                                             font: R.font.karlaBold(size: 26)!)
-    private let termsOfServiceButton = UIButton(titleColor: .black, title: "Terms Of Service",
-                                                font: R.font.karlaBold(size: 26)!)
-    private let getHelpButton = UIButton(titleColor: .black, title: "Get Help",
-                                         font: R.font.karlaBold(size: 26)!)
-    private let sendFeedbackButton = UIButton(titleColor: .black, title: "Send Feedback",
-                                              font: R.font.karlaBold(size: 26)!)
-    private let aboutUsButton = UIButton(titleColor: .black, title: "About Us",
-                                         font: R.font.karlaBold(size: 26)!)
-    private let logoutButton = UIButton(titleColor: .red, title: "Logout",
-                                        font: R.font.karlaBold(size: 26)!)
-
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = ""
-        navigationController?.navigationBar.tintColor = .black
-        scrollView.alwaysBounceVertical = true
-        navigationController?.navigationBar.barTintColor = .white
-        view.backgroundColor = R.color.appBackgroundColor()!
-        playButton.setTitleColor(R.color.darkGreen(), for: .normal)
-        playButton.isEnabled = true
 
-        setupUI()
+        let config = viewModel.sessionConfiguration
+        let userSession = viewModel.userSession
 
-        // setting button actions
-        playButton.addTarget(self, action: #selector(handlePlay), for: .touchUpInside)
-        editProfileButton.addTarget(self, action: #selector(handleEditProfile), for: .touchUpInside)
-        termsOfServiceButton.addTarget(self, action: #selector(handleTermsOfService), for: .touchUpInside)
-        getHelpButton.addTarget(self, action: #selector(handleGetHelp), for: .touchUpInside)
-        aboutUsButton.addTarget(self, action: #selector(handleAboutUs), for: .touchUpInside)
-        sendFeedbackButton.addTarget(self, action: #selector(handleSendFeedback), for: .touchUpInside)
-        logoutButton.addTarget(self, action: #selector(handleLogout), for: .touchUpInside)
+        let gameViewModel = GameScreenViewModel(userSession: userSession, sessionConfiguration: config)
+        let gameController = GameScreenViewController(viewModel: gameViewModel)
+
+        let editProfileViewModel = EditProfileViewModel(userSession: userSession)
+        let editProfileController = EditProfileViewController(viewModel: editProfileViewModel)
+
+        let getHelpViewModel = GetHelpViewModel(userSession: userSession)
+        let getHelpController = GetHelpViewController(viewModel: getHelpViewModel)
+
+        viewControllers = [
+            createNavController(viewController: editProfileController, title: "Profile", imageName: ""),
+            createNavController(viewController: TermsOfServiceViewController(), title: "ToS", imageName: ""),
+            createNavController(viewController: gameController, title: "Play", imageName: ""),
+            createNavController(viewController: getHelpController, title: "Help", imageName: ""),
+            createNavController(viewController: AboutUsViewController(), title: "About", imageName: "")
+        ]
+
+        selectedIndex = 2
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
+        tabBarController?.selectedIndex = 1
     }
 
     // MARK: - Private Methods
 
-    @objc private func handlePlay() {
-        let dvc = GameScreenViewController(viewModel: GameScreenViewModel(userSession: viewModel.userSession,
-                                                                          sessionConfiguration: viewModel.sessionConfiguration))
-        dvc.navigationItem.title = "Game"
-        navigationController?.pushViewController(dvc, animated: true)
-    }
-
-    @objc private func handleEditProfile() {
-        let dvc = EditProfileViewController(viewModel: EditProfileViewModel(userSession: viewModel.userSession))
-        dvc.navigationItem.title = "Edit Your Profile"
-        navigationController?.pushViewController(dvc, animated: true)
-    }
-
-    @objc private func handleAboutUs() {
-        let dvc = AboutUsViewController()
-        dvc.navigationItem.title = "About Us"
-        navigationController?.pushViewController(dvc, animated: true)
-    }
-
-    @objc private func handleGetHelp() {
-        let dvc = GetHelpViewController(viewModel: GetHelpViewModel(userSession: viewModel.userSession))
-        dvc.navigationItem.title = "Get Help"
-        navigationController?.pushViewController(dvc, animated: true)
-    }
-
-    @objc private func handleTermsOfService() {
-        let dvc = TermsOfServiceViewController()
-        dvc.navigationItem.title = "Terms Of Service"
-        navigationController?.pushViewController(dvc, animated: true)
-    }
-
-    @objc private func handleSendFeedback() {
-        let dvc = SendFeedbackViewController()
-        dvc.navigationItem.title = "Send Feedback"
-        navigationController?.pushViewController(dvc, animated: true)
-    }
-
-    @objc private func handleLogout() {
-        do {
-            try FirebaseAuth.Auth.auth().signOut()
-            AppDelegate.shared.rootViewController.switchToLogout()
-        } catch let logOutError {
-            let alert = AlertAssist.showErrorAlert(logOutError)
-            present(alert, animated: true)
-        }
-    }
-
-    // MARK: - UI Actions
-
-    private func setupUI() {
-        view.addSubview(scrollView)
-        scrollView.fillSuperView()
-
-        let stackView = VerticalStackView(arrangedSubviews:
-            [
-                playButton,
-                editProfileButton,
-                termsOfServiceButton,
-                getHelpButton,
-                sendFeedbackButton,
-                aboutUsButton,
-                logoutButton
-            ], spacing: 14)
-
-        scrollView.addSubview(stackView)
-
-        constrain(stackView) { stackView in
-            stackView.centerY == stackView.superview!.centerY - self.topbarHeight
-            stackView.centerX == stackView.superview!.centerX
-        }
+    private func createNavController(viewController: UIViewController, title: String, imageName: String) -> UIViewController {
+        let navController = UINavigationController(rootViewController: viewController)
+        viewController.navigationItem.title = title
+        viewController.view.backgroundColor = .white
+        navController.tabBarItem.title = title
+        navController.tabBarItem.image = UIImage(named: imageName)
+        return navController
     }
 }

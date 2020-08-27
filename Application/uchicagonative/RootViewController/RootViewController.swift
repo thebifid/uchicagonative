@@ -34,8 +34,7 @@ class RootViewController: UIViewController {
 
     func switchToMainScreen(userSession: UserSession) {
         let mainScreen = MenuScreenViewController(viewModel: MenuScreenViewModel(userSession: userSession))
-        let navController = NavigationController(rootViewController: mainScreen)
-        animateFadeTransition(to: navController)
+        animateFadeTransition(to: mainScreen)
     }
 
     func switchToLogout() {

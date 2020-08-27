@@ -49,6 +49,17 @@ class GetHelpViewController: UIViewController {
 
     private let visitSiteButton = PrimaryButton()
 
+    private let sendFeedbackLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Please send us feedback about your Mobile Memory App experience"
+        label.font = R.font.karlaRegular(size: Constants.buttonFontSize)!
+        label.textColor = R.color.lightBlack()!
+        label.numberOfLines = 0
+        return label
+    }()
+
+    private let sendFeedbackButton = PrimaryButton()
+
     // MARK: - Private Properties
 
     private let viewModel: GetHelpViewModel
@@ -109,15 +120,20 @@ class GetHelpViewController: UIViewController {
         visitSiteButton.configure(title: "Visit Website",
                                   font: R.font.karlaBold(size: Constants.buttonFontSize)!, isEnabled: true)
 
+        sendFeedbackButton.configure(title: "Send Feedback",
+                                     font: R.font.karlaBold(size: Constants.buttonFontSize)!, isEnabled: true)
+
         let upStackView = VerticalStackView(arrangedSubviews: [contactEmailLabel, sendEmailButton], spacing: 20)
         let downStackView = VerticalStackView(arrangedSubviews: [readAboutLabel, visitSiteButton], spacing: 20)
+        let feedbackstackView = VerticalStackView(arrangedSubviews: [sendFeedbackLabel, sendFeedbackButton], spacing: 20)
 
-        let stackView = VerticalStackView(arrangedSubviews: [upStackView, downStackView], spacing: 35)
+        let stackView = VerticalStackView(arrangedSubviews: [upStackView, downStackView, feedbackstackView], spacing: 35)
 
-        constrain(sendEmailButton, visitSiteButton) { sendEmailButton, visitSiteButton in
+        constrain(sendEmailButton, visitSiteButton, sendFeedbackButton) { sendEmailButton, visitSiteButton, sendFeedbackButton in
 
             sendEmailButton.height == 50
             visitSiteButton.height == 50
+            sendFeedbackButton.height == 50
         }
 
         scrollView.addSubview(stackView)
