@@ -103,7 +103,6 @@ class GameScreenViewController: UIViewController {
         }
 
         viewModel.didRoundEnd = { [weak self] in
-            self?.view.isUserInteractionEnabled = false
             self?.playRound()
         }
 
@@ -136,6 +135,7 @@ class GameScreenViewController: UIViewController {
 
         viewModel.didGameEnd = { [weak self] in
             guard let self = self else { return }
+            self.view.isUserInteractionEnabled = true
             self.viewModel.sendDataToFirebase { result in
                 switch result {
                 case let .failure(error):
@@ -233,6 +233,7 @@ class GameScreenViewController: UIViewController {
             viewModel.setEndPoint(endPoint: gesture.location(in: view))
 
             if viewModel.swipeDistanceX > 60 || abs(gesture.velocity(in: testCellImageView).x) > 500 {
+                view.isUserInteractionEnabled = false
                 let swipeDirection = gesture.velocity(in: testCellImageView).x < 0 ? GameScreenViewModel.SwipeDirection.left : .right
                 var offsetDistance = 400
                 if swipeDirection == .left {
